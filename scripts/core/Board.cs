@@ -35,6 +35,7 @@ public class Board
     private List<Board> GenerateMoves(Piece piece)
     {
         List<Board> result = [];
-        
+
+        return result;
     }
 }

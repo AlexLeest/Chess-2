@@ -35,5 +35,20 @@ public struct Vector2Int
         return !(a == b);
     }
     
-    public static 
+    public static Vector2Int Up => new(0, 1);
+    public static Vector2Int Down => new(0, -1);
+    public static Vector2Int Left => new(-1, 0);
+    public static Vector2Int Right => new(1, 0);
+    
+    public static Vector2Int UpLeft => new(-1, 1);
+    public static Vector2Int UpRight => new(1, 1);
+    public static Vector2Int DownLeft => new(-1, -1);
+    public static Vector2Int DownRight => new(1, -1);
+
+    public static Vector2Int[] Cardinals => [Up, Down, Left, Right];
+    public static Vector2Int[] Diagonals => [UpLeft, UpRight, DownLeft, DownRight];
+    
+    public static Vector2Int[] AllDirections => [Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight];
+
+    public static Vector2Int[] KnightHops => [new(1, 2), new(2, 1), new(2, -1), new(1, -2), new(-1, -2), new(-2, -1), new(-2, 1), new(-1, 2)];
 }

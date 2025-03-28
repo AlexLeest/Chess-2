@@ -5,5 +5,5 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
 public interface IMovement
 {
-    public List<Vector2Int> GetUnobstructedMovementOptions(Vector2Int from);
+    public List<Vector2Int> GetMovementOptions(Vector2Int from, Piece[,] board, bool color);
 }
