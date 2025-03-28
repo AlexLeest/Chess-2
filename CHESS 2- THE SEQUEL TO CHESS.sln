@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHESS 2- THE SEQUEL TO CHESS", "CHESS 2- THE SEQUEL TO CHESS.csproj", "{48802BC0-95DE-4EF9-8C6C-5F8A3B5F126B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48802BC0-95DE-4EF9-8C6C-5F8A3B5F126B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48802BC0-95DE-4EF9-8C6C-5F8A3B5F126B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48802BC0-95DE-4EF9-8C6C-5F8A3B5F126B}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{48802BC0-95DE-4EF9-8C6C-5F8A3B5F126B}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{48802BC0-95DE-4EF9-8C6C-5F8A3B5F126B}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{48802BC0-95DE-4EF9-8C6C-5F8A3B5F126B}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal
