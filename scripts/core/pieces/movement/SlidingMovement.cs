@@ -21,8 +21,11 @@ public class SlidingMovement : IMovement
 
     public List<Vector2Int> GetMovementOptions(Vector2Int from, Piece[,] pieces, bool color)
     {
+        int boardWidth = pieces.GetLength(0);
+        int boardHeight = pieces.GetLength(1);
+        
         // Hardcoding the board size in for now at 8x8
-        List<Vector2Int> result = [];
+        List<Vector2Int> options = [];
         
         foreach (var offset in offsets)
         {
@@ -30,20 +33,22 @@ public class SlidingMovement : IMovement
             for (int i = 0; i < multiplier ; i++)
             {
                 currentPos += offset;
+                if (!currentPos.Inside(boardWidth, boardHeight))
+                    break;
+
                 Piece onSquare = pieces[currentPos.X, currentPos.Y];
-                
                 if (onSquare != null)
                 {
                     if (onSquare.Color != color)
-                        result.Add(currentPos);
+                        options.Add(currentPos);
                     break;
                 }
                 
-                result.Add(currentPos);
+                options.Add(currentPos);
             }
         }
 
-        return result;
+        return options;
     }
 
     public static SlidingMovement Knight => new(Vector2Int.KnightHops, 1);

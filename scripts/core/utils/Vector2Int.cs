@@ -52,3 +52,11 @@ public struct Vector2Int
 
     public static Vector2Int[] KnightHops => [new(1, 2), new(2, 1), new(2, -1), new(1, -2), new(-1, -2), new(-2, -1), new(-2, 1), new(-1, 2)];
 }
+
+public static class Vector2IntExtensions
+{
+    public static bool Inside(this Vector2Int a, int width, int height)
+    {
+        return a.X >= 0 && a.Y >= 0 && a.X <= width && a.Y <= height;
+    }
+}
