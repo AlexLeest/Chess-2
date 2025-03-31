@@ -6,12 +6,13 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
 public class Board
 {
-    private Piece[] pieces;
+    public Piece[] Pieces;
+    
     private Piece[,] squares;
 
     public Board(Piece[] pieces)
     {
-        this.pieces = pieces;
+        this.Pieces = pieces;
         squares = new Piece[8, 8];
         foreach (Piece piece in pieces)
         {
@@ -67,7 +68,7 @@ public class Board
     private List<Board> GenerateMoves()
     {
         List<Board> result = [];
-        foreach (Piece piece in pieces)
+        foreach (Piece piece in Pieces)
         {
             foreach (Board move in GenerateMoves(piece))
             {
@@ -81,18 +82,30 @@ public class Board
     {
         List<Board> result = [];
         
-        var piecesWithoutSubject = pieces.Where(x => x != piece);
         foreach (Vector2Int move in piece.Movement.GetMovementOptions(piece.Position, squares, piece.Color))
         {
             // Take list of pieces on this board, copy it
-            // Remove this piece from list, add it back with new position
-            // Remove captures piece if applicable
-            // Make new board add to results
-            if (squares[move.X, move.Y] is not null)
+            Piece capturedPiece = squares[move.X, move.Y];
+            List<Piece> piecesWithoutSubject = [];
+            foreach (Piece p in Pieces)
             {
-                // Capture piece
-                // TODO: Item trigger
+                // Remove this piece from list, add it back with new position
+                // Remove captures piece if applicable
+                if (p != piece && p != capturedPiece)
+                {
+                    // TODO: Find alternative to massive amounts of deep copying
+                    Piece deepCopy = new(p.Color, p.Position, p.Movement);
+                    piecesWithoutSubject.Add(deepCopy);
+                }
             }
+            // if (capturedPiece is not null)
+            // {
+            //     // TODO: Item trigger
+            // }
+            
+            // Make new board add to results
+            Board possibleMove = new(piecesWithoutSubject.ToArray());
+            result.Add(possibleMove);
         }
 
         return result;
