@@ -9,10 +9,12 @@ public class Board
     public Piece[] Pieces;
     
     private Piece[,] squares;
+    private int turn;
 
-    public Board(Piece[] pieces)
+    public Board(int turn, Piece[] pieces)
     {
-        this.Pieces = pieces;
+        this.turn = turn;
+        Pieces = pieces;
         squares = new Piece[8, 8];
         foreach (Piece piece in pieces)
         {
@@ -63,14 +65,43 @@ public class Board
             Piece.Rook(31, false, new Vector2Int(7, 7)),
         ];
         
-        return new Board(pieces);
+        return new Board(0, pieces);
+    }
+
+    public bool IsInCheck(bool color)
+    {
+        Vector2Int kingPosition = new Vector2Int(0, 0);
+        int kingId = color ? 12 : 28;
+        foreach (Piece piece in Pieces)
+        {
+            if (piece.Id != kingId)
+                continue;
+            kingPosition = piece.Position;
+            break;
+        }
+        
+        foreach (Piece piece in Pieces)
+        {
+            foreach (Vector2Int move in piece.Movement.GetMovementOptions(piece.Position, squares, piece.Color))
+            {
+                if (move == kingPosition)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public List<Board> GenerateMoves()
     {
+        bool colorToMove = turn % 2 == 0;
         List<Board> result = [];
         foreach (Piece piece in Pieces)
         {
+            if (piece.Color != colorToMove)
+                continue;
             foreach (Board move in GenerateMoves(piece))
             {
                 result.Add(move);
@@ -81,6 +112,8 @@ public class Board
 
     private List<Board> GenerateMoves(Piece piece)
     {
+        bool colorToMove = turn % 2 == 0;
+        int nextTurn = turn + 1;
         List<Board> result = [];
         
         foreach (Vector2Int move in piece.Movement.GetMovementOptions(piece.Position, squares, piece.Color))
@@ -101,14 +134,16 @@ public class Board
                     i++;
                 }
             }
+            newPieces[i] = new Piece(piece.Id, piece.Color, move, piece.Movement);
             // if (capturedPiece is not null)
             // {
             //     // TODO: Item trigger
             // }
             
             // Make new board add to results
-            Board possibleMove = new(newPieces);
-            result.Add(possibleMove);
+            Board possibleMove = new(nextTurn, newPieces);
+            if (!possibleMove.IsInCheck(colorToMove))
+                result.Add(possibleMove);
         }
 
         return result;

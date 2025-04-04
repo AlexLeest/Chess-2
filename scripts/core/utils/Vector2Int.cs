@@ -34,7 +34,12 @@ public struct Vector2Int
     {
         return !(a == b);
     }
-    
+
+    public override string ToString()
+    {
+        return $"({X}, {Y})";
+    }
+
     public static Vector2Int Up => new(0, 1);
     public static Vector2Int Down => new(0, -1);
     public static Vector2Int Left => new(-1, 0);
@@ -57,6 +62,6 @@ public static class Vector2IntExtensions
 {
     public static bool Inside(this Vector2Int a, int width, int height)
     {
-        return a.X >= 0 && a.Y >= 0 && a.X <= width && a.Y <= height;
+        return a.X >= 0 && a.Y >= 0 && a.X < width && a.Y < height;
     }
 }

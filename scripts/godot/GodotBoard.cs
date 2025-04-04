@@ -53,13 +53,12 @@ public partial class GodotBoard : Control
 
     public override void _Input(InputEvent input)
     {
-        if (input is InputEventKey key && key.Pressed)
+        if (input is InputEventKey key && input.IsPressed())
         {
             if (key.Keycode == Key.Q)
             {
                 List<Board> moves = board.GenerateMoves();
-                GD.Print($"Possible next boards: {moves.Count}");
-                var randomBoard = moves[GD.RandRange(0, moves.Count)];
+                var randomBoard = moves[GD.RandRange(0, moves.Count - 1)];
                 SetNewBoard(randomBoard);
             }
         }
@@ -67,18 +66,23 @@ public partial class GodotBoard : Control
 
     public void SetNewBoard(Board newBoard)
     {
+        board = newBoard;
         GodotPiece[] newPieces = new GodotPiece[newBoard.Pieces.Length];
         int newPiecesIndex = 0;
         Dictionary<byte, GodotPiece> newPieceDictionary = new();
+        HashSet<GodotPiece> livePieces = new();
         
         // Where possible, match GodotPieces (based on id)
         foreach (Piece piece in board.Pieces)
         {
+            GD.Print($"Piece {piece.Id}, pos {piece.Position}");
             if (pieceDictionary.TryGetValue(piece.Id, out GodotPiece gdPiece))
             {
                 // Set gdPiece to new location
                 newPieces[newPiecesIndex] = gdPiece;
                 newPieceDictionary[piece.Id] = gdPiece;
+                gdPiece.Update(piece);
+                livePieces.Add(gdPiece);
                 newPiecesIndex++;
             }
             // else
@@ -87,9 +91,14 @@ public partial class GodotBoard : Control
             //     // This doesn't normally happen, but in theory could due to buffs/items or other whacky game mechanics
             // }
             // TODO: Find all unused pieces and delete them
-            
         }
-
+        foreach (GodotPiece currentPiece in pieces)
+        {
+            if (!livePieces.Contains(currentPiece))
+            {
+                currentPiece.QueueFree();
+            }
+        }
         pieces = newPieces;
         pieceDictionary = newPieceDictionary;
     }

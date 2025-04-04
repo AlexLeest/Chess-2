@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using Godot;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot;
@@ -12,8 +13,14 @@ public partial class GodotPiece : Sprite2D
     
     public GodotPiece(Piece piece)
     {
-        this.piece = piece;
+        Update(piece);
+    }
+
+    public void Update(Piece piece)
+    {
+        // GD.Print($"Moving piece {piece.Id} to pos {piece.Position.X}, {piece.Position.Y}");
         Id = piece.Id;
+        this.piece = piece;
         // Has to flip the board upside down to have the white pieces at the bottom: 64*8 - position
         Position = new Vector2(32 + piece.Position.X * 64, 512 - (32 + piece.Position.Y * 64));
     }
