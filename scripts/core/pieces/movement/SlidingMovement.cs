@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
-// Ayyyy I'm slidin ovah here
+// TODO: Struct, maybe
 public class SlidingMovement : IMovement
 {
     // In which direction the piece can jump (single step)

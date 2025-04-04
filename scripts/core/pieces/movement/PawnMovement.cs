@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
+// TODO: Struct, maybe
 public class PawnMovement : IMovement
 {
 

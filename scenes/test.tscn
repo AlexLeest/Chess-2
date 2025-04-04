@@ -1,15 +1,68 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddro8mbffb074"]
+[gd_scene load_steps=14 format=3 uid="uid://ddro8mbffb074"]
 
 [ext_resource type="Script" uid="uid://54kjarjdjwgv" path="res://scripts/godot/GodotBoard.cs" id="1_errlg"]
+[ext_resource type="Texture2D" uid="uid://tb8s1rq7ivaq" path="res://art/pieces/bB.svg" id="2_44saj"]
+[ext_resource type="Texture2D" uid="uid://gftk3abspmjw" path="res://art/pieces/bK.svg" id="3_7mbro"]
+[ext_resource type="Texture2D" uid="uid://dquybrpg3ywmf" path="res://art/pieces/bN.svg" id="4_ff6ho"]
+[ext_resource type="Texture2D" uid="uid://cad87thwm8ejr" path="res://art/pieces/bP.svg" id="5_7yos8"]
+[ext_resource type="Texture2D" uid="uid://bn7ggxwhldr6a" path="res://art/pieces/bQ.svg" id="6_5jxlq"]
+[ext_resource type="Texture2D" uid="uid://wlcjeabn4uoh" path="res://art/pieces/bR.svg" id="7_xrtyr"]
+[ext_resource type="Texture2D" uid="uid://c1fnwv0ig6j27" path="res://art/pieces/wB.svg" id="8_daiq8"]
+[ext_resource type="Texture2D" uid="uid://i6fmdcudmkkq" path="res://art/pieces/wK.svg" id="9_c6rvn"]
+[ext_resource type="Texture2D" uid="uid://qgv8b1v1luf2" path="res://art/pieces/wN.svg" id="10_n74k2"]
+[ext_resource type="Texture2D" uid="uid://b17veqy3lpb83" path="res://art/pieces/wP.svg" id="11_si7kk"]
+[ext_resource type="Texture2D" uid="uid://gg3im0lsrswa" path="res://art/pieces/wQ.svg" id="12_pn65j"]
+[ext_resource type="Texture2D" uid="uid://d28f403us63or" path="res://art/pieces/wR.svg" id="13_5f8cm"]
 
 [node name="Canvas" type="CanvasLayer"]
 
-[node name="GodotBoard" type="Control" parent="."]
+[node name="GodotBoard" type="Control" parent="." node_paths=PackedStringArray("pieces")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_errlg")
+lightSquare = Color(0.952941, 0.831373, 0.686275, 1)
+darkSquare = Color(0.568627, 0.305882, 0.25098, 1)
+squareSize = 64
+pieces = []
+pieceTextures = Array[Texture2D]([ExtResource("2_44saj"), ExtResource("3_7mbro"), ExtResource("4_ff6ho"), ExtResource("5_7yos8"), ExtResource("6_5jxlq"), ExtResource("7_xrtyr"), ExtResource("8_daiq8"), ExtResource("9_c6rvn"), ExtResource("10_n74k2"), ExtResource("11_si7kk"), ExtResource("12_pn65j"), ExtResource("13_5f8cm")])
+pieceTexturesDictionary = Dictionary[int, Texture2D]({
+0: ExtResource("11_si7kk"),
+1: ExtResource("11_si7kk"),
+2: ExtResource("11_si7kk"),
+3: ExtResource("11_si7kk"),
+4: ExtResource("11_si7kk"),
+5: ExtResource("11_si7kk"),
+6: ExtResource("11_si7kk"),
+7: ExtResource("11_si7kk"),
+8: ExtResource("13_5f8cm"),
+9: ExtResource("10_n74k2"),
+10: ExtResource("8_daiq8"),
+11: ExtResource("12_pn65j"),
+12: ExtResource("9_c6rvn"),
+13: ExtResource("8_daiq8"),
+14: ExtResource("10_n74k2"),
+15: ExtResource("13_5f8cm"),
+16: ExtResource("5_7yos8"),
+17: ExtResource("5_7yos8"),
+18: ExtResource("5_7yos8"),
+19: ExtResource("5_7yos8"),
+20: ExtResource("5_7yos8"),
+21: ExtResource("5_7yos8"),
+22: ExtResource("5_7yos8"),
+23: ExtResource("5_7yos8"),
+24: ExtResource("7_xrtyr"),
+25: ExtResource("4_ff6ho"),
+26: ExtResource("2_44saj"),
+27: ExtResource("6_5jxlq"),
+28: ExtResource("3_7mbro"),
+29: ExtResource("2_44saj"),
+30: ExtResource("4_ff6ho"),
+31: ExtResource("7_xrtyr")
+})
 metadata/_custom_type_script = "uid://54kjarjdjwgv"
