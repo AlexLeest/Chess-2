@@ -8,9 +8,9 @@ public class Piece
     
     public bool Color;
     public Vector2Int Position;
-    public IMovement Movement;
+    public IMovement[] Movement;
 
-    public Piece(byte id, bool color, Vector2Int position, IMovement movement)
+    public Piece(byte id, bool color, Vector2Int position, IMovement[] movement)
     {
         Id = id;
         Color = color;
@@ -20,31 +20,31 @@ public class Piece
 
     public static Piece Pawn(byte id, bool color, Vector2Int position)
     {
-        return new Piece(id, color, position, new PawnMovement());
+        return new Piece(id, color, position, [new PawnMovement()]);
     }
 
     public static Piece Knight(byte id, bool color, Vector2Int position)
     {
-        return new Piece(id, color, position, SlidingMovement.Knight);
+        return new Piece(id, color, position, [SlidingMovement.Knight]);
     }
 
     public static Piece Bishop(byte id, bool color, Vector2Int position)
     {
-        return new Piece(id, color, position, SlidingMovement.Bishop);
+        return new Piece(id, color, position, [SlidingMovement.Bishop]);
     }
 
     public static Piece Rook(byte id, bool color, Vector2Int position)
     {
-        return new Piece(id, color, position, SlidingMovement.Rook);
+        return new Piece(id, color, position, [SlidingMovement.Rook]);
     }
 
     public static Piece Queen(byte id, bool color, Vector2Int position)
     {
-        return new Piece(id, color, position, SlidingMovement.Queen);
+        return new Piece(id, color, position, [SlidingMovement.Queen]);
     }
 
     public static Piece King(byte id, bool color, Vector2Int position)
     {
-        return new Piece(id, color, position, SlidingMovement.King);
+        return new Piece(id, color, position, [SlidingMovement.King]);
     }
 }

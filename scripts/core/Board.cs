@@ -70,7 +70,7 @@ public class Board
 
     public bool IsInCheck(bool color)
     {
-        Vector2Int kingPosition = new Vector2Int(0, 0);
+        Vector2Int kingPosition = new(0, 0);
         int kingId = color ? 12 : 28;
         foreach (Piece piece in Pieces)
         {
@@ -81,21 +81,21 @@ public class Board
         }
         
         foreach (Piece piece in Pieces)
-        {
-            foreach (Vector2Int move in piece.Movement.GetMovementOptions(piece.Position, squares, piece.Color))
-            {
-                if (move == kingPosition)
-                {
-                    return true;
-                }
-            }
-        }
+            foreach (IMovement movement in piece.Movement)
+                foreach (Vector2Int move in movement.GetMovementOptions(piece.Position, squares, piece.Color))
+                    if (move == kingPosition)
+                        return true;
 
         return false;
     }
 
     public List<Board> GenerateMoves()
     {
+        // TODO:
+        //  En passant
+        //  Castling
+        //  Pawn promotion
+        
         bool colorToMove = turn % 2 == 0;
         List<Board> result = [];
         foreach (Piece piece in Pieces)
@@ -116,34 +116,55 @@ public class Board
         int nextTurn = turn + 1;
         List<Board> result = [];
         
-        foreach (Vector2Int move in piece.Movement.GetMovementOptions(piece.Position, squares, piece.Color))
-        {
-            // Take list of pieces on this board, copy it
-            Piece capturedPiece = squares[move.X, move.Y];
-            Piece[] newPieces = (capturedPiece == null ? new Piece[Pieces.Length] : new Piece[Pieces.Length - 1]);
-            int i = 0;
-            foreach (Piece p in Pieces)
+        foreach (IMovement movement in piece.Movement)
+            foreach (Vector2Int move in movement.GetMovementOptions(piece.Position, squares, piece.Color))
             {
-                // Remove this piece from list, add it back with new position
-                // Remove captures piece if applicable
-                if (p != piece && p != capturedPiece)
+                // Take list of pieces on this board, copy it
+                Piece capturedPiece = squares[move.X, move.Y];
+                Piece[] newPieces = DeepcopyPieces(capturedPiece == null ? [piece] : [piece, capturedPiece]);
+                // TODO: If piece has PawnMovement and is on last row, promote (how to handle promotion to 4 separate things?)
+                Piece newPiece;
+                if (movement is PawnMovement && move.Y == (piece.Color ? 7 : 0))
                 {
-                    // TODO: Find alternative to massive amounts of deep copying
-                    Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement);
-                    newPieces[i] = deepCopy;
-                    i++;
+                    // Promotion! Just to queen for now
+                    newPiece = new Piece(piece.Id, piece.Color, piece.Position, [SlidingMovement.Queen]);
                 }
+                else
+                {
+                    newPiece = new Piece(piece.Id, piece.Color, move, piece.Movement);
+                }
+                newPieces[^1] = newPiece;
+                // if (capturedPiece is not null)
+                // {
+                //     // TODO: Item triggers onCapture and onDeath
+                // }
+                
+                // Make new board add to results
+
+                Board possibleMove = new(nextTurn, newPieces);
+                if (!possibleMove.IsInCheck(colorToMove))
+                    result.Add(possibleMove);
             }
-            newPieces[i] = new Piece(piece.Id, piece.Color, move, piece.Movement);
-            // if (capturedPiece is not null)
-            // {
-            //     // TODO: Item trigger
-            // }
-            
-            // Make new board add to results
-            Board possibleMove = new(nextTurn, newPieces);
-            if (!possibleMove.IsInCheck(colorToMove))
-                result.Add(possibleMove);
+
+        return result;
+    }
+
+    private Piece[] DeepcopyPieces(params Piece[] toSkip)
+    {
+        // Result leaves 1 "empty" spot in the array (to be filled with the moved piece)
+        Piece[] result = new Piece[Pieces.Length - toSkip.Length + 1];
+        int i = 0;
+        foreach (Piece p in Pieces)
+        {
+            // Remove this piece from list, add it back with new position
+            // Remove captures piece if applicable
+            if (!toSkip.Contains(p))
+            {
+                // TODO: Find alternative to massive amounts of deep copying
+                Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement);
+                result[i] = deepCopy;
+                i++;
+            }
         }
 
         return result;

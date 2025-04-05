@@ -58,7 +58,12 @@ public partial class GodotBoard : Control
             if (key.Keycode == Key.Q)
             {
                 List<Board> moves = board.GenerateMoves();
-                var randomBoard = moves[GD.RandRange(0, moves.Count - 1)];
+                if (moves.Count == 0)
+                {
+                    GD.Print("No moves found, either checkmate or draw");
+                    return;
+                }
+                Board randomBoard = moves[GD.RandRange(0, moves.Count - 1)];
                 SetNewBoard(randomBoard);
             }
         }
@@ -79,6 +84,7 @@ public partial class GodotBoard : Control
             if (pieceDictionary.TryGetValue(piece.Id, out GodotPiece gdPiece))
             {
                 // Set gdPiece to new location
+                // Does not handle promotion or any of that stuff really
                 newPieces[newPiecesIndex] = gdPiece;
                 newPieceDictionary[piece.Id] = gdPiece;
                 gdPiece.Update(piece);
@@ -90,7 +96,6 @@ public partial class GodotBoard : Control
             //     // Spawn new GodotPiece???
             //     // This doesn't normally happen, but in theory could due to buffs/items or other whacky game mechanics
             // }
-            // TODO: Find all unused pieces and delete them
         }
         foreach (GodotPiece currentPiece in pieces)
         {
