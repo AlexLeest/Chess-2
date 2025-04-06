@@ -71,23 +71,33 @@ public partial class GodotBoard : GridContainer
 
     private void SquareClicked(Vector2I position)
     {
+        Vector2Int corePos = position.ToCore();
         if (selectedPiece != null)
         {
             // TODO: Check if piece can move here and if so, do
+            Piece pieceToMove = selectedPiece.Piece;
 
-            Vector2Int corePos = position.ToCore();
             foreach (IMovement movement in selectedPiece.Piece.Movement)
             {
-                foreach (Vector2Int move in movement.GetMovementOptions(position.ToCore(), board.Squares, true))
+                if (movement.GetMovementOptions(pieceToMove.Position, board.Squares, true).Contains(corePos))
                 {
-                    if (move == corePos)
-                    {
-                        // Build Piece[], make new Board, set and go.
-                    }
+                    // Build Piece[], make new Board, set and go.
+                    GD.Print($"Moving piece {selectedPiece.Id} to {position}");
+
+                    Piece capturedPiece = squares[corePos.X, corePos.Y].GdPiece?.Piece;
+                    Piece[] newPieces = board.DeepcopyPieces(capturedPiece == null ? [pieceToMove] : [pieceToMove, capturedPiece]);
+                    newPieces[^1] = new Piece(pieceToMove.Id, pieceToMove.Color, corePos, pieceToMove.Movement);
+
+                    Board newBoard = new Board(board.Turn + 1, newPieces);
+                    SetNewBoard(newBoard);
+                        
+                    selectedPiece = null;
+                    return;
                 }
             }
-            
-            GD.Print($"Moving piece {selectedPiece.Id} to {position}");
+            GD.Print("Unselecting");
+            selectedPiece = null;
+            return;
         }
         
         GodotSquare square = squares[position.X, position.Y];
@@ -95,14 +105,17 @@ public partial class GodotBoard : GridContainer
         {
             // Player always plays white side so big no for this
             GD.Print("Can't control black pieces you freak");
+            return;
         }
         selectedPiece = square.GdPiece;
+        GD.Print($"Selected piece {selectedPiece.Id}");
         // TODO: Show possible moves for piece
         foreach (IMovement movement in selectedPiece.Piece.Movement)
         {
-            foreach (Vector2Int move in movement.GetMovementOptions(position.ToCore(), board.Squares, true))
+            foreach (Vector2Int move in movement.GetMovementOptions(corePos, board.Squares, true))
             {
                 // TODO: Accentuate these
+                GD.Print($"Move to {move} allowed");
             }
         }
     }

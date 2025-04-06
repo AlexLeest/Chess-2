@@ -9,11 +9,11 @@ public class Board
     public Piece[] Pieces;
     public Piece[,] Squares;
 
-    private int turn;
+    public int Turn;
 
     public Board(int turn, Piece[] pieces)
     {
-        this.turn = turn;
+        this.Turn = turn;
         Pieces = pieces;
         Squares = new Piece[8, 8];
         foreach (Piece piece in pieces)
@@ -96,7 +96,7 @@ public class Board
         //  Castling
         //  Pawn promotion
         
-        bool colorToMove = turn % 2 == 0;
+        bool colorToMove = Turn % 2 == 0;
         List<Board> result = [];
         foreach (Piece piece in Pieces)
         {
@@ -112,8 +112,8 @@ public class Board
 
     private List<Board> GenerateMoves(Piece piece)
     {
-        bool colorToMove = turn % 2 == 0;
-        int nextTurn = turn + 1;
+        bool colorToMove = Turn % 2 == 0;
+        int nextTurn = Turn + 1;
         List<Board> result = [];
         
         foreach (IMovement movement in piece.Movement)
@@ -149,7 +149,7 @@ public class Board
         return result;
     }
 
-    private Piece[] DeepcopyPieces(params Piece[] toSkip)
+    public Piece[] DeepcopyPieces(params Piece[] toSkip)
     {
         // Result leaves 1 "empty" spot in the array (to be filled with the moved piece)
         Piece[] result = new Piece[Pieces.Length - toSkip.Length + 1];
