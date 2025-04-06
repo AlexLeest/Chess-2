@@ -7,18 +7,18 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 public class Board
 {
     public Piece[] Pieces;
-    
-    private Piece[,] squares;
+    public Piece[,] Squares;
+
     private int turn;
 
     public Board(int turn, Piece[] pieces)
     {
         this.turn = turn;
         Pieces = pieces;
-        squares = new Piece[8, 8];
+        Squares = new Piece[8, 8];
         foreach (Piece piece in pieces)
         {
-            squares[piece.Position.X, piece.Position.Y] = piece;
+            Squares[piece.Position.X, piece.Position.Y] = piece;
         }
     }
 
@@ -82,7 +82,7 @@ public class Board
         
         foreach (Piece piece in Pieces)
             foreach (IMovement movement in piece.Movement)
-                foreach (Vector2Int move in movement.GetMovementOptions(piece.Position, squares, piece.Color))
+                foreach (Vector2Int move in movement.GetMovementOptions(piece.Position, Squares, piece.Color))
                     if (move == kingPosition)
                         return true;
 
@@ -117,10 +117,10 @@ public class Board
         List<Board> result = [];
         
         foreach (IMovement movement in piece.Movement)
-            foreach (Vector2Int move in movement.GetMovementOptions(piece.Position, squares, piece.Color))
+            foreach (Vector2Int move in movement.GetMovementOptions(piece.Position, Squares, piece.Color))
             {
                 // Take list of pieces on this board, copy it
-                Piece capturedPiece = squares[move.X, move.Y];
+                Piece capturedPiece = Squares[move.X, move.Y];
                 Piece[] newPieces = DeepcopyPieces(capturedPiece == null ? [piece] : [piece, capturedPiece]);
                 // TODO: If piece has PawnMovement and is on last row, promote (how to handle promotion to 4 separate things?)
                 Piece newPiece;

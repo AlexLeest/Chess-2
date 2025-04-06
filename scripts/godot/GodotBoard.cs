@@ -1,54 +1,53 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 
 [GlobalClass]
-public partial class GodotBoard : Control
+public partial class GodotBoard : GridContainer
 {
     private Board board;
     [Export] private Color lightSquare, darkSquare;
-    [Export] private int squareSize = 16;
-    [Export] private GodotPiece[] pieces;
+    [Export] private int squareSize = 64;
     [Export] private Texture2D[] pieceTextures;
     [Export] private Godot.Collections.Dictionary<byte, Texture2D> pieceTexturesDictionary;
     
-    private Dictionary<byte, GodotPiece> pieceDictionary = new();
+    private GodotPiece[] pieces;
+    private GodotSquare[,] squares;
+    private Dictionary<byte, GodotSquare> pieceToSquare = new();
+    
+    private GodotPiece selectedPiece;
 
     public override void _Ready()
     {
         board = Board.DefaultBoard();
+        squares = new GodotSquare[8, 8];
+        foreach (Node node in GetChildren())
+        {
+            if (node is not GodotSquare square)
+                continue;
+
+            squares[square.Pos.X, square.Pos.Y] = square;
+            square.SquareClicked += SquareClicked;
+        }
+        
         pieces = new GodotPiece[board.Pieces.Length];
         for (int i = 0; i < board.Pieces.Length; i++)
         {
             Piece piece = board.Pieces[i];
             GodotPiece gdPiece = new(piece);
             pieces[i] = gdPiece;
-            pieceDictionary[gdPiece.Id] = gdPiece;
-            AddChild(gdPiece);
+            GodotSquare square = squares[piece.Position.X, piece.Position.Y];
+            square.GdPiece = gdPiece;
+            pieceToSquare[gdPiece.Id] = square;
+            square.AddChild(gdPiece);
+            gdPiece.Position = Vector2.Down;
             GD.Print($"Setting piece texture for {piece.Id}");
             gdPiece.Texture = pieceTexturesDictionary[piece.Id];
-            // gdPiece.Scale = new Vector2(1.5f, 1.5f);
         }
-    }
-
-    public override void _Draw()
-    {
-        for (int file = 0; file < 8; file++)
-        {
-            for (int rank = 0; rank < 8; rank++)
-            {
-                Rect2 rect = new(file * squareSize, rank * squareSize, squareSize, squareSize);
-                bool isLightSquare = (file + rank) % 2 == 0;
-                DrawRect(rect, isLightSquare ? lightSquare : darkSquare);
-            }
-        }
-    }
-
-    public override void _Process(double delta)
-    {
-        QueueRedraw();
     }
 
     public override void _Input(InputEvent input)
@@ -63,8 +62,47 @@ public partial class GodotBoard : Control
                     GD.Print("No moves found, either checkmate or draw");
                     return;
                 }
+                GD.Print($"Move count: {moves.Count.ToString()}");
                 Board randomBoard = moves[GD.RandRange(0, moves.Count - 1)];
                 SetNewBoard(randomBoard);
+            }
+        }
+    }
+
+    private void SquareClicked(Vector2I position)
+    {
+        if (selectedPiece != null)
+        {
+            // TODO: Check if piece can move here and if so, do
+
+            Vector2Int corePos = position.ToCore();
+            foreach (IMovement movement in selectedPiece.Piece.Movement)
+            {
+                foreach (Vector2Int move in movement.GetMovementOptions(position.ToCore(), board.Squares, true))
+                {
+                    if (move == corePos)
+                    {
+                        // Build Piece[], make new Board, set and go.
+                    }
+                }
+            }
+            
+            GD.Print($"Moving piece {selectedPiece.Id} to {position}");
+        }
+        
+        GodotSquare square = squares[position.X, position.Y];
+        if (!square.GdPiece.Piece.Color)
+        {
+            // Player always plays white side so big no for this
+            GD.Print("Can't control black pieces you freak");
+        }
+        selectedPiece = square.GdPiece;
+        // TODO: Show possible moves for piece
+        foreach (IMovement movement in selectedPiece.Piece.Movement)
+        {
+            foreach (Vector2Int move in movement.GetMovementOptions(position.ToCore(), board.Squares, true))
+            {
+                // TODO: Accentuate these
             }
         }
     }
@@ -74,20 +112,24 @@ public partial class GodotBoard : Control
         board = newBoard;
         GodotPiece[] newPieces = new GodotPiece[newBoard.Pieces.Length];
         int newPiecesIndex = 0;
-        Dictionary<byte, GodotPiece> newPieceDictionary = new();
+        Dictionary<byte, GodotSquare> newPieceToSquare = new();
         HashSet<GodotPiece> livePieces = new();
         
         // Where possible, match GodotPieces (based on id)
         foreach (Piece piece in board.Pieces)
         {
-            GD.Print($"Piece {piece.Id}, pos {piece.Position}");
-            if (pieceDictionary.TryGetValue(piece.Id, out GodotPiece gdPiece))
+            if (pieceToSquare.TryGetValue(piece.Id, out GodotSquare gdSquare))
             {
+                GodotPiece gdPiece = gdSquare.GdPiece;
                 // Set gdPiece to new location
-                // Does not handle promotion or any of that stuff really
                 newPieces[newPiecesIndex] = gdPiece;
-                newPieceDictionary[piece.Id] = gdPiece;
-                gdPiece.Update(piece);
+                GodotSquare newSquare = squares[piece.Position.X, piece.Position.Y];
+                
+                gdSquare.GdPiece = null;
+                newSquare.GdPiece = gdPiece;
+                gdPiece.Reparent(newSquare, false);
+
+                newPieceToSquare[piece.Id] = newSquare;
                 livePieces.Add(gdPiece);
                 newPiecesIndex++;
             }
@@ -105,6 +147,6 @@ public partial class GodotBoard : Control
             }
         }
         pieces = newPieces;
-        pieceDictionary = newPieceDictionary;
+        pieceToSquare = newPieceToSquare;
     }
 }

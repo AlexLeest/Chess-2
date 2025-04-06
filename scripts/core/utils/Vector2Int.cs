@@ -1,4 +1,6 @@
-﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using Godot;
+
+namespace CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
 public struct Vector2Int
 {
@@ -31,6 +33,16 @@ public struct Vector2Int
     }
 
     public static bool operator !=(Vector2Int a, Vector2Int b)
+    {
+        return !(a == b);
+    }
+
+    public static bool operator ==(Vector2Int a, Vector2I b)
+    {
+        return a.X == b.X && a.Y == b.Y;
+    }
+
+    public static bool operator !=(Vector2Int a, Vector2I b)
     {
         return !(a == b);
     }
