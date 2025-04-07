@@ -14,19 +14,6 @@ public partial class GodotSquare : ColorRect
     
     [Signal] public delegate void SquareClickedEventHandler(Vector2I position);
 
-    public override void _Ready()
-    {
-        // Set square with color and whatnot
-    }
-
-    // public override void _Draw()
-    // {
-    //     var pos = new Vector2(position.X * 64, 64 * 8 - ((position.Y+1) * 64));
-    //     Rect2 rect = new(pos, 64, 64);
-    //     float greyscale = (position.X + Position.Y * 8) / 64;
-    //     DrawRect(rect, new Color(greyscale, greyscale, greyscale, 1f));
-    // }
-
     public override void _GuiInput(InputEvent input)
     {    
         if (input is InputEventMouseButton mb)
@@ -37,10 +24,5 @@ public partial class GodotSquare : ColorRect
                 EmitSignalSquareClicked(Pos);
             }
         }
-    }
-
-    public void SetPiece(GodotPiece piece)
-    {
-        this.GdPiece = piece;
     }
 }

@@ -85,7 +85,11 @@ public partial class GodotBoard : GridContainer
                     GD.Print($"Moving piece {selectedPiece.Id} to {position}");
 
                     Piece capturedPiece = squares[corePos.X, corePos.Y].GdPiece?.Piece;
-                    Piece[] newPieces = board.DeepcopyPieces(capturedPiece == null ? [pieceToMove] : [pieceToMove, capturedPiece]);
+                    Piece[] newPieces;
+                    if (capturedPiece == null)
+                        newPieces = board.DeepcopyPieces(pieceToMove.Id);
+                    else
+                        newPieces = board.DeepcopyPieces(pieceToMove.Id, capturedPiece.Id);
                     newPieces[^1] = new Piece(pieceToMove.Id, pieceToMove.Color, corePos, pieceToMove.Movement);
 
                     Board newBoard = new Board(board.Turn + 1, newPieces);
@@ -101,6 +105,8 @@ public partial class GodotBoard : GridContainer
         }
         
         GodotSquare square = squares[position.X, position.Y];
+        if (square.GdPiece == null)
+            return;
         if (!square.GdPiece.Piece.Color)
         {
             // Player always plays white side so big no for this

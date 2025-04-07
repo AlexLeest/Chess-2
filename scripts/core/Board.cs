@@ -13,7 +13,7 @@ public class Board
 
     public Board(int turn, Piece[] pieces)
     {
-        this.Turn = turn;
+        Turn = turn;
         Pieces = pieces;
         Squares = new Piece[8, 8];
         foreach (Piece piece in pieces)
@@ -121,7 +121,11 @@ public class Board
             {
                 // Take list of pieces on this board, copy it
                 Piece capturedPiece = Squares[move.X, move.Y];
-                Piece[] newPieces = DeepcopyPieces(capturedPiece == null ? [piece] : [piece, capturedPiece]);
+                Piece[] newPieces;
+                if (capturedPiece == null)
+                    newPieces = DeepcopyPieces(piece.Id);
+                else
+                    newPieces = DeepcopyPieces(piece.Id, capturedPiece.Id);
                 // TODO: If piece has PawnMovement and is on last row, promote (how to handle promotion to 4 separate things?)
                 Piece newPiece;
                 if (movement is PawnMovement && move.Y == (piece.Color ? 7 : 0))
@@ -149,22 +153,21 @@ public class Board
         return result;
     }
 
-    public Piece[] DeepcopyPieces(params Piece[] toSkip)
+    public Piece[] DeepcopyPieces(params byte[] idToSkip)
     {
         // Result leaves 1 "empty" spot in the array (to be filled with the moved piece)
-        Piece[] result = new Piece[Pieces.Length - toSkip.Length + 1];
+        Piece[] result = new Piece[Pieces.Length - idToSkip.Length + 1];
         int i = 0;
         foreach (Piece p in Pieces)
         {
             // Remove this piece from list, add it back with new position
             // Remove captures piece if applicable
-            if (!toSkip.Contains(p))
-            {
-                // TODO: Find alternative to massive amounts of deep copying
-                Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement);
-                result[i] = deepCopy;
-                i++;
-            }
+            if (idToSkip.Contains(p.Id))
+                continue;
+            // TODO: Find alternative to massive amounts of deep copying
+            Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement);
+            result[i] = deepCopy;
+            i++;
         }
 
         return result;
