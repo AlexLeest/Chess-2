@@ -71,6 +71,12 @@ public partial class GodotBoard : GridContainer
 
     private void SquareClicked(Vector2I position)
     {
+        if (board.Turn % 2 != 0)
+        {
+            GD.Print("It's black's turn");
+            return;
+        }
+        
         Vector2Int corePos = position.ToCore();
         if (selectedPiece != null)
         {
@@ -79,38 +85,35 @@ public partial class GodotBoard : GridContainer
 
             foreach (IMovement movement in selectedPiece.Piece.Movement)
             {
-                if (movement.GetMovementOptions(pieceToMove.Position, board.Squares, true).Contains(corePos))
-                {
-                    // Build Piece[], make new Board, set and go.
-                    GD.Print($"Moving piece {selectedPiece.Id} to {position}");
+                var movementOptions = movement.GetMovementOptions(pieceToMove.Position, board.Squares, true);
+                if (!movementOptions.Contains(corePos))
+                    continue;
+                
+                // Build new Piece[], make new Board, set and go.
+                GD.Print($"Moving piece {selectedPiece.Id} to {position}");
 
-                    Piece capturedPiece = squares[corePos.X, corePos.Y].GdPiece?.Piece;
-                    Piece[] newPieces;
-                    if (capturedPiece == null)
-                        newPieces = board.DeepcopyPieces(pieceToMove.Id);
-                    else
-                        newPieces = board.DeepcopyPieces(pieceToMove.Id, capturedPiece.Id);
-                    newPieces[^1] = new Piece(pieceToMove.Id, pieceToMove.Color, corePos, pieceToMove.Movement);
+                Piece capturedPiece = squares[corePos.X, corePos.Y].GdPiece?.Piece;
+                Piece[] newPieces;
+                if (capturedPiece == null)
+                    newPieces = board.DeepcopyPieces(pieceToMove.Id);
+                else
+                    newPieces = board.DeepcopyPieces(pieceToMove.Id, capturedPiece.Id);
+                newPieces[^1] = new Piece(pieceToMove.Id, pieceToMove.Color, corePos, pieceToMove.Movement);
 
-                    Board newBoard = new Board(board.Turn + 1, newPieces);
-                    SetNewBoard(newBoard);
+                Board newBoard = new(board.Turn + 1, newPieces);
+                SetNewBoard(newBoard);
                         
-                    selectedPiece = null;
-                    return;
-                }
+                selectedPiece = null;
+                return;
             }
-            GD.Print("Unselecting");
+            // Clicked position couldn't be moved to by this piece.
             selectedPiece = null;
-            return;
         }
         
         GodotSquare square = squares[position.X, position.Y];
-        if (square.GdPiece == null)
-            return;
-        if (!square.GdPiece.Piece.Color)
+        if (square.GdPiece == null || !square.GdPiece.Piece.Color)
         {
-            // Player always plays white side so big no for this
-            GD.Print("Can't control black pieces you freak");
+            selectedPiece = null;
             return;
         }
         selectedPiece = square.GdPiece;
@@ -140,6 +143,7 @@ public partial class GodotBoard : GridContainer
             if (pieceToSquare.TryGetValue(piece.Id, out GodotSquare gdSquare))
             {
                 GodotPiece gdPiece = gdSquare.GdPiece;
+                gdPiece.Piece = piece;
                 // Set gdPiece to new location
                 newPieces[newPiecesIndex] = gdPiece;
                 GodotSquare newSquare = squares[piece.Position.X, piece.Position.Y];
