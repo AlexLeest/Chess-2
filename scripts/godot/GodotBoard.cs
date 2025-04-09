@@ -1,8 +1,10 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
+using CHESS2THESEQUELTOCHESS.scripts.core.AI;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 
@@ -14,7 +16,8 @@ public partial class GodotBoard : GridContainer
     [Export] private int squareSize = 64;
     [Export] private Texture2D[] pieceTextures;
     [Export] private Godot.Collections.Dictionary<byte, Texture2D> pieceTexturesDictionary;
-    
+
+    private IEngine engine;
     private GodotPiece[] pieces;
     private GodotSquare[,] squares;
     private Dictionary<byte, GodotSquare> pieceToSquare = new();
@@ -48,6 +51,8 @@ public partial class GodotBoard : GridContainer
             GD.Print($"Setting piece texture for {piece.Id}");
             gdPiece.Texture = pieceTexturesDictionary[piece.Id];
         }
+
+        engine = new FullRandom();
     }
 
     public override void _Input(InputEvent input)
@@ -82,13 +87,9 @@ public partial class GodotBoard : GridContainer
         {
             // TODO: Check if piece can move here and if so, do
             Piece pieceToMove = selectedPiece.Piece;
-
-            foreach (IMovement movement in selectedPiece.Piece.Movement)
+            
+            if (selectedPiece.Piece.GetMovementOptions(board.Squares).Contains(corePos))
             {
-                var movementOptions = movement.GetMovementOptions(pieceToMove.Position, board.Squares, true);
-                if (!movementOptions.Contains(corePos))
-                    continue;
-                
                 // Build new Piece[], make new Board, set and go.
                 GD.Print($"Moving piece {selectedPiece.Id} to {position}");
 
@@ -119,17 +120,14 @@ public partial class GodotBoard : GridContainer
         selectedPiece = square.GdPiece;
         GD.Print($"Selected piece {selectedPiece.Id}");
         // TODO: Show possible moves for piece
-        foreach (IMovement movement in selectedPiece.Piece.Movement)
+        foreach (Vector2Int move in selectedPiece.Piece.GetMovementOptions(board.Squares))
         {
-            foreach (Vector2Int move in movement.GetMovementOptions(corePos, board.Squares, true))
-            {
-                // TODO: Accentuate these
-                GD.Print($"Move to {move} allowed");
-            }
+            // TODO: Accentuate these
+            GD.Print($"Move to {move} allowed");
         }
     }
 
-    public void SetNewBoard(Board newBoard)
+    private void SetNewBoard(Board newBoard)
     {
         board = newBoard;
         GodotPiece[] newPieces = new GodotPiece[newBoard.Pieces.Length];
@@ -171,5 +169,13 @@ public partial class GodotBoard : GridContainer
         }
         pieces = newPieces;
         pieceToSquare = newPieceToSquare;
+
+        if (board.Turn % 2 != 0)
+        {
+            // White just played, black should respond by engine
+            // TODO: Skip rendering out the whole damn board if you're going another step down anyway
+            var engineResponse = engine.GenerateNextMove(board);
+            SetNewBoard(engineResponse);
+        }
     }
 }

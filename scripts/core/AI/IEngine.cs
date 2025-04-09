@@ -5,6 +5,6 @@
 /// </summary>
 public interface IEngine
 {
-    public float DetermineScore(Board board);
     public Board GenerateNextMove(Board board);
+    public float DetermineScore(Board board);
 }

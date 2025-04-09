@@ -1,8 +1,9 @@
 ﻿using Godot;
+using System;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
-public struct Vector2Int
+public struct Vector2Int : IEquatable<Vector2Int>
 {
     public int X, Y;
 
@@ -45,6 +46,21 @@ public struct Vector2Int
     public static bool operator !=(Vector2Int a, Vector2I b)
     {
         return !(a == b);
+    }
+
+    public bool Equals(Vector2Int other)
+    {
+        return X == other.X && Y == other.Y;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is Vector2Int other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(X, Y);
     }
 
     public override string ToString()

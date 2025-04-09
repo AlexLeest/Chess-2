@@ -52,9 +52,9 @@ public class SlidingMovement : IMovement
     }
 
     public static SlidingMovement Knight => new(Vector2Int.KnightHops, 1);
-    public static SlidingMovement Bishop => new(Vector2Int.Diagonals, 8);
-    public static SlidingMovement Rook => new(Vector2Int.Cardinals, 8);
-    public static SlidingMovement Queen => new(Vector2Int.AllDirections, 8);
+    public static SlidingMovement Bishop => new(Vector2Int.Diagonals, 7);
+    public static SlidingMovement Rook => new(Vector2Int.Cardinals, 7);
+    public static SlidingMovement Queen => new(Vector2Int.AllDirections, 7);
     public static SlidingMovement King => new(Vector2Int.AllDirections, 1);
 
 }

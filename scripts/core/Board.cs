@@ -6,12 +6,13 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
 public class Board
 {
-    public Piece[] Pieces;
-    public Piece[,] Squares;
+    public readonly Piece[] Pieces;
+    public readonly Piece[,] Squares;
+    public readonly int Turn;
 
-    public int Turn;
+    private bool whiteCastleQueenSide, whiteCastleKingSide, blackCastleQueenSide, blackCastleKingSide;
 
-    public Board(int turn, Piece[] pieces)
+    public Board(int turn, Piece[] pieces, bool whiteCastleQueenSide = true, bool whiteCastleKingSide = true, bool blackCastleQueenSide = true, bool blackCastleKingSide = true)
     {
         Turn = turn;
         Pieces = pieces;
@@ -20,6 +21,11 @@ public class Board
         {
             Squares[piece.Position.X, piece.Position.Y] = piece;
         }
+        
+        this.whiteCastleKingSide = whiteCastleKingSide;
+        this.whiteCastleQueenSide = whiteCastleQueenSide;
+        this.blackCastleKingSide = blackCastleKingSide;
+        this.blackCastleQueenSide = blackCastleQueenSide;
     }
 
     public static Board DefaultBoard()
@@ -36,14 +42,14 @@ public class Board
             Piece.Pawn(6, true, new Vector2Int(6, 1)),
             Piece.Pawn(7, true, new Vector2Int(7, 1)),
 
-            Piece.Rook(8, true, new Vector2Int(0, 0)),
+            Piece.Rook(8, true, new Vector2Int(0, 0), SpecialPieceTypes.QUEEN_SIDE_CASTLE),
             Piece.Knight(9, true, new Vector2Int(1, 0)),
             Piece.Bishop(10, true, new Vector2Int(2, 0)),
             Piece.Queen(11, true, new Vector2Int(3, 0)),
             Piece.King(12, true, new Vector2Int(4, 0)),
             Piece.Bishop(13, true, new Vector2Int(5, 0)),
             Piece.Knight(14, true, new Vector2Int(6, 0)),
-            Piece.Rook(15, true, new Vector2Int(7, 0)),
+            Piece.Rook(15, true, new Vector2Int(7, 0), SpecialPieceTypes.KING_SIDE_CASTLE),
 
             // Black
             Piece.Pawn(16, false, new Vector2Int(0, 6)),
@@ -55,14 +61,14 @@ public class Board
             Piece.Pawn(22, false, new Vector2Int(6, 6)),
             Piece.Pawn(23, false, new Vector2Int(7, 6)),
 
-            Piece.Rook(24, false, new Vector2Int(0, 7)),
+            Piece.Rook(24, false, new Vector2Int(0, 7), SpecialPieceTypes.KING_SIDE_CASTLE),
             Piece.Knight(25, false, new Vector2Int(1, 7)),
             Piece.Bishop(26, false, new Vector2Int(2, 7)),
             Piece.Queen(27, false, new Vector2Int(3, 7)),
             Piece.King(28, false, new Vector2Int(4, 7)),
             Piece.Bishop(29, false, new Vector2Int(5, 7)),
             Piece.Knight(30, false, new Vector2Int(6, 7)),
-            Piece.Rook(31, false, new Vector2Int(7, 7)),
+            Piece.Rook(31, false, new Vector2Int(7, 7), SpecialPieceTypes.QUEEN_SIDE_CASTLE),
         ];
         
         return new Board(0, pieces);
