@@ -46,7 +46,7 @@ public class Board
             Piece.Knight(9, true, new Vector2Int(1, 0)),
             Piece.Bishop(10, true, new Vector2Int(2, 0)),
             Piece.Queen(11, true, new Vector2Int(3, 0)),
-            Piece.King(12, true, new Vector2Int(4, 0)),
+            Piece.King(12, true, new Vector2Int(4, 0), SpecialPieceTypes.KING),
             Piece.Bishop(13, true, new Vector2Int(5, 0)),
             Piece.Knight(14, true, new Vector2Int(6, 0)),
             Piece.Rook(15, true, new Vector2Int(7, 0), SpecialPieceTypes.KING_SIDE_CASTLE),
@@ -65,7 +65,7 @@ public class Board
             Piece.Knight(25, false, new Vector2Int(1, 7)),
             Piece.Bishop(26, false, new Vector2Int(2, 7)),
             Piece.Queen(27, false, new Vector2Int(3, 7)),
-            Piece.King(28, false, new Vector2Int(4, 7)),
+            Piece.King(28, false, new Vector2Int(4, 7), SpecialPieceTypes.KING),
             Piece.Bishop(29, false, new Vector2Int(5, 7)),
             Piece.Knight(30, false, new Vector2Int(6, 7)),
             Piece.Rook(31, false, new Vector2Int(7, 7), SpecialPieceTypes.QUEEN_SIDE_CASTLE),
@@ -77,31 +77,24 @@ public class Board
     public bool IsInCheck(bool color)
     {
         Vector2Int kingPosition = new(0, 0);
-        int kingId = color ? 12 : 28;
         foreach (Piece piece in Pieces)
         {
-            if (piece.Id != kingId)
+            if (piece.SpecialPieceType != SpecialPieceTypes.KING || piece.Color != color)
                 continue;
             kingPosition = piece.Position;
             break;
         }
         
         foreach (Piece piece in Pieces)
-            foreach (IMovement movement in piece.Movement)
-                foreach (Vector2Int move in movement.GetMovementOptions(piece.Position, Squares, piece.Color))
-                    if (move == kingPosition)
-                        return true;
+            foreach (Vector2Int move in piece.GetMovementOptions(Squares))
+                if (move == kingPosition)
+                    return true;
 
         return false;
     }
 
     public List<Board> GenerateMoves()
     {
-        // TODO:
-        //  En passant
-        //  Castling
-        //  Pawn promotion
-        
         bool colorToMove = Turn % 2 == 0;
         List<Board> result = [];
         foreach (Piece piece in Pieces)
@@ -118,43 +111,47 @@ public class Board
 
     private List<Board> GenerateMoves(Piece piece)
     {
+        // TODO:
+        //  En passant
+        //  Castling
+        //  Pawn promotion
         bool colorToMove = Turn % 2 == 0;
         int nextTurn = Turn + 1;
         List<Board> result = [];
-        
-        foreach (IMovement movement in piece.Movement)
-            foreach (Vector2Int move in movement.GetMovementOptions(piece.Position, Squares, piece.Color))
-            {
-                // Take list of pieces on this board, copy it
-                Piece capturedPiece = Squares[move.X, move.Y];
-                Piece[] newPieces;
-                if (capturedPiece == null)
-                    newPieces = DeepcopyPieces(piece.Id);
-                else
-                    newPieces = DeepcopyPieces(piece.Id, capturedPiece.Id);
-                // TODO: If piece has PawnMovement and is on last row, promote (how to handle promotion to 4 separate things?)
-                Piece newPiece;
-                if (movement is PawnMovement && move.Y == (piece.Color ? 7 : 0))
-                {
-                    // Promotion! Just to queen for now
-                    newPiece = new Piece(piece.Id, piece.Color, piece.Position, [SlidingMovement.Queen]);
-                }
-                else
-                {
-                    newPiece = new Piece(piece.Id, piece.Color, move, piece.Movement);
-                }
-                newPieces[^1] = newPiece;
-                // if (capturedPiece is not null)
-                // {
-                //     // TODO: Item triggers onCapture and onDeath
-                // }
-                
-                // Make new board add to results
 
-                Board possibleMove = new(nextTurn, newPieces);
-                if (!possibleMove.IsInCheck(colorToMove))
-                    result.Add(possibleMove);
+        foreach (Vector2Int move in piece.GetMovementOptions(Squares))
+        {
+            // Take list of pieces on this board, copy it
+            Piece capturedPiece = Squares[move.X, move.Y];
+            Piece[] newPieces;
+            if (capturedPiece == null)
+                newPieces = DeepcopyPieces(piece.Id);
+            else
+                newPieces = DeepcopyPieces(piece.Id, capturedPiece.Id);
+            // TODO: If piece has PawnMovement and is on last row, promote (how to handle promotion to 4 separate things?)
+            Piece newPiece;
+            if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && move.Y == (piece.Color ? 7 : 0))
+            {
+                // Promotion! Just to queen for now
+                // TODO: Promotion to bishop, rook, knight
+                newPiece = new Piece(piece.Id, piece.Color, piece.Position, [SlidingMovement.Queen]);
             }
+            else
+            {
+                newPiece = new Piece(piece.Id, piece.Color, move, piece.Movement, piece.SpecialPieceType);
+            }
+            newPieces[^1] = newPiece;
+            // if (capturedPiece is not null)
+            // {
+            //     // TODO: Item triggers onCapture and onDeath
+            // }
+
+            // Make new board add to results
+
+            Board possibleMove = new(nextTurn, newPieces, whiteCastleQueenSide, whiteCastleKingSide, blackCastleQueenSide, blackCastleKingSide);
+            if (!possibleMove.IsInCheck(colorToMove))
+                result.Add(possibleMove);
+        }
 
         return result;
     }
@@ -171,7 +168,7 @@ public class Board
             if (idToSkip.Contains(p.Id))
                 continue;
             // TODO: Find alternative to massive amounts of deep copying
-            Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement);
+            Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement, p.SpecialPieceType);
             result[i] = deepCopy;
             i++;
         }

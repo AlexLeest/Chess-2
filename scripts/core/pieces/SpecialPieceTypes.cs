@@ -2,8 +2,10 @@
 
 public enum SpecialPieceTypes : byte
 {
-    NONE = 0,
-    PAWN = 1,
-    KING_SIDE_CASTLE = 2,
-    QUEEN_SIDE_CASTLE = 3,
+    NONE,
+    PAWN,
+    KING,
+    KING_SIDE_CASTLE,
+    QUEEN_SIDE_CASTLE,
+    
 }
