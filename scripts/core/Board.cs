@@ -11,9 +11,17 @@ public class Board
     public readonly Piece[,] Squares;
     public readonly int Turn;
 
-    private bool whiteCastleQueenSide, whiteCastleKingSide, blackCastleQueenSide, blackCastleKingSide;
+    private readonly bool[] castleQueenSide;
+    private readonly bool[] castleKingSide;
+    private readonly bool enPassantPossible;
 
-    public Board(int turn, Piece[] pieces, bool whiteCastleQueenSide = true, bool whiteCastleKingSide = true, bool blackCastleQueenSide = true, bool blackCastleKingSide = true)
+    public Board(
+        int turn,
+        Piece[] pieces,
+        bool[] castleQueenSide,
+        bool[] castleKingSide,
+        bool enPassantPossible = false
+    )
     {
         Turn = turn;
         Pieces = pieces;
@@ -22,11 +30,10 @@ public class Board
         {
             Squares[piece.Position.X, piece.Position.Y] = piece;
         }
-        
-        this.whiteCastleKingSide = whiteCastleKingSide;
-        this.whiteCastleQueenSide = whiteCastleQueenSide;
-        this.blackCastleKingSide = blackCastleKingSide;
-        this.blackCastleQueenSide = blackCastleQueenSide;
+
+        this.castleQueenSide = castleQueenSide;
+        this.castleKingSide = castleKingSide;
+        this.enPassantPossible = enPassantPossible;
     }
 
     public static Board DefaultBoard()
@@ -71,8 +78,8 @@ public class Board
             Piece.Knight(30, false, new Vector2Int(6, 7)),
             Piece.Rook(31, false, new Vector2Int(7, 7), SpecialPieceTypes.QUEEN_SIDE_CASTLE),
         ];
-        
-        return new Board(0, pieces);
+
+        return new Board(0, pieces, [true, true], [true, true]);
     }
 
     public bool IsInCheck(bool color)
@@ -85,11 +92,11 @@ public class Board
             kingPosition = piece.Position;
             break;
         }
-        
+
         foreach (Piece piece in Pieces)
-            foreach (Vector2Int move in piece.GetMovementOptions(Squares))
-                if (move == kingPosition)
-                    return true;
+        foreach (Vector2Int move in piece.GetMovementOptions(Squares))
+            if (move == kingPosition)
+                return true;
 
         return false;
     }
@@ -113,8 +120,8 @@ public class Board
     public List<Board> GenerateMoves(Piece piece)
     {
         // TODO:
-        //  En passant
         //  Castling
+        // En passant
         // Pawn promotion
         bool colorToMove = Turn % 2 == 0;
         int nextTurn = Turn + 1;
@@ -122,10 +129,13 @@ public class Board
 
         foreach (Vector2Int move in piece.GetMovementOptions(Squares))
         {
+            bool enPassantMove = false;
             // Take list of pieces on this board, copy it
             Piece capturedPiece = Squares[move.X, move.Y];
-            if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && capturedPiece == null)
+            // Check en passant captures
+            if (enPassantPossible && piece.SpecialPieceType == SpecialPieceTypes.PAWN && capturedPiece == null)
             {
+                // TODO: Save state "en-passantable" to the board so this doesn't have to be checked for literally every pawn move ever
                 Piece enPassantCheck = Squares[move.X, piece.Position.Y];
                 if (enPassantCheck != null && enPassantCheck.Color != colorToMove && enPassantCheck.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
                     capturedPiece = enPassantCheck;
@@ -146,6 +156,7 @@ public class Board
             else if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && Math.Abs(move.Y - piece.Position.Y) == 2)
             {
                 newPiece = new Piece(piece.Id, piece.Color, move, piece.Movement, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
+                enPassantMove = true;
             }
             else
             {
@@ -158,7 +169,7 @@ public class Board
             // }
 
             // Make new board add to results
-            Board possibleMove = new(nextTurn, newPieces, whiteCastleQueenSide, whiteCastleKingSide, blackCastleQueenSide, blackCastleKingSide);
+            Board possibleMove = new(nextTurn, newPieces, castleQueenSide, castleKingSide, enPassantMove);
             if (!possibleMove.IsInCheck(colorToMove))
                 result.Add(possibleMove);
         }
