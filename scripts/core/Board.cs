@@ -115,7 +115,7 @@ public class Board
         // TODO:
         //  En passant
         //  Castling
-        //  Pawn promotion
+        // Pawn promotion
         bool colorToMove = Turn % 2 == 0;
         int nextTurn = Turn + 1;
         List<Board> result = [];
@@ -124,6 +124,12 @@ public class Board
         {
             // Take list of pieces on this board, copy it
             Piece capturedPiece = Squares[move.X, move.Y];
+            if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && capturedPiece == null)
+            {
+                Piece enPassantCheck = Squares[move.X, piece.Position.Y];
+                if (enPassantCheck != null && enPassantCheck.Color != colorToMove && enPassantCheck.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
+                    capturedPiece = enPassantCheck;
+            }
             Piece[] newPieces;
             if (capturedPiece == null)
                 newPieces = DeepcopyPieces(piece.Id);

@@ -19,10 +19,10 @@ public class SlidingMovement : IMovement
         this.multiplier = multiplier;
     }
 
-    public List<Vector2Int> GetMovementOptions(Vector2Int from, Piece[,] pieces, bool color)
+    public List<Vector2Int> GetMovementOptions(Vector2Int from, Piece[,] squares, bool color)
     {
-        int boardWidth = pieces.GetLength(0);
-        int boardHeight = pieces.GetLength(1);
+        int boardWidth = squares.GetLength(0);
+        int boardHeight = squares.GetLength(1);
         
         // Hardcoding the board size in for now at 8x8
         List<Vector2Int> options = [];
@@ -36,7 +36,7 @@ public class SlidingMovement : IMovement
                 if (!currentPos.Inside(boardWidth, boardHeight))
                     break;
 
-                Piece onSquare = pieces[currentPos.X, currentPos.Y];
+                Piece onSquare = squares[currentPos.X, currentPos.Y];
                 if (onSquare != null)
                 {
                     if (onSquare.Color != color)

@@ -55,25 +55,6 @@ public partial class GodotBoard : GridContainer
         engine = new FullRandom();
     }
 
-    public override void _Input(InputEvent input)
-    {
-        if (input is InputEventKey key && input.IsPressed())
-        {
-            if (key.Keycode == Key.Q)
-            {
-                List<Board> moves = board.GenerateMoves();
-                if (moves.Count == 0)
-                {
-                    GD.Print("No moves found, either checkmate or draw");
-                    return;
-                }
-                GD.Print($"Move count: {moves.Count.ToString()}");
-                Board randomBoard = moves[GD.RandRange(0, moves.Count - 1)];
-                SetNewBoard(randomBoard);
-            }
-        }
-    }
-
     private void SquareClicked(Vector2I position)
     {
         if (board.Turn % 2 != 0)
