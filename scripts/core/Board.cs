@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -109,7 +110,7 @@ public class Board
         return result;
     }
 
-    private List<Board> GenerateMoves(Piece piece)
+    public List<Board> GenerateMoves(Piece piece)
     {
         // TODO:
         //  En passant
@@ -134,7 +135,11 @@ public class Board
             {
                 // Promotion! Just to queen for now
                 // TODO: Promotion to bishop, rook, knight
-                newPiece = new Piece(piece.Id, piece.Color, piece.Position, [SlidingMovement.Queen]);
+                newPiece = new Piece(piece.Id, piece.Color, move, [SlidingMovement.Queen]);
+            }
+            else if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && Math.Abs(move.Y - piece.Position.Y) == 2)
+            {
+                newPiece = new Piece(piece.Id, piece.Color, move, piece.Movement, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
             }
             else
             {
@@ -147,7 +152,6 @@ public class Board
             // }
 
             // Make new board add to results
-
             Board possibleMove = new(nextTurn, newPieces, whiteCastleQueenSide, whiteCastleKingSide, blackCastleQueenSide, blackCastleKingSide);
             if (!possibleMove.IsInCheck(colorToMove))
                 result.Add(possibleMove);
@@ -168,7 +172,7 @@ public class Board
             if (idToSkip.Contains(p.Id))
                 continue;
             // TODO: Find alternative to massive amounts of deep copying
-            Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement, p.SpecialPieceType);
+            Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement, p.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN ? SpecialPieceTypes.PAWN : p.SpecialPieceType);
             result[i] = deepCopy;
             i++;
         }

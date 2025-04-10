@@ -85,25 +85,14 @@ public partial class GodotBoard : GridContainer
         Vector2Int corePos = position.ToCore();
         if (selectedPiece != null)
         {
-            // TODO: Check if piece can move here and if so, do
             Piece pieceToMove = selectedPiece.Piece;
-            
-            if (selectedPiece.Piece.GetMovementOptions(board.Squares).Contains(corePos))
+
+            foreach (Board possibleBoard in board.GenerateMoves(pieceToMove))
             {
-                // Build new Piece[], make new Board, set and go.
-                GD.Print($"Moving piece {selectedPiece.Id} to {position}");
-
-                Piece capturedPiece = squares[corePos.X, corePos.Y].GdPiece?.Piece;
-                Piece[] newPieces;
-                if (capturedPiece == null)
-                    newPieces = board.DeepcopyPieces(pieceToMove.Id);
-                else
-                    newPieces = board.DeepcopyPieces(pieceToMove.Id, capturedPiece.Id);
-                newPieces[^1] = new Piece(pieceToMove.Id, pieceToMove.Color, corePos, pieceToMove.Movement);
-
-                Board newBoard = new(board.Turn + 1, newPieces);
-                SetNewBoard(newBoard);
-                        
+                if (possibleBoard.Squares[corePos.X, corePos.Y]?.Id != pieceToMove.Id)
+                    continue;
+                
+                SetNewBoard(possibleBoard);
                 selectedPiece = null;
                 return;
             }

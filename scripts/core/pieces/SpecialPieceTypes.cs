@@ -4,8 +4,8 @@ public enum SpecialPieceTypes : byte
 {
     NONE,
     PAWN,
+    EN_PASSANTABLE_PAWN,
     KING,
     KING_SIDE_CASTLE,
     QUEEN_SIDE_CASTLE,
-    
 }
