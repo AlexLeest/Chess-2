@@ -142,10 +142,6 @@ public class Board
 
     public List<Board> GenerateMoves(Piece piece)
     {
-        // TODO:
-        //  Castling
-        // En passant
-        // Pawn promotion
         bool colorToMove = Turn % 2 == 0;
         int colorIndex = Turn % 2;
         int nextTurn = Turn + 1;
@@ -160,7 +156,6 @@ public class Board
             bool enPassantMove = false;
             if (enPassantPossible && piece.SpecialPieceType == SpecialPieceTypes.PAWN && capturedPiece == null)
             {
-                // TODO: Save state "en-passantable" to the board so this doesn't have to be checked for literally every pawn move ever
                 Piece enPassantCheck = Squares[move.X, piece.Position.Y];
                 if (enPassantCheck != null && enPassantCheck.Color != colorToMove && enPassantCheck.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
                     capturedPiece = enPassantCheck;
