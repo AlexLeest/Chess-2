@@ -93,10 +93,33 @@ public class Board
             break;
         }
 
+        return IsInCheck(color, kingPosition);
+    }
+
+    private bool IsInCheck(bool color, Vector2Int position)
+    {
         foreach (Piece piece in Pieces)
-        foreach (Vector2Int move in piece.GetMovementOptions(Squares))
-            if (move == kingPosition)
-                return true;
+        {
+            if (piece.Color == color)
+                continue;
+            foreach (Vector2Int move in piece.GetMovementOptions(Squares))
+                if (move == position)
+                    return true;
+        }
+
+        return false;
+    }
+
+    private bool IsInCheck(bool color, Vector2Int[] positions)
+    {
+        foreach (Piece piece in Pieces)
+        {
+            if (piece.Color == color)
+                continue;
+            foreach (Vector2Int move in piece.GetMovementOptions(Squares))
+                if (positions.Contains(move))
+                    return true;
+        }
 
         return false;
     }
@@ -124,15 +147,17 @@ public class Board
         // En passant
         // Pawn promotion
         bool colorToMove = Turn % 2 == 0;
+        int colorIndex = Turn % 2;
         int nextTurn = Turn + 1;
         List<Board> result = [];
 
+        // For each possible move
         foreach (Vector2Int move in piece.GetMovementOptions(Squares))
         {
-            bool enPassantMove = false;
-            // Take list of pieces on this board, copy it
             Piece capturedPiece = Squares[move.X, move.Y];
+
             // Check en passant captures
+            bool enPassantMove = false;
             if (enPassantPossible && piece.SpecialPieceType == SpecialPieceTypes.PAWN && capturedPiece == null)
             {
                 // TODO: Save state "en-passantable" to the board so this doesn't have to be checked for literally every pawn move ever
@@ -140,12 +165,15 @@ public class Board
                 if (enPassantCheck != null && enPassantCheck.Color != colorToMove && enPassantCheck.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
                     capturedPiece = enPassantCheck;
             }
+
+            // Make full copy of all unmoved pieces
             Piece[] newPieces;
             if (capturedPiece == null)
                 newPieces = DeepcopyPieces(piece.Id);
             else
                 newPieces = DeepcopyPieces(piece.Id, capturedPiece.Id);
-            // TODO: If piece has PawnMovement and is on last row, promote (how to handle promotion to 4 separate things?)
+
+            // Add moved piece (in new position) back to the list
             Piece newPiece;
             if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && move.Y == (piece.Color ? 7 : 0))
             {
@@ -168,10 +196,108 @@ public class Board
             //     // TODO: Item triggers onCapture and onDeath
             // }
 
+            // If any of the castling pieces move, disallow castling in future boards
+            bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
+            bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
+            switch (piece.SpecialPieceType)
+            {
+                case SpecialPieceTypes.KING:
+                    newCastleQueenSide[colorIndex] = false;
+                    newCastleKingSide[colorIndex] = false;
+                    break;
+                case SpecialPieceTypes.QUEEN_SIDE_CASTLE:
+                    newCastleQueenSide[colorIndex] = false;
+                    break;
+                case SpecialPieceTypes.KING_SIDE_CASTLE:
+                    newCastleKingSide[colorIndex] = false;
+                    break;
+            }
+            if (capturedPiece != null)
+            {
+                int otherColorIndex = nextTurn % 2;
+                switch (capturedPiece.SpecialPieceType)
+                {
+                    case SpecialPieceTypes.KING:
+                        newCastleQueenSide[otherColorIndex] = false;
+                        newCastleKingSide[otherColorIndex] = false;
+                        break;
+                    case SpecialPieceTypes.QUEEN_SIDE_CASTLE:
+                        newCastleQueenSide[otherColorIndex] = false;
+                        break;
+                    case SpecialPieceTypes.KING_SIDE_CASTLE:
+                        newCastleKingSide[otherColorIndex] = false;
+                        break;
+                }
+            }
+
             // Make new board add to results
-            Board possibleMove = new(nextTurn, newPieces, castleQueenSide, castleKingSide, enPassantMove);
+            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, enPassantMove);
             if (!possibleMove.IsInCheck(colorToMove))
                 result.Add(possibleMove);
+        }
+
+        // Castling, separate from any preset movements
+        if (piece.SpecialPieceType == SpecialPieceTypes.KING && !IsInCheck(colorToMove))
+        {
+            int colorRank = colorToMove ? 0 : 7;
+            if (castleKingSide[colorIndex])
+            {
+                // IF there's no pieces on files 5, 6
+                // AND no possible capture on files 5, 6
+                // Move king to file 6
+                // Move piece on file 7 to file 5
+                if (
+                    Squares[5, colorRank] == null && Squares[6, colorRank] == null &&
+                    !IsInCheck(colorToMove, [new Vector2Int(5, colorRank), new Vector2Int(6, colorRank)])
+                )
+                {
+                    Piece toCastle = Squares[7, colorRank];
+                    Piece[] newPieces = DeepcopyPieces(piece.Id, toCastle.Id);
+                    // Move king
+                    newPieces[^2] = new Piece(piece.Id, piece.Color, new Vector2Int(6, colorRank), piece.Movement, piece.SpecialPieceType);
+                    // Move piece
+                    newPieces[^1] = new Piece(toCastle.Id, toCastle.Color, new Vector2Int(5, colorRank), piece.Movement, piece.SpecialPieceType);
+                    
+                    // Remove castling rights
+                    bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
+                    bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
+                    newCastleQueenSide[colorIndex] = false;
+                    newCastleKingSide[colorRank] = false;
+                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide);
+                    
+                    // Add to results
+                    result.Add(castledBoard);
+                }
+            }
+            if (castleQueenSide[colorIndex])
+            {
+                // IF there's no pieces on files 1, 2, 3
+                // AND no possible capture on files 2, 3
+                // Move king to file 2
+                // Move piece on file 0 to file 3
+                if (
+                    Squares[1, colorRank] == null && Squares[2, colorRank] == null && Squares[3, colorRank] == null &&
+                    !IsInCheck(colorToMove, [new Vector2Int(2, colorRank), new Vector2Int(3, colorRank)])
+                )
+                {
+                    Piece toCastle = Squares[0, colorRank];
+                    Piece[] newPieces = DeepcopyPieces(piece.Id, toCastle.Id);
+                    // Move king
+                    newPieces[^2] = new Piece(piece.Id, piece.Color, new Vector2Int(2, colorRank), piece.Movement, piece.SpecialPieceType);
+                    // Move piece
+                    newPieces[^1] = new Piece(toCastle.Id, toCastle.Color, new Vector2Int(3, colorRank), piece.Movement, piece.SpecialPieceType);
+                    
+                    // Remove castling rights
+                    bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
+                    bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
+                    newCastleQueenSide[colorIndex] = false;
+                    newCastleKingSide[colorRank] = false;
+                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide);
+                    
+                    // Add to results
+                    result.Add(castledBoard);
+                }
+            }
         }
 
         return result;
