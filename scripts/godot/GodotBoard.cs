@@ -11,7 +11,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 [GlobalClass]
 public partial class GodotBoard : GridContainer
 {
-    private Board board;
+    public Board Board;
     [Export] private Color lightSquare, darkSquare;
     [Export] private int squareSize = 64;
     [Export] private Texture2D[] pieceTextures;
@@ -26,7 +26,7 @@ public partial class GodotBoard : GridContainer
 
     public override void _Ready()
     {
-        board = Board.DefaultBoard();
+        Board = Board.DefaultBoard();
         squares = new GodotSquare[8, 8];
         foreach (Node node in GetChildren())
         {
@@ -37,10 +37,10 @@ public partial class GodotBoard : GridContainer
             square.SquareClicked += SquareClicked;
         }
         
-        pieces = new GodotPiece[board.Pieces.Length];
-        for (int i = 0; i < board.Pieces.Length; i++)
+        pieces = new GodotPiece[Board.Pieces.Length];
+        for (int i = 0; i < Board.Pieces.Length; i++)
         {
-            Piece piece = board.Pieces[i];
+            Piece piece = Board.Pieces[i];
             GodotPiece gdPiece = new(piece);
             pieces[i] = gdPiece;
             GodotSquare square = squares[piece.Position.X, piece.Position.Y];
@@ -62,14 +62,14 @@ public partial class GodotBoard : GridContainer
         //     GD.Print("It's black's turn");
         //     return;
         // }
-        bool colorToMove = board.Turn % 2 == 0;
+        bool colorToMove = Board.Turn % 2 == 0;
         
         Vector2Int corePos = position.ToCore();
         if (selectedPiece != null)
         {
             Piece pieceToMove = selectedPiece.Piece;
 
-            foreach (Board possibleBoard in board.GenerateMoves(pieceToMove))
+            foreach (Board possibleBoard in Board.GenerateMoves(pieceToMove))
             {
                 if (possibleBoard.Squares[corePos.X, corePos.Y]?.Id != pieceToMove.Id)
                     continue;
@@ -91,7 +91,7 @@ public partial class GodotBoard : GridContainer
         selectedPiece = square.GdPiece;
         GD.Print($"Selected piece {selectedPiece.Id}");
         // TODO: Show possible moves for piece
-        foreach (Vector2Int move in selectedPiece.Piece.GetMovementOptions(board.Squares))
+        foreach (Vector2Int move in selectedPiece.Piece.GetMovementOptions(Board.Squares))
         {
             // TODO: Accentuate these
             GD.Print($"Move to {move} allowed");
@@ -100,14 +100,14 @@ public partial class GodotBoard : GridContainer
 
     private void SetNewBoard(Board newBoard)
     {
-        board = newBoard;
+        Board = newBoard;
         GodotPiece[] newPieces = new GodotPiece[newBoard.Pieces.Length];
         int newPiecesIndex = 0;
         Dictionary<byte, GodotSquare> newPieceToSquare = new();
         HashSet<GodotPiece> livePieces = new();
         
         // Where possible, match GodotPieces (based on id)
-        foreach (Piece piece in board.Pieces)
+        foreach (Piece piece in Board.Pieces)
         {
             if (pieceToSquare.TryGetValue(piece.Id, out GodotSquare gdSquare))
             {

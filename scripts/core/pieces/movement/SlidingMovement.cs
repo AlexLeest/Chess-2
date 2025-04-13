@@ -1,10 +1,11 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
 // TODO: Struct, maybe
-public class SlidingMovement : IMovement
+public struct SlidingMovement : IMovement
 {
     // In which direction the piece can jump (single step)
     private Vector2Int[] offsets;
@@ -35,7 +36,7 @@ public class SlidingMovement : IMovement
                 currentPos += offset;
                 if (!currentPos.Inside(boardWidth, boardHeight))
                     break;
-
+                
                 Piece onSquare = squares[currentPos.X, currentPos.Y];
                 if (onSquare != null)
                 {

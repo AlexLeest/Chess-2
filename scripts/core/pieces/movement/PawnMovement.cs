@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
 // TODO: Struct, maybe
-public class PawnMovement : IMovement
+public struct PawnMovement : IMovement
 {
 
     public List<Vector2Int> GetMovementOptions(Vector2Int from, Piece[,] squares, bool color)
