@@ -57,11 +57,12 @@ public partial class GodotBoard : GridContainer
 
     private void SquareClicked(Vector2I position)
     {
-        if (board.Turn % 2 != 0)
-        {
-            GD.Print("It's black's turn");
-            return;
-        }
+        // if (board.Turn % 2 != 0)
+        // {
+        //     GD.Print("It's black's turn");
+        //     return;
+        // }
+        bool colorToMove = board.Turn % 2 == 0;
         
         Vector2Int corePos = position.ToCore();
         if (selectedPiece != null)
@@ -82,7 +83,7 @@ public partial class GodotBoard : GridContainer
         }
         
         GodotSquare square = squares[position.X, position.Y];
-        if (square.GdPiece == null || !square.GdPiece.Piece.Color)
+        if (square.GdPiece == null || !square.GdPiece.Piece.Color == colorToMove)
         {
             selectedPiece = null;
             return;
@@ -140,12 +141,12 @@ public partial class GodotBoard : GridContainer
         pieces = newPieces;
         pieceToSquare = newPieceToSquare;
 
-        if (board.Turn % 2 != 0)
-        {
-            // White just played, black should respond by engine
-            // TODO: Skip rendering out the whole damn board if you're going another step down anyway
-            var engineResponse = engine.GenerateNextMove(board);
-            SetNewBoard(engineResponse);
-        }
+        // if (board.Turn % 2 != 0)
+        // {
+        //     // White just played, black should respond by engine
+        //     // TODO: Skip rendering out the whole damn board if you're going another step down anyway
+        //     var engineResponse = engine.GenerateNextMove(board);
+        //     SetNewBoard(engineResponse);
+        // }
     }
 }

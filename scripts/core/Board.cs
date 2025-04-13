@@ -212,10 +212,6 @@ public class Board
                 int otherColorIndex = nextTurn % 2;
                 switch (capturedPiece.SpecialPieceType)
                 {
-                    case SpecialPieceTypes.KING:
-                        newCastleQueenSide[otherColorIndex] = false;
-                        newCastleKingSide[otherColorIndex] = false;
-                        break;
                     case SpecialPieceTypes.QUEEN_SIDE_CASTLE:
                         newCastleQueenSide[otherColorIndex] = false;
                         break;
@@ -247,7 +243,7 @@ public class Board
                 )
                 {
                     Piece toCastle = Squares[7, colorRank];
-                    Piece[] newPieces = DeepcopyPieces(piece.Id, toCastle.Id);
+                    Piece[] newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
                     // Move king
                     newPieces[^2] = new Piece(piece.Id, piece.Color, new Vector2Int(6, colorRank), piece.Movement, piece.SpecialPieceType);
                     // Move piece
@@ -257,7 +253,7 @@ public class Board
                     bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
                     bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
                     newCastleQueenSide[colorIndex] = false;
-                    newCastleKingSide[colorRank] = false;
+                    newCastleKingSide[colorIndex] = false;
                     Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide);
                     
                     // Add to results
@@ -276,7 +272,7 @@ public class Board
                 )
                 {
                     Piece toCastle = Squares[0, colorRank];
-                    Piece[] newPieces = DeepcopyPieces(piece.Id, toCastle.Id);
+                    Piece[] newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
                     // Move king
                     newPieces[^2] = new Piece(piece.Id, piece.Color, new Vector2Int(2, colorRank), piece.Movement, piece.SpecialPieceType);
                     // Move piece
@@ -286,7 +282,7 @@ public class Board
                     bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
                     bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
                     newCastleQueenSide[colorIndex] = false;
-                    newCastleKingSide[colorRank] = false;
+                    newCastleKingSide[colorIndex] = false;
                     Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide);
                     
                     // Add to results
@@ -309,8 +305,26 @@ public class Board
             // Remove captures piece if applicable
             if (idToSkip.Contains(p.Id))
                 continue;
-            // TODO: Find alternative to massive amounts of deep copying
             Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement, p.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN ? SpecialPieceTypes.PAWN : p.SpecialPieceType);
+            result[i] = deepCopy;
+            i++;
+        }
+
+        return result;
+    }
+
+    public Piece[] CastleDeepcopy(byte kingId, byte castleId)
+    {
+        // Result leaves 1 "empty" spot in the array (to be filled with the moved piece)
+        Piece[] result = new Piece[Pieces.Length];
+        int i = 0;
+        foreach (Piece p in Pieces)
+        {
+            // Remove this piece from list, add it back with new position
+            // Remove captures piece if applicable
+            if (p.Id == kingId || castleId == p.Id)
+                continue;
+            Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement, p.SpecialPieceType);
             result[i] = deepCopy;
             i++;
         }
