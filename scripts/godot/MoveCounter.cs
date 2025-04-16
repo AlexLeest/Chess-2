@@ -25,18 +25,26 @@ public partial class MoveCounter : Node
         }
     }
 
-    private int CountBoardAmounts(Board currentBoard, int depth)
+    private int CountBoardAmounts(Board currentBoard, int depth, bool print = true)
     {
-        if (depth == 0)
+        if (depth <= 0)
         {
             return 1;
         }
 
-        int count = 0;
         ConcurrentBag<int> counts = new();
 
         Parallel.ForEach(currentBoard.GenerateMoves(),
-            nextBoard => { counts.Add(CountBoardAmounts(nextBoard, depth - 1)); }
+            nextBoard =>
+            {
+                int count = CountBoardAmounts(nextBoard, depth - 1, false);
+                if (print)
+                {
+                    // TODO: Get a last-move field on the board for debug reasons (also visualisation maybe)
+                    GD.Print($"{count} moves");
+                }
+                counts.Add(count);
+            }
         );
         return counts.Sum();
 
@@ -44,7 +52,5 @@ public partial class MoveCounter : Node
         // {
         //     count += CountBoardAmounts(nextBoard, depth - 1);
         // }
-
-        return count;
     }
 }

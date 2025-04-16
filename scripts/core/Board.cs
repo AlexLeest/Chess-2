@@ -102,9 +102,11 @@ public class Board
         {
             if (piece.Color == color)
                 continue;
-            foreach (Vector2Int move in piece.GetMovementOptions(Squares))
-                if (move == position)
+            foreach (IMovement movement in piece.Movement)
+            {
+                if (movement.Attacks(piece.Position, position, Squares, color))
                     return true;
+            }
         }
 
         return false;

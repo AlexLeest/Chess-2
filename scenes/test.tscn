@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://gg3im0lsrswa" path="res://art/pieces/wQ.svg" id="12_pn65j"]
 [ext_resource type="Texture2D" uid="uid://d28f403us63or" path="res://art/pieces/wR.svg" id="13_5f8cm"]
 [ext_resource type="Script" uid="uid://c5frspbfxkamm" path="res://scripts/godot/GodotSquare.cs" id="14_7mbro"]
-[ext_resource type="Script" uid="uid://dyehe8bfc21a0" path="res://scripts/godot/MoveCounter.cs" id="15_ff6ho"]
+[ext_resource type="Script" uid="uid://dbv72vwgtn827" path="res://scripts/godot/MoveCounter.cs" id="15_ff6ho"]
 
 [node name="Canvas" type="CanvasLayer"]
 
@@ -587,5 +587,5 @@ metadata/_custom_type_script = "uid://c5frspbfxkamm"
 [node name="MoveCounter" type="Node" parent="." node_paths=PackedStringArray("gdBoard")]
 script = ExtResource("15_ff6ho")
 gdBoard = NodePath("../GodotBoard2")
-depth = 6
+depth = 5
 metadata/_custom_type_script = "uid://dyehe8bfc21a0"

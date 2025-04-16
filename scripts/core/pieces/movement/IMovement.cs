@@ -7,4 +7,6 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 public interface IMovement
 {
     public List<Vector2Int> GetMovementOptions(Vector2Int from, Piece[,] squares, bool color);
+    
+    public bool Attacks(Vector2Int from, Vector2Int to, Piece[,] squares, bool color);
 }

@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,6 +51,42 @@ public struct SlidingMovement : IMovement
         }
 
         return options;
+    }
+
+    public bool Attacks(Vector2Int from, Vector2Int to, Piece[,] squares, bool color)
+    {
+        int boardWidth = squares.GetLength(0);
+        int boardHeight = squares.GetLength(1);
+        
+        // Maybe break up SlidingMovement to only have 1 offset instead of a list. idk.
+        Vector2Int currentPos = from;
+        Vector2Int delta = to - from;
+        foreach (Vector2Int offset in offsets)
+        {
+            // Check if signs line up, if not, skip
+            if (Math.Sign(offset.X) != Math.Sign(delta.X) || Math.Sign(offset.Y) != Math.Sign(delta.Y))
+                continue;
+
+            for (int i = 0; i < multiplier; i++)
+            {
+                currentPos += offset;
+                if (currentPos == to)
+                {
+                    // Hit target square (regardless of piece existing there or not)
+                    return true;
+                }
+                if (!currentPos.Inside(boardWidth, boardHeight))
+                    break;
+                
+                Piece onSquare = squares[currentPos.X, currentPos.Y];
+                if (onSquare == null)
+                    continue;
+                if (onSquare.Color == color)
+                    break;
+            }
+        }
+
+        return false;
     }
 
     public static SlidingMovement Knight => new(Vector2Int.KnightHops, 1);

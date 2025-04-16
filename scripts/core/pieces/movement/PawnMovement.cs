@@ -19,16 +19,18 @@ public struct PawnMovement : IMovement
         // Step forward
         Vector2Int forward = from + direction;
         if (forward.Inside(boardWidth, boardHeight) && squares[forward.X, forward.Y] is null)
-            options.Add(forward);
-        
-        // Double move forward
-        bool onDoubleMoveRow = (color && from.Y == 1) || (!color && from.Y == 6);
-        if (onDoubleMoveRow)
         {
-            Vector2Int doubleMove = forward + direction;
-            if (squares[doubleMove.X, doubleMove.Y] is null)
-                options.Add(doubleMove);
+            options.Add(forward);
+            // Double move forward
+            bool onDoubleMoveRow = (color && from.Y == 1) || (!color && from.Y == 6);
+            if (onDoubleMoveRow)
+            {
+                Vector2Int doubleMove = forward + direction;
+                if (squares[doubleMove.X, doubleMove.Y] is null)
+                    options.Add(doubleMove);
+            }
         }
+        
         // Captures
         AttemptCapture(squares, color, new Vector2Int(forward.X - 1, forward.Y), options);
         AttemptCapture(squares, color, new Vector2Int(forward.X + 1, forward.Y), options);
@@ -55,6 +57,20 @@ public struct PawnMovement : IMovement
         }
 
         return options;
+    }
+
+    public bool Attacks(Vector2Int from, Vector2Int to, Piece[,] squares, bool color)
+    {
+        // Pawns can only attack diagonal
+        int xOffset = from.X - to.X;
+        if (xOffset != 1 && xOffset != -1)
+            return false;
+        
+        int directionY = color ? 1 : -1;
+        if (from.Y - to.Y != directionY)
+            return false;
+
+        return true;
     }
 
     private static void AttemptCapture(Piece[,] squares, bool color, Vector2Int capturePos, List<Vector2Int> options)
