@@ -587,5 +587,5 @@ metadata/_custom_type_script = "uid://c5frspbfxkamm"
 [node name="MoveCounter" type="Node" parent="." node_paths=PackedStringArray("gdBoard")]
 script = ExtResource("15_ff6ho")
 gdBoard = NodePath("../GodotBoard2")
-depth = 5
+depth = 6
 metadata/_custom_type_script = "uid://dyehe8bfc21a0"

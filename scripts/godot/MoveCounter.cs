@@ -15,17 +15,25 @@ public partial class MoveCounter : Node
 
     public override void _Input(InputEvent input)
     {
-        if (input is InputEventKey eventKey && eventKey.Pressed && eventKey.Keycode == Key.Q)
+        if (input is InputEventKey eventKey && eventKey.Pressed)
         {
-            for (int i = 0; i <= depth; i++)
+            if (eventKey.Keycode == Key.Q)
+            {
+                for (int i = 0; i <= depth; i++)
+                {
+                    Stopwatch sw = Stopwatch.StartNew();
+                    GD.Print($"Depth: {i}, Count: {CountBoardAmounts(gdBoard.Board, i)}, Time: {sw.ElapsedMilliseconds} ms");
+                }
+            }
+            if (eventKey.Keycode == Key.W)
             {
                 Stopwatch sw = Stopwatch.StartNew();
-                GD.Print($"Depth: {i}, Count: {CountBoardAmounts(gdBoard.Board, i)}, Time: {sw.ElapsedMilliseconds} ms");
+                GD.Print($"Depth: {depth}, Count: {CountBoardAmounts(gdBoard.Board, depth)}, Time: {sw.ElapsedMilliseconds} ms");
             }
         }
     }
 
-    private int CountBoardAmounts(Board currentBoard, int depth, bool print = true)
+    private int CountBoardAmounts(Board currentBoard, int depth, bool print = false)
     {
         if (depth <= 0)
         {
@@ -33,7 +41,7 @@ public partial class MoveCounter : Node
         }
 
         ConcurrentBag<int> counts = new();
-
+        
         Parallel.ForEach(currentBoard.GenerateMoves(),
             nextBoard =>
             {
@@ -41,16 +49,24 @@ public partial class MoveCounter : Node
                 if (print)
                 {
                     // TODO: Get a last-move field on the board for debug reasons (also visualisation maybe)
-                    GD.Print($"{count} moves");
+                    GD.Print($"{nextBoard.LastMove}: {count}");
                 }
                 counts.Add(count);
             }
         );
         return counts.Sum();
 
+        // int count = 0;
         // foreach (Board nextBoard in currentBoard.GenerateMoves())
         // {
-        //     count += CountBoardAmounts(nextBoard, depth - 1);
+        //     int localCount = CountBoardAmounts(nextBoard, depth - 1, false);
+        //     if (print)
+        //     {
+        //         // TODO: Get a last-move field on the board for debug reasons (also visualisation maybe)
+        //         GD.Print($"{nextBoard.LastMove}: {localCount}");
+        //     }
+        //     count += localCount;
         // }
+        // return count;
     }
 }

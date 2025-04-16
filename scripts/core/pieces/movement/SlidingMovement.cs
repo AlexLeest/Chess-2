@@ -59,10 +59,10 @@ public struct SlidingMovement : IMovement
         int boardHeight = squares.GetLength(1);
         
         // Maybe break up SlidingMovement to only have 1 offset instead of a list. idk.
-        Vector2Int currentPos = from;
         Vector2Int delta = to - from;
         foreach (Vector2Int offset in offsets)
         {
+            Vector2Int currentPos = from;
             // Check if signs line up, if not, skip
             if (Math.Sign(offset.X) != Math.Sign(delta.X) || Math.Sign(offset.Y) != Math.Sign(delta.Y))
                 continue;
@@ -79,10 +79,10 @@ public struct SlidingMovement : IMovement
                     break;
                 
                 Piece onSquare = squares[currentPos.X, currentPos.Y];
-                if (onSquare == null)
-                    continue;
-                if (onSquare.Color == color)
+                if (onSquare != null)
+                {
                     break;
+                }
             }
         }
 

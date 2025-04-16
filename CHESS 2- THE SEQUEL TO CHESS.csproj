@@ -4,4 +4,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>CHESS2THESEQUELTOCHESS</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="scripts\perft.txt" />
+  </ItemGroup>
 </Project>

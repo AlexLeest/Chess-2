@@ -10,6 +10,7 @@ public class Board
     public readonly Piece[] Pieces;
     public readonly Piece[,] Squares;
     public readonly int Turn;
+    public readonly Move? LastMove;
 
     private readonly bool[] castleQueenSide;
     private readonly bool[] castleKingSide;
@@ -20,7 +21,8 @@ public class Board
         Piece[] pieces,
         bool[] castleQueenSide,
         bool[] castleKingSide,
-        bool enPassantPossible = false
+        bool enPassantPossible = false,
+        Move? lastMove = null
     )
     {
         Turn = turn;
@@ -34,6 +36,7 @@ public class Board
         this.castleQueenSide = castleQueenSide;
         this.castleKingSide = castleKingSide;
         this.enPassantPossible = enPassantPossible;
+        this.LastMove = lastMove;
     }
 
     public static Board DefaultBoard()
@@ -118,6 +121,12 @@ public class Board
         {
             if (piece.Color == color)
                 continue;
+            // foreach (Vector2Int position in positions)
+            //     foreach (IMovement movement in piece.Movement)
+            //     {
+            //         if (movement.Attacks(piece.Position, position, Squares, color))
+            //             return true;
+            //     }
             foreach (Vector2Int move in piece.GetMovementOptions(Squares))
                 if (positions.Contains(move))
                     return true;
@@ -224,7 +233,7 @@ public class Board
             }
 
             // Make new board add to results
-            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, enPassantMove);
+            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, enPassantMove, new Move(piece.Position, move));
             if (!possibleMove.IsInCheck(colorToMove))
                 result.Add(possibleMove);
         }
