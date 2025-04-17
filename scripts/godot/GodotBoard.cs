@@ -17,6 +17,8 @@ public partial class GodotBoard : GridContainer
     [Export] private Texture2D[] pieceTextures;
     [Export] private Godot.Collections.Dictionary<byte, Texture2D> pieceTexturesDictionary;
 
+    [Export] private string fen;
+
     private IEngine engine;
     private GodotPiece[] pieces;
     private GodotSquare[,] squares;
@@ -26,7 +28,10 @@ public partial class GodotBoard : GridContainer
 
     public override void _Ready()
     {
-        Board = Board.DefaultBoard();
+        if (fen != null)
+            Board = FENConverter.FENToBoard(fen);
+        else
+            Board = Board.DefaultBoard();
         squares = new GodotSquare[8, 8];
         foreach (Node node in GetChildren())
         {

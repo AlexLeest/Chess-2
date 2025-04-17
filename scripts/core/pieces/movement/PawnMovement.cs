@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
 // TODO: Struct, maybe
-public struct PawnMovement : IMovement
+public class PawnMovement : IMovement
 {
 
     public List<Vector2Int> GetMovementOptions(Vector2Int from, Piece[,] squares, bool color)
@@ -59,20 +59,6 @@ public struct PawnMovement : IMovement
         return options;
     }
 
-    public bool Attacks(Vector2Int from, Vector2Int to, Piece[,] squares, bool color)
-    {
-        // Pawns can only attack diagonal
-        int xOffset = from.X - to.X;
-        if (xOffset != 1 && xOffset != -1)
-            return false;
-        
-        int directionY = color ? 1 : -1;
-        if (from.Y - to.Y != directionY)
-            return false;
-
-        return true;
-    }
-
     private static void AttemptCapture(Piece[,] squares, bool color, Vector2Int capturePos, List<Vector2Int> options)
     {
         if (!capturePos.Inside(squares.GetLength(0), squares.GetLength(1)))
@@ -83,5 +69,37 @@ public struct PawnMovement : IMovement
         {
             options.Add(capturePos);
         }
+    }
+
+    public bool Attacks(Vector2Int from, Vector2Int target, Piece[,] squares, bool color)
+    {
+        // Pawns can only attack diagonal
+        int xOffset = from.X - target.X;
+        if (xOffset != 1 && xOffset != -1)
+            return false;
+        
+        int directionY = color ? 1 : -1;
+        if (from.Y - target.Y != directionY)
+            return false;
+
+        return true;
+    }
+
+    public bool AttacksAny(Vector2Int from, Vector2Int[] targets, Piece[,] squares, bool color)
+    {
+        int directionY = color ? 1 : -1;
+        foreach (Vector2Int target in targets)
+        {
+            // Pawns can only attack diagonal
+            int xOffset = from.X - target.X;
+            if (xOffset != 1 && xOffset != -1)
+                continue;
+        
+            if (from.Y - target.Y != directionY)
+                continue;
+
+            return true;
+        }
+        return false;
     }
 }

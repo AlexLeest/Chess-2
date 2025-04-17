@@ -6,7 +6,7 @@ using System.Linq;
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
 // TODO: Struct, maybe
-public struct SlidingMovement : IMovement
+public class SlidingMovement : IMovement
 {
     // In which direction the piece can jump (single step)
     private Vector2Int[] offsets;
@@ -53,13 +53,13 @@ public struct SlidingMovement : IMovement
         return options;
     }
 
-    public bool Attacks(Vector2Int from, Vector2Int to, Piece[,] squares, bool color)
+    public bool Attacks(Vector2Int from, Vector2Int target, Piece[,] squares, bool color)
     {
         int boardWidth = squares.GetLength(0);
         int boardHeight = squares.GetLength(1);
         
         // Maybe break up SlidingMovement to only have 1 offset instead of a list. idk.
-        Vector2Int delta = to - from;
+        Vector2Int delta = target - from;
         foreach (Vector2Int offset in offsets)
         {
             Vector2Int currentPos = from;
@@ -70,7 +70,7 @@ public struct SlidingMovement : IMovement
             for (int i = 0; i < multiplier; i++)
             {
                 currentPos += offset;
-                if (currentPos == to)
+                if (currentPos == target)
                 {
                     // Hit target square (regardless of piece existing there or not)
                     return true;
@@ -84,6 +84,53 @@ public struct SlidingMovement : IMovement
                     break;
                 }
             }
+        }
+
+        return false;
+    }
+
+    public bool AttacksAny(Vector2Int from, Vector2Int[] targets, Piece[,] squares, bool color)
+    {
+        int boardWidth = squares.GetLength(0);
+        int boardHeight = squares.GetLength(1);
+        
+        // Maybe break up SlidingMovement to only have 1 offset instead of a list. idk.
+        Vector2Int[] deltas = new Vector2Int[targets.Length];
+        for (int i = 0; i < targets.Length; i++)
+        {
+            Vector2Int target = targets[i];
+            deltas[i] = target - from;
+        }
+        foreach (Vector2Int offset in offsets)
+        {
+            Vector2Int currentPos = from;
+            // Check if signs line up, if not, skip
+            for (int index = 0; index < deltas.Length; index++)
+            {
+                Vector2Int delta = deltas[index];
+                if (Math.Sign(offset.X) != Math.Sign(delta.X) || Math.Sign(offset.Y) != Math.Sign(delta.Y))
+                    continue;
+                for (int mult = 0; mult < multiplier; mult++)
+                {
+                    currentPos += offset;
+                    if (currentPos == targets[index])
+                    {
+                        // Hit target square (regardless of piece existing there or not)
+                        return true;
+                    }
+                    if (!currentPos.Inside(boardWidth, boardHeight))
+                        break;
+
+                    Piece onSquare = squares[currentPos.X, currentPos.Y];
+                    if (onSquare != null)
+                    {
+                        break;
+                    }
+                }
+            }
+
+
+
         }
 
         return false;
