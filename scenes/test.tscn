@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ddro8mbffb074"]
+[gd_scene load_steps=29 format=3 uid="uid://ddro8mbffb074"]
 
 [ext_resource type="Script" uid="uid://54kjarjdjwgv" path="res://scripts/godot/GodotBoard.cs" id="1_errlg"]
 [ext_resource type="Texture2D" uid="uid://tb8s1rq7ivaq" path="res://art/pieces/bB.svg" id="2_44saj"]
@@ -14,7 +14,92 @@
 [ext_resource type="Texture2D" uid="uid://gg3im0lsrswa" path="res://art/pieces/wQ.svg" id="12_pn65j"]
 [ext_resource type="Texture2D" uid="uid://d28f403us63or" path="res://art/pieces/wR.svg" id="13_5f8cm"]
 [ext_resource type="Script" uid="uid://c5frspbfxkamm" path="res://scripts/godot/GodotSquare.cs" id="14_7mbro"]
+[ext_resource type="Script" uid="uid://03f3vre5h3sj" path="res://scripts/godot/utils/BasePieceTexture.cs" id="14_7yos8"]
 [ext_resource type="Script" uid="uid://dbv72vwgtn827" path="res://scripts/godot/MoveCounter.cs" id="15_ff6ho"]
+
+[sub_resource type="Resource" id="Resource_5jxlq"]
+script = ExtResource("14_7yos8")
+BasePiece = 0
+Color = true
+Texture = ExtResource("11_si7kk")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_xrtyr"]
+script = ExtResource("14_7yos8")
+BasePiece = 0
+Color = false
+Texture = ExtResource("5_7yos8")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_daiq8"]
+script = ExtResource("14_7yos8")
+BasePiece = 1
+Color = true
+Texture = ExtResource("13_5f8cm")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_c6rvn"]
+script = ExtResource("14_7yos8")
+BasePiece = 1
+Color = false
+Texture = ExtResource("7_xrtyr")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_n74k2"]
+script = ExtResource("14_7yos8")
+BasePiece = 2
+Color = true
+Texture = ExtResource("8_daiq8")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_si7kk"]
+script = ExtResource("14_7yos8")
+BasePiece = 2
+Color = false
+Texture = ExtResource("2_44saj")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_pn65j"]
+script = ExtResource("14_7yos8")
+BasePiece = 3
+Color = true
+Texture = ExtResource("10_n74k2")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_5f8cm"]
+script = ExtResource("14_7yos8")
+BasePiece = 3
+Color = false
+Texture = ExtResource("4_ff6ho")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_gm488"]
+script = ExtResource("14_7yos8")
+BasePiece = 4
+Color = true
+Texture = ExtResource("12_pn65j")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_kay4s"]
+script = ExtResource("14_7yos8")
+BasePiece = 4
+Color = false
+Texture = ExtResource("6_5jxlq")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_j7bvy"]
+script = ExtResource("14_7yos8")
+BasePiece = 5
+Color = true
+Texture = ExtResource("9_c6rvn")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_1dqgb"]
+script = ExtResource("14_7yos8")
+BasePiece = 5
+Color = false
+Texture = ExtResource("3_7mbro")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [node name="Canvas" type="CanvasLayer"]
 
@@ -36,7 +121,6 @@ columns = 8
 script = ExtResource("1_errlg")
 lightSquare = Color(0.952941, 0.831373, 0.686275, 1)
 darkSquare = Color(0.568627, 0.305882, 0.25098, 1)
-pieceTextures = Array[Texture2D]([ExtResource("2_44saj"), ExtResource("3_7mbro"), ExtResource("4_ff6ho"), ExtResource("5_7yos8"), ExtResource("6_5jxlq"), ExtResource("7_xrtyr"), ExtResource("8_daiq8"), ExtResource("9_c6rvn"), ExtResource("10_n74k2"), ExtResource("11_si7kk"), ExtResource("12_pn65j"), ExtResource("13_5f8cm")])
 pieceTexturesDictionary = Dictionary[int, Texture2D]({
 0: ExtResource("11_si7kk"),
 1: ExtResource("11_si7kk"),
@@ -71,7 +155,8 @@ pieceTexturesDictionary = Dictionary[int, Texture2D]({
 30: ExtResource("4_ff6ho"),
 31: ExtResource("7_xrtyr")
 })
-fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+pieceTextures = Array[Object]([SubResource("Resource_5jxlq"), SubResource("Resource_xrtyr"), SubResource("Resource_daiq8"), SubResource("Resource_c6rvn"), SubResource("Resource_n74k2"), SubResource("Resource_si7kk"), SubResource("Resource_pn65j"), SubResource("Resource_5f8cm"), SubResource("Resource_gm488"), SubResource("Resource_kay4s"), SubResource("Resource_j7bvy"), SubResource("Resource_1dqgb")])
+fen = "r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10 "
 metadata/_custom_type_script = "uid://54kjarjdjwgv"
 
 [node name="GodotSquare" type="ColorRect" parent="GodotBoard"]

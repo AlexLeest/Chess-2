@@ -12,6 +12,7 @@ public partial class MoveCounter : Node
 {
     [Export] private GodotBoard gdBoard;
     [Export] private int depth;
+    [Export] private bool debugPrint;
 
     public override void _Input(InputEvent input)
     {
@@ -28,7 +29,7 @@ public partial class MoveCounter : Node
             if (eventKey.Keycode == Key.W)
             {
                 Stopwatch sw = Stopwatch.StartNew();
-                GD.Print($"Depth: {depth}, Count: {CountBoardAmounts(gdBoard.Board, depth)}, Time: {sw.ElapsedMilliseconds} ms");
+                GD.Print($"Depth: {depth}, Count: {CountBoardAmounts(gdBoard.Board, depth, debugPrint)}, Time: {sw.ElapsedMilliseconds} ms");
             }
         }
     }

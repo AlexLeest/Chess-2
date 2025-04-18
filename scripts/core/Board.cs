@@ -179,16 +179,16 @@ public class Board
             {
                 // Promotion! Just to queen for now
                 // TODO: Promotion to bishop, rook, knight
-                newPiece = new Piece(piece.Id, piece.Color, move, [SlidingMovement.Queen]);
+                newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move, [SlidingMovement.Queen]);
             }
             else if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && Math.Abs(move.Y - piece.Position.Y) == 2)
             {
-                newPiece = new Piece(piece.Id, piece.Color, move, piece.Movement, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
+                newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move, piece.Movement, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
                 enPassantMove = true;
             }
             else
             {
-                newPiece = new Piece(piece.Id, piece.Color, move, piece.Movement, piece.SpecialPieceType);
+                newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move, piece.Movement, piece.SpecialPieceType);
             }
             newPieces[^1] = newPiece;
             // if (capturedPiece is not null)
@@ -250,16 +250,16 @@ public class Board
                     Piece toCastle = Squares[7, colorRank];
                     Piece[] newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
                     // Move king
-                    newPieces[^2] = new Piece(piece.Id, piece.Color, new Vector2Int(6, colorRank), piece.Movement, piece.SpecialPieceType);
+                    newPieces[^2] = new Piece(piece.Id, toCastle.BasePiece, piece.Color, new Vector2Int(6, colorRank), piece.Movement, piece.SpecialPieceType);
                     // Move piece
-                    newPieces[^1] = new Piece(toCastle.Id, toCastle.Color, new Vector2Int(5, colorRank), piece.Movement, piece.SpecialPieceType);
+                    newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(5, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
                     
                     // Remove castling rights
                     bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
                     bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
                     newCastleQueenSide[colorIndex] = false;
                     newCastleKingSide[colorIndex] = false;
-                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide);
+                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, false, new Move(piece.Position, new Vector2Int(6, colorRank)));
                     
                     // Add to results
                     result.Add(castledBoard);
@@ -279,16 +279,16 @@ public class Board
                     Piece toCastle = Squares[0, colorRank];
                     Piece[] newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
                     // Move king
-                    newPieces[^2] = new Piece(piece.Id, piece.Color, new Vector2Int(2, colorRank), piece.Movement, piece.SpecialPieceType);
+                    newPieces[^2] = new Piece(piece.Id, toCastle.BasePiece, piece.Color, new Vector2Int(2, colorRank), piece.Movement, piece.SpecialPieceType);
                     // Move piece
-                    newPieces[^1] = new Piece(toCastle.Id, toCastle.Color, new Vector2Int(3, colorRank), piece.Movement, piece.SpecialPieceType);
+                    newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(3, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
                     
                     // Remove castling rights
                     bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
                     bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
                     newCastleQueenSide[colorIndex] = false;
                     newCastleKingSide[colorIndex] = false;
-                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide);
+                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, false, new Move(piece.Position, new Vector2Int(2, colorRank)));
                     
                     // Add to results
                     result.Add(castledBoard);
@@ -310,7 +310,7 @@ public class Board
             // Remove captures piece if applicable
             if (idToSkip.Contains(p.Id))
                 continue;
-            Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement, p.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN ? SpecialPieceTypes.PAWN : p.SpecialPieceType);
+            Piece deepCopy = new(p.Id, p.BasePiece, p.Color, p.Position, p.Movement, p.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN ? SpecialPieceTypes.PAWN : p.SpecialPieceType);
             result[i] = deepCopy;
             i++;
         }
@@ -329,7 +329,7 @@ public class Board
             // Remove captures piece if applicable
             if (p.Id == kingId || castleId == p.Id)
                 continue;
-            Piece deepCopy = new(p.Id, p.Color, p.Position, p.Movement, p.SpecialPieceType);
+            Piece deepCopy = new(p.Id, p.BasePiece, p.Color, p.Position, p.Movement, p.SpecialPieceType);
             result[i] = deepCopy;
             i++;
         }

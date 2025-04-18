@@ -14,8 +14,8 @@ public partial class GodotBoard : GridContainer
     public Board Board;
     [Export] private Color lightSquare, darkSquare;
     [Export] private int squareSize = 64;
-    [Export] private Texture2D[] pieceTextures;
     [Export] private Godot.Collections.Dictionary<byte, Texture2D> pieceTexturesDictionary;
+    [Export] private BasePieceTexture[] pieceTextures;
 
     [Export] private string fen;
 
@@ -53,8 +53,17 @@ public partial class GodotBoard : GridContainer
             pieceToSquare[gdPiece.Id] = square;
             square.AddChild(gdPiece);
             gdPiece.Position = Vector2.Down;
-            GD.Print($"Setting piece texture for {piece.Id}");
-            gdPiece.Texture = pieceTexturesDictionary[piece.Id];
+            // GD.Print($"Setting piece texture for {piece.Id}");
+            
+            // Determine piece type (only standard pieces for now)
+            foreach (BasePieceTexture texture in pieceTextures)
+            {
+                if (!(piece.BasePiece == texture.BasePiece && piece.Color == texture.Color))
+                    continue;
+                gdPiece.Texture = texture.Texture;
+                break;
+            }
+            // gdPiece.Texture = pieceTexturesDictionary[piece.Id];
         }
 
         engine = new FullRandom();

@@ -103,10 +103,10 @@ public class SlidingMovement : IMovement
         }
         foreach (Vector2Int offset in offsets)
         {
-            Vector2Int currentPos = from;
             // Check if signs line up, if not, skip
             for (int index = 0; index < deltas.Length; index++)
             {
+                Vector2Int currentPos = from;
                 Vector2Int delta = deltas[index];
                 if (Math.Sign(offset.X) != Math.Sign(delta.X) || Math.Sign(offset.Y) != Math.Sign(delta.Y))
                     continue;

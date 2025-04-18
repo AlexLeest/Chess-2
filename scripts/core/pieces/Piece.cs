@@ -3,23 +3,15 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
-public class Piece
+public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position, IMovement[] movement, SpecialPieceTypes specialPiece = SpecialPieceTypes.NONE)
 {
-    public byte Id;
+    public byte Id = id;
+    public BasePiece BasePiece = basePiece;
     
-    public bool Color;
-    public Vector2Int Position;
-    public IMovement[] Movement;
-    public SpecialPieceTypes SpecialPieceType;
-
-    public Piece(byte id, bool color, Vector2Int position, IMovement[] movement, SpecialPieceTypes specialPiece = SpecialPieceTypes.NONE)
-    {
-        Id = id;
-        Color = color;
-        Position = position;
-        Movement = movement;
-        SpecialPieceType = specialPiece;
-    }
+    public bool Color = color;
+    public Vector2Int Position = position;
+    public IMovement[] Movement = movement;
+    public SpecialPieceTypes SpecialPieceType = specialPiece;
 
     public IEnumerable<Vector2Int> GetMovementOptions(Piece[,] board)
     {
@@ -34,31 +26,31 @@ public class Piece
 
     public static Piece Pawn(byte id, bool color, Vector2Int position)
     {
-        return new Piece(id, color, position, [new PawnMovement()], SpecialPieceTypes.PAWN);
+        return new Piece(id, BasePiece.Pawn, color, position, [new PawnMovement()], SpecialPieceTypes.PAWN);
     }
 
     public static Piece Knight(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.NONE)
     {
-        return new Piece(id, color, position, [SlidingMovement.Knight], specialPiece);
+        return new Piece(id, BasePiece.Knight, color, position, [SlidingMovement.Knight], specialPiece);
     }
 
     public static Piece Bishop(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.NONE)
     {
-        return new Piece(id, color, position, [SlidingMovement.Bishop], specialPiece);
+        return new Piece(id, BasePiece.Bishop, color, position, [SlidingMovement.Bishop], specialPiece);
     }
 
     public static Piece Rook(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.NONE)
     {
-        return new Piece(id, color, position, [SlidingMovement.Rook], specialPiece);
+        return new Piece(id, BasePiece.Rook, color, position, [SlidingMovement.Rook], specialPiece);
     }
 
     public static Piece Queen(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.NONE)
     {
-        return new Piece(id, color, position, [SlidingMovement.Queen], specialPiece);
+        return new Piece(id, BasePiece.Queen, color, position, [SlidingMovement.Queen], specialPiece);
     }
 
-    public static Piece King(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.NONE)
+    public static Piece King(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.KING)
     {
-        return new Piece(id, color, position, [SlidingMovement.King], specialPiece);
+        return new Piece(id, BasePiece.King, color, position, [SlidingMovement.King], specialPiece);
     }
 }
