@@ -86,6 +86,6 @@ public static class FENConverter
         bool[] castleQueenSide = [castling.Contains('Q'), castling.Contains('q')];
         bool[] castleKingSide = [castling.Contains('K'), castling.Contains('k')];
 
-        return new Board(turn, pieces.ToArray(), castleQueenSide, castleKingSide);
+        return new Board(turn, pieces.ToArray(), castleQueenSide, castleKingSide, []);
     }
 }

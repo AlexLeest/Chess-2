@@ -156,7 +156,6 @@ pieceTexturesDictionary = Dictionary[int, Texture2D]({
 31: ExtResource("7_xrtyr")
 })
 pieceTextures = Array[Object]([SubResource("Resource_5jxlq"), SubResource("Resource_xrtyr"), SubResource("Resource_daiq8"), SubResource("Resource_c6rvn"), SubResource("Resource_n74k2"), SubResource("Resource_si7kk"), SubResource("Resource_pn65j"), SubResource("Resource_5f8cm"), SubResource("Resource_gm488"), SubResource("Resource_kay4s"), SubResource("Resource_j7bvy"), SubResource("Resource_1dqgb")])
-fen = "r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10 "
 metadata/_custom_type_script = "uid://54kjarjdjwgv"
 
 [node name="GodotSquare" type="ColorRect" parent="GodotBoard"]
@@ -674,3 +673,4 @@ metadata/_custom_type_script = "uid://c5frspbfxkamm"
 script = ExtResource("15_ff6ho")
 gdBoard = NodePath("../GodotBoard")
 depth = 5
+countInternalNodes = true

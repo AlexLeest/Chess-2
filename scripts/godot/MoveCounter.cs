@@ -12,12 +12,15 @@ public partial class MoveCounter : Node
 {
     [Export] private GodotBoard gdBoard;
     [Export] private int depth;
-    [Export] private bool debugPrint;
+    [Export] private bool debugPrint, countInternalNodes;
+
+    private int internalNodes = 0;
 
     public override void _Input(InputEvent input)
     {
         if (input is InputEventKey eventKey && eventKey.Pressed)
         {
+            internalNodes = countInternalNodes ? 1 : 0;
             if (eventKey.Keycode == Key.Q)
             {
                 for (int i = 0; i <= depth; i++)
@@ -29,7 +32,9 @@ public partial class MoveCounter : Node
             if (eventKey.Keycode == Key.W)
             {
                 Stopwatch sw = Stopwatch.StartNew();
-                GD.Print($"Depth: {depth}, Count: {CountBoardAmounts(gdBoard.Board, depth, debugPrint)}, Time: {sw.ElapsedMilliseconds} ms");
+                int nodeCount = CountBoardAmounts(gdBoard.Board, depth, debugPrint);
+                long time = sw.ElapsedMilliseconds;
+                GD.Print($"Depth: {depth}, Count: {nodeCount}, Time: {time} ms, NPS: {nodeCount/(time/1000f)}");
             }
         }
     }
@@ -55,7 +60,7 @@ public partial class MoveCounter : Node
                 counts.Add(count);
             }
         );
-        return counts.Sum();
+        return counts.Sum() + internalNodes;
 
         // int count = 0;
         // foreach (Board nextBoard in currentBoard.GenerateMoves())
@@ -68,6 +73,6 @@ public partial class MoveCounter : Node
         //     }
         //     count += localCount;
         // }
-        // return count;
+        // return count + internalNodes;
     }
 }

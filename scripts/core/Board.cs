@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,14 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
 public class Board
 {
+    public Board LastBoard;
+    
     public readonly Piece[] Pieces;
     public readonly Piece[,] Squares;
     public readonly int Turn;
     public readonly Move? LastMove;
+
+    private readonly Dictionary<byte, IItem[]> itemsPerPiece;
 
     private readonly bool[] castleQueenSide;
     private readonly bool[] castleKingSide;
@@ -21,22 +26,27 @@ public class Board
         Piece[] pieces,
         bool[] castleQueenSide,
         bool[] castleKingSide,
+        Dictionary<byte, IItem[]> itemsPerPiece,
         bool enPassantPossible = false,
-        Move? lastMove = null
+        Move? lastMove = null,
+        Board lastBoard = null
     )
     {
         Turn = turn;
         Pieces = pieces;
+
+        this.castleQueenSide = castleQueenSide;
+        this.castleKingSide = castleKingSide;
+        this.enPassantPossible = enPassantPossible;
+        this.itemsPerPiece = itemsPerPiece;
+        this.LastMove = lastMove;
+        this.LastBoard = lastBoard;
+        
         Squares = new Piece[8, 8];
         foreach (Piece piece in pieces)
         {
             Squares[piece.Position.X, piece.Position.Y] = piece;
         }
-
-        this.castleQueenSide = castleQueenSide;
-        this.castleKingSide = castleKingSide;
-        this.enPassantPossible = enPassantPossible;
-        this.LastMove = lastMove;
     }
 
     public static Board DefaultBoard()
@@ -82,7 +92,7 @@ public class Board
             Piece.Rook(31, false, new Vector2Int(7, 7), SpecialPieceTypes.QUEEN_SIDE_CASTLE),
         ];
 
-        return new Board(0, pieces, [true, true], [true, true]);
+        return new Board(0, pieces, [true, true], [true, true], []);
     }
 
     public bool IsInCheck(bool color)
@@ -191,10 +201,32 @@ public class Board
                 newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move, piece.Movement, piece.SpecialPieceType);
             }
             newPieces[^1] = newPiece;
-            // if (capturedPiece is not null)
-            // {
-            //     // TODO: Item triggers onCapture and onDeath
-            // }
+            if (capturedPiece is not null)
+            {
+                // TODO: Item triggers onCapture and onDeath
+                if (itemsPerPiece.TryGetValue(piece.Id, out IItem[] captureItems))
+                {
+                    // Capturing items should trigger
+                    foreach (IItem item in captureItems)
+                    {
+                        if (item.Trigger == ItemTriggers.ON_CAPTURE && item.ConditionsMet(newPieces, move))
+                        {
+                            newPieces = item.Execute(newPieces, move);
+                        }
+                    }
+                }
+                if (itemsPerPiece.TryGetValue(capturedPiece.Id, out IItem[] capturedItems))
+                {
+                    // Captured items should trigger
+                    foreach (IItem item in capturedItems)
+                    {
+                        if (item.Trigger == ItemTriggers.ON_CAPTURED && item.ConditionsMet(newPieces, move))
+                        {
+                            newPieces = item.Execute(newPieces, move);
+                        }
+                    }
+                }
+            }
 
             // If any of the castling pieces move, disallow castling in future boards
             bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
@@ -227,7 +259,7 @@ public class Board
             }
 
             // Make new board add to results
-            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, enPassantMove, new Move(piece.Position, move));
+            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, enPassantMove, new Move(piece.Position, move), this);
             if (!possibleMove.IsInCheck(colorToMove))
                 result.Add(possibleMove);
         }
@@ -259,7 +291,7 @@ public class Board
                     bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
                     newCastleQueenSide[colorIndex] = false;
                     newCastleKingSide[colorIndex] = false;
-                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, false, new Move(piece.Position, new Vector2Int(6, colorRank)));
+                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, false, new Move(piece.Position, new Vector2Int(6, colorRank)), this);
                     
                     // Add to results
                     result.Add(castledBoard);
@@ -288,7 +320,7 @@ public class Board
                     bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
                     newCastleQueenSide[colorIndex] = false;
                     newCastleKingSide[colorIndex] = false;
-                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, false, new Move(piece.Position, new Vector2Int(2, colorRank)));
+                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, false, new Move(piece.Position, new Vector2Int(2, colorRank)), this);
                     
                     // Add to results
                     result.Add(castledBoard);
@@ -310,8 +342,9 @@ public class Board
             // Remove captures piece if applicable
             if (idToSkip.Contains(p.Id))
                 continue;
-            Piece deepCopy = new(p.Id, p.BasePiece, p.Color, p.Position, p.Movement, p.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN ? SpecialPieceTypes.PAWN : p.SpecialPieceType);
-            result[i] = deepCopy;
+            // Piece deepCopy = new(p.Id, p.BasePiece, p.Color, p.Position, p.Movement, p.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN ? SpecialPieceTypes.PAWN : p.SpecialPieceType);
+            // result[i] = deepCopy;
+            result[i] = p.DeepCopy();
             i++;
         }
 

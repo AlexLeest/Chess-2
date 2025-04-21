@@ -88,6 +88,7 @@ public partial class GodotBoard : GridContainer
                 if (possibleBoard.Squares[corePos.X, corePos.Y]?.Id != pieceToMove.Id)
                     continue;
                 
+                // BUG: Self-destruct actually prevents this from happening because oops, pieceToMove is in fact fuckn dead.
                 SetNewBoard(possibleBoard);
                 selectedPiece = null;
                 return;

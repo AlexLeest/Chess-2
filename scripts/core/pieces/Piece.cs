@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
@@ -16,12 +17,14 @@ public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position
     public IEnumerable<Vector2Int> GetMovementOptions(Piece[,] board)
     {
         foreach (IMovement movement in Movement)
-        {
             foreach (Vector2Int move in movement.GetMovementOptions(Position, board, Color))
-            {
                 yield return move;
-            }
-        }
+    }
+
+    public Piece DeepCopy()
+    {
+        // En-passant decay, otherwise copy everything
+        return new Piece(Id, BasePiece, Color, Position, Movement, SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN ? SpecialPieceTypes.PAWN : SpecialPieceType);
     }
 
     public static Piece Pawn(byte id, bool color, Vector2Int position)
