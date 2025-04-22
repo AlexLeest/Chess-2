@@ -7,7 +7,7 @@ public interface IItem
     public byte PieceId { get; }
     public ItemTriggers Trigger { get; }
     
-    public bool ConditionsMet(Piece[] pieces, Vector2Int position);
+    public bool ConditionsMet(Board board, Vector2Int position);
 
-    public Piece[] Execute(Piece[] pieces, Vector2Int position);
+    public Board Execute(Board board, Vector2Int position);
 }

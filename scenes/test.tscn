@@ -673,4 +673,3 @@ metadata/_custom_type_script = "uid://c5frspbfxkamm"
 script = ExtResource("15_ff6ho")
 gdBoard = NodePath("../GodotBoard")
 depth = 5
-countInternalNodes = true

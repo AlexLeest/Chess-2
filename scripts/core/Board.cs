@@ -10,8 +10,8 @@ public class Board
 {
     public Board LastBoard;
     
-    public readonly Piece[] Pieces;
-    public readonly Piece[,] Squares;
+    public Piece[] Pieces;
+    public Piece[,] Squares;
     public readonly int Turn;
     public readonly Move? LastMove;
 
@@ -91,8 +91,17 @@ public class Board
             Piece.Knight(30, false, new Vector2Int(6, 7)),
             Piece.Rook(31, false, new Vector2Int(7, 7), SpecialPieceTypes.QUEEN_SIDE_CASTLE),
         ];
+        
+        // DEBUG:
+        // Item dictionary for testing purposes
+        // Every white pawn has respawn
+        Dictionary<byte, IItem[]> itemsPerPiece = new();
+        for (byte i = 0; i < 8; i++)
+        {
+            itemsPerPiece.Add(i, [new Respawn(i)]);
+        }
 
-        return new Board(0, pieces, [true, true], [true, true], []);
+        return new Board(0, pieces, [true, true], [true, true], itemsPerPiece);
     }
 
     public bool IsInCheck(bool color)
@@ -201,32 +210,6 @@ public class Board
                 newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move, piece.Movement, piece.SpecialPieceType);
             }
             newPieces[^1] = newPiece;
-            if (capturedPiece is not null)
-            {
-                // TODO: Item triggers onCapture and onDeath
-                if (itemsPerPiece.TryGetValue(piece.Id, out IItem[] captureItems))
-                {
-                    // Capturing items should trigger
-                    foreach (IItem item in captureItems)
-                    {
-                        if (item.Trigger == ItemTriggers.ON_CAPTURE && item.ConditionsMet(newPieces, move))
-                        {
-                            newPieces = item.Execute(newPieces, move);
-                        }
-                    }
-                }
-                if (itemsPerPiece.TryGetValue(capturedPiece.Id, out IItem[] capturedItems))
-                {
-                    // Captured items should trigger
-                    foreach (IItem item in capturedItems)
-                    {
-                        if (item.Trigger == ItemTriggers.ON_CAPTURED && item.ConditionsMet(newPieces, move))
-                        {
-                            newPieces = item.Execute(newPieces, move);
-                        }
-                    }
-                }
-            }
 
             // If any of the castling pieces move, disallow castling in future boards
             bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
@@ -244,7 +227,7 @@ public class Board
                     newCastleKingSide[colorIndex] = false;
                     break;
             }
-            if (capturedPiece != null)
+            if (capturedPiece is not null)
             {
                 int otherColorIndex = nextTurn % 2;
                 switch (capturedPiece.SpecialPieceType)
@@ -260,6 +243,32 @@ public class Board
 
             // Make new board add to results
             Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, enPassantMove, new Move(piece.Position, move), this);
+            if (capturedPiece is not null)
+            {
+                // TODO: Item triggers onCapture and onDeath
+                if (itemsPerPiece.TryGetValue(piece.Id, out IItem[] captureItems))
+                {
+                    // Capturing items should trigger
+                    foreach (IItem item in captureItems)
+                    {
+                        if (item.Trigger == ItemTriggers.ON_CAPTURE && item.ConditionsMet(possibleMove, move))
+                        {
+                            possibleMove = item.Execute(possibleMove, move);
+                        }
+                    }
+                }
+                if (itemsPerPiece.TryGetValue(capturedPiece.Id, out IItem[] capturedItems))
+                {
+                    // Captured items should trigger
+                    foreach (IItem item in capturedItems)
+                    {
+                        if (item.Trigger == ItemTriggers.ON_CAPTURED && item.ConditionsMet(possibleMove, move))
+                        {
+                            possibleMove = item.Execute(possibleMove, move);
+                        }
+                    }
+                }
+            }
             if (!possibleMove.IsInCheck(colorToMove))
                 result.Add(possibleMove);
         }

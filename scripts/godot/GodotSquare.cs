@@ -25,4 +25,11 @@ public partial class GodotSquare : ColorRect
             }
         }
     }
+
+    public void Clear()
+    {
+        if (GdPiece is not null)
+            GdPiece.QueueFree();
+        GdPiece = null;
+    }
 }

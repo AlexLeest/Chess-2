@@ -42,29 +42,7 @@ public partial class GodotBoard : GridContainer
             square.SquareClicked += SquareClicked;
         }
         
-        pieces = new GodotPiece[Board.Pieces.Length];
-        for (int i = 0; i < Board.Pieces.Length; i++)
-        {
-            Piece piece = Board.Pieces[i];
-            GodotPiece gdPiece = new(piece);
-            pieces[i] = gdPiece;
-            GodotSquare square = squares[piece.Position.X, piece.Position.Y];
-            square.GdPiece = gdPiece;
-            pieceToSquare[gdPiece.Id] = square;
-            square.AddChild(gdPiece);
-            gdPiece.Position = Vector2.Down;
-            // GD.Print($"Setting piece texture for {piece.Id}");
-            
-            // Determine piece type (only standard pieces for now)
-            foreach (BasePieceTexture texture in pieceTextures)
-            {
-                if (!(piece.BasePiece == texture.BasePiece && piece.Color == texture.Color))
-                    continue;
-                gdPiece.Texture = texture.Texture;
-                break;
-            }
-            // gdPiece.Texture = pieceTexturesDictionary[piece.Id];
-        }
+        RenderPieces();
 
         engine = new FullRandom();
     }
@@ -85,10 +63,9 @@ public partial class GodotBoard : GridContainer
 
             foreach (Board possibleBoard in Board.GenerateMoves(pieceToMove))
             {
-                if (possibleBoard.Squares[corePos.X, corePos.Y]?.Id != pieceToMove.Id)
+                if (possibleBoard.LastMove?.From != selectedPiece?.Piece.Position || possibleBoard.LastMove?.To != corePos)
                     continue;
                 
-                // BUG: Self-destruct actually prevents this from happening because oops, pieceToMove is in fact fuckn dead.
                 SetNewBoard(possibleBoard);
                 selectedPiece = null;
                 return;
@@ -116,45 +93,7 @@ public partial class GodotBoard : GridContainer
     private void SetNewBoard(Board newBoard)
     {
         Board = newBoard;
-        GodotPiece[] newPieces = new GodotPiece[newBoard.Pieces.Length];
-        int newPiecesIndex = 0;
-        Dictionary<byte, GodotSquare> newPieceToSquare = new();
-        HashSet<GodotPiece> livePieces = new();
-        
-        // Where possible, match GodotPieces (based on id)
-        foreach (Piece piece in Board.Pieces)
-        {
-            if (pieceToSquare.TryGetValue(piece.Id, out GodotSquare gdSquare))
-            {
-                GodotPiece gdPiece = gdSquare.GdPiece;
-                gdPiece.Piece = piece;
-                // Set gdPiece to new location
-                newPieces[newPiecesIndex] = gdPiece;
-                GodotSquare newSquare = squares[piece.Position.X, piece.Position.Y];
-                
-                gdSquare.GdPiece = null;
-                newSquare.GdPiece = gdPiece;
-                gdPiece.Reparent(newSquare, false);
-
-                newPieceToSquare[piece.Id] = newSquare;
-                livePieces.Add(gdPiece);
-                newPiecesIndex++;
-            }
-            // else
-            // {
-            //     // Spawn new GodotPiece???
-            //     // This doesn't normally happen, but in theory could due to buffs/items or other whacky game mechanics
-            // }
-        }
-        foreach (GodotPiece currentPiece in pieces)
-        {
-            if (!livePieces.Contains(currentPiece))
-            {
-                currentPiece.QueueFree();
-            }
-        }
-        pieces = newPieces;
-        pieceToSquare = newPieceToSquare;
+        RenderPieces();
 
         // if (board.Turn % 2 != 0)
         // {
@@ -163,5 +102,37 @@ public partial class GodotBoard : GridContainer
         //     var engineResponse = engine.GenerateNextMove(board);
         //     SetNewBoard(engineResponse);
         // }
+    }
+
+    private void RenderPieces()
+    {
+        // TODO: Fuck you we're making this stateless
+        foreach (GodotSquare square in squares)
+        {
+            square.Clear();
+        }
+        pieces = new GodotPiece[Board.Pieces.Length];
+        for (int i = 0; i < Board.Pieces.Length; i++)
+        {
+            Piece piece = Board.Pieces[i];
+            GodotPiece gdPiece = new(piece);
+            pieces[i] = gdPiece;
+            GodotSquare square = squares[piece.Position.X, piece.Position.Y];
+            square.GdPiece = gdPiece;
+            pieceToSquare[gdPiece.Id] = square;
+            square.AddChild(gdPiece);
+            gdPiece.Position = Vector2.Down;
+            // GD.Print($"Setting piece texture for {piece.Id}");
+            
+            // Determine piece type (only standard pieces for now)
+            foreach (BasePieceTexture texture in pieceTextures)
+            {
+                if (!(piece.BasePiece == texture.BasePiece && piece.Color == texture.Color))
+                    continue;
+                gdPiece.Texture = texture.Texture;
+                break;
+            }
+            // gdPiece.Texture = pieceTexturesDictionary[piece.Id];
+        }
     }
 }
