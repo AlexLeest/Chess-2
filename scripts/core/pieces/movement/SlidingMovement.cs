@@ -21,13 +21,13 @@ public class SlidingMovement : IMovement
         this.multiplier = multiplier;
     }
 
-    public IEnumerable<Move> GetMovementOptions(byte id, Vector2Int from, Piece[,] squares, bool color)
+    public List<Move> GetMovementOptions(byte id, Vector2Int from, Piece[,] squares, bool color)
     {
         int boardWidth = squares.GetLength(0);
         int boardHeight = squares.GetLength(1);
         
         // Hardcoding the board size in for now at 8x8
-        List<Vector2Int> options = [];
+        List<Move> options = [];
         
         foreach (var offset in offsets)
         {
@@ -42,17 +42,17 @@ public class SlidingMovement : IMovement
                 if (onSquare != null)
                 {
                     if (onSquare.Color != color)
-                        yield return new Move(id, from, currentPos, onSquare);
-                        // options.Add(currentPos);
+                        // yield return new Move(id, from, currentPos, onSquare);
+                        options.Add(new Move(id, from, currentPos, onSquare));
                     break;
                 }
 
-                yield return new Move(id, from, currentPos);
-                // options.Add(currentPos);
+                // yield return new Move(id, from, currentPos);
+                options.Add(new Move(id, from, currentPos));
             }
         }
 
-        // return options;
+        return options;
     }
 
     public bool Attacks(Vector2Int from, Vector2Int target, Piece[,] squares, bool color)

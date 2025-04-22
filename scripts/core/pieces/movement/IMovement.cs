@@ -13,7 +13,7 @@ public interface IMovement
     /// <param name="squares">Board representation</param>
     /// <param name="color">Color of the moving piece (for deciding whether a capture is possible or not)</param>
     /// <returns>List of places this movement can reach</returns>
-    public IEnumerable<Move> GetMovementOptions(byte id, Vector2Int from, Piece[,] squares, bool color);
+    public List<Move> GetMovementOptions(byte id, Vector2Int from, Piece[,] squares, bool color);
     
     /// <summary>
     /// Cheaper check whether this Movement can attack a certain target square on the board
