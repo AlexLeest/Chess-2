@@ -12,9 +12,19 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
         //TODO:
         // Else, go through boards from start, check if this item has been triggered before
         // If not, return true
+        Board currentBoard = board;
+        while (currentBoard.LastBoard is not null)
+        {
+            if (currentBoard.LastMove?.Captured?.Id == pieceId)
+                return false;
+            currentBoard = currentBoard.LastBoard;
+        }
+        
         Vector2Int respawnPos = GetRootPosition(board);
         if (board.Squares[respawnPos.X, respawnPos.Y] is not null)
             return false;
+        
+        
         
         return true;
     }

@@ -19,7 +19,7 @@ public class Board
 
     private readonly bool[] castleQueenSide;
     private readonly bool[] castleKingSide;
-    private readonly bool enPassantPossible;
+    // private readonly bool enPassantPossible;
 
     public Board(
         int turn,
@@ -27,7 +27,7 @@ public class Board
         bool[] castleQueenSide,
         bool[] castleKingSide,
         Dictionary<byte, IItem[]> itemsPerPiece,
-        bool enPassantPossible = false,
+        // bool enPassantPossible = false,
         Move? lastMove = null,
         Board lastBoard = null
     )
@@ -37,7 +37,7 @@ public class Board
 
         this.castleQueenSide = castleQueenSide;
         this.castleKingSide = castleKingSide;
-        this.enPassantPossible = enPassantPossible;
+        // this.enPassantPossible = enPassantPossible;
         this.itemsPerPiece = itemsPerPiece;
         this.LastMove = lastMove;
         this.LastBoard = lastBoard;
@@ -196,9 +196,6 @@ public class Board
             // Piece capturedPiece = Squares[move.X, move.Y];
             Piece capturedPiece = move.Captured;
 
-            // Check en passant captures
-            bool enPassantMove = false;
-
             // Make full copy of all unmoved pieces
             Piece[] newPieces;
             if (capturedPiece == null)
@@ -217,7 +214,6 @@ public class Board
             else if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && Math.Abs(move.To.Y - piece.Position.Y) == 2)
             {
                 newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move.To, piece.Movement, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
-                enPassantMove = true;
             }
             else
             {
@@ -257,7 +253,7 @@ public class Board
 
             // Make new board add to results
             // Move committedMove = new(piece.Id, piece.Position, move, capturedPiece);
-            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, enPassantMove, move, this);
+            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, move, this);
             if (capturedPiece is not null)
             {
                 possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_CAPTURE, possibleMove, move);
@@ -295,7 +291,7 @@ public class Board
                     newCastleQueenSide[colorIndex] = false;
                     newCastleKingSide[colorIndex] = false;
                     Move castleMove = new(piece.Id, piece.Position, new Vector2Int(6, colorRank));
-                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, false, castleMove, this);
+                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, castleMove, this);
                     
                     // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
                     foreach (Piece toActivate in castledBoard.Pieces)
@@ -332,7 +328,7 @@ public class Board
                     newCastleQueenSide[colorIndex] = false;
                     newCastleKingSide[colorIndex] = false;
                     Move castleMove = new(piece.Id, piece.Position, new Vector2Int(2, colorRank));
-                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, false, castleMove, this);
+                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, castleMove, this);
                     
                     // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
                     foreach (Piece toActivate in castledBoard.Pieces)
