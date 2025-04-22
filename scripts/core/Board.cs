@@ -261,7 +261,7 @@ public class Board
             }
 
             // Make new board add to results
-            Move committedMove = new(piece.Position, move);
+            Move committedMove = new(piece.Id, piece.Position, move, capturedPiece);
             Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, enPassantMove, committedMove, this);
             if (capturedPiece is not null)
             {
@@ -321,7 +321,7 @@ public class Board
                     bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
                     newCastleQueenSide[colorIndex] = false;
                     newCastleKingSide[colorIndex] = false;
-                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, false, new Move(piece.Position, new Vector2Int(6, colorRank)), this);
+                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, false, new Move(piece.Id, piece.Position, new Vector2Int(6, colorRank)), this);
                     
                     // Add to results
                     result.Add(castledBoard);
@@ -350,7 +350,7 @@ public class Board
                     bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
                     newCastleQueenSide[colorIndex] = false;
                     newCastleKingSide[colorIndex] = false;
-                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, false, new Move(piece.Position, new Vector2Int(2, colorRank)), this);
+                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, false, new Move(piece.Id, piece.Position, new Vector2Int(2, colorRank)), this);
                     
                     // Add to results
                     result.Add(castledBoard);

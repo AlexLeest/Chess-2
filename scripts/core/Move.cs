@@ -2,9 +2,11 @@
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
-public struct Move(Vector2Int from, Vector2Int to)
+public struct Move(byte pieceId, Vector2Int from, Vector2Int to, Piece captured = null)
 {
     public Vector2Int From = from, To = to;
+    public byte Moving = pieceId;
+    public Piece Captured = captured;
 
     private static readonly char[] files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
