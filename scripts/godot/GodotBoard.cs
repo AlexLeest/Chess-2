@@ -83,10 +83,10 @@ public partial class GodotBoard : GridContainer
         selectedPiece = square.GdPiece;
         GD.Print($"Selected piece {selectedPiece.Id}");
         // TODO: Show possible moves for piece
-        foreach (Vector2Int move in selectedPiece.Piece.GetMovementOptions(Board.Squares))
+        foreach (Move move in selectedPiece.Piece.GetMovementOptions(Board.Squares))
         {
             // TODO: Accentuate these
-            GD.Print($"Move to {move} allowed");
+            GD.Print($"Move {move} allowed");
         }
     }
 

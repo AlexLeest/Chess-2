@@ -7,33 +7,41 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 public class PawnMovement : IMovement
 {
 
-    public List<Vector2Int> GetMovementOptions(Vector2Int from, Piece[,] squares, bool color)
+    public IEnumerable<Move> GetMovementOptions(byte id, Vector2Int from, Piece[,] squares, bool color)
     {
         // TODO: En passant
         int boardWidth = squares.GetLength(0);
         int boardHeight = squares.GetLength(1);
         
-        List<Vector2Int> options = [];
         Vector2Int direction = new(0, (color ? 1 : -1));
 
         // Step forward
         Vector2Int forward = from + direction;
         if (forward.Inside(boardWidth, boardHeight) && squares[forward.X, forward.Y] is null)
         {
-            options.Add(forward);
+            // options.Add(forward);
+            yield return new Move(id, from, forward);
             // Double move forward
             bool onDoubleMoveRow = (color && from.Y == 1) || (!color && from.Y == 6);
             if (onDoubleMoveRow)
             {
                 Vector2Int doubleMove = forward + direction;
                 if (squares[doubleMove.X, doubleMove.Y] is null)
-                    options.Add(doubleMove);
+                    // options.Add(doubleMove);
+                    yield return new Move(id, from, doubleMove);
             }
         }
         
         // Captures
-        AttemptCapture(squares, color, new Vector2Int(forward.X - 1, forward.Y), options);
-        AttemptCapture(squares, color, new Vector2Int(forward.X + 1, forward.Y), options);
+        Vector2Int upLeft = new Vector2Int(forward.X - 1, forward.Y);
+        Piece captureLeft = AttemptCapture(squares, color, upLeft);
+        if (captureLeft is not null)
+            yield return new Move(id, from, upLeft, captureLeft);
+        
+        Vector2Int upRight = new Vector2Int(forward.X - 1, forward.Y);
+        Piece captureRight = AttemptCapture(squares, color, upRight);
+        if (captureRight is not null)
+            yield return new Move(id, from, upRight, captureRight);
         
         // En passant checks
         // TODO: Does not currently handle actually CAPTURING that pawn
@@ -43,7 +51,8 @@ public class PawnMovement : IMovement
             Piece toTake = squares[enPassantLeft.X, enPassantLeft.Y];
             if (toTake is not null && toTake.Color != color && toTake.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
             {
-                options.Add(enPassantLeft + direction);
+                // options.Add(enPassantLeft + direction);
+                yield return new Move(id, from, enPassantLeft, toTake);
             }
         }
         Vector2Int enPassantRight = new(from.X + 1, from.Y);
@@ -52,23 +61,25 @@ public class PawnMovement : IMovement
             Piece toTake = squares[enPassantRight.X, enPassantLeft.Y];
             if (toTake is not null && toTake.Color != color && toTake.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
             {
-                options.Add(enPassantRight + direction);
+                // options.Add(enPassantRight + direction);
+                yield return new Move(id, from, enPassantRight, toTake);
             }
         }
 
-        return options;
+        // return options;
     }
 
-    private static void AttemptCapture(Piece[,] squares, bool color, Vector2Int capturePos, List<Vector2Int> options)
+    private static Piece AttemptCapture(Piece[,] squares, bool color, Vector2Int capturePos)
     {
         if (!capturePos.Inside(squares.GetLength(0), squares.GetLength(1)))
-            return;
+            return null;
         
         Piece toTake = squares[capturePos.X, capturePos.Y];
         if (toTake is not null && toTake.Color != color)
         {
-            options.Add(capturePos);
+            return toTake;
         }
+        return null;
     }
 
     public bool Attacks(Vector2Int from, Vector2Int target, Piece[,] squares, bool color)

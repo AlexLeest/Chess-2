@@ -14,10 +14,10 @@ public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position
     public IMovement[] Movement = movement;
     public SpecialPieceTypes SpecialPieceType = specialPiece;
 
-    public IEnumerable<Vector2Int> GetMovementOptions(Piece[,] board)
+    public IEnumerable<Move> GetMovementOptions(Piece[,] board)
     {
         foreach (IMovement movement in Movement)
-            foreach (Vector2Int move in movement.GetMovementOptions(Position, board, Color))
+            foreach (Move move in movement.GetMovementOptions(Id, Position, board, Color))
                 yield return move;
     }
 

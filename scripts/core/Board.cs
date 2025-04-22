@@ -191,18 +191,19 @@ public class Board
         List<Board> result = [];
 
         // For each possible move
-        foreach (Vector2Int move in piece.GetMovementOptions(Squares))
+        foreach (Move move in piece.GetMovementOptions(Squares))
         {
-            Piece capturedPiece = Squares[move.X, move.Y];
+            // Piece capturedPiece = Squares[move.X, move.Y];
+            Piece capturedPiece = move.Captured;
 
             // Check en passant captures
             bool enPassantMove = false;
-            if (enPassantPossible && piece.SpecialPieceType == SpecialPieceTypes.PAWN && capturedPiece == null)
-            {
-                Piece enPassantCheck = Squares[move.X, piece.Position.Y];
-                if (enPassantCheck != null && enPassantCheck.Color != colorToMove && enPassantCheck.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
-                    capturedPiece = enPassantCheck;
-            }
+            // if (enPassantPossible && piece.SpecialPieceType == SpecialPieceTypes.PAWN && capturedPiece == null)
+            // {
+            //     Piece enPassantCheck = Squares[move.X, piece.Position.Y];
+            //     if (enPassantCheck != null && enPassantCheck.Color != colorToMove && enPassantCheck.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
+            //         capturedPiece = enPassantCheck;
+            // }
 
             // Make full copy of all unmoved pieces
             Piece[] newPieces;
@@ -213,20 +214,20 @@ public class Board
 
             // Add moved piece (in new position) back to the list
             Piece newPiece;
-            if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && move.Y == (piece.Color ? 7 : 0))
+            if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && move.To.Y == (piece.Color ? 7 : 0))
             {
                 // Promotion! Just to queen for now
                 // TODO: Promotion to bishop, rook, knight
-                newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move, [SlidingMovement.Queen]);
+                newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move.To, [SlidingMovement.Queen]);
             }
-            else if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && Math.Abs(move.Y - piece.Position.Y) == 2)
+            else if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && Math.Abs(move.To.Y - piece.Position.Y) == 2)
             {
-                newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move, piece.Movement, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
+                newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move.To, piece.Movement, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
                 enPassantMove = true;
             }
             else
             {
-                newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move, piece.Movement, piece.SpecialPieceType);
+                newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move.To, piece.Movement, piece.SpecialPieceType);
             }
             newPieces[^1] = newPiece;
 
@@ -261,11 +262,11 @@ public class Board
             }
 
             // Make new board add to results
-            Move committedMove = new(piece.Id, piece.Position, move, capturedPiece);
-            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, enPassantMove, committedMove, this);
+            // Move committedMove = new(piece.Id, piece.Position, move, capturedPiece);
+            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, enPassantMove, move, this);
             if (capturedPiece is not null)
             {
-                possibleMove = ActivateItems(piece.Id, ItemTriggers.ON_CAPTURE, possibleMove, committedMove);
+                possibleMove = ActivateItems(piece.Id, ItemTriggers.ON_CAPTURE, possibleMove, move);
                 // if (itemsPerPiece.TryGetValue(piece.Id, out IItem[] captureItems))
                 // {
                 //     // Capturing items should trigger
@@ -277,7 +278,7 @@ public class Board
                 //         }
                 //     }
                 // }
-                possibleMove = ActivateItems(capturedPiece.Id, ItemTriggers.ON_CAPTURED, possibleMove, committedMove);
+                possibleMove = ActivateItems(capturedPiece.Id, ItemTriggers.ON_CAPTURED, possibleMove, move);
                 // if (itemsPerPiece.TryGetValue(capturedPiece.Id, out IItem[] capturedItems))
                 // {
                 //     // Captured items should trigger
