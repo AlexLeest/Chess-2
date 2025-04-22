@@ -5,7 +5,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.buffs;
 
 public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURED)
 {
-    public override bool ConditionsMet(Board board, Vector2Int position)
+    public override bool ConditionsMet(Board board, Move move)
     {
         // Find original position for this piece (first board, pieceId, position)
         // If position currently not free, return false
@@ -19,7 +19,7 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
         return true;
     }
 
-    public override Board Execute(Board board, Vector2Int position)
+    public override Board Execute(Board board, Move move)
     {
         // Get piece from last board (it's been captured in this one)
         Vector2Int respawnPos = GetRootPosition(board);

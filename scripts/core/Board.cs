@@ -98,13 +98,32 @@ public class Board
         Dictionary<byte, IItem[]> itemsPerPiece = new();
         for (byte i = 0; i < 8; i++)
         {
+            itemsPerPiece.Add(i, [new Respawn(i)]);
+        }
+        for (byte i = 16; i < 24; i++)
+        {
             itemsPerPiece.Add(i, [new SelfDestruct(i)]);
         }
 
         return new Board(0, pieces, [true, true], [true, true], itemsPerPiece);
     }
 
-    public bool IsInCheck(bool color)
+    public Board ActivateItems(byte pieceId, ItemTriggers trigger, Board board, Move move)
+    {
+        if (itemsPerPiece.TryGetValue(pieceId, out IItem[] captureItems))
+        {
+            foreach (IItem item in captureItems)
+            {
+                if (item.Trigger == trigger && item.ConditionsMet(board, move))
+                {
+                    board = item.Execute(board, move);
+                }
+            }
+        }
+        return board;
+    }
+
+    private bool IsInCheck(bool color)
     {
         Vector2Int kingPosition = new(0, 0);
         foreach (Piece piece in Pieces)
@@ -242,32 +261,34 @@ public class Board
             }
 
             // Make new board add to results
-            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, enPassantMove, new Move(piece.Position, move), this);
+            Move committedMove = new(piece.Position, move);
+            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, enPassantMove, committedMove, this);
             if (capturedPiece is not null)
             {
-                // TODO: Item triggers onCapture and onDeath
-                if (itemsPerPiece.TryGetValue(piece.Id, out IItem[] captureItems))
-                {
-                    // Capturing items should trigger
-                    foreach (IItem item in captureItems)
-                    {
-                        if (item.Trigger == ItemTriggers.ON_CAPTURE && item.ConditionsMet(possibleMove, move))
-                        {
-                            possibleMove = item.Execute(possibleMove, move);
-                        }
-                    }
-                }
-                if (itemsPerPiece.TryGetValue(capturedPiece.Id, out IItem[] capturedItems))
-                {
-                    // Captured items should trigger
-                    foreach (IItem item in capturedItems)
-                    {
-                        if (item.Trigger == ItemTriggers.ON_CAPTURED && item.ConditionsMet(possibleMove, move))
-                        {
-                            possibleMove = item.Execute(possibleMove, move);
-                        }
-                    }
-                }
+                possibleMove = ActivateItems(piece.Id, ItemTriggers.ON_CAPTURE, possibleMove, committedMove);
+                // if (itemsPerPiece.TryGetValue(piece.Id, out IItem[] captureItems))
+                // {
+                //     // Capturing items should trigger
+                //     foreach (IItem item in captureItems)
+                //     {
+                //         if (item.Trigger == ItemTriggers.ON_CAPTURE && item.ConditionsMet(possibleMove, committedMove))
+                //         {
+                //             possibleMove = item.Execute(possibleMove, committedMove);
+                //         }
+                //     }
+                // }
+                possibleMove = ActivateItems(capturedPiece.Id, ItemTriggers.ON_CAPTURED, possibleMove, committedMove);
+                // if (itemsPerPiece.TryGetValue(capturedPiece.Id, out IItem[] capturedItems))
+                // {
+                //     // Captured items should trigger
+                //     foreach (IItem item in capturedItems)
+                //     {
+                //         if (item.Trigger == ItemTriggers.ON_CAPTURED && item.ConditionsMet(possibleMove, committedMove))
+                //         {
+                //             possibleMove = item.Execute(possibleMove, committedMove);
+                //         }
+                //     }
+                // }
             }
             if (!possibleMove.IsInCheck(colorToMove))
                 result.Add(possibleMove);
@@ -340,7 +361,7 @@ public class Board
         return result;
     }
 
-    public Piece[] DeepcopyPieces(params byte[] idToSkip)
+    private Piece[] DeepcopyPieces(params byte[] idToSkip)
     {
         // Result leaves 1 "empty" spot in the array (to be filled with the moved piece)
         Piece[] result = new Piece[Pieces.Length - idToSkip.Length + 1];
@@ -360,7 +381,7 @@ public class Board
         return result;
     }
 
-    public Piece[] CastleDeepcopy(byte kingId, byte castleId)
+    private Piece[] CastleDeepcopy(byte kingId, byte castleId)
     {
         // Result leaves 1 "empty" spot in the array (to be filled with the moved piece)
         Piece[] result = new Piece[Pieces.Length];
