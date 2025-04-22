@@ -94,11 +94,11 @@ public class Board
         
         // DEBUG:
         // Item dictionary for testing purposes
-        // Every white pawn has respawn
+        // Every white pawn has selfDestruct
         Dictionary<byte, IItem[]> itemsPerPiece = new();
         for (byte i = 0; i < 8; i++)
         {
-            itemsPerPiece.Add(i, [new Respawn(i)]);
+            itemsPerPiece.Add(i, [new SelfDestruct(i)]);
         }
 
         return new Board(0, pieces, [true, true], [true, true], itemsPerPiece);
