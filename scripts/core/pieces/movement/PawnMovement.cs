@@ -40,7 +40,7 @@ public class PawnMovement : IMovement
             options.Add(new Move(id, from, upLeft, captureLeft));
             // yield return new Move(id, from, upLeft, captureLeft);
         
-        Vector2Int upRight = new Vector2Int(forward.X - 1, forward.Y);
+        Vector2Int upRight = new Vector2Int(forward.X + 1, forward.Y);
         Piece captureRight = AttemptCapture(squares, color, upRight);
         if (captureRight is not null)
             options.Add(new Move(id, from, upRight, captureRight));

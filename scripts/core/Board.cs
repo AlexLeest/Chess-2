@@ -96,14 +96,14 @@ public class Board
         // Item dictionary for testing purposes
         // Every white pawn has selfDestruct
         Dictionary<byte, IItem[]> itemsPerPiece = new();
-        for (byte i = 0; i < 8; i++)
-        {
-            itemsPerPiece.Add(i, [new Respawn(i)]);
-        }
-        for (byte i = 16; i < 24; i++)
-        {
-            itemsPerPiece.Add(i, [new SelfDestruct(i)]);
-        }
+        // for (byte i = 0; i < 8; i++)
+        // {
+        //     itemsPerPiece.Add(i, [new Respawn(i)]);
+        // }
+        // for (byte i = 16; i < 24; i++)
+        // {
+        //     itemsPerPiece.Add(i, [new SelfDestruct(i)]);
+        // }
 
         return new Board(0, pieces, [true, true], [true, true], itemsPerPiece);
     }
@@ -200,7 +200,7 @@ public class Board
             bool enPassantMove = false;
             // if (enPassantPossible && piece.SpecialPieceType == SpecialPieceTypes.PAWN && capturedPiece == null)
             // {
-            //     Piece enPassantCheck = Squares[move.X, piece.Position.Y];
+            //     Piece enPassantCheck = Squares[move.To.X, piece.Position.Y];
             //     if (enPassantCheck != null && enPassantCheck.Color != colorToMove && enPassantCheck.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
             //         capturedPiece = enPassantCheck;
             // }
