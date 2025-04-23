@@ -20,15 +20,12 @@ public class Board
 
     private readonly Dictionary<byte, IItem[]> itemsPerPiece;
 
-    // private readonly bool enPassantPossible;
-
     public Board(
         int turn,
         Piece[] pieces,
         bool[] castleQueenSide,
         bool[] castleKingSide,
         Dictionary<byte, IItem[]> itemsPerPiece,
-        // bool enPassantPossible = false,
         Move? lastMove = null,
         Board lastBoard = null
     )
@@ -38,7 +35,6 @@ public class Board
 
         this.CastleQueenSide = castleQueenSide;
         this.CastleKingSide = castleKingSide;
-        // this.enPassantPossible = enPassantPossible;
         this.itemsPerPiece = itemsPerPiece;
         this.LastMove = lastMove;
         this.LastBoard = lastBoard;
