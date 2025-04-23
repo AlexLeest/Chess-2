@@ -24,8 +24,6 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
         if (board.Squares[respawnPos.X, respawnPos.Y] is not null)
             return false;
         
-        
-        
         return true;
     }
 

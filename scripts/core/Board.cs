@@ -14,11 +14,11 @@ public class Board
     public Piece[,] Squares;
     public readonly int Turn;
     public readonly Move? LastMove;
+    public bool[] CastleQueenSide;
+    public bool[] CastleKingSide;
 
     private readonly Dictionary<byte, IItem[]> itemsPerPiece;
 
-    private readonly bool[] castleQueenSide;
-    private readonly bool[] castleKingSide;
     // private readonly bool enPassantPossible;
 
     public Board(
@@ -35,8 +35,8 @@ public class Board
         Turn = turn;
         Pieces = pieces;
 
-        this.castleQueenSide = castleQueenSide;
-        this.castleKingSide = castleKingSide;
+        this.CastleQueenSide = castleQueenSide;
+        this.CastleKingSide = castleKingSide;
         // this.enPassantPossible = enPassantPossible;
         this.itemsPerPiece = itemsPerPiece;
         this.LastMove = lastMove;
@@ -94,16 +94,16 @@ public class Board
         
         // DEBUG:
         // Item dictionary for testing purposes
-        // Every white pawn has selfDestruct
         Dictionary<byte, IItem[]> itemsPerPiece = new();
-        for (byte i = 0; i < 8; i++)
-        {
-            itemsPerPiece.Add(i, [new Respawn(i)]);
-        }
-        for (byte i = 16; i < 24; i++)
-        {
-            itemsPerPiece.Add(i, [new SelfDestruct(i)]);
-        }
+        itemsPerPiece.Add(12, [new OpponentRoyalSwap(12)]);
+        // for (byte i = 0; i < 8; i++)
+        // {
+        //     itemsPerPiece.Add(i, [new Respawn(i)]);
+        // }
+        // for (byte i = 16; i < 24; i++)
+        // {
+        //     itemsPerPiece.Add(i, [new SelfDestruct(i)]);
+        // }
 
         return new Board(0, pieces, [true, true], [true, true], itemsPerPiece);
     }
@@ -222,8 +222,8 @@ public class Board
             newPieces[^1] = newPiece;
 
             // If any of the castling pieces move, disallow castling in future boards
-            bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
-            bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
+            bool[] newCastleQueenSide = [CastleQueenSide[0], CastleQueenSide[1]];
+            bool[] newCastleKingSide = [CastleKingSide[0], CastleKingSide[1]];
             switch (piece.SpecialPieceType)
             {
                 case SpecialPieceTypes.KING:
@@ -267,7 +267,7 @@ public class Board
         if (piece.SpecialPieceType == SpecialPieceTypes.KING && !IsInCheck(colorToMove))
         {
             int colorRank = colorToMove ? 0 : 7;
-            if (castleKingSide[colorIndex])
+            if (CastleKingSide[colorIndex])
             {
                 // IF there's no pieces on files 5, 6
                 // AND no possible capture on files 5, 6
@@ -286,8 +286,8 @@ public class Board
                     newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(5, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
                     
                     // Remove castling rights
-                    bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
-                    bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
+                    bool[] newCastleQueenSide = [CastleQueenSide[0], CastleQueenSide[1]];
+                    bool[] newCastleKingSide = [CastleKingSide[0], CastleKingSide[1]];
                     newCastleQueenSide[colorIndex] = false;
                     newCastleKingSide[colorIndex] = false;
                     Move castleMove = new(piece.Id, piece.Position, new Vector2Int(6, colorRank));
@@ -304,7 +304,7 @@ public class Board
                     result.Add(castledBoard);
                 }
             }
-            if (castleQueenSide[colorIndex])
+            if (CastleQueenSide[colorIndex])
             {
                 // IF there's no pieces on files 1, 2, 3
                 // AND no possible capture on files 2, 3
@@ -323,8 +323,8 @@ public class Board
                     newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(3, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
                     
                     // Remove castling rights
-                    bool[] newCastleQueenSide = [castleQueenSide[0], castleQueenSide[1]];
-                    bool[] newCastleKingSide = [castleKingSide[0], castleKingSide[1]];
+                    bool[] newCastleQueenSide = [CastleQueenSide[0], CastleQueenSide[1]];
+                    bool[] newCastleKingSide = [CastleKingSide[0], CastleKingSide[1]];
                     newCastleQueenSide[colorIndex] = false;
                     newCastleKingSide[colorIndex] = false;
                     Move castleMove = new(piece.Id, piece.Position, new Vector2Int(2, colorRank));
