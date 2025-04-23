@@ -1,38 +1,37 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using System.Collections.Generic;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core.buffs;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 
 public class OpponentRoyalSwap(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CASTLE) 
 {
     public override bool ConditionsMet(Board board, Move move)
     {
-        // TODO: Check if opponent has (at least 1) queen
+        bool color = GetOwnColor(board);
+        foreach (Piece piece in board.Pieces)
+        {
+            if (piece.BasePiece == BasePiece.QUEEN && piece.Color != color)
+                return true;
+        }
 
-        return true;
+        return false;
     }
 
     public override Board Execute(Board board, Move move)
     {
         // Find out own color
-        bool color = false;
-        foreach (Piece piece in board.Pieces)
-        {
-            if (piece.Id != pieceId)
-                continue;
-            color = piece.Color;
-            break;
-        }
+        bool color = GetOwnColor(board);
         
         Piece king = null;
         Piece queen = null;
-        for (int index = 0; index < board.Pieces.Length; index++)
+        foreach (Piece piece in board.Pieces)
         {
-            Piece piece = board.Pieces[index];
             if (piece.SpecialPieceType == SpecialPieceTypes.KING && piece.Color != color)
             {
                 king = piece;
             }
-            else if (piece.BasePiece == BasePiece.Queen && piece.Color != color)
+            else if (piece.BasePiece == BasePiece.QUEEN && piece.Color != color)
             {
                 queen = piece;
             }
@@ -55,5 +54,17 @@ public class OpponentRoyalSwap(byte pieceId) : AbstractItem(pieceId, ItemTrigger
         board.CastleKingSide[otherColorIndex] = false;
 
         return board;
+    }
+
+    private bool GetOwnColor(Board board)
+    {
+        bool color = false;
+        foreach (Piece piece in board.Pieces)
+        {
+            if (piece.Id != PieceId)
+                continue;
+            return piece.Color;
+        }
+        throw new KeyNotFoundException($"Piece with Id {PieceId} does not exist on board");
     }
 }

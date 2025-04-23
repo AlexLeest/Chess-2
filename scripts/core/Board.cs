@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System;
 using System.Collections.Generic;
@@ -209,7 +210,7 @@ public class Board
             {
                 // Promotion! Just to queen for now
                 // TODO: Promotion to bishop, rook, knight
-                newPiece = new Piece(piece.Id, BasePiece.Queen, piece.Color, move.To, [SlidingMovement.Queen]);
+                newPiece = new Piece(piece.Id, BasePiece.QUEEN, piece.Color, move.To, [SlidingMovement.Queen]);
             }
             else if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && Math.Abs(move.To.Y - piece.Position.Y) == 2)
             {

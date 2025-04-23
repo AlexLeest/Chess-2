@@ -2,10 +2,10 @@
 
 public enum BasePiece
 {
-    Pawn,
-    Rook,
-    Bishop,
-    Knight,
-    Queen,
-    King,
+    PAWN,
+    ROOK,
+    BISHOP,
+    KNIGHT,
+    QUEEN,
+    KING,
 }

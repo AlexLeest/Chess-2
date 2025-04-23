@@ -15,7 +15,7 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
         Board currentBoard = board;
         while (currentBoard.LastBoard is not null)
         {
-            if (currentBoard.LastMove?.Captured?.Id == pieceId)
+            if (currentBoard.LastMove?.Captured?.Id == PieceId)
                 return false;
             currentBoard = currentBoard.LastBoard;
         }
@@ -35,7 +35,7 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
         if (toRespawn is null)
             return board;
         
-        toRespawn = new Piece(pieceId, toRespawn.BasePiece, toRespawn.Color, respawnPos, toRespawn.Movement, toRespawn.SpecialPieceType);
+        toRespawn = new Piece(PieceId, toRespawn.BasePiece, toRespawn.Color, respawnPos, toRespawn.Movement, toRespawn.SpecialPieceType);
         
         Piece[] newPieces = new Piece[board.Pieces.Length + 1];
         for (int i = 0; i < board.Pieces.Length; i++)
@@ -54,7 +54,7 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
         Piece toRespawn = null;
         foreach (Piece piece in board.Pieces)
         {
-            if (piece.Id != pieceId)
+            if (piece.Id != PieceId)
                 continue;
             
             toRespawn = piece;
@@ -72,10 +72,10 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
         }
         foreach (Piece piece in rootBoard.Pieces)
         {
-            if (piece.Id != pieceId)
+            if (piece.Id != PieceId)
                 continue;
             return piece.Position;
         }
-        throw new KeyNotFoundException($"Piece with id {pieceId} not found at root board");
+        throw new KeyNotFoundException($"Piece with id {PieceId} not found at root board");
     }
 }

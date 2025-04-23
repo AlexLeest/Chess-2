@@ -29,31 +29,31 @@ public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position
 
     public static Piece Pawn(byte id, bool color, Vector2Int position)
     {
-        return new Piece(id, BasePiece.Pawn, color, position, [new PawnMovement()], SpecialPieceTypes.PAWN);
+        return new Piece(id, BasePiece.PAWN, color, position, [new PawnMovement()], SpecialPieceTypes.PAWN);
     }
 
     public static Piece Knight(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.NONE)
     {
-        return new Piece(id, BasePiece.Knight, color, position, [SlidingMovement.Knight], specialPiece);
+        return new Piece(id, BasePiece.KNIGHT, color, position, [SlidingMovement.Knight], specialPiece);
     }
 
     public static Piece Bishop(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.NONE)
     {
-        return new Piece(id, BasePiece.Bishop, color, position, [SlidingMovement.Bishop], specialPiece);
+        return new Piece(id, BasePiece.BISHOP, color, position, [SlidingMovement.Bishop], specialPiece);
     }
 
     public static Piece Rook(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.NONE)
     {
-        return new Piece(id, BasePiece.Rook, color, position, [SlidingMovement.Rook], specialPiece);
+        return new Piece(id, BasePiece.ROOK, color, position, [SlidingMovement.Rook], specialPiece);
     }
 
     public static Piece Queen(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.NONE)
     {
-        return new Piece(id, BasePiece.Queen, color, position, [SlidingMovement.Queen], specialPiece);
+        return new Piece(id, BasePiece.QUEEN, color, position, [SlidingMovement.Queen], specialPiece);
     }
 
     public static Piece King(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.KING)
     {
-        return new Piece(id, BasePiece.King, color, position, [SlidingMovement.King], specialPiece);
+        return new Piece(id, BasePiece.KING, color, position, [SlidingMovement.King], specialPiece);
     }
 }
