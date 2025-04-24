@@ -14,8 +14,9 @@ public partial class GodotBoard : GridContainer
     public Board Board;
     [Export] private Color lightSquare, darkSquare;
     [Export] private int squareSize = 64;
-    [Export] private Godot.Collections.Dictionary<byte, Texture2D> pieceTexturesDictionary;
-    [Export] private BasePieceTexture[] pieceTextures;
+    // [Export] private Godot.Collections.Dictionary<byte, Texture2D> pieceTexturesDictionary;
+    // [Export] private BasePieceTexture[] pieceTextures;
+    [Export] private PieceTextures pieceTextures;
 
     [Export] private string fen;
 
@@ -106,7 +107,6 @@ public partial class GodotBoard : GridContainer
 
     private void RenderPieces()
     {
-        // TODO: Fuck you we're making this stateless
         foreach (GodotSquare square in squares)
         {
             square.Clear();
@@ -122,17 +122,8 @@ public partial class GodotBoard : GridContainer
             pieceToSquare[gdPiece.Id] = square;
             square.AddChild(gdPiece);
             gdPiece.Position = Vector2.Down;
-            // GD.Print($"Setting piece texture for {piece.Id}");
             
-            // Determine piece type (only standard pieces for now)
-            foreach (BasePieceTexture texture in pieceTextures)
-            {
-                if (!(piece.BasePiece == texture.BasePiece && piece.Color == texture.Color))
-                    continue;
-                gdPiece.Texture = texture.Texture;
-                break;
-            }
-            // gdPiece.Texture = pieceTexturesDictionary[piece.Id];
+            gdPiece.Texture = pieceTextures.GetPieceTexture(piece);
         }
     }
 }

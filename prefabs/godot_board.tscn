@@ -1,104 +1,8 @@
-[gd_scene load_steps=28 format=3 uid="uid://cwi6nbxbpo8bs"]
+[gd_scene load_steps=4 format=3 uid="uid://cwi6nbxbpo8bs"]
 
 [ext_resource type="Script" uid="uid://54kjarjdjwgv" path="res://scripts/godot/boards/GodotBoard.cs" id="1_u7bof"]
-[ext_resource type="Texture2D" uid="uid://b17veqy3lpb83" path="res://art/pieces/wP.svg" id="2_4nm5v"]
-[ext_resource type="Texture2D" uid="uid://d28f403us63or" path="res://art/pieces/wR.svg" id="3_x7oph"]
-[ext_resource type="Texture2D" uid="uid://qgv8b1v1luf2" path="res://art/pieces/wN.svg" id="4_ro2hj"]
-[ext_resource type="Texture2D" uid="uid://c1fnwv0ig6j27" path="res://art/pieces/wB.svg" id="5_owbbi"]
-[ext_resource type="Texture2D" uid="uid://gg3im0lsrswa" path="res://art/pieces/wQ.svg" id="6_v4xg5"]
-[ext_resource type="Texture2D" uid="uid://i6fmdcudmkkq" path="res://art/pieces/wK.svg" id="7_d2h5o"]
-[ext_resource type="Texture2D" uid="uid://cad87thwm8ejr" path="res://art/pieces/bP.svg" id="8_ybnyp"]
-[ext_resource type="Texture2D" uid="uid://wlcjeabn4uoh" path="res://art/pieces/bR.svg" id="9_7bu8x"]
-[ext_resource type="Texture2D" uid="uid://dquybrpg3ywmf" path="res://art/pieces/bN.svg" id="10_xxvg1"]
-[ext_resource type="Texture2D" uid="uid://tb8s1rq7ivaq" path="res://art/pieces/bB.svg" id="11_nn3tk"]
-[ext_resource type="Texture2D" uid="uid://bn7ggxwhldr6a" path="res://art/pieces/bQ.svg" id="12_800ls"]
-[ext_resource type="Texture2D" uid="uid://gftk3abspmjw" path="res://art/pieces/bK.svg" id="13_avu4r"]
-[ext_resource type="Script" uid="uid://03f3vre5h3sj" path="res://scripts/godot/utils/BasePieceTexture.cs" id="14_36j01"]
+[ext_resource type="Resource" uid="uid://bcrexudceb4sh" path="res://data/basepiecetextures.tres" id="2_3pwqh"]
 [ext_resource type="Script" uid="uid://c5frspbfxkamm" path="res://scripts/godot/boards/GodotSquare.cs" id="15_yf33j"]
-
-[sub_resource type="Resource" id="Resource_5jxlq"]
-script = ExtResource("14_36j01")
-BasePiece = 0
-Color = true
-Texture = ExtResource("2_4nm5v")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
-
-[sub_resource type="Resource" id="Resource_xrtyr"]
-script = ExtResource("14_36j01")
-BasePiece = 0
-Color = false
-Texture = ExtResource("8_ybnyp")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
-
-[sub_resource type="Resource" id="Resource_daiq8"]
-script = ExtResource("14_36j01")
-BasePiece = 1
-Color = true
-Texture = ExtResource("3_x7oph")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
-
-[sub_resource type="Resource" id="Resource_c6rvn"]
-script = ExtResource("14_36j01")
-BasePiece = 1
-Color = false
-Texture = ExtResource("9_7bu8x")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
-
-[sub_resource type="Resource" id="Resource_n74k2"]
-script = ExtResource("14_36j01")
-BasePiece = 2
-Color = true
-Texture = ExtResource("5_owbbi")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
-
-[sub_resource type="Resource" id="Resource_si7kk"]
-script = ExtResource("14_36j01")
-BasePiece = 2
-Color = false
-Texture = ExtResource("11_nn3tk")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
-
-[sub_resource type="Resource" id="Resource_pn65j"]
-script = ExtResource("14_36j01")
-BasePiece = 3
-Color = true
-Texture = ExtResource("4_ro2hj")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
-
-[sub_resource type="Resource" id="Resource_5f8cm"]
-script = ExtResource("14_36j01")
-BasePiece = 3
-Color = false
-Texture = ExtResource("10_xxvg1")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
-
-[sub_resource type="Resource" id="Resource_gm488"]
-script = ExtResource("14_36j01")
-BasePiece = 4
-Color = true
-Texture = ExtResource("6_v4xg5")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
-
-[sub_resource type="Resource" id="Resource_kay4s"]
-script = ExtResource("14_36j01")
-BasePiece = 4
-Color = false
-Texture = ExtResource("12_800ls")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
-
-[sub_resource type="Resource" id="Resource_j7bvy"]
-script = ExtResource("14_36j01")
-BasePiece = 5
-Color = true
-Texture = ExtResource("7_d2h5o")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
-
-[sub_resource type="Resource" id="Resource_1dqgb"]
-script = ExtResource("14_36j01")
-BasePiece = 5
-Color = false
-Texture = ExtResource("13_avu4r")
-metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [node name="GodotBoard" type="GridContainer"]
 anchors_preset = 8
@@ -118,41 +22,7 @@ columns = 8
 script = ExtResource("1_u7bof")
 lightSquare = Color(0.952941, 0.831373, 0.686275, 1)
 darkSquare = Color(0.568627, 0.305882, 0.25098, 1)
-pieceTexturesDictionary = Dictionary[int, Texture2D]({
-0: ExtResource("2_4nm5v"),
-1: ExtResource("2_4nm5v"),
-2: ExtResource("2_4nm5v"),
-3: ExtResource("2_4nm5v"),
-4: ExtResource("2_4nm5v"),
-5: ExtResource("2_4nm5v"),
-6: ExtResource("2_4nm5v"),
-7: ExtResource("2_4nm5v"),
-8: ExtResource("3_x7oph"),
-9: ExtResource("4_ro2hj"),
-10: ExtResource("5_owbbi"),
-11: ExtResource("6_v4xg5"),
-12: ExtResource("7_d2h5o"),
-13: ExtResource("5_owbbi"),
-14: ExtResource("4_ro2hj"),
-15: ExtResource("3_x7oph"),
-16: ExtResource("8_ybnyp"),
-17: ExtResource("8_ybnyp"),
-18: ExtResource("8_ybnyp"),
-19: ExtResource("8_ybnyp"),
-20: ExtResource("8_ybnyp"),
-21: ExtResource("8_ybnyp"),
-22: ExtResource("8_ybnyp"),
-23: ExtResource("8_ybnyp"),
-24: ExtResource("9_7bu8x"),
-25: ExtResource("10_xxvg1"),
-26: ExtResource("11_nn3tk"),
-27: ExtResource("12_800ls"),
-28: ExtResource("13_avu4r"),
-29: ExtResource("11_nn3tk"),
-30: ExtResource("10_xxvg1"),
-31: ExtResource("9_7bu8x")
-})
-pieceTextures = Array[Object]([SubResource("Resource_5jxlq"), SubResource("Resource_xrtyr"), SubResource("Resource_daiq8"), SubResource("Resource_c6rvn"), SubResource("Resource_n74k2"), SubResource("Resource_si7kk"), SubResource("Resource_pn65j"), SubResource("Resource_5f8cm"), SubResource("Resource_gm488"), SubResource("Resource_kay4s"), SubResource("Resource_j7bvy"), SubResource("Resource_1dqgb")])
+pieceTextures = ExtResource("2_3pwqh")
 metadata/_custom_type_script = "uid://54kjarjdjwgv"
 
 [node name="GodotSquare" type="ColorRect" parent="."]

@@ -1,0 +1,105 @@
+[gd_resource type="Resource" script_class="PieceTextures" load_steps=27 format=3 uid="uid://bcrexudceb4sh"]
+
+[ext_resource type="Script" uid="uid://03f3vre5h3sj" path="res://scripts/godot/utils/BasePieceTexture.cs" id="1_fhrla"]
+[ext_resource type="Script" uid="uid://cr2qemoyqbcdy" path="res://scripts/godot/pieces/PieceTextures.cs" id="1_pa321"]
+[ext_resource type="Texture2D" uid="uid://b17veqy3lpb83" path="res://art/pieces/wP.svg" id="1_s6bhj"]
+[ext_resource type="Texture2D" uid="uid://cad87thwm8ejr" path="res://art/pieces/bP.svg" id="3_7lck4"]
+[ext_resource type="Texture2D" uid="uid://d28f403us63or" path="res://art/pieces/wR.svg" id="4_4gw50"]
+[ext_resource type="Texture2D" uid="uid://wlcjeabn4uoh" path="res://art/pieces/bR.svg" id="5_2yyu8"]
+[ext_resource type="Texture2D" uid="uid://c1fnwv0ig6j27" path="res://art/pieces/wB.svg" id="6_losim"]
+[ext_resource type="Texture2D" uid="uid://tb8s1rq7ivaq" path="res://art/pieces/bB.svg" id="7_hpkq3"]
+[ext_resource type="Texture2D" uid="uid://qgv8b1v1luf2" path="res://art/pieces/wN.svg" id="8_l8dpr"]
+[ext_resource type="Texture2D" uid="uid://dquybrpg3ywmf" path="res://art/pieces/bN.svg" id="9_jlof7"]
+[ext_resource type="Texture2D" uid="uid://gg3im0lsrswa" path="res://art/pieces/wQ.svg" id="10_gdee2"]
+[ext_resource type="Texture2D" uid="uid://bn7ggxwhldr6a" path="res://art/pieces/bQ.svg" id="11_b8qsf"]
+[ext_resource type="Texture2D" uid="uid://i6fmdcudmkkq" path="res://art/pieces/wK.svg" id="12_b2yyf"]
+[ext_resource type="Texture2D" uid="uid://gftk3abspmjw" path="res://art/pieces/bK.svg" id="13_2bttg"]
+
+[sub_resource type="Resource" id="Resource_b5m35"]
+script = ExtResource("1_fhrla")
+BasePiece = 0
+Color = true
+Texture = ExtResource("1_s6bhj")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_vjo87"]
+script = ExtResource("1_fhrla")
+BasePiece = 0
+Color = false
+Texture = ExtResource("3_7lck4")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_xo6sd"]
+script = ExtResource("1_fhrla")
+BasePiece = 1
+Color = true
+Texture = ExtResource("4_4gw50")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_oqyug"]
+script = ExtResource("1_fhrla")
+BasePiece = 1
+Color = false
+Texture = ExtResource("5_2yyu8")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_gyn4y"]
+script = ExtResource("1_fhrla")
+BasePiece = 2
+Color = true
+Texture = ExtResource("6_losim")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_ol6j1"]
+script = ExtResource("1_fhrla")
+BasePiece = 2
+Color = false
+Texture = ExtResource("7_hpkq3")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_es8jc"]
+script = ExtResource("1_fhrla")
+BasePiece = 3
+Color = true
+Texture = ExtResource("8_l8dpr")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_0ax14"]
+script = ExtResource("1_fhrla")
+BasePiece = 3
+Color = false
+Texture = ExtResource("9_jlof7")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_1irfh"]
+script = ExtResource("1_fhrla")
+BasePiece = 4
+Color = true
+Texture = ExtResource("10_gdee2")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_f8lef"]
+script = ExtResource("1_fhrla")
+BasePiece = 4
+Color = false
+Texture = ExtResource("11_b8qsf")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_op34j"]
+script = ExtResource("1_fhrla")
+BasePiece = 5
+Color = true
+Texture = ExtResource("12_b2yyf")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_t6kho"]
+script = ExtResource("1_fhrla")
+BasePiece = 5
+Color = false
+Texture = ExtResource("13_2bttg")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[resource]
+script = ExtResource("1_pa321")
+pieceTextures = Array[Object]([SubResource("Resource_b5m35"), SubResource("Resource_vjo87"), SubResource("Resource_xo6sd"), SubResource("Resource_oqyug"), SubResource("Resource_gyn4y"), SubResource("Resource_ol6j1"), SubResource("Resource_es8jc"), SubResource("Resource_0ax14"), SubResource("Resource_1irfh"), SubResource("Resource_f8lef"), SubResource("Resource_op34j"), SubResource("Resource_t6kho")])
+metadata/_custom_type_script = "uid://cr2qemoyqbcdy"
