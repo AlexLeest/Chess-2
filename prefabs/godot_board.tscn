@@ -1,109 +1,106 @@
-[gd_scene load_steps=29 format=3 uid="uid://ddro8mbffb074"]
+[gd_scene load_steps=28 format=3 uid="uid://cwi6nbxbpo8bs"]
 
-[ext_resource type="Script" uid="uid://54kjarjdjwgv" path="res://scripts/godot/GodotBoard.cs" id="1_errlg"]
-[ext_resource type="Texture2D" uid="uid://tb8s1rq7ivaq" path="res://art/pieces/bB.svg" id="2_44saj"]
-[ext_resource type="Texture2D" uid="uid://gftk3abspmjw" path="res://art/pieces/bK.svg" id="3_7mbro"]
-[ext_resource type="Texture2D" uid="uid://dquybrpg3ywmf" path="res://art/pieces/bN.svg" id="4_ff6ho"]
-[ext_resource type="Texture2D" uid="uid://cad87thwm8ejr" path="res://art/pieces/bP.svg" id="5_7yos8"]
-[ext_resource type="Texture2D" uid="uid://bn7ggxwhldr6a" path="res://art/pieces/bQ.svg" id="6_5jxlq"]
-[ext_resource type="Texture2D" uid="uid://wlcjeabn4uoh" path="res://art/pieces/bR.svg" id="7_xrtyr"]
-[ext_resource type="Texture2D" uid="uid://c1fnwv0ig6j27" path="res://art/pieces/wB.svg" id="8_daiq8"]
-[ext_resource type="Texture2D" uid="uid://i6fmdcudmkkq" path="res://art/pieces/wK.svg" id="9_c6rvn"]
-[ext_resource type="Texture2D" uid="uid://qgv8b1v1luf2" path="res://art/pieces/wN.svg" id="10_n74k2"]
-[ext_resource type="Texture2D" uid="uid://b17veqy3lpb83" path="res://art/pieces/wP.svg" id="11_si7kk"]
-[ext_resource type="Texture2D" uid="uid://gg3im0lsrswa" path="res://art/pieces/wQ.svg" id="12_pn65j"]
-[ext_resource type="Texture2D" uid="uid://d28f403us63or" path="res://art/pieces/wR.svg" id="13_5f8cm"]
-[ext_resource type="Script" uid="uid://c5frspbfxkamm" path="res://scripts/godot/GodotSquare.cs" id="14_7mbro"]
-[ext_resource type="Script" uid="uid://03f3vre5h3sj" path="res://scripts/godot/utils/BasePieceTexture.cs" id="14_7yos8"]
-[ext_resource type="Script" uid="uid://dbv72vwgtn827" path="res://scripts/godot/MoveCounter.cs" id="15_ff6ho"]
+[ext_resource type="Script" uid="uid://54kjarjdjwgv" path="res://scripts/godot/boards/GodotBoard.cs" id="1_u7bof"]
+[ext_resource type="Texture2D" uid="uid://b17veqy3lpb83" path="res://art/pieces/wP.svg" id="2_4nm5v"]
+[ext_resource type="Texture2D" uid="uid://d28f403us63or" path="res://art/pieces/wR.svg" id="3_x7oph"]
+[ext_resource type="Texture2D" uid="uid://qgv8b1v1luf2" path="res://art/pieces/wN.svg" id="4_ro2hj"]
+[ext_resource type="Texture2D" uid="uid://c1fnwv0ig6j27" path="res://art/pieces/wB.svg" id="5_owbbi"]
+[ext_resource type="Texture2D" uid="uid://gg3im0lsrswa" path="res://art/pieces/wQ.svg" id="6_v4xg5"]
+[ext_resource type="Texture2D" uid="uid://i6fmdcudmkkq" path="res://art/pieces/wK.svg" id="7_d2h5o"]
+[ext_resource type="Texture2D" uid="uid://cad87thwm8ejr" path="res://art/pieces/bP.svg" id="8_ybnyp"]
+[ext_resource type="Texture2D" uid="uid://wlcjeabn4uoh" path="res://art/pieces/bR.svg" id="9_7bu8x"]
+[ext_resource type="Texture2D" uid="uid://dquybrpg3ywmf" path="res://art/pieces/bN.svg" id="10_xxvg1"]
+[ext_resource type="Texture2D" uid="uid://tb8s1rq7ivaq" path="res://art/pieces/bB.svg" id="11_nn3tk"]
+[ext_resource type="Texture2D" uid="uid://bn7ggxwhldr6a" path="res://art/pieces/bQ.svg" id="12_800ls"]
+[ext_resource type="Texture2D" uid="uid://gftk3abspmjw" path="res://art/pieces/bK.svg" id="13_avu4r"]
+[ext_resource type="Script" uid="uid://03f3vre5h3sj" path="res://scripts/godot/utils/BasePieceTexture.cs" id="14_36j01"]
+[ext_resource type="Script" uid="uid://c5frspbfxkamm" path="res://scripts/godot/boards/GodotSquare.cs" id="15_yf33j"]
 
 [sub_resource type="Resource" id="Resource_5jxlq"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 0
 Color = true
-Texture = ExtResource("11_si7kk")
+Texture = ExtResource("2_4nm5v")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [sub_resource type="Resource" id="Resource_xrtyr"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 0
 Color = false
-Texture = ExtResource("5_7yos8")
+Texture = ExtResource("8_ybnyp")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [sub_resource type="Resource" id="Resource_daiq8"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 1
 Color = true
-Texture = ExtResource("13_5f8cm")
+Texture = ExtResource("3_x7oph")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [sub_resource type="Resource" id="Resource_c6rvn"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 1
 Color = false
-Texture = ExtResource("7_xrtyr")
+Texture = ExtResource("9_7bu8x")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [sub_resource type="Resource" id="Resource_n74k2"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 2
 Color = true
-Texture = ExtResource("8_daiq8")
+Texture = ExtResource("5_owbbi")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [sub_resource type="Resource" id="Resource_si7kk"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 2
 Color = false
-Texture = ExtResource("2_44saj")
+Texture = ExtResource("11_nn3tk")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [sub_resource type="Resource" id="Resource_pn65j"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 3
 Color = true
-Texture = ExtResource("10_n74k2")
+Texture = ExtResource("4_ro2hj")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [sub_resource type="Resource" id="Resource_5f8cm"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 3
 Color = false
-Texture = ExtResource("4_ff6ho")
+Texture = ExtResource("10_xxvg1")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [sub_resource type="Resource" id="Resource_gm488"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 4
 Color = true
-Texture = ExtResource("12_pn65j")
+Texture = ExtResource("6_v4xg5")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [sub_resource type="Resource" id="Resource_kay4s"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 4
 Color = false
-Texture = ExtResource("6_5jxlq")
+Texture = ExtResource("12_800ls")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [sub_resource type="Resource" id="Resource_j7bvy"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 5
 Color = true
-Texture = ExtResource("9_c6rvn")
+Texture = ExtResource("7_d2h5o")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [sub_resource type="Resource" id="Resource_1dqgb"]
-script = ExtResource("14_7yos8")
+script = ExtResource("14_36j01")
 BasePiece = 5
 Color = false
-Texture = ExtResource("3_7mbro")
+Texture = ExtResource("13_avu4r")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
-[node name="Canvas" type="CanvasLayer"]
-
-[node name="GodotBoard" type="GridContainer" parent="."]
+[node name="GodotBoard" type="GridContainer"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -118,559 +115,553 @@ grow_vertical = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 8
-script = ExtResource("1_errlg")
+script = ExtResource("1_u7bof")
 lightSquare = Color(0.952941, 0.831373, 0.686275, 1)
 darkSquare = Color(0.568627, 0.305882, 0.25098, 1)
 pieceTexturesDictionary = Dictionary[int, Texture2D]({
-0: ExtResource("11_si7kk"),
-1: ExtResource("11_si7kk"),
-2: ExtResource("11_si7kk"),
-3: ExtResource("11_si7kk"),
-4: ExtResource("11_si7kk"),
-5: ExtResource("11_si7kk"),
-6: ExtResource("11_si7kk"),
-7: ExtResource("11_si7kk"),
-8: ExtResource("13_5f8cm"),
-9: ExtResource("10_n74k2"),
-10: ExtResource("8_daiq8"),
-11: ExtResource("12_pn65j"),
-12: ExtResource("9_c6rvn"),
-13: ExtResource("8_daiq8"),
-14: ExtResource("10_n74k2"),
-15: ExtResource("13_5f8cm"),
-16: ExtResource("5_7yos8"),
-17: ExtResource("5_7yos8"),
-18: ExtResource("5_7yos8"),
-19: ExtResource("5_7yos8"),
-20: ExtResource("5_7yos8"),
-21: ExtResource("5_7yos8"),
-22: ExtResource("5_7yos8"),
-23: ExtResource("5_7yos8"),
-24: ExtResource("7_xrtyr"),
-25: ExtResource("4_ff6ho"),
-26: ExtResource("2_44saj"),
-27: ExtResource("6_5jxlq"),
-28: ExtResource("3_7mbro"),
-29: ExtResource("2_44saj"),
-30: ExtResource("4_ff6ho"),
-31: ExtResource("7_xrtyr")
+0: ExtResource("2_4nm5v"),
+1: ExtResource("2_4nm5v"),
+2: ExtResource("2_4nm5v"),
+3: ExtResource("2_4nm5v"),
+4: ExtResource("2_4nm5v"),
+5: ExtResource("2_4nm5v"),
+6: ExtResource("2_4nm5v"),
+7: ExtResource("2_4nm5v"),
+8: ExtResource("3_x7oph"),
+9: ExtResource("4_ro2hj"),
+10: ExtResource("5_owbbi"),
+11: ExtResource("6_v4xg5"),
+12: ExtResource("7_d2h5o"),
+13: ExtResource("5_owbbi"),
+14: ExtResource("4_ro2hj"),
+15: ExtResource("3_x7oph"),
+16: ExtResource("8_ybnyp"),
+17: ExtResource("8_ybnyp"),
+18: ExtResource("8_ybnyp"),
+19: ExtResource("8_ybnyp"),
+20: ExtResource("8_ybnyp"),
+21: ExtResource("8_ybnyp"),
+22: ExtResource("8_ybnyp"),
+23: ExtResource("8_ybnyp"),
+24: ExtResource("9_7bu8x"),
+25: ExtResource("10_xxvg1"),
+26: ExtResource("11_nn3tk"),
+27: ExtResource("12_800ls"),
+28: ExtResource("13_avu4r"),
+29: ExtResource("11_nn3tk"),
+30: ExtResource("10_xxvg1"),
+31: ExtResource("9_7bu8x")
 })
 pieceTextures = Array[Object]([SubResource("Resource_5jxlq"), SubResource("Resource_xrtyr"), SubResource("Resource_daiq8"), SubResource("Resource_c6rvn"), SubResource("Resource_n74k2"), SubResource("Resource_si7kk"), SubResource("Resource_pn65j"), SubResource("Resource_5f8cm"), SubResource("Resource_gm488"), SubResource("Resource_kay4s"), SubResource("Resource_j7bvy"), SubResource("Resource_1dqgb")])
 metadata/_custom_type_script = "uid://54kjarjdjwgv"
 
-[node name="GodotSquare" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(0, 7)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare2" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare2" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(1, 7)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare3" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare3" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(2, 7)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare4" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare4" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(3, 7)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare5" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare5" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(4, 7)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare6" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare6" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(5, 7)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare7" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare7" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(6, 7)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare8" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare8" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(7, 7)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare9" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare9" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(0, 6)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare10" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare10" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(1, 6)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare11" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare11" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(2, 6)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare12" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare12" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(3, 6)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare13" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare13" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(4, 6)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare14" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare14" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(5, 6)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare15" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare15" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(6, 6)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare16" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare16" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(7, 6)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare17" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare17" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(0, 5)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare18" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare18" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(1, 5)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare19" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare19" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(2, 5)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare20" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare20" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(3, 5)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare21" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare21" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(4, 5)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare22" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare22" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(5, 5)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare23" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare23" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(6, 5)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare24" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare24" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(7, 5)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare25" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare25" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(0, 4)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare26" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare26" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(1, 4)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare27" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare27" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(2, 4)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare28" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare28" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(3, 4)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare29" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare29" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(4, 4)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare30" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare30" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(5, 4)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare31" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare31" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(6, 4)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare32" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare32" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(7, 4)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare33" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare33" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(0, 3)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare34" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare34" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(1, 3)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare35" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare35" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(2, 3)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare36" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare36" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(3, 3)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare37" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare37" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(4, 3)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare38" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare38" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(5, 3)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare39" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare39" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(6, 3)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare40" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare40" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(7, 3)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare41" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare41" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(0, 2)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare42" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare42" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(1, 2)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare43" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare43" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(2, 2)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare44" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare44" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(3, 2)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare45" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare45" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(4, 2)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare46" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare46" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(5, 2)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare47" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare47" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(6, 2)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare48" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare48" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(7, 2)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare49" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare49" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(0, 1)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare50" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare50" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(1, 1)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare51" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare51" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(2, 1)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare52" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare52" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(3, 1)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare53" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare53" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(4, 1)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare54" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare54" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(5, 1)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare55" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare55" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(6, 1)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare56" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare56" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(7, 1)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare57" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare57" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare58" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare58" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(1, 0)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare59" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare59" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(2, 0)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare60" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare60" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(3, 0)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare61" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare61" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(4, 0)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare62" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare62" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(5, 0)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare63" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare63" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.568627, 0.305882, 0.25098, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(6, 0)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
 
-[node name="GodotSquare64" type="ColorRect" parent="GodotBoard"]
+[node name="GodotSquare64" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 color = Color(0.952941, 0.831373, 0.686275, 1)
-script = ExtResource("14_7mbro")
+script = ExtResource("15_yf33j")
 Pos = Vector2i(7, 0)
 metadata/_custom_type_script = "uid://c5frspbfxkamm"
-
-[node name="MoveCounter" type="Node" parent="." node_paths=PackedStringArray("gdBoard")]
-script = ExtResource("15_ff6ho")
-gdBoard = NodePath("../GodotBoard")
-depth = 5
-countInternalNodes = true

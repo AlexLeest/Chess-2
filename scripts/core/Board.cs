@@ -92,7 +92,7 @@ public class Board
         // DEBUG:
         // Item dictionary for testing purposes
         Dictionary<byte, IItem[]> itemsPerPiece = new();
-        itemsPerPiece.Add(12, [new OpponentRoyalSwap(12)]);
+        // itemsPerPiece.Add(12, [new OpponentRoyalSwap(12)]);
         // for (byte i = 0; i < 8; i++)
         // {
         //     itemsPerPiece.Add(i, [new Respawn(i)]);
