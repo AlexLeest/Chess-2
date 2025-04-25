@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="SetupResource" load_steps=2 format=3 uid="uid://bwoh8wwe1dfgp"]
+
+[ext_resource type="Script" uid="uid://bqh182sbsrhvl" path="res://scripts/godot/utils/SetupResource.cs" id="1_u11e2"]
+
+[resource]
+script = ExtResource("1_u11e2")
+metadata/_custom_type_script = "uid://bqh182sbsrhvl"

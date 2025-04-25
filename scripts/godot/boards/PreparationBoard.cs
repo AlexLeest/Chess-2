@@ -13,9 +13,9 @@ public partial class PreparationBoard : GridContainer
     // Show ranks 1 and 2 of a board (white starting row) with the player's current setup
     // Allow player to shuffle pieces around at will
     [Export] private PieceTextures pieceTextures;
-    [Export] private BoardSetup boardSetup;
+    [Export] private SetupResource boardSetup;
     
-    private Piece[] pieces;
+    // private Piece[] pieces;
     private GodotSquare[,] squares;
 
     private GodotSquare selectedSquare;
@@ -33,30 +33,21 @@ public partial class PreparationBoard : GridContainer
             squares[square.Pos.X, square.Pos.Y] = square;
             square.SquareClicked += SquareClicked;
         }
+        
+        RenderPieces();
     }
 
     public bool SetItem(IItem item, Vector2I coords)
     {
         Piece subject = squares[coords.X, coords.Y].GdPiece?.Piece;
         if (subject is not null)
-        {
-            if (boardSetup.items.TryGetValue(subject.Id, out List<IItem> currentItems))
-            {
-                currentItems.Add(item);
-            }
-            else
-            {
-                boardSetup.items.Add(subject.Id, [item]);
-            }
-        }
-
-        return true;
+            return boardSetup.SetItem(subject.Id, item);
+        return false;
     }
 
-    public void SetPieces(Piece[] newPieces)
+    public void DeletePiece(Piece piece)
     {
-        pieces = newPieces;
-        RenderPieces();
+        boardSetup.DeletePiece(piece);
     }
 
     private void SquareClicked(Vector2I position)
@@ -96,7 +87,7 @@ public partial class PreparationBoard : GridContainer
         foreach (GodotSquare square in squares)
             square.Clear();
 
-        foreach (Piece piece in pieces)
+        foreach (Piece piece in boardSetup.Pieces)
         {
             GodotSquare square = squares[piece.Position.X, piece.Position.Y];
             GodotPiece gdPiece = new(piece);
