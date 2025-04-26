@@ -13,6 +13,8 @@ public partial class SetupResource : Resource
     
     public List<Piece> Pieces => boardSetup.Pieces;
 
+    public Board GetBoard => boardSetup.SpawnBoard();
+    
     public void AddPiece(Piece piece)
     {
         boardSetup.AddPiece(piece);

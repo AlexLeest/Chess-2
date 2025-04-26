@@ -99,4 +99,11 @@ public partial class PreparationBoard : GridContainer
             gdPiece.Texture = pieceTextures.GetPieceTexture(piece);
         }
     }
+
+    private void FinishSetupAndStartLevel()
+    {
+        Node root = GetTree().CurrentScene;
+        // Spawn the "main" scene
+        // BoardSetup resource should handle board spawning correctly?
+    }
 }

@@ -12,10 +12,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 public partial class GodotBoard : GridContainer
 {
     public Board Board;
-    [Export] private Color lightSquare, darkSquare;
-    [Export] private int squareSize = 64;
-    // [Export] private Godot.Collections.Dictionary<byte, Texture2D> pieceTexturesDictionary;
-    // [Export] private BasePieceTexture[] pieceTextures;
+    [Export] private SetupResource boardSetup;
     [Export] private PieceTextures pieceTextures;
 
     [Export] private string fen;
@@ -32,7 +29,8 @@ public partial class GodotBoard : GridContainer
         if (fen != null)
             Board = FENConverter.FENToBoard(fen);
         else
-            Board = Board.DefaultBoard();
+            Board = boardSetup.GetBoard;
+            // Board = Board.DefaultBoard();
         squares = new GodotSquare[8, 8];
         foreach (Node node in GetChildren())
         {
