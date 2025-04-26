@@ -2,7 +2,6 @@
 using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
-using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 
@@ -64,9 +63,13 @@ public partial class PreparationBoard : GridContainer
             
             Piece selectedPiece = selectedSquare.GdPiece.Piece;
             selectedPiece.Position = clickedPos.ToCore();
-            Piece clickedPiece = clickedSquare.GdPiece.Piece;
-            clickedPiece.Position = selectedPos.ToCore();
-            
+            if (clickedSquare.GdPiece is not null)
+            {
+                Piece clickedPiece = clickedSquare.GdPiece.Piece;
+                clickedPiece.Position = selectedPos.ToCore();
+            }
+
+            selectedSquare = null;
             RenderPieces();
             return;
         }
