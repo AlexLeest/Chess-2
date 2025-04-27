@@ -1,0 +1,143 @@
+[gd_resource type="Resource" script_class="EnemySetup" load_steps=25 format=3 uid="uid://cnws85ni83aen"]
+
+[ext_resource type="Script" uid="uid://du1aaoy1w0a5m" path="res://scripts/godot/data/EnemySetup.cs" id="1_428u1"]
+[ext_resource type="Resource" uid="uid://bs3d5s2jnrs0m" path="res://data/movements/pawn_movement.tres" id="1_exgdu"]
+[ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="2_2ewus"]
+[ext_resource type="Resource" uid="uid://b2x8cgcu6vpdt" path="res://data/movements/rook_movement.tres" id="3_jh5ga"]
+[ext_resource type="Resource" uid="uid://2thbkgl7alft" path="res://data/movements/knight_movement.tres" id="4_wmham"]
+[ext_resource type="Resource" uid="uid://cfx0jw73qy21n" path="res://data/movements/bishop_movement.tres" id="5_bepnb"]
+[ext_resource type="Resource" uid="uid://nhw5xi4wt0ea" path="res://data/movements/queen_movement.tres" id="6_f010w"]
+[ext_resource type="Resource" uid="uid://nrdvag5iu0f1" path="res://data/movements/king_movement.tres" id="7_1gukd"]
+
+[sub_resource type="Resource" id="Resource_0jdyo"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(0, 6)
+Items = []
+PieceType = 0
+Movement = Array[Object]([ExtResource("1_exgdu")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_803if"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(1, 6)
+Items = []
+PieceType = 0
+Movement = Array[Object]([ExtResource("1_exgdu")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_6nnes"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(2, 6)
+Items = []
+PieceType = 0
+Movement = Array[Object]([ExtResource("1_exgdu")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_fmps7"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(3, 6)
+Items = []
+PieceType = 0
+Movement = Array[Object]([ExtResource("1_exgdu")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_6q10a"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(4, 6)
+Items = []
+PieceType = 0
+Movement = Array[Object]([ExtResource("1_exgdu")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_y4nfu"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(5, 6)
+Items = []
+PieceType = 0
+Movement = Array[Object]([ExtResource("1_exgdu")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_80y2r"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(6, 6)
+Items = []
+PieceType = 0
+Movement = Array[Object]([ExtResource("1_exgdu")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_rgctt"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(7, 6)
+Items = []
+PieceType = 0
+Movement = Array[Object]([ExtResource("1_exgdu")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_xdfx4"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(0, 7)
+Items = []
+PieceType = 1
+Movement = Array[Object]([ExtResource("3_jh5ga")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_pb6af"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(1, 7)
+Items = []
+PieceType = 3
+Movement = Array[Object]([ExtResource("4_wmham")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_eks25"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(2, 7)
+Items = []
+PieceType = 2
+Movement = Array[Object]([ExtResource("5_bepnb")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_et3rk"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(3, 7)
+Items = []
+PieceType = 4
+Movement = Array[Object]([ExtResource("6_f010w")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_avlx5"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(4, 7)
+Items = []
+PieceType = 5
+Movement = Array[Object]([ExtResource("7_1gukd")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_5f6jb"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(5, 7)
+Items = []
+PieceType = 2
+Movement = Array[Object]([ExtResource("5_bepnb")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_pxhsf"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(6, 7)
+Items = []
+PieceType = 3
+Movement = Array[Object]([ExtResource("4_wmham")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_llupd"]
+script = ExtResource("2_2ewus")
+StartPosition = Vector2i(7, 7)
+Items = []
+PieceType = 1
+Movement = Array[Object]([ExtResource("3_jh5ga")])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[resource]
+script = ExtResource("1_428u1")
+EnemyPieces = Array[Object]([SubResource("Resource_0jdyo"), SubResource("Resource_803if"), SubResource("Resource_6nnes"), SubResource("Resource_fmps7"), SubResource("Resource_6q10a"), SubResource("Resource_y4nfu"), SubResource("Resource_80y2r"), SubResource("Resource_rgctt"), SubResource("Resource_xdfx4"), SubResource("Resource_pb6af"), SubResource("Resource_eks25"), SubResource("Resource_et3rk"), SubResource("Resource_avlx5"), SubResource("Resource_5f6jb"), SubResource("Resource_pxhsf"), SubResource("Resource_llupd")])
+metadata/_custom_type_script = "uid://du1aaoy1w0a5m"

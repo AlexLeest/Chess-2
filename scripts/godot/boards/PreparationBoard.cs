@@ -17,7 +17,8 @@ public partial class PreparationBoard : GridContainer
     
     private GodotSquare[,] squares;
 
-    private GodotSquare selectedSquare;
+    private PieceResource selectedPiece;
+    private GodotSquare highlightedSquare;
 
     public override void _Ready()
     {
@@ -48,35 +49,28 @@ public partial class PreparationBoard : GridContainer
     {
         // De-highlight square if one was selected before this
         
-        GodotSquare clickedSquare = squares[position.X, position.Y];
+        PieceResource clickedPiece = boardPlayerSetup.GetPieceOnPosition(position);
         
-        if (selectedSquare is not null)
+        if (selectedPiece is not null)
         {
-            // Swap selectedSquare and onPos
-            Vector2I selectedPos = selectedSquare.Pos;
-            Vector2I clickedPos = clickedSquare.Pos;
-            
-            Piece selectedPiece = selectedSquare.GdPiece.Piece;
-            selectedPiece.Position = clickedPos.ToCore();
-            if (clickedSquare.GdPiece is not null)
+            if (clickedPiece is not null)
             {
-                Piece clickedPiece = clickedSquare.GdPiece.Piece;
-                clickedPiece.Position = selectedPos.ToCore();
+                clickedPiece.StartPosition = selectedPiece.StartPosition;
             }
-
-            selectedSquare = null;
-            RenderPieces();
+            selectedPiece.StartPosition = position;
+            selectedPiece = null;
             return;
         }
-        if (clickedSquare.GdPiece is not null)
+        if (clickedPiece is not null)
         {
-            selectedSquare = clickedSquare;
+            selectedPiece = clickedPiece;
+            highlightedSquare = squares[position.X, position.Y];
             // Highlight the square
 
             return;
         }
 
-        selectedSquare = null;
+        selectedPiece = null;
         // No need to select empty squares
     }
 

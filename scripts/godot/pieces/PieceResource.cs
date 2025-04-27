@@ -13,7 +13,9 @@ public partial class PieceResource : Resource
     [Export] public GodotItem[] Items = [];
     [Export] public BasePiece PieceType;
     [Export] public GodotMovement[] Movement;
-
+    
+    public PieceResource() { }
+    
     public PieceResource(BasePiece basePiece, Vector2I startPos)
     {
         StartPosition = startPos;
@@ -36,9 +38,13 @@ public partial class PieceResource : Resource
     {
         List<IMovement> movement = [];
         foreach (GodotMovement mov in Movement)
-        {
             movement.Add(mov.GetMovement());
-        }
-        return new Piece(id, PieceType, color, StartPosition.ToCore(), movement.ToArray());
+        SpecialPieceTypes pieceType = PieceType switch
+        {
+            BasePiece.KING => SpecialPieceTypes.KING,
+            BasePiece.PAWN => SpecialPieceTypes.PAWN,
+            _ => SpecialPieceTypes.NONE,
+        };
+        return new Piece(id, PieceType, color, StartPosition.ToCore(), movement.ToArray(), pieceType);
     }
 }

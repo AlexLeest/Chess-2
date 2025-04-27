@@ -12,7 +12,8 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 public partial class GodotBoard : GridContainer
 {
     public Board Board;
-    [Export] private PlayerSetup boardPlayerSetup;
+    [Export] private PlayerSetup playerSetup;
+    [Export] private EnemySetup enemySetup;
     [Export] private PieceTextures pieceTextures;
 
     [Export] private string fen;
@@ -29,8 +30,7 @@ public partial class GodotBoard : GridContainer
         if (fen != null)
             Board = FENConverter.FENToBoard(fen);
         else
-            // Board = boardPlayerSetup.ConvertToBoard();
-            Board = Board.DefaultBoard();
+            Board = playerSetup.ConvertToBoard(enemySetup);
         squares = new GodotSquare[8, 8];
         foreach (Node node in GetChildren())
         {

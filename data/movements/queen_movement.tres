@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GodotMovement" load_steps=2 format=3 uid="uid://nhw5xi4wt0ea"]
+
+[ext_resource type="Script" uid="uid://b885h4jlofknj" path="res://scripts/godot/data/GodotMovement.cs" id="1_thfcl"]
+
+[resource]
+script = ExtResource("1_thfcl")
+type = 1
+offsets = PackedVector2Array(1, 1, 1, 0, 0, 1, 1, -1, -1, 1, -1, 0, -1, -1, 0, -1)
+multiplier = 8
+metadata/_custom_type_script = "uid://b885h4jlofknj"
