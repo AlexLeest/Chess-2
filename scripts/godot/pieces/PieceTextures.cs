@@ -13,20 +13,17 @@ public partial class PieceTextures : Resource
     private bool initialized;
     private Dictionary<(BasePiece, bool), Texture2D> textureDict;
 
+    public Texture2D GetPieceTexture(Piece piece)
+    {
+        return GetPieceTexture(piece.BasePiece, piece.Color);
+    }
+
     public Texture2D GetPieceTexture(BasePiece piece, bool color)
     {
         if (!initialized)
             InitDictionary();
 
         return textureDict[(piece, color)];
-    }
-
-    public Texture2D GetPieceTexture(Piece piece)
-    {
-        if (!initialized)
-            InitDictionary();
-
-        return textureDict[(piece.BasePiece, piece.Color)];
     }
 
     private void InitDictionary()

@@ -14,7 +14,6 @@ public partial class PreparationBoard : GridContainer
     [Export] private PieceTextures pieceTextures;
     [Export] private SetupResource boardSetup;
     
-    // private Piece[] pieces;
     private GodotSquare[,] squares;
 
     private GodotSquare selectedSquare;

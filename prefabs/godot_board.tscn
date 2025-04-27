@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwi6nbxbpo8bs"]
+[gd_scene load_steps=5 format=3 uid="uid://cwi6nbxbpo8bs"]
 
 [ext_resource type="Script" uid="uid://54kjarjdjwgv" path="res://scripts/godot/boards/GodotBoard.cs" id="1_u7bof"]
 [ext_resource type="Resource" uid="uid://bcrexudceb4sh" path="res://data/basepiecetextures.tres" id="2_3pwqh"]
+[ext_resource type="Resource" uid="uid://bwoh8wwe1dfgp" path="res://data/board_setup.tres" id="2_w8g8o"]
 [ext_resource type="Script" uid="uid://c5frspbfxkamm" path="res://scripts/godot/boards/GodotSquare.cs" id="15_yf33j"]
 
 [node name="GodotBoard" type="GridContainer"]
@@ -20,8 +21,7 @@ theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 8
 script = ExtResource("1_u7bof")
-lightSquare = Color(0.952941, 0.831373, 0.686275, 1)
-darkSquare = Color(0.568627, 0.305882, 0.25098, 1)
+boardSetup = ExtResource("2_w8g8o")
 pieceTextures = ExtResource("2_3pwqh")
 metadata/_custom_type_script = "uid://54kjarjdjwgv"
 
