@@ -1,5 +1,6 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
 using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
+using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
 
@@ -12,7 +13,7 @@ public partial class PreparationBoard : GridContainer
     // Show ranks 1 and 2 of a board (white starting row) with the player's current setup
     // Allow player to shuffle pieces around at will
     [Export] private PieceTextures pieceTextures;
-    [Export] private SetupResource boardSetup;
+    [Export] private PlayerSetup boardPlayerSetup;
     
     private GodotSquare[,] squares;
 
@@ -35,17 +36,12 @@ public partial class PreparationBoard : GridContainer
         RenderPieces();
     }
 
-    public bool SetItem(IItem item, Vector2I coords)
+    public bool SetItem(GodotItem item, Vector2I coords)
     {
         Piece subject = squares[coords.X, coords.Y].GdPiece?.Piece;
         if (subject is not null)
-            return boardSetup.SetItem(subject.Id, item);
+            return boardPlayerSetup.SetItem(subject.Position.ToGodot(), item);
         return false;
-    }
-
-    public void DeletePiece(Piece piece)
-    {
-        boardSetup.DeletePiece(piece);
     }
 
     private void SquareClicked(Vector2I position)
@@ -89,7 +85,7 @@ public partial class PreparationBoard : GridContainer
         foreach (GodotSquare square in squares)
             square.Clear();
 
-        foreach (Piece piece in boardSetup.Pieces)
+        foreach (Piece piece in boardPlayerSetup.GetAsPieces())
         {
             GodotSquare square = squares[piece.Position.X, piece.Position.Y];
             GodotPiece gdPiece = new(piece);

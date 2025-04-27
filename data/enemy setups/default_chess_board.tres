@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="EnemySetup" load_steps=12 format=3 uid="uid://chiac4xdljp11"]
+
+[ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="1_7qflj"]
+[ext_resource type="Script" uid="uid://dnkqvsl7ex15v" path="res://scripts/godot/utils/EnemySetup.cs" id="1_gembl"]
+
+[sub_resource type="Resource" id="Resource_bhue1"]
+script = ExtResource("1_7qflj")
+pieceType = 0
+startPosition = Vector2i(0, 6)
+items = null
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_6ocgx"]
+script = ExtResource("1_7qflj")
+pieceType = 0
+startPosition = Vector2i(1, 6)
+items = null
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_s7qxh"]
+script = ExtResource("1_7qflj")
+pieceType = 0
+startPosition = Vector2i(3, 6)
+items = null
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_bfmgj"]
+script = ExtResource("1_7qflj")
+pieceType = 0
+startPosition = Vector2i(3, 6)
+items = null
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_3dfm4"]
+script = ExtResource("1_7qflj")
+pieceType = 0
+startPosition = Vector2i(4, 6)
+items = null
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_7re43"]
+script = ExtResource("1_7qflj")
+pieceType = 0
+startPosition = Vector2i(5, 6)
+items = Array[Resource]([])
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_8rju3"]
+script = ExtResource("1_7qflj")
+pieceType = 0
+startPosition = Vector2i(6, 6)
+items = null
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_py7mu"]
+script = ExtResource("1_7qflj")
+pieceType = 0
+startPosition = Vector2i(7, 6)
+items = null
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_0d06t"]
+script = ExtResource("1_7qflj")
+pieceType = 0
+startPosition = Vector2i(0, 0)
+items = null
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[resource]
+script = ExtResource("1_gembl")
+pieces = Array[Object]([SubResource("Resource_bhue1"), SubResource("Resource_6ocgx"), SubResource("Resource_s7qxh"), SubResource("Resource_bfmgj"), SubResource("Resource_3dfm4"), SubResource("Resource_7re43"), SubResource("Resource_8rju3"), SubResource("Resource_py7mu"), SubResource("Resource_0d06t")])
+metadata/_custom_type_script = "uid://dnkqvsl7ex15v"
