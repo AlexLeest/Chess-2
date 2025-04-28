@@ -131,7 +131,7 @@ public class Board
         return board;
     }
 
-    private bool IsInCheck(bool color)
+    public bool IsInCheck(bool color)
     {
         Vector2Int kingPosition = new(0, 0);
         foreach (Piece piece in Pieces)

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="LevelModel" load_steps=3 format=3 uid="uid://4h2kst8o8ily"]
+
+[ext_resource type="Script" uid="uid://d4jbqkmx4hwho" path="res://scripts/godot/data/LevelModel.cs" id="1_k7ub5"]
+[ext_resource type="Resource" uid="uid://cnws85ni83aen" path="res://data/enemy setups/default_board.tres" id="1_sis75"]
+
+[resource]
+script = ExtResource("1_k7ub5")
+EnemySetups = Array[Object]([ExtResource("1_sis75")])
+metadata/_custom_type_script = "uid://d4jbqkmx4hwho"

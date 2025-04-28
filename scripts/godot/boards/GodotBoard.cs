@@ -11,9 +11,11 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 [GlobalClass]
 public partial class GodotBoard : GridContainer
 {
+    public static int Level;
+    
     public Board Board;
     [Export] private PlayerSetup playerSetup;
-    [Export] private EnemySetup enemySetup;
+    [Export] private LevelModel levelModel;
     [Export] private PieceTextures pieceTextures;
 
     [Export] private string fen;
@@ -25,12 +27,16 @@ public partial class GodotBoard : GridContainer
     
     private GodotPiece selectedPiece;
 
+    [Signal] public delegate void WinEventHandler();
+    [Signal] public delegate void LossEventHandler();
+    [Signal] public delegate void DrawEventHandler();
+
     public override void _Ready()
     {
         if (fen != null)
             Board = FENConverter.FENToBoard(fen);
         else
-            Board = playerSetup.ConvertToBoard(enemySetup);
+            Board = playerSetup.ConvertToBoard(levelModel.EnemySetups[Level]);
         squares = new GodotSquare[8, 8];
         foreach (Node node in GetChildren())
         {
@@ -45,14 +51,25 @@ public partial class GodotBoard : GridContainer
 
         engine = new FullRandom();
     }
+    
+    public override void _Input(InputEvent input)
+    {
+        if (input is InputEventKey eventKey && eventKey.Pressed)
+        {
+            if (eventKey.Keycode == Key.Space)
+            {
+                FinishLevelAndSpawnSetup();
+            }
+        }
+    }
 
     private void SquareClicked(Vector2I position)
     {
-        // if (board.Turn % 2 != 0)
-        // {
-        //     GD.Print("It's black's turn");
-        //     return;
-        // }
+        if (Board.Turn % 2 != 0)
+        {
+            GD.Print("It's black's turn");
+            return;
+        }
         bool colorToMove = Board.Turn % 2 == 0;
         
         Vector2Int corePos = position.ToCore();
@@ -84,7 +101,7 @@ public partial class GodotBoard : GridContainer
         // TODO: Show possible moves for piece
         foreach (Move move in selectedPiece.Piece.GetMovementOptions(Board.Squares))
         {
-            // TODO: Accentuate these
+            // TODO: Highlight these squares
             GD.Print($"Move {move} allowed");
         }
     }
@@ -93,14 +110,27 @@ public partial class GodotBoard : GridContainer
     {
         Board = newBoard;
         RenderPieces();
+        
+        // Check for checkmate or stalemate
+        if (newBoard.GenerateMoves().Count == 0)
+        {
+            bool colorToMove = newBoard.Turn % 2 == 0;
+            if (newBoard.IsInCheck(colorToMove))
+            {
+                // CHECKMATE
+            }
+            // STALEMATE
+            FinishLevelAndSpawnSetup();
+            return;
+        }
 
-        // if (board.Turn % 2 != 0)
-        // {
-        //     // White just played, black should respond by engine
-        //     // TODO: Skip rendering out the whole damn board if you're going another step down anyway
-        //     var engineResponse = engine.GenerateNextMove(board);
-        //     SetNewBoard(engineResponse);
-        // }
+        if (newBoard.Turn % 2 != 0)
+        {
+            // White just played, black should respond by engine
+            // TODO: Skip rendering out the whole damn board if you're going another step down anyway
+            var engineResponse = engine.GenerateNextMove(newBoard);
+            SetNewBoard(engineResponse);
+        }
     }
 
     private void RenderPieces()
@@ -123,5 +153,19 @@ public partial class GodotBoard : GridContainer
             
             gdPiece.Texture = pieceTextures.GetPieceTexture(piece);
         }
+    }    
+    
+    private void FinishLevelAndSpawnSetup()
+    {
+        Node canvas = GetTree().CurrentScene;
+        // Spawn the "main" scene
+        // BoardSetup resource should handle board spawning correctly?
+
+        PackedScene prepBoard = ResourceLoader.Load<PackedScene>("res://prefabs/preparation_board.tscn");
+        Node board = prepBoard.Instantiate();
+        canvas.AddChild(board);
+        
+        // kys
+        QueueFree();
     }
 }

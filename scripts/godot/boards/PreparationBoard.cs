@@ -14,12 +14,13 @@ public partial class PreparationBoard : GridContainer
     // Allow player to shuffle pieces around at will
     [Export] private PieceTextures pieceTextures;
     [Export] private PlayerSetup boardPlayerSetup;
-    [Export] private PackedScene boardScene;
     
     private GodotSquare[,] squares;
 
     private PieceResource selectedPiece;
     private GodotSquare highlightedSquare;
+
+    [Signal] public delegate void FinishSetupEventHandler();
 
     public override void _Ready()
     {
@@ -108,7 +109,8 @@ public partial class PreparationBoard : GridContainer
         // Spawn the "main" scene
         // BoardSetup resource should handle board spawning correctly?
 
-        Node board = boardScene.Instantiate();
+        PackedScene prepBoard = ResourceLoader.Load<PackedScene>("res://prefabs/godot_board.tscn");
+        Node board = prepBoard.Instantiate();
         canvas.AddChild(board);
         
         // kys

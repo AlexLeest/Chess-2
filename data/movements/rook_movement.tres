@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_2em35")
-type = 0
-offsets = PackedVector2Array()
+type = 1
+offsets = PackedVector2Array(1, 0, 0, 1, -1, 0, 0, -1)
 multiplier = 7
 metadata/_custom_type_script = "uid://b885h4jlofknj"
