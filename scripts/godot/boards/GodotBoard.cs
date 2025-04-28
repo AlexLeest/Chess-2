@@ -109,7 +109,6 @@ public partial class GodotBoard : GridContainer
     private void SetNewBoard(Board newBoard)
     {
         Board = newBoard;
-        RenderPieces();
         
         // Check for checkmate or stalemate
         if (newBoard.GenerateMoves().Count == 0)
@@ -127,10 +126,11 @@ public partial class GodotBoard : GridContainer
         if (newBoard.Turn % 2 != 0)
         {
             // White just played, black should respond by engine
-            // TODO: Skip rendering out the whole damn board if you're going another step down anyway
             var engineResponse = engine.GenerateNextMove(newBoard);
             SetNewBoard(engineResponse);
+            return;
         }
+        RenderPieces();
     }
 
     private void RenderPieces()
