@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwi6nbxbpo8bs"]
+[gd_scene load_steps=6 format=3 uid="uid://cwi6nbxbpo8bs"]
 
 [ext_resource type="Script" uid="uid://54kjarjdjwgv" path="res://scripts/godot/boards/GodotBoard.cs" id="1_u7bof"]
 [ext_resource type="Resource" uid="uid://bcrexudceb4sh" path="res://data/basepiecetextures.tres" id="2_3pwqh"]
+[ext_resource type="Resource" uid="uid://dab655gk8f2w" path="res://data/player_setup.tres" id="2_rmr3w"]
+[ext_resource type="Resource" uid="uid://cnws85ni83aen" path="res://data/enemy setups/default_board.tres" id="3_fleok"]
 [ext_resource type="Script" uid="uid://c5frspbfxkamm" path="res://scripts/godot/boards/GodotSquare.cs" id="15_yf33j"]
 
 [node name="GodotBoard" type="GridContainer"]
@@ -20,6 +22,8 @@ theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 8
 script = ExtResource("1_u7bof")
+playerSetup = ExtResource("2_rmr3w")
+enemySetup = ExtResource("3_fleok")
 pieceTextures = ExtResource("2_3pwqh")
 metadata/_custom_type_script = "uid://54kjarjdjwgv"
 

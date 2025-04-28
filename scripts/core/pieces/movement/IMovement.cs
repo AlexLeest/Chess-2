@@ -9,6 +9,7 @@ public interface IMovement
     /// <summary>
     /// Generates list of possible moves for this given the parameters
     /// </summary>
+    /// <param name="id">Identifier of piece</param>
     /// <param name="from">Starting square</param>
     /// <param name="squares">Board representation</param>
     /// <param name="color">Color of the moving piece (for deciding whether a capture is possible or not)</param>

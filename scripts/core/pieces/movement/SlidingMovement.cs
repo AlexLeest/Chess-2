@@ -42,12 +42,10 @@ public class SlidingMovement : IMovement
                 if (onSquare != null)
                 {
                     if (onSquare.Color != color)
-                        // yield return new Move(id, from, currentPos, onSquare);
                         options.Add(new Move(id, from, currentPos, onSquare));
                     break;
                 }
 
-                // yield return new Move(id, from, currentPos);
                 options.Add(new Move(id, from, currentPos));
             }
         }

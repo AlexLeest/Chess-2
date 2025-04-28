@@ -9,7 +9,6 @@ public class PawnMovement : IMovement
 
     public List<Move> GetMovementOptions(byte id, Vector2Int from, Piece[,] squares, bool color)
     {
-        // TODO: En passant
         int boardWidth = squares.GetLength(0);
         int boardHeight = squares.GetLength(1);
         
@@ -21,7 +20,6 @@ public class PawnMovement : IMovement
         if (forward.Inside(boardWidth, boardHeight) && squares[forward.X, forward.Y] is null)
         {
             options.Add(new Move(id, from, forward));
-            // yield return new Move(id, from, forward);
             // Double move forward
             bool onDoubleMoveRow = (color && from.Y == 1) || (!color && from.Y == 6);
             if (onDoubleMoveRow)
@@ -29,7 +27,6 @@ public class PawnMovement : IMovement
                 Vector2Int doubleMove = forward + direction;
                 if (squares[doubleMove.X, doubleMove.Y] is null)
                     options.Add(new Move(id, from, doubleMove));
-                    // yield return new Move(id, from, doubleMove);
             }
         }
         
@@ -38,13 +35,11 @@ public class PawnMovement : IMovement
         Piece captureLeft = AttemptCapture(squares, color, upLeft);
         if (captureLeft is not null)
             options.Add(new Move(id, from, upLeft, captureLeft));
-            // yield return new Move(id, from, upLeft, captureLeft);
         
         Vector2Int upRight = new Vector2Int(forward.X + 1, forward.Y);
         Piece captureRight = AttemptCapture(squares, color, upRight);
         if (captureRight is not null)
             options.Add(new Move(id, from, upRight, captureRight));
-            // yield return new Move(id, from, upRight, captureRight);
         
         // En passant checks
         // TODO: Does not currently handle actually CAPTURING that pawn
@@ -55,7 +50,6 @@ public class PawnMovement : IMovement
             if (toTake is not null && toTake.Color != color && toTake.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
             {
                 options.Add(new Move(id, from, enPassantLeft + direction, toTake));
-                // yield return new Move(id, from, enPassantLeft + direction, toTake);
             }
         }
         Vector2Int enPassantRight = new(from.X + 1, from.Y);
@@ -65,7 +59,6 @@ public class PawnMovement : IMovement
             if (toTake is not null && toTake.Color != color && toTake.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
             {
                 options.Add(new Move(id, from, enPassantRight + direction, toTake));
-                // yield return new Move(id, from, enPassantRight + direction, toTake);
             }
         }
 

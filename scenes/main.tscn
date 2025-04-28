@@ -1,17 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddro8mbffb074"]
+[gd_scene load_steps=3 format=3 uid="uid://ddro8mbffb074"]
 
 [ext_resource type="PackedScene" uid="uid://cwi6nbxbpo8bs" path="res://prefabs/godot_board.tscn" id="1_0wfyh"]
-[ext_resource type="Resource" uid="uid://dab655gk8f2w" path="res://data/player_setup.tres" id="2_jyhfs"]
 [ext_resource type="Script" uid="uid://dbv72vwgtn827" path="res://scripts/godot/utils/MoveCounter.cs" id="2_sugp2"]
-[ext_resource type="Resource" uid="uid://cnws85ni83aen" path="res://data/enemy setups/default_board.tres" id="3_jyhfs"]
 
 [node name="Canvas" type="CanvasLayer"]
 
 [node name="GodotBoard" parent="." instance=ExtResource("1_0wfyh")]
 size_flags_horizontal = 0
 size_flags_vertical = 0
-playerSetup = ExtResource("2_jyhfs")
-enemySetup = ExtResource("3_jyhfs")
 
 [node name="MoveCounter" type="Node" parent="." node_paths=PackedStringArray("gdBoard")]
 script = ExtResource("2_sugp2")

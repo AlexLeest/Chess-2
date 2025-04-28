@@ -14,6 +14,7 @@ public partial class PreparationBoard : GridContainer
     // Allow player to shuffle pieces around at will
     [Export] private PieceTextures pieceTextures;
     [Export] private PlayerSetup boardPlayerSetup;
+    [Export] private PackedScene boardScene;
     
     private GodotSquare[,] squares;
 
@@ -35,6 +36,17 @@ public partial class PreparationBoard : GridContainer
         }
         
         RenderPieces();
+    }
+    
+    public override void _Input(InputEvent input)
+    {
+        if (input is InputEventKey eventKey && eventKey.Pressed)
+        {
+            if (eventKey.Keycode == Key.Space)
+            {
+                FinishSetupAndStartLevel();
+            }
+        }
     }
 
     public bool SetItem(GodotItem item, Vector2I coords)
@@ -59,6 +71,7 @@ public partial class PreparationBoard : GridContainer
             }
             selectedPiece.StartPosition = position;
             selectedPiece = null;
+            RenderPieces();
             return;
         }
         if (clickedPiece is not null)
@@ -91,8 +104,14 @@ public partial class PreparationBoard : GridContainer
 
     private void FinishSetupAndStartLevel()
     {
-        Node root = GetTree().CurrentScene;
+        Node canvas = GetTree().CurrentScene;
         // Spawn the "main" scene
         // BoardSetup resource should handle board spawning correctly?
+
+        Node board = boardScene.Instantiate();
+        canvas.AddChild(board);
+        
+        // kys
+        QueueFree();
     }
 }

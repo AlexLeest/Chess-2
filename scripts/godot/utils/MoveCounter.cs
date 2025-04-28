@@ -16,11 +16,6 @@ public partial class MoveCounter : Node
 
     private int internalNodes = 0;
 
-    public override void _Ready()
-    {
-        
-    }
-
     public override void _Input(InputEvent input)
     {
         if (input is InputEventKey eventKey && eventKey.Pressed)
