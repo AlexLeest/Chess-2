@@ -3,6 +3,10 @@ using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 
+/// <summary>
+/// When this piece is captured, it also captures the piece that took it.
+/// </summary>
+/// <param name="pieceId"></param>
 public class SelfDestruct(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURED)
 {
     public override bool ConditionsMet(Board board, Move move)

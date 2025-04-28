@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.buffs;
 
+/// <summary>
+/// When this piece is captured, it instead respawns on it's starting location (once, and only if that location is empty)
+/// </summary>
+/// <param name="pieceId"></param>
 public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURED)
 {
     public override bool ConditionsMet(Board board, Move move)

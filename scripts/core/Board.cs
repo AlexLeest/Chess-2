@@ -105,6 +105,17 @@ public class Board
         return new Board(0, pieces, [true, true], [true, true], itemsPerPiece);
     }
 
+    public Piece GetPiece(byte id)
+    {
+        foreach (Piece piece in Pieces)
+        {
+            if (piece.Id != id)
+                continue;
+            return piece;
+        }
+        return null;
+    }
+
     public Board ActivateItems(byte pieceId, ItemTriggers trigger, Board board, Move move)
     {
         if (itemsPerPiece.TryGetValue(pieceId, out IItem[] captureItems))
@@ -251,8 +262,13 @@ public class Board
             // Make new board add to results
             // Move committedMove = new(piece.Id, piece.Position, move, capturedPiece);
             Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, move, this);
+            
+            // Trigger ON_MOVE items
+            possibleMove = ActivateItems(piece.Id, ItemTriggers.ON_MOVE, possibleMove, move);
+            
             if (capturedPiece is not null)
             {
+                // Trigger ON_CAPTURE and ON_CAPTURED items
                 possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_CAPTURE, possibleMove, move);
                 possibleMove = possibleMove.ActivateItems(capturedPiece.Id, ItemTriggers.ON_CAPTURED, possibleMove, move);
             }
@@ -276,29 +292,32 @@ public class Board
                 )
                 {
                     Piece toCastle = Squares[7, colorRank];
-                    Piece[] newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
-                    // Move king
-                    newPieces[^2] = new Piece(piece.Id, piece.BasePiece, piece.Color, new Vector2Int(6, colorRank), piece.Movement, piece.SpecialPieceType);
-                    // Move piece
-                    newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(5, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
-                    
-                    // Remove castling rights
-                    bool[] newCastleQueenSide = [CastleQueenSide[0], CastleQueenSide[1]];
-                    bool[] newCastleKingSide = [CastleKingSide[0], CastleKingSide[1]];
-                    newCastleQueenSide[colorIndex] = false;
-                    newCastleKingSide[colorIndex] = false;
-                    Move castleMove = new(piece.Id, piece.Position, new Vector2Int(6, colorRank));
-                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, castleMove, this);
-                    
-                    // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
-                    foreach (Piece toActivate in castledBoard.Pieces)
+                    if (toCastle is not null && toCastle.SpecialPieceType == SpecialPieceTypes.QUEEN_SIDE_CASTLE)
                     {
-                        ItemTriggers trigger = toActivate.Color == colorToMove ? ItemTriggers.ON_CASTLE : ItemTriggers.ON_OPPONENT_CASTLE;
-                        castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove);
+                        Piece[] newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
+                        // Move king
+                        newPieces[^2] = new Piece(piece.Id, piece.BasePiece, piece.Color, new Vector2Int(6, colorRank), piece.Movement, piece.SpecialPieceType);
+                        // Move piece
+                        newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(5, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
+
+                        // Remove castling rights
+                        bool[] newCastleQueenSide = [CastleQueenSide[0], CastleQueenSide[1]];
+                        bool[] newCastleKingSide = [CastleKingSide[0], CastleKingSide[1]];
+                        newCastleQueenSide[colorIndex] = false;
+                        newCastleKingSide[colorIndex] = false;
+                        Move castleMove = new(piece.Id, piece.Position, new Vector2Int(6, colorRank));
+                        Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, castleMove, this);
+
+                        // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
+                        foreach (Piece toActivate in castledBoard.Pieces)
+                        {
+                            ItemTriggers trigger = toActivate.Color == colorToMove ? ItemTriggers.ON_CASTLE : ItemTriggers.ON_OPPONENT_CASTLE;
+                            castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove);
+                        }
+
+                        // Add to results
+                        result.Add(castledBoard);
                     }
-                    
-                    // Add to results
-                    result.Add(castledBoard);
                 }
             }
             if (CastleQueenSide[colorIndex])
@@ -313,29 +332,32 @@ public class Board
                 )
                 {
                     Piece toCastle = Squares[0, colorRank];
-                    Piece[] newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
-                    // Move king
-                    newPieces[^2] = new Piece(piece.Id, piece.BasePiece, piece.Color, new Vector2Int(2, colorRank), piece.Movement, piece.SpecialPieceType);
-                    // Move piece
-                    newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(3, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
-                    
-                    // Remove castling rights
-                    bool[] newCastleQueenSide = [CastleQueenSide[0], CastleQueenSide[1]];
-                    bool[] newCastleKingSide = [CastleKingSide[0], CastleKingSide[1]];
-                    newCastleQueenSide[colorIndex] = false;
-                    newCastleKingSide[colorIndex] = false;
-                    Move castleMove = new(piece.Id, piece.Position, new Vector2Int(2, colorRank));
-                    Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, castleMove, this);
-                    
-                    // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
-                    foreach (Piece toActivate in castledBoard.Pieces)
+                    if (toCastle is not null && toCastle.SpecialPieceType == SpecialPieceTypes.KING_SIDE_CASTLE)
                     {
-                        ItemTriggers trigger = toActivate.Color == colorToMove ? ItemTriggers.ON_CASTLE : ItemTriggers.ON_OPPONENT_CASTLE;
-                        castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove);
+                        Piece[] newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
+                        // Move king
+                        newPieces[^2] = new Piece(piece.Id, piece.BasePiece, piece.Color, new Vector2Int(2, colorRank), piece.Movement, piece.SpecialPieceType);
+                        // Move piece
+                        newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(3, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
+
+                        // Remove castling rights
+                        bool[] newCastleQueenSide = [CastleQueenSide[0], CastleQueenSide[1]];
+                        bool[] newCastleKingSide = [CastleKingSide[0], CastleKingSide[1]];
+                        newCastleQueenSide[colorIndex] = false;
+                        newCastleKingSide[colorIndex] = false;
+                        Move castleMove = new(piece.Id, piece.Position, new Vector2Int(2, colorRank));
+                        Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, castleMove, this);
+
+                        // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
+                        foreach (Piece toActivate in castledBoard.Pieces)
+                        {
+                            ItemTriggers trigger = toActivate.Color == colorToMove ? ItemTriggers.ON_CASTLE : ItemTriggers.ON_OPPONENT_CASTLE;
+                            castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove);
+                        }
+
+                        // Add to results
+                        result.Add(castledBoard);
                     }
-                    
-                    // Add to results
-                    result.Add(castledBoard);
                 }
             }
         }

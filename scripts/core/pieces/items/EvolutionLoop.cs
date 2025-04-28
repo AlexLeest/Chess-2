@@ -1,0 +1,42 @@
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+
+/// <summary>
+/// This piece "evolves" into the next type of piece every time it moves
+/// PAWN -> KNIGHT -> BISHOP -> ROOK -> QUEEN -> PAWN
+/// </summary>
+/// <param name="pieceId"></param>
+public class EvolutionLoop(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MOVE)
+{
+    private readonly Dictionary<BasePiece, BasePiece> evolutionSteps = new()
+    {
+        { BasePiece.PAWN, BasePiece.KNIGHT },
+        { BasePiece.KNIGHT, BasePiece.BISHOP },
+        { BasePiece.BISHOP, BasePiece.ROOK },
+        { BasePiece.ROOK, BasePiece.QUEEN },
+        { BasePiece.QUEEN, BasePiece.PAWN },
+        // { BasePiece.QUEEN ,BasePiece.KING},
+        // { BasePiece.KING , BasePiece.PAWN},
+    };
+    
+    public override bool ConditionsMet(Board board, Move move)
+    {
+        return true;
+    }
+
+    public override Board Execute(Board board, Move move)
+    {
+        Piece moved = board.GetPiece(PieceId);
+        if (evolutionSteps.TryGetValue(moved.BasePiece, out BasePiece nextBasePiece))
+        {
+            // Change BasePiece type to the next one, change the first movement entry out for the default of the next one as well
+            moved.BasePiece = nextBasePiece;
+            moved.Movement[0] = DefaultMovements.Get(nextBasePiece);
+        }
+        return board;
+    }
+}

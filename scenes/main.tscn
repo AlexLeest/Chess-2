@@ -13,6 +13,8 @@ size_flags_vertical = 0
 playerSetup = ExtResource("2_jyhfs")
 enemySetup = ExtResource("3_jyhfs")
 
-[node name="MoveCounter" type="Node" parent="."]
+[node name="MoveCounter" type="Node" parent="." node_paths=PackedStringArray("gdBoard")]
 script = ExtResource("2_sugp2")
+gdBoard = NodePath("../GodotBoard")
 depth = 5
+countInternalNodes = true

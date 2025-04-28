@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="EvolutionLoop" load_steps=2 format=3 uid="uid://ny0jv6ydl5se"]
+
+[ext_resource type="Script" uid="uid://bddtnrp54met0" path="res://scripts/godot/pieces/items/EvolutionLoop.cs" id="1_tjq5i"]
+
+[resource]
+script = ExtResource("1_tjq5i")
+metadata/_custom_type_script = "uid://bddtnrp54met0"

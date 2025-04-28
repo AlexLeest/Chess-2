@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 
+/// <summary>
+/// When you castle, swap the positions of the opponent's king and queen.
+/// </summary>
+/// <param name="pieceId"></param>
 public class OpponentRoyalSwap(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CASTLE) 
 {
     public override bool ConditionsMet(Board board, Move move)
