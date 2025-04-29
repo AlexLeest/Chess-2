@@ -24,8 +24,6 @@ public partial class PreparationBoard : GridContainer
 
     public override void _Ready()
     {
-        // TODO: Do I try and grab a savegame from somewhere? Save this to a resource?
-        
         squares = new GodotSquare[8, 2];
         foreach (Node node in GetChildren())
         {
@@ -63,6 +61,12 @@ public partial class PreparationBoard : GridContainer
         // De-highlight square if one was selected before this
         
         PieceResource clickedPiece = boardPlayerSetup.GetPieceOnPosition(position);
+        if (clickedPiece is not null && clickedPiece.PieceType == BasePiece.KING)
+        {
+            GD.Print("Can't move the king, nope");
+            selectedPiece = null;
+            return;
+        }
         
         if (selectedPiece is not null)
         {

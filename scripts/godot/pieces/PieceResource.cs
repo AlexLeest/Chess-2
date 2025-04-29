@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
@@ -32,11 +33,12 @@ public partial class PieceResource : Resource
             index++;
         }
         newItems[index] = newItem;
+        Items = newItems;
     }
 
     public Piece ConvertToPiece(byte id, bool color)
     {
-        List<IMovement> movement = [];
+        List<IMovement> movement = [DefaultMovements.Get(PieceType)];
         foreach (GodotMovement mov in Movement)
             movement.Add(mov.GetMovement());
         SpecialPieceTypes pieceType = PieceType switch
@@ -45,6 +47,13 @@ public partial class PieceResource : Resource
             BasePiece.PAWN => SpecialPieceTypes.PAWN,
             _ => SpecialPieceTypes.NONE,
         };
+        if (pieceType == SpecialPieceTypes.NONE)
+        {
+            if (StartPosition == new Vector2I(0, 0) || StartPosition == new Vector2I(0, 7))
+                pieceType = SpecialPieceTypes.QUEEN_SIDE_CASTLE;
+            else if (StartPosition == new Vector2I(7, 0) || StartPosition == new Vector2I(7, 7))
+                pieceType = SpecialPieceTypes.KING_SIDE_CASTLE;
+        }
         return new Piece(id, PieceType, color, StartPosition.ToCore(), movement.ToArray(), pieceType);
     }
 }

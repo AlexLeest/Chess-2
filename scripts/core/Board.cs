@@ -292,7 +292,7 @@ public class Board
                 )
                 {
                     Piece toCastle = Squares[7, colorRank];
-                    if (toCastle is not null && toCastle.SpecialPieceType == SpecialPieceTypes.QUEEN_SIDE_CASTLE)
+                    if (toCastle is not null && toCastle.SpecialPieceType == SpecialPieceTypes.KING_SIDE_CASTLE)
                     {
                         Piece[] newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
                         // Move king
@@ -332,7 +332,7 @@ public class Board
                 )
                 {
                     Piece toCastle = Squares[0, colorRank];
-                    if (toCastle is not null && toCastle.SpecialPieceType == SpecialPieceTypes.KING_SIDE_CASTLE)
+                    if (toCastle is not null && toCastle.SpecialPieceType == SpecialPieceTypes.QUEEN_SIDE_CASTLE)
                     {
                         Piece[] newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
                         // Move king
