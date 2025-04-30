@@ -13,9 +13,6 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
     {
         // Find original position for this piece (first board, pieceId, position)
         // If position currently not free, return false
-        //TODO:
-        // Else, go through boards from start, check if this item has been triggered before
-        // If not, return true
         Board currentBoard = board;
         while (currentBoard.LastBoard is not null)
         {

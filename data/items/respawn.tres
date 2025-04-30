@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Respawn" load_steps=2 format=3 uid="uid://bjd78u2gbe48b"]
+
+[ext_resource type="Script" uid="uid://b8yxk8omsm8gc" path="res://scripts/godot/pieces/items/OnCaptured/Respawn.cs" id="1_hx6y0"]
+
+[resource]
+script = ExtResource("1_hx6y0")
+metadata/_custom_type_script = "uid://b8yxk8omsm8gc"

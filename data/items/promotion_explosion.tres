@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PromotionExplosion" load_steps=2 format=3 uid="uid://cry0orp0abx7r"]
+
+[ext_resource type="Script" uid="uid://bejw4b23l7oei" path="res://scripts/godot/pieces/items/OnPromotion/PromotionExplosion.cs" id="1_bwxju"]
+
+[resource]
+script = ExtResource("1_bwxju")
+metadata/_custom_type_script = "uid://bejw4b23l7oei"

@@ -9,11 +9,6 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 /// <param name="pieceId"></param>
 public class SelfDestruct(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURED)
 {
-    public override bool ConditionsMet(Board board, Move move)
-    {
-        return true;
-    }
-
     public override Board Execute(Board board, Move move)
     {
         Vector2Int moveTo = move.To;

@@ -9,7 +9,7 @@ public abstract class AbstractItem(byte pieceId, ItemTriggers trigger) : IItem
 
     public virtual bool ConditionsMet(Board board, Move move)
     {
-        return false;
+        return true;
     }
 
     public virtual Board Execute(Board board, Move move)

@@ -18,7 +18,7 @@ public class Board
     public bool[] CastleQueenSide;
     public bool[] CastleKingSide;
 
-    private readonly Dictionary<byte, IItem[]> itemsPerPiece;
+    public readonly Dictionary<byte, IItem[]> ItemsPerPiece;
 
     public Board(
         int turn,
@@ -35,7 +35,7 @@ public class Board
 
         this.CastleQueenSide = castleQueenSide;
         this.CastleKingSide = castleKingSide;
-        this.itemsPerPiece = itemsPerPiece;
+        this.ItemsPerPiece = itemsPerPiece;
         this.LastMove = lastMove;
         this.LastBoard = lastBoard;
         
@@ -116,9 +116,29 @@ public class Board
         return null;
     }
 
+    public Board ActivateItems(bool color, ItemTriggers trigger, Board board, Move move)
+    {
+        foreach (Piece piece in Pieces)
+        {
+            if (piece.Color != color)
+                continue;
+            board = board.ActivateItems(piece.Id, trigger, board, move);
+        }
+        return board;
+    }
+
+    public Board ActivateItems(ItemTriggers trigger, Board board, Move move)
+    {
+        foreach (var pair in board.ItemsPerPiece)
+        {
+            board = board.ActivateItems(pair.Key, trigger, board, move);
+        }
+        return board;
+    }
+
     public Board ActivateItems(byte pieceId, ItemTriggers trigger, Board board, Move move)
     {
-        if (itemsPerPiece.TryGetValue(pieceId, out IItem[] captureItems))
+        if (board.ItemsPerPiece.TryGetValue(pieceId, out IItem[] captureItems))
         {
             foreach (IItem item in captureItems)
             {
@@ -201,7 +221,7 @@ public class Board
         // For each possible move
         foreach (Move move in piece.GetMovementOptions(Squares))
         {
-            // Piece capturedPiece = Squares[move.X, move.Y];
+            bool promotion = false;
             Piece capturedPiece = move.Captured;
 
             // Make full copy of all unmoved pieces
@@ -217,6 +237,7 @@ public class Board
             {
                 // Promotion! Just to queen for now
                 // TODO: Promotion to bishop, rook, knight
+                promotion = true;
                 newPiece = new Piece(piece.Id, BasePiece.QUEEN, piece.Color, move.To, [SlidingMovement.Queen]);
             }
             else if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && Math.Abs(move.To.Y - piece.Position.Y) == 2)
@@ -261,7 +282,7 @@ public class Board
 
             // Make new board add to results
             // Move committedMove = new(piece.Id, piece.Position, move, capturedPiece);
-            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, move, this);
+            Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, ItemsPerPiece, move, this);
             
             // Trigger ON_MOVE items
             possibleMove = ActivateItems(piece.Id, ItemTriggers.ON_MOVE, possibleMove, move);
@@ -272,6 +293,15 @@ public class Board
                 possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_CAPTURE, possibleMove, move);
                 possibleMove = possibleMove.ActivateItems(capturedPiece.Id, ItemTriggers.ON_CAPTURED, possibleMove, move);
             }
+            if (promotion)
+            {
+                // Trigger ON_PROMOTION items if that flag is set
+                possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_PROMOTION, possibleMove, move);
+            }
+            
+            // Trigger all ON_TURN items
+            possibleMove = possibleMove.ActivateItems(colorToMove, ItemTriggers.ON_TURN, possibleMove, move);
+            
             if (!possibleMove.IsInCheck(colorToMove))
                 result.Add(possibleMove);
         }
@@ -306,7 +336,7 @@ public class Board
                         newCastleQueenSide[colorIndex] = false;
                         newCastleKingSide[colorIndex] = false;
                         Move castleMove = new(piece.Id, piece.Position, new Vector2Int(6, colorRank));
-                        Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, castleMove, this);
+                        Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, ItemsPerPiece, castleMove, this);
 
                         // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
                         foreach (Piece toActivate in castledBoard.Pieces)
@@ -315,6 +345,7 @@ public class Board
                             castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove);
                         }
 
+                        castledBoard = castledBoard.ActivateItems(ItemTriggers.ON_TURN, castledBoard, castleMove);
                         // Add to results
                         result.Add(castledBoard);
                     }
@@ -346,7 +377,7 @@ public class Board
                         newCastleQueenSide[colorIndex] = false;
                         newCastleKingSide[colorIndex] = false;
                         Move castleMove = new(piece.Id, piece.Position, new Vector2Int(2, colorRank));
-                        Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, itemsPerPiece, castleMove, this);
+                        Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, ItemsPerPiece, castleMove, this);
 
                         // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
                         foreach (Piece toActivate in castledBoard.Pieces)
@@ -355,6 +386,7 @@ public class Board
                             castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove);
                         }
 
+                        castledBoard = castledBoard.ActivateItems(ItemTriggers.ON_TURN, castledBoard, castleMove);
                         // Add to results
                         result.Add(castledBoard);
                     }

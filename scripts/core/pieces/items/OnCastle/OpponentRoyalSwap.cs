@@ -14,10 +14,8 @@ public class OpponentRoyalSwap(byte pieceId) : AbstractItem(pieceId, ItemTrigger
     {
         bool color = GetOwnColor(board);
         foreach (Piece piece in board.Pieces)
-        {
             if (piece.BasePiece == BasePiece.QUEEN && piece.Color != color)
                 return true;
-        }
 
         return false;
     }
