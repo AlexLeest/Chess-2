@@ -173,7 +173,7 @@ public class Board
                 continue;
             foreach (IMovement movement in piece.Movement)
             {
-                if (movement.Attacks(piece.Position, position, Squares, color))
+                if (movement.Attacks(piece.Position, position, this, color))
                     return true;
             }
         }
@@ -188,7 +188,7 @@ public class Board
             if (piece.Color == color)
                 continue;
             foreach (IMovement movement in piece.Movement)
-                if (movement.AttacksAny(piece.Position, positions, Squares, color))
+                if (movement.AttacksAny(piece.Position, positions, this, color))
                     return true;
         }
 
@@ -219,7 +219,7 @@ public class Board
         List<Board> result = [];
 
         // For each possible move
-        foreach (Move move in piece.GetMovementOptions(Squares))
+        foreach (Move move in piece.GetMovementOptions(this))
         {
             bool promotion = false;
             Piece capturedPiece = move.Captured;

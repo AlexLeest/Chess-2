@@ -25,9 +25,7 @@ public class KingOfTheHill(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
             return false;
         
         Piece piece = board.GetPiece(PieceId);
-        if (piece is null)
-            return false;
-        if (piece.Position.X is >= 3 and <= 4 && piece.Position.Y is >= 3 and <= 4)
+        if (piece?.Position.X is >= 3 and <= 4 && piece.Position.Y is >= 3 and <= 4)
             return true;
         
         return false;

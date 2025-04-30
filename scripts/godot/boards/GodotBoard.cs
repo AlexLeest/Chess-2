@@ -99,7 +99,7 @@ public partial class GodotBoard : GridContainer
         selectedPiece = square.GdPiece;
         GD.Print($"Selected piece {selectedPiece.Id}");
         // TODO: Show possible moves for piece
-        foreach (Move move in selectedPiece.Piece.GetMovementOptions(Board.Squares))
+        foreach (Move move in selectedPiece.Piece.GetMovementOptions(Board))
         {
             // TODO: Highlight these squares
             GD.Print($"Move {move} allowed");

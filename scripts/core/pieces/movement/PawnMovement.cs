@@ -7,8 +7,10 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 public class PawnMovement : IMovement
 {
 
-    public List<Move> GetMovementOptions(byte id, Vector2Int from, Piece[,] squares, bool color)
+    public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
     {
+        Piece[,] squares = board.Squares;
+        
         int boardWidth = squares.GetLength(0);
         int boardHeight = squares.GetLength(1);
         
@@ -78,8 +80,10 @@ public class PawnMovement : IMovement
         return null;
     }
 
-    public bool Attacks(Vector2Int from, Vector2Int target, Piece[,] squares, bool color)
+    public bool Attacks(Vector2Int from, Vector2Int target, Board board, bool color)
     {
+        Piece[,] squares = board.Squares;
+
         // Pawns can only attack diagonal
         int xOffset = from.X - target.X;
         if (xOffset != 1 && xOffset != -1)
@@ -92,8 +96,10 @@ public class PawnMovement : IMovement
         return true;
     }
 
-    public bool AttacksAny(Vector2Int from, Vector2Int[] targets, Piece[,] squares, bool color)
+    public bool AttacksAny(Vector2Int from, Vector2Int[] targets, Board board, bool color)
     {
+        Piece[,] squares = board.Squares;
+
         int directionY = color ? 1 : -1;
         foreach (Vector2Int target in targets)
         {
