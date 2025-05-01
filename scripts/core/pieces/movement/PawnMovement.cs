@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
-// TODO: Struct, maybe
+/// <summary>
+/// Regular pawn movement
+/// </summary>
 public class PawnMovement : IMovement
 {
 

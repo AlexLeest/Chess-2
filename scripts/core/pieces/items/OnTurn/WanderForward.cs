@@ -20,7 +20,6 @@ public class WanderForward(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
 
     public override Board Execute(Board board, Move move)
     {
-        // TODO: All of this I guess
         Piece piece = board.GetPiece(pieceId);
         Vector2Int forward = new Vector2Int(piece.Position.X, piece.Position.Y + (piece.Color ? 1 : -1));
 

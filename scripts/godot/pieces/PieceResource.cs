@@ -13,7 +13,7 @@ public partial class PieceResource : Resource
     [Export] public Vector2I StartPosition;
     [Export] public GodotItem[] Items = [];
     [Export] public BasePiece PieceType;
-    [Export] public GodotMovement[] Movement;
+    [Export] public GodotMovement[] Movement = [];
     
     public PieceResource() { }
     

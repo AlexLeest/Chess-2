@@ -19,6 +19,10 @@ public partial class GodotMovement : Resource
         {
             return new PawnMovement();
         }
+        if (type == MovementType.CHECKERS)
+        {
+            return new CheckersJump();
+        }
         
         List<Vector2Int> intOffsets = [];
         foreach (Vector2 offset in offsets)
@@ -33,4 +37,5 @@ public enum MovementType
 {
     PAWN,
     SLIDING,
+    CHECKERS,
 }

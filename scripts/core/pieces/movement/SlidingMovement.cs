@@ -5,7 +5,10 @@ using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
-// TODO: Struct, maybe
+/// <summary>
+/// Generic movement. The offsets are the "directions" the piece can move in, a maximum of "multiplier" amount of times
+/// Supports every base piece movement except pawns.
+/// </summary>
 public class SlidingMovement : IMovement
 {
     // In which direction the piece can jump (single step)
