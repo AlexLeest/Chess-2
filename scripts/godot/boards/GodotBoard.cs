@@ -4,7 +4,6 @@ using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 
@@ -45,6 +44,8 @@ public partial class GodotBoard : GridContainer
 
             squares[square.Pos.X, square.Pos.Y] = square;
             square.SquareClicked += SquareClicked;
+            square.OnMouseEntered += SquareMouseEnter;
+            square.OnMouseExited += SquareMouseExit;
         }
         
         RenderPieces();
@@ -63,7 +64,17 @@ public partial class GodotBoard : GridContainer
         }
     }
 
-    private void SquareClicked(Vector2I position)
+    private void SquareMouseEnter(Vector2I coords)
+    {
+        
+    }
+
+    private void SquareMouseExit(Vector2I coords)
+    {
+        
+    }
+
+    private void SquareClicked(Vector2I coords)
     {
         if (Board.Turn % 2 != 0)
         {
@@ -72,7 +83,7 @@ public partial class GodotBoard : GridContainer
         }
         bool colorToMove = Board.Turn % 2 == 0;
         
-        Vector2Int corePos = position.ToCore();
+        Vector2Int corePos = coords.ToCore();
         if (selectedPiece != null)
         {
             Piece pieceToMove = selectedPiece.Piece;
@@ -90,7 +101,7 @@ public partial class GodotBoard : GridContainer
             selectedPiece = null;
         }
         
-        GodotSquare square = squares[position.X, position.Y];
+        GodotSquare square = squares[coords.X, coords.Y];
         if (square.GdPiece == null || !square.GdPiece.Piece.Color == colorToMove)
         {
             selectedPiece = null;

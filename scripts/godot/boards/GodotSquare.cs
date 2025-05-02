@@ -12,7 +12,16 @@ public partial class GodotSquare : ColorRect
     [Export] private int squareNumber;
     private Color color;
     
-    [Signal] public delegate void SquareClickedEventHandler(Vector2I position);
+    [Signal] public delegate void SquareClickedEventHandler(Vector2I coords);
+    [Signal] public delegate void OnMouseEnteredEventHandler(Vector2I coords);
+    [Signal] public delegate void OnMouseExitedEventHandler(Vector2I coords);
+
+    public override void _Ready()
+    {
+        // Necessary to have the event carry position data to GodotBoard
+        MouseEntered += SquareMouseEntered;
+        MouseExited += SquareMouseExited;
+    }
 
     public override void _GuiInput(InputEvent input)
     {    
@@ -24,6 +33,16 @@ public partial class GodotSquare : ColorRect
                 EmitSignalSquareClicked(Pos);
             }
         }
+    }
+
+    public void SquareMouseEntered()
+    {
+        EmitSignalOnMouseEntered(Pos);
+    }
+    
+    public void SquareMouseExited()
+    {
+        EmitSignalOnMouseExited(Pos);
     }
 
     public void Clear()
