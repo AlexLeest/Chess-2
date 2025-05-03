@@ -31,6 +31,32 @@ public partial class GodotMovement : Resource
         }
         return new SlidingMovement(intOffsets.ToArray(), multiplier);
     }
+
+    public static GodotMovement CreateFromIMovement(IMovement movement)
+    {
+        GodotMovement result = new();
+        switch (movement)
+        {
+            case PawnMovement:
+                result.type = MovementType.PAWN;
+                break;
+            case CheckersJump:
+                result.type = MovementType.CHECKERS;
+                break;
+            case SlidingMovement slidingMovement:
+                result.type = MovementType.SLIDING;
+                List<Vector2> offsets = [];
+                foreach (Vector2Int offset in slidingMovement.GetOffsets())
+                {
+                    offsets.Add(new Vector2(offset.X, offset.Y));
+                }
+                result.offsets = offsets.ToArray();
+                result.multiplier = slidingMovement.GetMultiplier();
+                break;
+        }
+
+        return result;
+    }
 }
 
 public enum MovementType

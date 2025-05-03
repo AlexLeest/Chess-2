@@ -17,7 +17,7 @@ public partial class PieceResource : Resource
     
     public PieceResource() { }
     
-    public PieceResource(BasePiece basePiece, Vector2I startPos)
+    public PieceResource(BasePiece basePiece, Vector2I startPos, GodotMovement[] movement, GodotItem[] items)
     {
         StartPosition = startPos;
         PieceType = basePiece;
@@ -55,5 +55,10 @@ public partial class PieceResource : Resource
                 pieceType = SpecialPieceTypes.KING_SIDE_CASTLE;
         }
         return new Piece(id, PieceType, color, StartPosition.ToCore(), movement.ToArray(), pieceType);
+    }
+
+    public static PieceResource CreateFromPiece(Piece piece, Board board)
+    {
+        return new PieceResource();
     }
 }

@@ -144,6 +144,9 @@ public class SlidingMovement : IMovement
 
         return false;
     }
+    
+    public Vector2Int[] GetOffsets() => offsets;
+    public int GetMultiplier() => multiplier;
 
     public static SlidingMovement Knight => new(Vector2Int.KnightHops, 1);
     public static SlidingMovement Bishop => new(Vector2Int.Diagonals, 7);

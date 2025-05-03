@@ -23,6 +23,8 @@ public partial class GodotBoard : GridContainer
     private GodotPiece[] pieces;
     private GodotSquare[,] squares;
     private Dictionary<byte, GodotSquare> pieceToSquare = new();
+
+    private PieceTooltip tooltip;
     
     private GodotPiece selectedPiece;
 
@@ -48,6 +50,9 @@ public partial class GodotBoard : GridContainer
             square.OnMouseExited += SquareMouseExit;
         }
         
+        // Connect PieceTooltip
+        tooltip = GetNode<PieceTooltip>("./Tooltip");
+        
         RenderPieces();
 
         engine = new FullRandom();
@@ -66,7 +71,21 @@ public partial class GodotBoard : GridContainer
 
     private void SquareMouseEnter(Vector2I coords)
     {
-        
+        Piece mousedOver = squares[coords.X, coords.Y].GdPiece?.Piece;
+        if (mousedOver is not null)
+        {
+            // Construct a PieceResource for this piece
+            PieceResource toShow = new();
+            toShow.PieceType = mousedOver.BasePiece;
+            List<GodotMovement> movements = [];
+            foreach (IMovement movement in mousedOver.Movement)
+            {
+                movements.Add(GodotMovement.CreateFromIMovement(movement));
+            }
+            toShow.Movement = movements.ToArray();
+
+            tooltip.ShowTooltip(toShow);
+        }
     }
 
     private void SquareMouseExit(Vector2I coords)
