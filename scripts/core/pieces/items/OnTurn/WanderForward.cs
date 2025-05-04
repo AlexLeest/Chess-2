@@ -1,6 +1,6 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core.buffs.OnTurn;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnTurn;
 
 /// <summary>
 /// Every turn, this piece attempts to "wander" forward

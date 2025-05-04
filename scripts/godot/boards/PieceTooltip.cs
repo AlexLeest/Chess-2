@@ -1,4 +1,7 @@
-﻿using Godot;
+﻿using CHESS2THESEQUELTOCHESS.scripts.godot.items;
+using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
+using Godot;
+using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 
@@ -14,8 +17,20 @@ public partial class PieceTooltip : VBoxContainer
     {
         Visible = true;
         pieceNameLabel.Text = piece.PieceType.ToString();
-        movementsLabel.Text = "";
-        itemsLabel.Text = "";
+        List<string> moveTexts = [];
+        foreach (GodotMovement movement in piece.Movement)
+        {
+            // Or do this as separate new rich text entries
+            moveTexts.Add(movement.ToString());
+        }
+        movementsLabel.Text = string.Join("\n", moveTexts);
+        List<string> itemsTexts = [];
+        foreach (GodotItem item in piece.Items)
+        {
+            // Or do this as separate new rich text entries
+            itemsTexts.Add(item.GetDescription());
+        }
+        itemsLabel.Text = string.Join("\n", itemsTexts);
     }
 
     public void HideTooltip()

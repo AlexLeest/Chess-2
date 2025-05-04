@@ -1,6 +1,4 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
-
-namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
+﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
 
 /// <summary>
 /// When piece captures a piece of it's own 

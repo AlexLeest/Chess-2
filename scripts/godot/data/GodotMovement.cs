@@ -32,6 +32,16 @@ public partial class GodotMovement : Resource
         return new SlidingMovement(intOffsets.ToArray(), multiplier);
     }
 
+    public override string ToString()
+    {
+        if (type is MovementType.SLIDING)
+        {
+            return $"Movement: {type},\noffsets: {string.Join(", ", offsets)},\nmultiplier: {multiplier}";
+        }
+
+        return $"Movement: {type}";
+    }
+
     public static GodotMovement CreateFromIMovement(IMovement movement)
     {
         GodotMovement result = new();

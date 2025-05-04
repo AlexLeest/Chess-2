@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
@@ -59,6 +60,25 @@ public partial class PieceResource : Resource
 
     public static PieceResource CreateFromPiece(Piece piece, Board board)
     {
-        return new PieceResource();
+        PieceResource result = new();
+
+        result.PieceType = piece.BasePiece;
+        
+        result.StartPosition = piece.Position.ToGodot();
+        
+        List<GodotMovement> gdMovement = [];
+        foreach (IMovement movement in piece.Movement)
+        {
+            gdMovement.Add(GodotMovement.CreateFromIMovement(movement));
+        }
+        result.Movement = gdMovement.ToArray();
+
+        List<GodotItem> items = [];
+        if (board.ItemsPerPiece.TryGetValue(piece.Id, out IItem[] itemArray))        
+            foreach (IItem item in itemArray)
+                items.Add(GodotItem.CreateFromIItem(item));
+        result.Items = items.ToArray();
+        
+        return result;
     }
 }

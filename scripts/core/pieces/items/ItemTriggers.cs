@@ -1,4 +1,4 @@
-﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.buffs;
+﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 
 public enum ItemTriggers
 {

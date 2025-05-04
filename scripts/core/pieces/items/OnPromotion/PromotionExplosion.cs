@@ -1,7 +1,7 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core.buffs.OnPromotion;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnPromotion;
 
 /// <summary>
 /// Causes an explosion around the point of promotion, capturing any pieces surrounding this spot.

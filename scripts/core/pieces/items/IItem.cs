@@ -1,6 +1,4 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
-
-namespace CHESS2THESEQUELTOCHESS.scripts.core.buffs;
+﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 
 public interface IItem
 {

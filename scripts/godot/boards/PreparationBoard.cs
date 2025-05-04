@@ -1,5 +1,4 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
-using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;

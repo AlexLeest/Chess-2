@@ -51,7 +51,7 @@ public partial class GodotBoard : GridContainer
         }
         
         // Connect PieceTooltip
-        tooltip = GetNode<PieceTooltip>("./Tooltip");
+        tooltip = GetNode<PieceTooltip>("../Tooltip");
         
         RenderPieces();
 
@@ -75,14 +75,7 @@ public partial class GodotBoard : GridContainer
         if (mousedOver is not null)
         {
             // Construct a PieceResource for this piece
-            PieceResource toShow = new();
-            toShow.PieceType = mousedOver.BasePiece;
-            List<GodotMovement> movements = [];
-            foreach (IMovement movement in mousedOver.Movement)
-            {
-                movements.Add(GodotMovement.CreateFromIMovement(movement));
-            }
-            toShow.Movement = movements.ToArray();
+            PieceResource toShow = PieceResource.CreateFromPiece(mousedOver, Board);
 
             tooltip.ShowTooltip(toShow);
         }
@@ -90,7 +83,7 @@ public partial class GodotBoard : GridContainer
 
     private void SquareMouseExit(Vector2I coords)
     {
-        
+        tooltip.HideTooltip();
     }
 
     private void SquareClicked(Vector2I coords)

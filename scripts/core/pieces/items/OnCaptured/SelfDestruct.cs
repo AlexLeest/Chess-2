@@ -1,7 +1,6 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
-using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 
 /// <summary>
 /// When this piece is captured, it also captures the piece that took it.

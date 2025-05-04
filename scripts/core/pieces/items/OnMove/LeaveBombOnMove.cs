@@ -1,6 +1,4 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
-
-namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
 
 /// <summary>
 /// Leaves a bomb behind on the spot it just moved from, which is a piece that "lives" for 1 turn and has a SelfDestruct item associated with it.

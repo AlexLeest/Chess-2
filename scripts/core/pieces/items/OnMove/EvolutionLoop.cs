@@ -1,9 +1,7 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
-using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
 
 /// <summary>
 /// This piece "evolves" into the next type of piece every time it moves

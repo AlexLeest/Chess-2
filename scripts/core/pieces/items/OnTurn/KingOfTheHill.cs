@@ -1,7 +1,6 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
-using Godot.Collections;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core.buffs.OnTurn;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnTurn;
 
 /// <summary>
 /// If piece is in centre of the board, "evolve" it to a stronger piece

@@ -1,6 +1,4 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
-
-namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
 
 /// <summary>
 /// "Shoots" the enemy piece, not actually moving this piece over there

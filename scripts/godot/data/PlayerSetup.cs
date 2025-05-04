@@ -1,8 +1,7 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
-using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using Godot;
-using System;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;

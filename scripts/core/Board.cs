@@ -1,5 +1,4 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
-using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System;
 using System.Collections.Generic;

@@ -1,8 +1,7 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.buffs;
-using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCastle;
 
 /// <summary>
 /// When you castle, swap the positions of the opponent's king and queen.

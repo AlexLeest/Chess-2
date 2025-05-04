@@ -14,9 +14,7 @@
     <Folder Include="scripts\core\pieces\items\OnOpponentCastle\" />
     <Folder Include="scripts\core\pieces\items\OnThreathened\" />
     <Folder Include="scripts\godot\pieces\items\OnCaptured\" />
-    <Folder Include="scripts\godot\pieces\items\OnCapture\" />
     <Folder Include="scripts\godot\pieces\items\OnCastle\" />
-    <Folder Include="scripts\godot\pieces\items\OnMove\" />
     <Folder Include="scripts\godot\pieces\items\OnOpponentCastle\" />
     <Folder Include="scripts\godot\pieces\items\OnThreatened\" />
   </ItemGroup>

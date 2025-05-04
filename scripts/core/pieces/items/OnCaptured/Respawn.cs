@@ -1,7 +1,7 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core.buffs;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 
 /// <summary>
 /// When this piece is captured, it instead respawns on it's starting location (once, and only if that location is empty)
