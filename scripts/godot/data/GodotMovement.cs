@@ -21,7 +21,7 @@ public partial class GodotMovement : Resource
         }
         if (type == MovementType.CHECKERS)
         {
-            return new CheckersJump();
+            return new CheckersMovement();
         }
         
         List<Vector2Int> intOffsets = [];
@@ -50,7 +50,7 @@ public partial class GodotMovement : Resource
             case PawnMovement:
                 result.type = MovementType.PAWN;
                 break;
-            case CheckersJump:
+            case CheckersMovement:
                 result.type = MovementType.CHECKERS;
                 break;
             case SlidingMovement slidingMovement:

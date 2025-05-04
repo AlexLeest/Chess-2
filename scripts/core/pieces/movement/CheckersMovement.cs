@@ -7,7 +7,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 /// <summary>
 /// Checkers style capturing, where you can jump over an opponent piece to capture it
 /// </summary>
-public class CheckersJump : IMovement
+public class CheckersMovement : IMovement
 {
     public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
     {
@@ -21,7 +21,12 @@ public class CheckersJump : IMovement
                 continue;
             
             Piece diagPiece = board.Squares[diagCoords.X, diagCoords.Y];
-            if (diagPiece is null || diagPiece.Color == color)
+            if (diagPiece is null)
+            {
+                result.Add(new Move(id, from, diagCoords));
+                continue;
+            }
+            if (diagPiece.Color == color)
                 continue;
 
             Vector2Int behindPieceCoords = diagCoords + direction;
