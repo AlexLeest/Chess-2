@@ -5,9 +5,10 @@ using Godot;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.items;
 
-public partial class GodotItem : Resource
+public abstract partial class GodotItem : Resource
 {
     // This thing effectively functions as a superclass for core items to become resources
+    public abstract Rarity Rarity { get; }
 
     public virtual IItem GetItem(byte pieceId)
     {
@@ -47,4 +48,13 @@ public partial class GodotItem : Resource
         
         throw new System.NotImplementedException();
     }
+}
+
+public enum Rarity
+{
+    COMMON,
+    UNCOMMON,
+    RARE,
+    EPIC,
+    LEGENDARY,
 }

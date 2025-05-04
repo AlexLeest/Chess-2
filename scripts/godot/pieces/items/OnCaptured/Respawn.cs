@@ -6,6 +6,8 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot.items;
 [GlobalClass]
 public partial class Respawn : GodotItem
 {
+    public override Rarity Rarity => Rarity.COMMON;
+
     public override IItem GetItem(byte pieceId)
     {
         return new core.pieces.items.OnCaptured.Respawn(pieceId);

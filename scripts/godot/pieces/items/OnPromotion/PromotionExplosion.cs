@@ -7,6 +7,8 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnPromotion;
 [GlobalClass]
 public partial class PromotionExplosion : GodotItem
 {
+    public override Rarity Rarity => Rarity.COMMON;
+    
     public override IItem GetItem(byte pieceId)
     {
         return new core.pieces.items.OnPromotion.PromotionExplosion(pieceId);
