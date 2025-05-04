@@ -18,6 +18,7 @@ public partial class PreparationBoard : GridContainer
 
     private PieceResource selectedPiece;
     private GodotSquare highlightedSquare;
+    private PieceTooltip tooltip;
 
     [Signal] public delegate void FinishSetupEventHandler();
 
@@ -31,7 +32,11 @@ public partial class PreparationBoard : GridContainer
 
             squares[square.Pos.X, square.Pos.Y] = square;
             square.SquareClicked += SquareClicked;
+            square.OnMouseEntered += SquareMouseEnter;
+            square.OnMouseExited += SquareMouseExit;
         }
+        
+        tooltip = GetNode<PieceTooltip>("../Tooltip");
         
         RenderPieces();
     }
@@ -45,6 +50,20 @@ public partial class PreparationBoard : GridContainer
                 FinishSetupAndStartLevel();
             }
         }
+    }
+
+    private void SquareMouseEnter(Vector2I coords)
+    {
+        PieceResource mousedOver = boardPlayerSetup.GetPieceOnPosition(coords);
+        if (mousedOver is not null)
+        {
+            tooltip.ShowTooltip(mousedOver);
+        }
+    }
+
+    private void SquareMouseExit(Vector2I coords)
+    {
+        tooltip.HideTooltip();
     }
 
     public bool SetItem(GodotItem item, Vector2I coords)
