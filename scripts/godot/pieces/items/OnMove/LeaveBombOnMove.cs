@@ -2,7 +2,7 @@
 
 public partial class LeaveBombOnMove : GodotItem
 {
-    public override Rarity Rarity => Rarity.COMMON;
+    public override ItemRarity Rarity => ItemRarity.COMMON;
 
     
 }

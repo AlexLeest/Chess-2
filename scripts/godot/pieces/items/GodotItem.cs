@@ -8,7 +8,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot.items;
 public abstract partial class GodotItem : Resource
 {
     // This thing effectively functions as a superclass for core items to become resources
-    public abstract Rarity Rarity { get; }
+    public abstract ItemRarity Rarity { get; }
 
     public virtual IItem GetItem(byte pieceId)
     {
@@ -50,7 +50,7 @@ public abstract partial class GodotItem : Resource
     }
 }
 
-public enum Rarity
+public enum ItemRarity
 {
     COMMON,
     UNCOMMON,

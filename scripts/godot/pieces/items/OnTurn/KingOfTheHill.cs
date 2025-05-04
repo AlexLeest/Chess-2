@@ -7,7 +7,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnTurn;
 [GlobalClass]
 public partial class KingOfTheHill : GodotItem
 {
-    public override Rarity Rarity => Rarity.COMMON;
+    public override ItemRarity Rarity => ItemRarity.COMMON;
 
     public override IItem GetItem(byte pieceId)
     {
