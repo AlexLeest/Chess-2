@@ -6,7 +6,7 @@ using Godot;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.items;
 
-public abstract partial class GodotItem : Resource, IHasRarity
+public abstract partial class GodotItem : Resource
 {
     // This thing effectively functions as a superclass for core items to become resources
     public abstract ItemRarity Rarity { get; }

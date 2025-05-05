@@ -2,6 +2,8 @@
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
+using Godot.Collections;
+using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 
@@ -13,12 +15,16 @@ public partial class PreparationBoard : GridContainer
     // Allow player to shuffle pieces around at will
     [Export] private PieceTextures pieceTextures;
     [Export] private PlayerSetup boardPlayerSetup;
+
+    [Export] private ItemsModel itemsModel;
     
     private GodotSquare[,] squares;
 
+    private UpgradeChoiceButton[] upgradeButtons;
     private PieceResource selectedPiece;
     private GodotSquare highlightedSquare;
     private PieceTooltip tooltip;
+    private bool upgradeMode = true;
 
     [Signal] public delegate void FinishSetupEventHandler();
 
@@ -37,8 +43,13 @@ public partial class PreparationBoard : GridContainer
         }
         
         tooltip = GetNode<PieceTooltip>("../Tooltip");
-        
-        
+        upgradeButtons = GetNode<Node>("../Upgrades").GetChildren().Cast<UpgradeChoiceButton>().ToArray();
+
+        foreach (UpgradeChoiceButton upgradeButton in upgradeButtons)
+        {
+            upgradeButton.SetUpgrade(itemsModel.GetRandomItemByRarity(ItemRarity.COMMON));
+        }
+        upgradeButtons[0].GetParent<VBoxContainer>().Visible = true;
         
         RenderPieces();
     }
@@ -76,11 +87,19 @@ public partial class PreparationBoard : GridContainer
         return false;
     }
 
-    private void SquareClicked(Vector2I position)
+    private void SquareClicked(Vector2I coords)
     {
         // De-highlight square if one was selected before this
         
-        PieceResource clickedPiece = boardPlayerSetup.GetPieceOnPosition(position);
+        PieceResource clickedPiece = boardPlayerSetup.GetPieceOnPosition(coords);
+        // Check if an upgrade was selected, if so, apply to piece on clicked square
+        if (upgradeMode && clickedPiece is not null)
+        {
+            HandleUpgrade(coords);
+            upgradeButtons[0].GetParent<VBoxContainer>().Visible = false;
+            return;
+        }
+        
         if (clickedPiece is not null && clickedPiece.PieceType == BasePiece.KING)
         {
             GD.Print("Can't move the king, nope");
@@ -94,7 +113,7 @@ public partial class PreparationBoard : GridContainer
             {
                 clickedPiece.StartPosition = selectedPiece.StartPosition;
             }
-            selectedPiece.StartPosition = position;
+            selectedPiece.StartPosition = coords;
             selectedPiece = null;
             RenderPieces();
             return;
@@ -102,7 +121,7 @@ public partial class PreparationBoard : GridContainer
         if (clickedPiece is not null)
         {
             selectedPiece = clickedPiece;
-            highlightedSquare = squares[position.X, position.Y];
+            highlightedSquare = squares[coords.X, coords.Y];
             // Highlight the square
 
             return;
@@ -110,6 +129,19 @@ public partial class PreparationBoard : GridContainer
 
         selectedPiece = null;
         // No need to select empty squares
+    }
+
+    private void HandleUpgrade(Vector2I coords)
+    {
+        UpgradeChoiceButton pressed = upgradeButtons.FirstOrDefault(button => button.IsPressed());
+
+        if (pressed is not null)
+        {
+            GodotItem upgrade = pressed.Upgrade;
+            boardPlayerSetup.SetItem(coords, upgrade);
+
+            upgradeMode = false;
+        }
     }
 
     private void RenderPieces()

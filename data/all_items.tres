@@ -1,8 +1,17 @@
-[gd_resource type="Resource" script_class="ItemsModel" load_steps=2 format=3 uid="uid://dnfklsd6c1fcm"]
+[gd_resource type="Resource" script_class="ItemsModel" load_steps=10 format=3 uid="uid://dnfklsd6c1fcm"]
 
 [ext_resource type="Script" uid="uid://ch4lamg1j73rm" path="res://scripts/godot/data/ItemsModel.cs" id="1_e0ufh"]
+[ext_resource type="Resource" uid="uid://ny0jv6ydl5se" path="res://data/items/evolution_loop.tres" id="1_fhhnx"]
+[ext_resource type="Resource" uid="uid://ddw4dh1uhmihm" path="res://data/items/gun.tres" id="2_um0xg"]
+[ext_resource type="Resource" uid="uid://dpfd24xbjinfk" path="res://data/items/king_of_the_hill.tres" id="3_2ph0b"]
+[ext_resource type="Resource" uid="uid://bwrjcp6rj316b" path="res://data/items/opponent_royal_swap.tres" id="4_5xdq7"]
+[ext_resource type="Resource" uid="uid://cry0orp0abx7r" path="res://data/items/promotion_explosion.tres" id="5_8pqnj"]
+[ext_resource type="Resource" uid="uid://bjd78u2gbe48b" path="res://data/items/respawn.tres" id="6_ma77a"]
+[ext_resource type="Resource" uid="uid://cldkdae8ac6gy" path="res://data/items/self_destruct.tres" id="7_vjgsy"]
+[ext_resource type="Resource" uid="uid://dcbdyvflrg644" path="res://data/items/wander_forward.tres" id="8_qsvw7"]
 
 [resource]
 script = ExtResource("1_e0ufh")
-items = null
+items = Array[Resource]([ExtResource("1_fhhnx"), ExtResource("2_um0xg"), ExtResource("3_2ph0b"), ExtResource("4_5xdq7"), ExtResource("5_8pqnj"), ExtResource("6_ma77a"), ExtResource("7_vjgsy"), ExtResource("8_qsvw7")])
+movements = null
 metadata/_custom_type_script = "uid://ch4lamg1j73rm"

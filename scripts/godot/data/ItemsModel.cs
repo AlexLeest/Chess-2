@@ -10,17 +10,27 @@ public partial class ItemsModel : Resource
     [Export] private GodotItem[] items;
     [Export] private GodotMovement[] movements;
 
-    private Dictionary<ItemRarity, List<IHasRarity>> itemsByRarity;
+    private Dictionary<ItemRarity, List<GodotItem>> itemsByRarity;
+    private Dictionary<ItemRarity, List<GodotMovement>> movementsByRarity;
+    private Dictionary<ItemRarity, List<GodotPiece>> piecesByRarity;
     
-    public IHasRarity GetRandomItemByRarity(ItemRarity itemRarity)
+    public GodotItem GetRandomItemByRarity(ItemRarity itemRarity)
     {
-        PopulateDictionary();
+        PopulateItemDictionary();
         
-        List<IHasRarity> itemsForRarity = itemsByRarity[itemRarity];
-        return itemsForRarity[GD.RandRange(0, itemsForRarity.Count)];
+        List<GodotItem> itemsForRarity = itemsByRarity[itemRarity];
+        return itemsForRarity[GD.RandRange(0, itemsForRarity.Count - 1)];
     }
 
-    private void PopulateDictionary()
+    public GodotMovement GetRandomMovementByRarity(ItemRarity itemRarity)
+    {
+        PopulateMovementDictionary();
+        
+        List<GodotMovement> movementsForRarity = movementsByRarity[itemRarity];
+        return movementsForRarity[GD.RandRange(0, movementsForRarity.Count)];
+    }
+
+    private void PopulateItemDictionary()
     {
         if (itemsByRarity is not null)
             return;
@@ -29,26 +39,26 @@ public partial class ItemsModel : Resource
         
         foreach (GodotItem item in items)
         {
-            if (itemsByRarity.TryGetValue(item.Rarity, out List<IHasRarity> list))
-            {
+            if (itemsByRarity.TryGetValue(item.Rarity, out List<GodotItem> list))
                 list.Add(item);
-            }
             else
-            {
                 itemsByRarity[item.Rarity] = [item];
-            }
         }
+    }
 
+    private void PopulateMovementDictionary()
+    {
+        if (movementsByRarity is not null)
+            return;
+        
+        movementsByRarity = [];
+        
         foreach (GodotMovement item in movements)
         {
-            if (itemsByRarity.TryGetValue(item.Rarity, out List<IHasRarity> list))
-            {
+            if (movementsByRarity.TryGetValue(item.Rarity, out List<GodotMovement> list))
                 list.Add(item);
-            }
             else
-            {
-                itemsByRarity[item.Rarity] = [item];
-            }
+                movementsByRarity[item.Rarity] = [item];
         }
     }
 }

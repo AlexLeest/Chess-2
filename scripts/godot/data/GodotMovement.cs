@@ -7,16 +7,14 @@ using System.Collections.Generic;
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 
 [GlobalClass]
-public partial class GodotMovement : Resource, IHasRarity
+public partial class GodotMovement : Resource
 {
     [Export] private MovementType type;
     // Array of Vector2I not allowed so this is a quick workaround
     [Export] private Vector2[] offsets;
     [Export] private int multiplier;
 
-    [Export] public ItemRarity rarity;
-    
-    public ItemRarity Rarity => rarity;
+    [Export] public ItemRarity Rarity;
 
     public IMovement GetMovement()
     {
