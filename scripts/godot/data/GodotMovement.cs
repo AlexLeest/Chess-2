@@ -1,17 +1,22 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using Godot;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 
 [GlobalClass]
-public partial class GodotMovement : Resource
+public partial class GodotMovement : Resource, IUnlockableItem
 {
     [Export] private MovementType type;
     // Array of Vector2I not allowed so this is a quick workaround
     [Export] private Vector2[] offsets;
     [Export] private int multiplier;
+
+    [Export] public ItemRarity rarity;
+    
+    public ItemRarity Rarity => rarity;
 
     public IMovement GetMovement()
     {

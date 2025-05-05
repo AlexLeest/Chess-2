@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ItemsModel" load_steps=2 format=3 uid="uid://dnfklsd6c1fcm"]
+
+[ext_resource type="Script" uid="uid://ch4lamg1j73rm" path="res://scripts/godot/data/ItemsModel.cs" id="1_e0ufh"]
+
+[resource]
+script = ExtResource("1_e0ufh")
+items = null
+metadata/_custom_type_script = "uid://ch4lamg1j73rm"

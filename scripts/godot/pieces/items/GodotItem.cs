@@ -1,11 +1,12 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnPromotion;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnTurn;
+using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.items;
 
-public abstract partial class GodotItem : Resource
+public abstract partial class GodotItem : Resource, IUnlockableItem
 {
     // This thing effectively functions as a superclass for core items to become resources
     public abstract ItemRarity Rarity { get; }

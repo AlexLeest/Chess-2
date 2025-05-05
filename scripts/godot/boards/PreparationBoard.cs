@@ -38,6 +38,8 @@ public partial class PreparationBoard : GridContainer
         
         tooltip = GetNode<PieceTooltip>("../Tooltip");
         
+        
+        
         RenderPieces();
     }
     

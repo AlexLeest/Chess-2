@@ -8,14 +8,15 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 public partial class ItemsModel : Resource
 {
     [Export] private GodotItem[] items;
+    [Export] private GodotMovement[] movements;
 
-    private Dictionary<ItemRarity, List<GodotItem>> itemsByRarity;
+    private Dictionary<ItemRarity, List<IUnlockableItem>> itemsByRarity;
     
-    public GodotItem GetRandomItemByRarity(ItemRarity itemRarity)
+    public IUnlockableItem GetRandomItemByRarity(ItemRarity itemRarity)
     {
         PopulateDictionary();
         
-        List<GodotItem> itemsForRarity = itemsByRarity[itemRarity];
+        List<IUnlockableItem> itemsForRarity = itemsByRarity[itemRarity];
         return itemsForRarity[GD.RandRange(0, itemsForRarity.Count)];
     }
 
@@ -28,7 +29,19 @@ public partial class ItemsModel : Resource
         
         foreach (GodotItem item in items)
         {
-            if (itemsByRarity.TryGetValue(item.Rarity, out List<GodotItem> list))
+            if (itemsByRarity.TryGetValue(item.Rarity, out List<IUnlockableItem> list))
+            {
+                list.Add(item);
+            }
+            else
+            {
+                itemsByRarity[item.Rarity] = [item];
+            }
+        }
+
+        foreach (GodotMovement item in movements)
+        {
+            if (itemsByRarity.TryGetValue(item.Rarity, out List<IUnlockableItem> list))
             {
                 list.Add(item);
             }
