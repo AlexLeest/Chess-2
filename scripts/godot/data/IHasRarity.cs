@@ -2,7 +2,7 @@
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 
-public interface IUnlockableItem
+public interface IHasRarity
 {
     public ItemRarity Rarity { get; }
 }

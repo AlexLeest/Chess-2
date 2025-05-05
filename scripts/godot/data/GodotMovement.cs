@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 
 [GlobalClass]
-public partial class GodotMovement : Resource, IUnlockableItem
+public partial class GodotMovement : Resource, IHasRarity
 {
     [Export] private MovementType type;
     // Array of Vector2I not allowed so this is a quick workaround

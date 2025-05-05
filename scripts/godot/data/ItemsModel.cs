@@ -10,13 +10,13 @@ public partial class ItemsModel : Resource
     [Export] private GodotItem[] items;
     [Export] private GodotMovement[] movements;
 
-    private Dictionary<ItemRarity, List<IUnlockableItem>> itemsByRarity;
+    private Dictionary<ItemRarity, List<IHasRarity>> itemsByRarity;
     
-    public IUnlockableItem GetRandomItemByRarity(ItemRarity itemRarity)
+    public IHasRarity GetRandomItemByRarity(ItemRarity itemRarity)
     {
         PopulateDictionary();
         
-        List<IUnlockableItem> itemsForRarity = itemsByRarity[itemRarity];
+        List<IHasRarity> itemsForRarity = itemsByRarity[itemRarity];
         return itemsForRarity[GD.RandRange(0, itemsForRarity.Count)];
     }
 
@@ -29,7 +29,7 @@ public partial class ItemsModel : Resource
         
         foreach (GodotItem item in items)
         {
-            if (itemsByRarity.TryGetValue(item.Rarity, out List<IUnlockableItem> list))
+            if (itemsByRarity.TryGetValue(item.Rarity, out List<IHasRarity> list))
             {
                 list.Add(item);
             }
@@ -41,7 +41,7 @@ public partial class ItemsModel : Resource
 
         foreach (GodotMovement item in movements)
         {
-            if (itemsByRarity.TryGetValue(item.Rarity, out List<IUnlockableItem> list))
+            if (itemsByRarity.TryGetValue(item.Rarity, out List<IHasRarity> list))
             {
                 list.Add(item);
             }
