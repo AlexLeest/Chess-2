@@ -9,10 +9,11 @@ public partial class ItemsModel : Resource
 {
     [Export] private GodotItem[] items;
     [Export] private GodotMovement[] movements;
+    [Export] private PieceResource[] pieces;
 
     private Dictionary<ItemRarity, List<GodotItem>> itemsByRarity;
     private Dictionary<ItemRarity, List<GodotMovement>> movementsByRarity;
-    private Dictionary<ItemRarity, List<GodotPiece>> piecesByRarity;
+    private Dictionary<ItemRarity, List<PieceResource>> piecesByRarity;
     
     public GodotItem GetRandomItemByRarity(ItemRarity itemRarity)
     {

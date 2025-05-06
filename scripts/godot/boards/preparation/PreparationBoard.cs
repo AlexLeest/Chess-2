@@ -43,6 +43,13 @@ public partial class PreparationBoard : GridContainer
         }
         
         tooltip = GetNode<PieceTooltip>("../Tooltip");
+        HandleUpgrades();
+        
+        RenderPieces();
+    }
+
+    private void HandleUpgrades()
+    {
         upgradeButtons = GetNode<Node>("../Upgrades").GetChildren().Cast<UpgradeChoiceButton>().ToArray();
 
         foreach (UpgradeChoiceButton upgradeButton in upgradeButtons)
@@ -50,8 +57,6 @@ public partial class PreparationBoard : GridContainer
             upgradeButton.SetUpgrade(itemsModel.GetRandomItemByRarity(ItemRarity.COMMON));
         }
         upgradeButtons[0].GetParent<VBoxContainer>().Visible = true;
-        
-        RenderPieces();
     }
     
     public override void _Input(InputEvent input)
