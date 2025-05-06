@@ -12,4 +12,9 @@ public partial class SelfDestruct : GodotItem
     {
         return new core.pieces.items.OnCaptured.SelfDestruct(pieceId);
     }
+
+    public override string GetDescription()
+    {
+        return "Self Destruct\nThis piece kills any piece that captures it.";
+    }
 }

@@ -13,7 +13,7 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
     {
         // Find original position for this piece (first board, pieceId, position)
         // If position currently not free, return false
-        Board currentBoard = board;
+        Board currentBoard = board.LastBoard;
         while (currentBoard.LastBoard is not null)
         {
             if (currentBoard.LastMove?.Captured?.Id == PieceId)

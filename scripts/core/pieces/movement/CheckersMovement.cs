@@ -51,6 +51,9 @@ public class CheckersMovement : IMovement
             return false;
 
         Vector2Int behindPieceCoords = target + delta;
+        if (!behindPieceCoords.Inside(board.Squares.GetLength(0), board.Squares.GetLength(1)))
+            return false;
+        
         Piece behindPiece = board.Squares[behindPieceCoords.X, behindPieceCoords.Y];
         
         return behindPiece is null;
