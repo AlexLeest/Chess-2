@@ -76,6 +76,7 @@ layout_mode = 2
 toggle_mode = true
 button_group = ExtResource("4_tbgi4")
 script = ExtResource("5_tefeu")
+Type = 1
 metadata/_custom_type_script = "uid://cd31idbxsl0ts"
 
 [node name="UpgradeChoiceButton3" type="Button" parent="Upgrades"]
@@ -84,4 +85,5 @@ layout_mode = 2
 toggle_mode = true
 button_group = ExtResource("4_tbgi4")
 script = ExtResource("5_tefeu")
+Type = 2
 metadata/_custom_type_script = "uid://cd31idbxsl0ts"

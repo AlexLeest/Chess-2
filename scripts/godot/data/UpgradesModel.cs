@@ -1,19 +1,26 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.godot.items;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core;
+using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using Godot;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 
 [GlobalClass]
-public partial class ItemsModel : Resource
+public partial class UpgradesModel : Resource
 {
     [Export] private GodotItem[] items;
     [Export] private GodotMovement[] movements;
-    [Export] private PieceResource[] pieces;
 
     private Dictionary<ItemRarity, List<GodotItem>> itemsByRarity;
     private Dictionary<ItemRarity, List<GodotMovement>> movementsByRarity;
-    private Dictionary<ItemRarity, List<PieceResource>> piecesByRarity;
+    private Dictionary<ItemRarity, List<BasePiece>> piecesByRarity = new()
+    {
+        { ItemRarity.COMMON, [BasePiece.PAWN, BasePiece.CHECKERS] },
+        { ItemRarity.UNCOMMON, [BasePiece.KNIGHT] },
+        { ItemRarity.RARE, [BasePiece.BISHOP] },
+        { ItemRarity.EPIC, [BasePiece.ROOK] },
+        { ItemRarity.LEGENDARY, [BasePiece.QUEEN] },
+    };
     
     public GodotItem GetRandomItemByRarity(ItemRarity itemRarity)
     {
@@ -28,7 +35,13 @@ public partial class ItemsModel : Resource
         PopulateMovementDictionary();
         
         List<GodotMovement> movementsForRarity = movementsByRarity[itemRarity];
-        return movementsForRarity[GD.RandRange(0, movementsForRarity.Count)];
+        return movementsForRarity[GD.RandRange(0, movementsForRarity.Count - 1)];
+    }
+
+    public BasePiece GetRandomPieceByRarity(ItemRarity itemRarity)
+    {
+        List<BasePiece> piecesForRarity = piecesByRarity[itemRarity];
+        return piecesForRarity[GD.RandRange(0, piecesForRarity.Count - 1)];
     }
 
     private void PopulateItemDictionary()

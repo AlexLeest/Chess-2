@@ -3,6 +3,7 @@ using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
 using Godot.Collections;
+using System;
 using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot;
@@ -16,7 +17,7 @@ public partial class PreparationBoard : GridContainer
     [Export] private PieceTextures pieceTextures;
     [Export] private PlayerSetup boardPlayerSetup;
 
-    [Export] private ItemsModel itemsModel;
+    [Export] private UpgradesModel upgradesModel;
     
     private GodotSquare[,] squares;
 
@@ -41,20 +42,20 @@ public partial class PreparationBoard : GridContainer
             square.OnMouseEntered += SquareMouseEnter;
             square.OnMouseExited += SquareMouseExit;
         }
+        UpgradeButtonsSetup();
         
         tooltip = GetNode<PieceTooltip>("../Tooltip");
-        HandleUpgrades();
         
         RenderPieces();
     }
 
-    private void HandleUpgrades()
+    private void UpgradeButtonsSetup()
     {
         upgradeButtons = GetNode<Node>("../Upgrades").GetChildren().Cast<UpgradeChoiceButton>().ToArray();
 
         foreach (UpgradeChoiceButton upgradeButton in upgradeButtons)
         {
-            upgradeButton.SetUpgrade(itemsModel.GetRandomItemByRarity(ItemRarity.COMMON));
+            upgradeButton.SetUpgrade(upgradesModel, ItemRarity.COMMON);
         }
         upgradeButtons[0].GetParent<VBoxContainer>().Visible = true;
     }
@@ -62,12 +63,8 @@ public partial class PreparationBoard : GridContainer
     public override void _Input(InputEvent input)
     {
         if (input is InputEventKey eventKey && eventKey.Pressed)
-        {
             if (eventKey.Keycode == Key.Space)
-            {
                 FinishSetupAndStartLevel();
-            }
-        }
     }
 
     private void SquareMouseEnter(Vector2I coords)
@@ -84,24 +81,20 @@ public partial class PreparationBoard : GridContainer
         tooltip.HideTooltip();
     }
 
-    public bool SetItem(GodotItem item, Vector2I coords)
-    {
-        Piece subject = squares[coords.X, coords.Y].GdPiece?.Piece;
-        if (subject is not null)
-            return boardPlayerSetup.SetItem(subject.Position.ToGodot(), item);
-        return false;
-    }
-
     private void SquareClicked(Vector2I coords)
     {
         // De-highlight square if one was selected before this
         
         PieceResource clickedPiece = boardPlayerSetup.GetPieceOnPosition(coords);
         // Check if an upgrade was selected, if so, apply to piece on clicked square
-        if (upgradeMode && clickedPiece is not null)
+        if (upgradeMode)
         {
-            HandleUpgrade(coords);
-            upgradeButtons[0].GetParent<VBoxContainer>().Visible = false;
+            bool upgradeApplied = HandleUpgrade(coords);
+            if (upgradeApplied)
+            {
+                upgradeButtons[0].GetParent<VBoxContainer>().Visible = false;
+                upgradeMode = false;
+            }
             return;
         }
         
@@ -136,17 +129,30 @@ public partial class PreparationBoard : GridContainer
         // No need to select empty squares
     }
 
-    private void HandleUpgrade(Vector2I coords)
+    private bool HandleUpgrade(Vector2I coords)
     {
         UpgradeChoiceButton pressed = upgradeButtons.FirstOrDefault(button => button.IsPressed());
 
-        if (pressed is not null)
-        {
-            GodotItem upgrade = pressed.Upgrade;
-            boardPlayerSetup.SetItem(coords, upgrade);
+        if (pressed is null)
+            return false;
 
-            upgradeMode = false;
+        bool upgradeApplied;
+        switch (pressed.Type)
+        {
+            case UpgradeType.ITEM:
+                upgradeApplied = boardPlayerSetup.SetItem(coords, pressed.Item);
+                break;
+            case UpgradeType.MOVEMENT:
+                upgradeApplied = boardPlayerSetup.SetMovement(coords, pressed.Movement);
+                break;
+            case UpgradeType.PIECE:
+                upgradeApplied = boardPlayerSetup.AddPiece(coords, pressed.Piece);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
+        RenderPieces();
+        return upgradeApplied;
     }
 
     private void RenderPieces()

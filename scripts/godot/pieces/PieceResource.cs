@@ -5,6 +5,7 @@ using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 
@@ -35,6 +36,13 @@ public partial class PieceResource : Resource
         }
         newItems[index] = newItem;
         Items = newItems;
+    }
+
+    public void AddMovement(GodotMovement newMovement)
+    {
+        List<GodotMovement> newMovements = Movement.ToList();
+        newMovements.Add(newMovement);
+        Movement = newMovements.ToArray();
     }
 
     public Piece ConvertToPiece(byte id, bool color)
@@ -79,6 +87,17 @@ public partial class PieceResource : Resource
                 items.Add(GodotItem.CreateFromIItem(item));
         result.Items = items.ToArray();
         
+        return result;
+    }
+
+    public static PieceResource CreateFromBasePiece(BasePiece piece, Vector2I startPos)
+    {
+        PieceResource result = new();
+        
+        result.StartPosition = startPos;
+        result.PieceType = piece;
+        result.Movement = [GodotMovement.CreateFromIMovement(DefaultMovements.Get(piece))];
+
         return result;
     }
 }

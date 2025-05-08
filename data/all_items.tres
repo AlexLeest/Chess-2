@@ -1,6 +1,5 @@
-[gd_resource type="Resource" script_class="ItemsModel" load_steps=10 format=3 uid="uid://dnfklsd6c1fcm"]
+[gd_resource type="Resource" script_class="UpgradesModel" load_steps=17 format=3 uid="uid://dnfklsd6c1fcm"]
 
-[ext_resource type="Script" uid="uid://ch4lamg1j73rm" path="res://scripts/godot/data/ItemsModel.cs" id="1_e0ufh"]
 [ext_resource type="Resource" uid="uid://ny0jv6ydl5se" path="res://data/items/evolution_loop.tres" id="1_fhhnx"]
 [ext_resource type="Resource" uid="uid://ddw4dh1uhmihm" path="res://data/items/gun.tres" id="2_um0xg"]
 [ext_resource type="Resource" uid="uid://dpfd24xbjinfk" path="res://data/items/king_of_the_hill.tres" id="3_2ph0b"]
@@ -9,9 +8,17 @@
 [ext_resource type="Resource" uid="uid://bjd78u2gbe48b" path="res://data/items/respawn.tres" id="6_ma77a"]
 [ext_resource type="Resource" uid="uid://cldkdae8ac6gy" path="res://data/items/self_destruct.tres" id="7_vjgsy"]
 [ext_resource type="Resource" uid="uid://dcbdyvflrg644" path="res://data/items/wander_forward.tres" id="8_qsvw7"]
+[ext_resource type="Resource" uid="uid://cfx0jw73qy21n" path="res://data/movements/defaults/bishop_movement.tres" id="9_qsvw7"]
+[ext_resource type="Resource" uid="uid://nrdvag5iu0f1" path="res://data/movements/defaults/king_movement.tres" id="10_qgao5"]
+[ext_resource type="Resource" uid="uid://2thbkgl7alft" path="res://data/movements/defaults/knight_movement.tres" id="11_1dr23"]
+[ext_resource type="Resource" uid="uid://bs3d5s2jnrs0m" path="res://data/movements/defaults/pawn_movement.tres" id="12_l6gso"]
+[ext_resource type="Resource" uid="uid://nhw5xi4wt0ea" path="res://data/movements/defaults/queen_movement.tres" id="13_p6ufp"]
+[ext_resource type="Resource" uid="uid://b2x8cgcu6vpdt" path="res://data/movements/defaults/rook_movement.tres" id="14_7vb0p"]
+[ext_resource type="Resource" uid="uid://do1heo3x146tb" path="res://data/movements/checkers_jump.tres" id="15_4100q"]
+[ext_resource type="Script" uid="uid://cc7v4nx16p53b" path="res://scripts/godot/data/UpgradesModel.cs" id="16_8o2jt"]
 
 [resource]
-script = ExtResource("1_e0ufh")
+script = ExtResource("16_8o2jt")
 items = Array[Resource]([ExtResource("1_fhhnx"), ExtResource("2_um0xg"), ExtResource("3_2ph0b"), ExtResource("4_5xdq7"), ExtResource("5_8pqnj"), ExtResource("6_ma77a"), ExtResource("7_vjgsy"), ExtResource("8_qsvw7")])
-movements = null
+movements = Array[Object]([ExtResource("9_qsvw7"), ExtResource("10_qgao5"), ExtResource("11_1dr23"), ExtResource("12_l6gso"), ExtResource("13_p6ufp"), ExtResource("14_7vb0p"), ExtResource("15_4100q")])
 metadata/_custom_type_script = "uid://ch4lamg1j73rm"

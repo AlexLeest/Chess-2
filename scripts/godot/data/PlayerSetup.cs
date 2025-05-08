@@ -3,6 +3,7 @@ using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 
@@ -64,13 +65,32 @@ public partial class PlayerSetup : Resource
 
     public bool SetItem(Vector2I position, GodotItem item)
     {
-        foreach (PieceResource piece in PlayerPieces)
-        {
-            if (piece.StartPosition != position)
-                continue;
-            piece.AddItem(item);
-            return true;
-        }
-        return false;
+        PieceResource piece = GetPieceOnPosition(position);
+        if (piece is null)
+            return false;
+        piece.AddItem(item);
+        return true;
+    }
+
+    public bool SetMovement(Vector2I position, GodotMovement movement)
+    {
+        PieceResource piece = GetPieceOnPosition(position);
+        if (piece is null)
+            return false;
+        piece.AddMovement(movement);
+        return true;
+    }
+
+    public bool AddPiece(Vector2I position, BasePiece pieceType)
+    {
+        if (GetPieceOnPosition(position) is not null)
+            return false;
+        
+        PieceResource piece = PieceResource.CreateFromBasePiece(pieceType, position);
+        List<PieceResource> newPieces = PlayerPieces.ToList();
+        newPieces.Add(piece);
+        PlayerPieces = newPieces.ToArray();
+
+        return true;
     }
 }

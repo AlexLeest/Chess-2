@@ -6,21 +6,16 @@ public static class DefaultMovements
 {
     public static IMovement Get(BasePiece pieceType)
     {
-        switch (pieceType)
+        return pieceType switch
         {
-            case BasePiece.KING:
-                return SlidingMovement.King;
-            case BasePiece.QUEEN:
-                return SlidingMovement.Queen;
-            case BasePiece.BISHOP:
-                return SlidingMovement.Bishop;
-            case BasePiece.ROOK:
-                return SlidingMovement.Rook;
-            case BasePiece.KNIGHT:
-                return SlidingMovement.Knight;
-            case BasePiece.PAWN:
-                return new PawnMovement();
-        }
-        throw new ArgumentException($"BasePiece type {pieceType} not defined");
+            BasePiece.KING => SlidingMovement.King,
+            BasePiece.QUEEN => SlidingMovement.Queen,
+            BasePiece.BISHOP => SlidingMovement.Bishop,
+            BasePiece.ROOK => SlidingMovement.Rook,
+            BasePiece.KNIGHT => SlidingMovement.Knight,
+            BasePiece.PAWN => new PawnMovement(),
+            BasePiece.CHECKERS => new CheckersMovement(),
+            _ => throw new ArgumentException($"BasePiece type {pieceType} not defined")
+        };
     }
 }

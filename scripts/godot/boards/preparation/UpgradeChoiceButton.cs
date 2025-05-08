@@ -1,21 +1,36 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.godot.items;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core;
+using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
+using System;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 
 [GlobalClass]
 public partial class UpgradeChoiceButton : Button
 {
-    [Export] private UpgradeType type;
-    [Export] public GodotItem Upgrade;
+    [Export] public UpgradeType Type;
+    [Export] public GodotItem Item;
     [Export] public GodotMovement Movement;
-    [Export] public PieceResource Piece;
+    [Export] public BasePiece Piece;
 
-    public void SetUpgrade(GodotItem upgrade)
+    public void SetUpgrade(UpgradesModel model, ItemRarity rarity)
     {
-        Upgrade = upgrade;
-        Text = upgrade.GetDescription();
+        switch (Type)
+        {
+            case UpgradeType.ITEM:
+                Item = model.GetRandomItemByRarity(rarity);
+                Text = Item.GetDescription();
+                break;
+            case UpgradeType.MOVEMENT:
+                Movement = model.GetRandomMovementByRarity(rarity);
+                Text = Movement.ToString();
+                break;
+            case UpgradeType.PIECE:
+                Piece = model.GetRandomPieceByRarity(rarity);
+                Text = Piece.ToString();
+                break;
+        }
     }
 }
 

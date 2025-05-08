@@ -12,7 +12,7 @@ public partial class GodotPiece : TextureRect
     
     public GodotPiece(Piece piece)
     {
-        this.Piece = piece;
+        Piece = piece;
         Id = piece.Id;
     }
 }

@@ -26,7 +26,7 @@ columns = 8
 script = ExtResource("1_rtu32")
 pieceTextures = ExtResource("2_e32cc")
 boardPlayerSetup = ExtResource("3_26hjj")
-itemsModel = ExtResource("5_mwa8x")
+upgradesModel = ExtResource("5_mwa8x")
 metadata/_custom_type_script = "uid://2rqutw7br6l3"
 
 [node name="GodotSquare49" type="ColorRect" parent="."]
