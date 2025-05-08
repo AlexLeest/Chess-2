@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CaptureNonKingPiece" load_steps=2 format=3 uid="uid://c67m4tyoaewst"]
+
+[ext_resource type="Script" uid="uid://b84g7g55g7sxy" path="res://scripts/godot/pieces/items/OnOpponentCastle/CaptureNonKingPiece.cs" id="1_wkgcr"]
+
+[resource]
+script = ExtResource("1_wkgcr")
+Rarity = 4
+metadata/_custom_type_script = "uid://b84g7g55g7sxy"

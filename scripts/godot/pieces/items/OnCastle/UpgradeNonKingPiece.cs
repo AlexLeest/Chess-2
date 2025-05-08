@@ -5,15 +5,15 @@ using Godot;
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnCastle;
 
 [GlobalClass]
-public partial class OpponentRoyalSwap : GodotItem
+public partial class UpgradeNonKingPiece : GodotItem
 {
     public override IItem GetItem(byte pieceId)
     {
-        return new core.pieces.items.OnCastle.OpponentRoyalSwap(pieceId);
+        return new core.pieces.items.OnCastle.UpgradeNonKingPiece(pieceId);
     }
 
     public override string GetDescription()
     {
-        return "Royal Swap:\nWhen you castle, the opponent's king and queen swap their places";
+        return "Upgrade Non-King Piece\nOn castling, the non-king piece is upgraded";
     }
 }

@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="PlayerSetup" load_steps=13 format=3 uid="uid://dab655gk8f2w"]
+[gd_resource type="Resource" script_class="PlayerSetup" load_steps=15 format=3 uid="uid://dab655gk8f2w"]
 
 [ext_resource type="Script" uid="uid://dxjj038hvehvy" path="res://scripts/godot/data/PlayerSetup.cs" id="1_0hlud"]
 [ext_resource type="Resource" uid="uid://do1heo3x146tb" path="res://data/movements/checkers_jump.tres" id="1_gfi27"]
 [ext_resource type="Resource" uid="uid://dpfd24xbjinfk" path="res://data/items/king_of_the_hill.tres" id="1_wg7p6"]
 [ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="2_smuar"]
 [ext_resource type="Resource" uid="uid://bwrjcp6rj316b" path="res://data/items/opponent_royal_swap.tres" id="4_duuy3"]
+[ext_resource type="Resource" uid="uid://dx7o5eb2ntg61" path="res://data/items/upgrade_non_king_piece.tres" id="4_lqo0s"]
 [ext_resource type="Resource" uid="uid://ddw4dh1uhmihm" path="res://data/items/gun.tres" id="5_lqo0s"]
+[ext_resource type="Resource" uid="uid://pww6fxg1g8ik" path="res://data/items/spawn_pawn_fence.tres" id="6_lqo0s"]
 
 [sub_resource type="Resource" id="Resource_wg7p6"]
 script = ExtResource("2_smuar")
@@ -34,7 +36,7 @@ metadata/_custom_type_script = "uid://cul58y3sumplo"
 [sub_resource type="Resource" id="Resource_v8lho"]
 script = ExtResource("2_smuar")
 StartPosition = Vector2i(4, 0)
-Items = [ExtResource("4_duuy3")]
+Items = [ExtResource("4_lqo0s"), ExtResource("4_duuy3"), ExtResource("6_lqo0s")]
 PieceType = 5
 Movement = [ExtResource("1_gfi27")]
 metadata/_custom_type_script = "uid://cul58y3sumplo"

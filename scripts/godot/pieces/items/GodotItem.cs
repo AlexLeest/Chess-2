@@ -1,7 +1,11 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnOpponentCastle;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnPromotion;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnTurn;
-using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCastle;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
 using Godot;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.items;
@@ -9,45 +13,32 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot.items;
 public abstract partial class GodotItem : Resource
 {
     // This thing effectively functions as a superclass for core items to become resources
-    public abstract ItemRarity Rarity { get; }
+    [Export] public ItemRarity Rarity;
 
-    public virtual IItem GetItem(byte pieceId)
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract IItem GetItem(byte pieceId);
 
-    public virtual string GetDescription()
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract string GetDescription();
 
     public static GodotItem CreateFromIItem(IItem item)
     {
-        switch (item)
+        return item switch
         {
-            case core.pieces.items.OnCapture.CannibalTeeth:
-                return new pieces.items.OnCapture.CannibalTeeth();
-            case core.pieces.items.OnCapture.Gun:
-                return new Gun();
-            case core.pieces.items.OnCaptured.Respawn:
-                return new Respawn();
-            case core.pieces.items.OnCaptured.SelfDestruct:
-                return new SelfDestruct();
-            case core.pieces.items.OnCastle.OpponentRoyalSwap:
-                return new OpponentRoyalSwap();
-            case core.pieces.items.OnMove.EvolutionLoop:
-                return new EvolutionLoop();
-            case core.pieces.items.OnMove.LeaveBombOnMove:
-                return new LeaveBombOnMove();
-            case PromotionExplosion:
-                return new pieces.items.OnPromotion.PromotionExplosion();
-            case KingOfTheHill:
-                return new pieces.items.OnTurn.KingOfTheHill();
-            case WanderForward:
-                return new OnTurn.WanderForward();
-        }
-        
-        throw new System.NotImplementedException();
+            CannibalTeeth => new pieces.items.OnCapture.CannibalTeeth(),
+            Gun => new pieces.items.OnCapture.Gun(),
+            Respawn => new pieces.items.OnCaptured.Respawn(),
+            SelfDestruct => new pieces.items.OnCaptured.SelfDestruct(),
+            OpponentRoyalSwap => new pieces.items.OnCastle.OpponentRoyalSwap(),
+            EvolutionLoop => new pieces.items.OnMove.EvolutionLoop(),
+            LeaveBombOnMove => new pieces.items.OnMove.LeaveBombOnMove(),
+            PromotionExplosion => new pieces.items.OnPromotion.PromotionExplosion(),
+            KingOfTheHill => new pieces.items.OnTurn.KingOfTheHill(),
+            WanderForward => new pieces.items.OnTurn.WanderForward(),
+            CaptureNonKingPiece => new pieces.items.OnOpponentCastle.CaptureNonKingPiece(),
+            UpgradeNonKingPiece => new pieces.items.OnCastle.UpgradeNonKingPiece(),
+            SpawnPawnFence => new pieces.items.OnCastle.SpawnPawnFence(),
+            _ => throw new System.NotImplementedException()
+        };
+
     }
 }
 

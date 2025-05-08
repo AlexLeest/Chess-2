@@ -96,7 +96,6 @@ public partial class PieceResource : Resource
         
         result.StartPosition = startPos;
         result.PieceType = piece;
-        result.Movement = [GodotMovement.CreateFromIMovement(DefaultMovements.Get(piece))];
 
         return result;
     }

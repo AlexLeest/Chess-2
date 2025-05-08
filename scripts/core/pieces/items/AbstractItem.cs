@@ -10,8 +10,5 @@ public abstract class AbstractItem(byte pieceId, ItemTriggers trigger) : IItem
         return true;
     }
 
-    public virtual Board Execute(Board board, Move move)
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract Board Execute(Board board, Move move);
 }

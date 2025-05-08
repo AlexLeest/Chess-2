@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="GodotMovement" load_steps=2 format=3 uid="uid://cfx0jw73qy21n"]
+[gd_resource type="Resource" script_class="GodotSlidingMovement" load_steps=2 format=3 uid="uid://cfx0jw73qy21n"]
 
-[ext_resource type="Script" uid="uid://b885h4jlofknj" path="res://scripts/godot/data/GodotMovement.cs" id="1_v7ih2"]
+[ext_resource type="Script" uid="uid://cquxcb8jnqgtm" path="res://scripts/godot/pieces/movement/GodotSlidingMovement.cs" id="1_adsd5"]
 
 [resource]
-script = ExtResource("1_v7ih2")
-type = 1
-offsets = PackedVector2Array(1, 1, -1, -1, 1, -1, -1, 1)
+script = ExtResource("1_adsd5")
+offsets = PackedVector2Array(1, 1, -1, 1, 1, -1, -1, -1)
 multiplier = 7
+Rarity = 0
 metadata/_custom_type_script = "uid://b885h4jlofknj"

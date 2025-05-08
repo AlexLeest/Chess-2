@@ -11,11 +11,8 @@
     <Content Include="scripts\perft.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="scripts\core\pieces\items\OnOpponentCastle\" />
     <Folder Include="scripts\core\pieces\items\OnThreathened\" />
     <Folder Include="scripts\godot\pieces\items\OnCaptured\" />
-    <Folder Include="scripts\godot\pieces\items\OnCastle\" />
-    <Folder Include="scripts\godot\pieces\items\OnOpponentCastle\" />
     <Folder Include="scripts\godot\pieces\items\OnThreatened\" />
   </ItemGroup>
 </Project>

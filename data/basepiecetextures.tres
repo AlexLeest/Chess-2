@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PieceTextures" load_steps=27 format=3 uid="uid://bcrexudceb4sh"]
+[gd_resource type="Resource" script_class="PieceTextures" load_steps=31 format=3 uid="uid://bcrexudceb4sh"]
 
 [ext_resource type="Script" uid="uid://03f3vre5h3sj" path="res://scripts/godot/utils/BasePieceTexture.cs" id="1_fhrla"]
 [ext_resource type="Script" uid="uid://cr2qemoyqbcdy" path="res://scripts/godot/pieces/PieceTextures.cs" id="1_pa321"]
@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://bn7ggxwhldr6a" path="res://art/pieces/bQ.svg" id="11_b8qsf"]
 [ext_resource type="Texture2D" uid="uid://i6fmdcudmkkq" path="res://art/pieces/wK.svg" id="12_b2yyf"]
 [ext_resource type="Texture2D" uid="uid://gftk3abspmjw" path="res://art/pieces/bK.svg" id="13_2bttg"]
+[ext_resource type="Texture2D" uid="uid://qdxtwdc20u6e" path="res://art/pieces/checkers_white.png" id="14_4gw50"]
+[ext_resource type="Texture2D" uid="uid://b834vm23rpgvr" path="res://art/pieces/checkers_black.png" id="15_2yyu8"]
 
 [sub_resource type="Resource" id="Resource_b5m35"]
 script = ExtResource("1_fhrla")
@@ -99,7 +101,21 @@ Color = false
 Texture = ExtResource("13_2bttg")
 metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
+[sub_resource type="Resource" id="Resource_losim"]
+script = ExtResource("1_fhrla")
+BasePiece = 6
+Color = true
+Texture = ExtResource("14_4gw50")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
+[sub_resource type="Resource" id="Resource_hpkq3"]
+script = ExtResource("1_fhrla")
+BasePiece = 6
+Color = false
+Texture = ExtResource("15_2yyu8")
+metadata/_custom_type_script = "uid://03f3vre5h3sj"
+
 [resource]
 script = ExtResource("1_pa321")
-pieceTextures = Array[Object]([SubResource("Resource_b5m35"), SubResource("Resource_vjo87"), SubResource("Resource_xo6sd"), SubResource("Resource_oqyug"), SubResource("Resource_gyn4y"), SubResource("Resource_ol6j1"), SubResource("Resource_es8jc"), SubResource("Resource_0ax14"), SubResource("Resource_1irfh"), SubResource("Resource_f8lef"), SubResource("Resource_op34j"), SubResource("Resource_t6kho")])
+pieceTextures = Array[Object]([SubResource("Resource_b5m35"), SubResource("Resource_vjo87"), SubResource("Resource_xo6sd"), SubResource("Resource_oqyug"), SubResource("Resource_gyn4y"), SubResource("Resource_ol6j1"), SubResource("Resource_es8jc"), SubResource("Resource_0ax14"), SubResource("Resource_1irfh"), SubResource("Resource_f8lef"), SubResource("Resource_op34j"), SubResource("Resource_t6kho"), SubResource("Resource_losim"), SubResource("Resource_hpkq3")])
 metadata/_custom_type_script = "uid://cr2qemoyqbcdy"

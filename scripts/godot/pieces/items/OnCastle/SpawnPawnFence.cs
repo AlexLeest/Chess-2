@@ -5,15 +5,15 @@ using Godot;
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnCastle;
 
 [GlobalClass]
-public partial class OpponentRoyalSwap : GodotItem
+public partial class SpawnPawnFence : GodotItem
 {
     public override IItem GetItem(byte pieceId)
     {
-        return new core.pieces.items.OnCastle.OpponentRoyalSwap(pieceId);
+        return new core.pieces.items.OnCastle.SpawnPawnFence(pieceId);
     }
 
     public override string GetDescription()
     {
-        return "Royal Swap:\nWhen you castle, the opponent's king and queen swap their places";
+        return "Spawn pawn fence\nOn castling, 3 pawns will spawn in front of the king (where possible)";
     }
 }

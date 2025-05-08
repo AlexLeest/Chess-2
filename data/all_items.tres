@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="UpgradesModel" load_steps=17 format=3 uid="uid://dnfklsd6c1fcm"]
+[gd_resource type="Resource" script_class="UpgradesModel" load_steps=20 format=3 uid="uid://dnfklsd6c1fcm"]
 
 [ext_resource type="Resource" uid="uid://ny0jv6ydl5se" path="res://data/items/evolution_loop.tres" id="1_fhhnx"]
 [ext_resource type="Resource" uid="uid://ddw4dh1uhmihm" path="res://data/items/gun.tres" id="2_um0xg"]
@@ -8,9 +8,12 @@
 [ext_resource type="Resource" uid="uid://bjd78u2gbe48b" path="res://data/items/respawn.tres" id="6_ma77a"]
 [ext_resource type="Resource" uid="uid://cldkdae8ac6gy" path="res://data/items/self_destruct.tres" id="7_vjgsy"]
 [ext_resource type="Resource" uid="uid://dcbdyvflrg644" path="res://data/items/wander_forward.tres" id="8_qsvw7"]
+[ext_resource type="Resource" uid="uid://c67m4tyoaewst" path="res://data/items/capture_non_king_piece.tres" id="9_1dr23"]
 [ext_resource type="Resource" uid="uid://cfx0jw73qy21n" path="res://data/movements/defaults/bishop_movement.tres" id="9_qsvw7"]
+[ext_resource type="Resource" uid="uid://dx7o5eb2ntg61" path="res://data/items/upgrade_non_king_piece.tres" id="10_l6gso"]
 [ext_resource type="Resource" uid="uid://nrdvag5iu0f1" path="res://data/movements/defaults/king_movement.tres" id="10_qgao5"]
 [ext_resource type="Resource" uid="uid://2thbkgl7alft" path="res://data/movements/defaults/knight_movement.tres" id="11_1dr23"]
+[ext_resource type="Resource" uid="uid://pww6fxg1g8ik" path="res://data/items/spawn_pawn_fence.tres" id="11_l6gso"]
 [ext_resource type="Resource" uid="uid://bs3d5s2jnrs0m" path="res://data/movements/defaults/pawn_movement.tres" id="12_l6gso"]
 [ext_resource type="Resource" uid="uid://nhw5xi4wt0ea" path="res://data/movements/defaults/queen_movement.tres" id="13_p6ufp"]
 [ext_resource type="Resource" uid="uid://b2x8cgcu6vpdt" path="res://data/movements/defaults/rook_movement.tres" id="14_7vb0p"]
@@ -19,6 +22,6 @@
 
 [resource]
 script = ExtResource("16_8o2jt")
-items = Array[Resource]([ExtResource("1_fhhnx"), ExtResource("2_um0xg"), ExtResource("3_2ph0b"), ExtResource("4_5xdq7"), ExtResource("5_8pqnj"), ExtResource("6_ma77a"), ExtResource("7_vjgsy"), ExtResource("8_qsvw7")])
-movements = Array[Object]([ExtResource("9_qsvw7"), ExtResource("10_qgao5"), ExtResource("11_1dr23"), ExtResource("12_l6gso"), ExtResource("13_p6ufp"), ExtResource("14_7vb0p"), ExtResource("15_4100q")])
+items = Array[Resource]([ExtResource("1_fhhnx"), ExtResource("2_um0xg"), ExtResource("3_2ph0b"), ExtResource("4_5xdq7"), ExtResource("5_8pqnj"), ExtResource("6_ma77a"), ExtResource("7_vjgsy"), ExtResource("8_qsvw7"), ExtResource("9_1dr23"), ExtResource("10_l6gso"), ExtResource("11_l6gso")])
+movements = Array[Object]([ExtResource("15_4100q"), ExtResource("9_qsvw7"), ExtResource("10_qgao5"), ExtResource("11_1dr23"), ExtResource("12_l6gso"), ExtResource("13_p6ufp"), ExtResource("14_7vb0p")])
 metadata/_custom_type_script = "uid://ch4lamg1j73rm"

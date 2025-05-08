@@ -1,8 +1,14 @@
-﻿namespace CHESS2THESEQUELTOCHESS.scripts.godot.items;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+using CHESS2THESEQUELTOCHESS.scripts.godot.items;
+
+namespace CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnMove;
 
 public partial class LeaveBombOnMove : GodotItem
 {
-    public override ItemRarity Rarity => ItemRarity.COMMON;
+    public override IItem GetItem(byte pieceId)
+    {
+        throw new System.NotImplementedException();
+    }
 
     public override string GetDescription()
     {

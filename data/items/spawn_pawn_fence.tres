@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SpawnPawnFence" load_steps=2 format=3 uid="uid://pww6fxg1g8ik"]
+
+[ext_resource type="Script" uid="uid://bikleeagn3oi8" path="res://scripts/godot/pieces/items/OnCastle/SpawnPawnFence.cs" id="1_4mu5x"]
+
+[resource]
+script = ExtResource("1_4mu5x")
+Rarity = 0
+metadata/_custom_type_script = "uid://bikleeagn3oi8"

@@ -1,10 +1,8 @@
-[gd_resource type="Resource" script_class="GodotMovement" load_steps=2 format=3 uid="uid://bs3d5s2jnrs0m"]
+[gd_resource type="Resource" script_class="GodotPawnMovement" load_steps=2 format=3 uid="uid://bs3d5s2jnrs0m"]
 
-[ext_resource type="Script" uid="uid://b885h4jlofknj" path="res://scripts/godot/data/GodotMovement.cs" id="1_6cbg6"]
+[ext_resource type="Script" uid="uid://djbhctklgnf6w" path="res://scripts/godot/pieces/movement/GodotPawnMovement.cs" id="1_wmkg7"]
 
 [resource]
-script = ExtResource("1_6cbg6")
-type = 0
-offsets = PackedVector2Array()
-multiplier = 0
+script = ExtResource("1_wmkg7")
+Rarity = 0
 metadata/_custom_type_script = "uid://b885h4jlofknj"

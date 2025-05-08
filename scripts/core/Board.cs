@@ -164,7 +164,7 @@ public class Board
         return IsInCheck(color, kingPosition);
     }
 
-    private bool IsInCheck(bool color, Vector2Int position)
+    public bool IsInCheck(bool color, Vector2Int position)
     {
         foreach (Piece piece in Pieces)
         {
@@ -396,7 +396,7 @@ public class Board
         return result;
     }
 
-    private Piece[] DeepcopyPieces(params byte[] idToSkip)
+    public Piece[] DeepcopyPieces(params byte[] idToSkip)
     {
         // Result leaves 1 "empty" spot in the array (to be filled with the moved piece)
         Piece[] result = new Piece[Pieces.Length - idToSkip.Length + 1];

@@ -1,10 +1,8 @@
-[gd_resource type="Resource" script_class="GodotMovement" load_steps=2 format=3 uid="uid://do1heo3x146tb"]
+[gd_resource type="Resource" script_class="GodotCheckersMovement" load_steps=2 format=3 uid="uid://do1heo3x146tb"]
 
-[ext_resource type="Script" uid="uid://b885h4jlofknj" path="res://scripts/godot/data/GodotMovement.cs" id="1_dk4w0"]
+[ext_resource type="Script" uid="uid://dxf4iu0bbc3fh" path="res://scripts/godot/pieces/movement/GodotCheckersMovement.cs" id="1_dk4w0"]
 
 [resource]
 script = ExtResource("1_dk4w0")
-type = 2
-offsets = PackedVector2Array()
-multiplier = 0
+Rarity = 0
 metadata/_custom_type_script = "uid://b885h4jlofknj"
