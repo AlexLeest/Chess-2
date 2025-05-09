@@ -36,7 +36,7 @@ public abstract partial class GodotItem : Resource
             CaptureNonKingPiece => new pieces.items.OnOpponentCastle.CaptureNonKingPiece(),
             UpgradeNonKingPiece => new pieces.items.OnCastle.UpgradeNonKingPiece(),
             SpawnPawnFence => new pieces.items.OnCastle.SpawnPawnFence(),
-            _ => throw new System.NotImplementedException()
+            _ => throw new System.NotImplementedException(),
         };
 
     }
@@ -44,6 +44,7 @@ public abstract partial class GodotItem : Resource
 
 public enum ItemRarity
 {
+    // TODO: Maybe simplify this to 3 tiers instead
     COMMON,
     UNCOMMON,
     RARE,

@@ -17,20 +17,10 @@ public class UpgradeNonKingPiece(byte pieceId) : AbstractItem(pieceId, ItemTrigg
     {
         // Get non-king piece from castling move
         int xCoord = move.To.X;
-        Piece nonKingPiece = xCoord == 2 ? board.Squares[3, move.To.Y] : board.Squares[5, move.To.Y];
         
-        if (evolutionSteps.TryGetValue(nonKingPiece.BasePiece, out BasePiece nextBasePiece))
-        {
-            // Change BasePiece type to the next one, change the first movement entry out for the default of the next one as well
-            nonKingPiece.BasePiece = nextBasePiece;
-            
-            // Have to copy the movement array over because it's passed by reference and editing spot 0 changes it for every board
-            IMovement[] newMovement = new IMovement[nonKingPiece.Movement.Length];
-            newMovement[0] = DefaultMovements.Get(nextBasePiece);
-            for (int i = 1; i < nonKingPiece.Movement.Length; i++)
-                newMovement[i] = nonKingPiece.Movement[i];
-            nonKingPiece.Movement = newMovement;
-        }
+        Piece nonKingPiece = xCoord == 2 ? board.Squares[3, move.To.Y] : board.Squares[5, move.To.Y];
+        nonKingPiece.Upgrade();
+        
         return board;
     }
 }

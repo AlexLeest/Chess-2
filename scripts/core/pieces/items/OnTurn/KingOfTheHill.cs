@@ -9,15 +9,6 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnTurn;
 /// <param name="pieceId"></param>
 public class KingOfTheHill(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_TURN)
 {
-    private readonly System.Collections.Generic.Dictionary<BasePiece, BasePiece> evolutionSteps = new()
-    {
-        { BasePiece.PAWN, BasePiece.KNIGHT },
-        { BasePiece.KNIGHT, BasePiece.BISHOP },
-        { BasePiece.BISHOP, BasePiece.ROOK },
-        { BasePiece.ROOK, BasePiece.QUEEN },
-        // { BasePiece.QUEEN, BasePiece.KING }
-    };
-
     public override bool ConditionsMet(Board board, Move move)
     {
         if (move.Moving == PieceId)
@@ -33,18 +24,7 @@ public class KingOfTheHill(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
     public override Board Execute(Board board, Move move)
     {
         Piece piece = board.GetPiece(PieceId);
-        if (evolutionSteps.TryGetValue(piece.BasePiece, out BasePiece nextBasePiece))
-        {
-            // Change BasePiece type to the next one, change the first movement entry out for the default of the next one as well
-            piece.BasePiece = nextBasePiece;
-            
-            // Have to copy the movement array over because it's passed by reference and editing spot 0 changes it for every board
-            IMovement[] newMovement = new IMovement[piece.Movement.Length];
-            newMovement[0] = DefaultMovements.Get(nextBasePiece);
-            for (int i = 1; i < piece.Movement.Length; i++)
-                newMovement[i] = piece.Movement[i];
-            piece.Movement = newMovement;
-        }
+        piece.Upgrade();
         return board;
     }
 }

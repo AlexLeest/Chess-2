@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="SelfDestruct" load_steps=2 format=3 uid="uid://cldkdae8ac6gy"]
-
-[ext_resource type="Script" uid="uid://dh52xobpaec63" path="res://scripts/godot/pieces/items/OnCaptured/SelfDestruct.cs" id="1_ger7l"]
-
-[resource]
-script = ExtResource("1_ger7l")
-Rarity = 1
-metadata/_custom_type_script = "uid://dh52xobpaec63"

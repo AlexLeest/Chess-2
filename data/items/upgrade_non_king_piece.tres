@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="UpgradeNonKingPiece" load_steps=2 format=3 uid="uid://dx7o5eb2ntg61"]
-
-[ext_resource type="Script" uid="uid://7eytoxi3miwg" path="res://scripts/godot/pieces/items/OnCastle/UpgradeNonKingPiece.cs" id="1_ovyqd"]
-
-[resource]
-script = ExtResource("1_ovyqd")
-Rarity = 1
-metadata/_custom_type_script = "uid://7eytoxi3miwg"

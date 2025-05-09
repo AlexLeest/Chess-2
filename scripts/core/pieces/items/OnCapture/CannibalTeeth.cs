@@ -1,7 +1,9 @@
-﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
 
 /// <summary>
-/// When piece captures a piece of it's own 
+/// When piece captures a piece of it's own color, evolve the piece
 /// </summary>
 /// <param name="pieceId"></param>
 public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURE)
@@ -16,6 +18,9 @@ public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
 
     public override Board Execute(Board board, Move move)
     {
+        Piece piece = board.GetPiece(PieceId);
+        piece.Upgrade();
+        
         return board;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.movement;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using Godot;
@@ -20,8 +21,6 @@ public abstract partial class GodotMovement : Resource
         {
             case PawnMovement:
                 return new GodotPawnMovement();
-            case CheckersMovement:
-                return new GodotCheckersMovement();
             case SlidingMovement slidingMovement:
                 List<Vector2> offsets = [];
                 foreach (Vector2Int offset in slidingMovement.GetOffsets())
@@ -29,6 +28,10 @@ public abstract partial class GodotMovement : Resource
                     offsets.Add(new Vector2(offset.X, offset.Y));
                 }
                 return new GodotSlidingMovement(offsets.ToArray(), slidingMovement.GetMultiplier());
+            case CheckersMovement:
+                return new GodotCheckersMovement();
+            case CannibalKing:
+                return new GodotCannibalKing();
         }
         throw new System.NotImplementedException();
     }
