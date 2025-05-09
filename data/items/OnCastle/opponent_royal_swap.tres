@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="OpponentRoyalSwap" load_steps=2 format=3 uid="uid://bwrjcp6rj316b"]
+
+[ext_resource type="Script" uid="uid://bp2qpkwmlp6yo" path="res://scripts/godot/pieces/items/OnCastle/OpponentRoyalSwap.cs" id="1_teg6v"]
+
+[resource]
+script = ExtResource("1_teg6v")
+Rarity = 2
+metadata/_custom_type_script = "uid://bp2qpkwmlp6yo"

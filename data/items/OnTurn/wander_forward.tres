@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="WanderForward" load_steps=2 format=3 uid="uid://dcbdyvflrg644"]
+
+[ext_resource type="Script" uid="uid://cqyu642fnhxos" path="res://scripts/godot/pieces/items/OnTurn/WanderForward.cs" id="1_brh1v"]
+
+[resource]
+script = ExtResource("1_brh1v")
+metadata/_custom_type_script = "uid://cqyu642fnhxos"

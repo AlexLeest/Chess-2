@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KingOfTheHill" load_steps=2 format=3 uid="uid://dpfd24xbjinfk"]
+
+[ext_resource type="Script" uid="uid://dlc0vft1pjm0m" path="res://scripts/godot/pieces/items/OnTurn/KingOfTheHill.cs" id="1_pok1p"]
+
+[resource]
+script = ExtResource("1_pok1p")
+Rarity = 1
+metadata/_custom_type_script = "uid://dlc0vft1pjm0m"

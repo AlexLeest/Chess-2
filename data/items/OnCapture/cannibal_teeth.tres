@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CannibalTeeth" load_steps=2 format=3 uid="uid://hyy20rkr31ix"]
+
+[ext_resource type="Script" uid="uid://f0afq30cpaik" path="res://scripts/godot/pieces/items/OnCapture/CannibalTeeth.cs" id="1_47fa0"]
+
+[resource]
+script = ExtResource("1_47fa0")
+Rarity = 0
+metadata/_custom_type_script = "uid://f0afq30cpaik"
