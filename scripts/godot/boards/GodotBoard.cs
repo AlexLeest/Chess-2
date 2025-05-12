@@ -55,7 +55,7 @@ public partial class GodotBoard : GridContainer
         
         RenderPieces();
 
-        engine = new FullRandom();
+        engine = new MinimaxWithPieceHeuristic(3);
     }
     
     public override void _Input(InputEvent input)
@@ -137,11 +137,16 @@ public partial class GodotBoard : GridContainer
         if (newBoard.GenerateMoves().Count == 0)
         {
             bool colorToMove = newBoard.Turn % 2 == 0;
+            string otherColor = colorToMove ? "Black" : "White";
             if (newBoard.IsInCheck(colorToMove))
             {
                 // CHECKMATE
+                GD.Print($"{otherColor} WINS");
+                FinishLevelAndSpawnSetup();
+                return;
             }
             // STALEMATE
+            GD.Print($"STALEMATE");
             FinishLevelAndSpawnSetup();
             return;
         }

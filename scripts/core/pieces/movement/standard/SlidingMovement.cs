@@ -144,7 +144,26 @@ public class SlidingMovement : IMovement
 
         return false;
     }
-    
+
+    public override string ToString()
+    {
+        if (offsets.SequenceEqual(Vector2Int.AllDirections))
+        {
+            if (multiplier == 1)
+                return "KING";
+            if (multiplier == 7)
+                return "QUEEN";
+        }
+        if (offsets.SequenceEqual(Vector2Int.Diagonals))
+            return "BISHOP";
+        if (offsets.SequenceEqual(Vector2Int.Cardinals))
+            return "ROOK";
+        if (offsets.SequenceEqual(Vector2Int.KnightHops))
+            return "KNIGHT";
+        
+        return base.ToString();
+    }
+
     public Vector2Int[] GetOffsets() => offsets;
     public int GetMultiplier() => multiplier;
 

@@ -8,7 +8,6 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 /// </summary>
 public class PawnMovement : IMovement
 {
-
     public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
     {
         Piece[,] squares = board.Squares;
@@ -116,5 +115,10 @@ public class PawnMovement : IMovement
             return true;
         }
         return false;
+    }
+
+    public override string ToString()
+    {
+        return "PAWN";
     }
 }

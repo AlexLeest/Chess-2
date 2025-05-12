@@ -66,4 +66,9 @@ public class CheckersMovement : IMovement
                 return true;
         return false;
     }
+
+    public override string ToString()
+    {
+        return "CHECKERS";
+    }
 }

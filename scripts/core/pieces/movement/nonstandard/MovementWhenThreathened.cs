@@ -34,4 +34,9 @@ public class MovementWhenThreathened(IMovement baseMovement) : IMovement
 
         return baseMovement.AttacksAny(from, targets, board, color);
     }
+
+    public override string ToString()
+    {
+        return $"WHEN THREATENED: {baseMovement}";
+    }
 }

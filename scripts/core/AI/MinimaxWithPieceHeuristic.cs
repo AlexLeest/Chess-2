@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
@@ -14,18 +15,68 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
     
     public Board GenerateNextMove(Board board)
     {
-        for (int depth = 0; depth < +maxDepth; depth++)
+        List<Board> moves = board.GenerateMoves();
+        Board bestMove = null;
+        float bestMoveScore = float.NegativeInfinity;
+        
+        foreach (Board move in moves)
         {
-            
+            float moveScore = Mini(move, maxDepth);
+            // GD.Print($"Move: {move.LastMove}, score: {moveScore}");
+            if (moveScore > bestMoveScore)
+            {
+                // GD.Print($"Preferred move: {move.LastMove}");
+                bestMoveScore = moveScore;
+                bestMove = move;
+            }
         }
         
-        return board;
+        return bestMove;
+    }
+
+    private float Maxi(Board board, int depth)
+    {
+        if (depth == 0)
+            return DetermineScore(board);
+
+        float max = float.NegativeInfinity;
+        List<Board> nextMoves = board.GenerateMoves();
+        foreach (Board move in nextMoves)
+        {
+            float score = -Mini(move, depth - 1);
+            if (score > max)
+            {
+                max = score;
+            }
+        }
+        return max;
+    }
+
+    private float Mini(Board board, int depth)
+    {
+        if (depth == 0)
+            return -DetermineScore(board);
+
+        float min = float.PositiveInfinity;
+        List<Board> nextMoves = board.GenerateMoves();
+        foreach (Board move in nextMoves)
+        {
+            float score = -Maxi(move, depth - 1);
+            if (score < min)
+            {
+                min = score;
+            }
+        }
+        return min;
     }
 
     private float NegaMax(Board board, int depth)
     {
         if (depth == 0)
-            return DetermineScore(board);
+        {
+            bool colorToMove = board.Turn % 2 == 0;
+            return colorToMove ? -DetermineScore(board) : DetermineScore(board);
+        }
 
         float max = float.NegativeInfinity;
         List<Board> nextMoves = board.GenerateMoves();
@@ -48,8 +99,10 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
         {
             score += ScoreForPiece(piece);
         }
-
         return score;
+        
+        bool colorToMove = board.Turn % 2 == 0;
+        return colorToMove ? -score : score;
     }
 
     private float ScoreForPiece(Piece piece)

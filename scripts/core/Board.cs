@@ -433,4 +433,11 @@ public class Board
 
         return result;
     }
+
+    public override string ToString()
+    {
+        if (LastMove is null)
+            return "Root board";
+        return LastMove.ToString();
+    }
 }

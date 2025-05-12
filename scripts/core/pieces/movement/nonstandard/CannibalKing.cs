@@ -47,4 +47,9 @@ public class CannibalKing : IMovement
                 return true;
         return false;
     }
+
+    public override string ToString()
+    {
+        return "CANNIBAL KING";
+    }
 }

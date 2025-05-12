@@ -26,6 +26,13 @@ public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position
         return new Piece(Id, BasePiece, Color, Position, Movement, SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN ? SpecialPieceTypes.PAWN : SpecialPieceType);
     }
 
+    private static readonly char[] files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+    public override string ToString()
+    {
+        string color = Color ? "WHITE" : "BLACK";
+        return $"{files[Position.X]}{Position.Y + 1}, {color}, movement: {Movement[0]}";
+    }
+
     public static Piece Pawn(byte id, bool color, Vector2Int position)
     {
         return new Piece(id, BasePiece.PAWN, color, position, [new PawnMovement()], SpecialPieceTypes.PAWN);
