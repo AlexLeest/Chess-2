@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://2rqutw7br6l3" path="res://scripts/godot/boards/preparation/PreparationBoard.cs" id="1_rtu32"]
 [ext_resource type="Script" uid="uid://c5frspbfxkamm" path="res://scripts/godot/boards/GodotSquare.cs" id="2_atl4u"]
 [ext_resource type="Resource" uid="uid://bcrexudceb4sh" path="res://data/basepiecetextures.tres" id="2_e32cc"]
-[ext_resource type="Resource" uid="uid://dab655gk8f2w" path="res://data/player_setup.tres" id="3_26hjj"]
+[ext_resource type="Resource" uid="uid://dab655gk8f2w" path="res://data/player setups/player_setup.tres" id="3_26hjj"]
 [ext_resource type="Resource" uid="uid://dnfklsd6c1fcm" path="res://data/all_items.tres" id="5_mwa8x"]
 
 [node name="PreparationBoard" type="GridContainer"]
