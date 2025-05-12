@@ -55,7 +55,7 @@ public partial class GodotBoard : GridContainer
         
         RenderPieces();
 
-        engine = new MinimaxWithPieceHeuristic(3);
+        engine = new MinimaxWithPieceHeuristic(4);
     }
     
     public override void _Input(InputEvent input)
@@ -142,19 +142,20 @@ public partial class GodotBoard : GridContainer
             {
                 // CHECKMATE
                 GD.Print($"{otherColor} WINS");
-                FinishLevelAndSpawnSetup();
+                // FinishLevelAndSpawnSetup();
                 return;
             }
             // STALEMATE
             GD.Print($"STALEMATE");
-            FinishLevelAndSpawnSetup();
+            // FinishLevelAndSpawnSetup();
             return;
         }
 
         if (newBoard.Turn % 2 != 0)
         {
             // White just played, black should respond by engine
-            var engineResponse = engine.GenerateNextMove(newBoard);
+            Board engineResponse = engine.GenerateNextMove(newBoard);
+            GD.Print(engineResponse);
             SetNewBoard(engineResponse);
             return;
         }

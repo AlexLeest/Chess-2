@@ -19,6 +19,8 @@ public class Board
 
     public readonly Dictionary<byte, IItem[]> ItemsPerPiece;
 
+    public bool ColorToMove => Turn % 2 == 0;
+
     public Board(
         int turn,
         Piece[] pieces,
