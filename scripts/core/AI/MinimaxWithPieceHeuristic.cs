@@ -21,32 +21,10 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
     public Board GenerateNextMove(Board board)
     {
         Stopwatch timer = Stopwatch.StartNew();
+        betaPruned = 0;
         GD.Print(-NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, maxDepth));
         GD.Print($"{bestEval}, {bestMove}, {timer.Elapsed}, pruned: {betaPruned}");
         return bestMove;
-
-        // betaPruned = 0;
-        // bestMove = null;
-        // bestEval = float.NegativeInfinity;
-        // timer.Restart();
-        // List<Board> moves = board.GenerateMoves();
-        // Board bestMove = null;
-        // float bestMoveScore = float.NegativeInfinity;
-        //
-        // foreach (Board move in moves)
-        // {
-        //     float moveScore = -NegaMax(move, float.NegativeInfinity, float.PositiveInfinity, maxDepth - 1);
-        //     // GD.Print($"Move: {move.LastMove}, score: {moveScore}");
-        //     if (moveScore > bestMoveScore)
-        //     {
-        //         // GD.Print($"Preferred move: {move.LastMove}");
-        //         bestMoveScore = moveScore;
-        //         bestMove = move;
-        //     }
-        // }
-        //
-        // GD.Print($"{bestMoveScore}, {bestMove}, {timer.Elapsed}, pruned: {betaPruned}");
-        // return bestMove;
     }
 
     private float NegaMax(Board board, float alpha, float beta, int depth)
