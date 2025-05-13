@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -22,7 +23,7 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
         Stopwatch timer = Stopwatch.StartNew();
         betaPruned = 0;
         float score = NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, maxDepth);
-        // GD.Print($"{bestEval}/{score}, {bestMove}, {timer.Elapsed}, pruned: {betaPruned}");
+        GD.Print($"{bestEval}/{score}, {bestMove}, {timer.Elapsed}, pruned: {betaPruned}");
         return bestMove;
     }
 

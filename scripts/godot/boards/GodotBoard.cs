@@ -4,6 +4,8 @@ using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 
@@ -86,7 +88,7 @@ public partial class GodotBoard : GridContainer
         tooltip.HideTooltip();
     }
 
-    private void SquareClicked(Vector2I coords)
+    private async void SquareClicked(Vector2I coords)
     {
         if (Board.Turn % 2 != 0)
         {
@@ -104,7 +106,7 @@ public partial class GodotBoard : GridContainer
             {
                 if (possibleBoard.LastMove?.From != selectedPiece?.Piece.Position || possibleBoard.LastMove?.To != corePos)
                     continue;
-                
+
                 SetNewBoard(possibleBoard);
                 selectedPiece = null;
                 return;
@@ -129,7 +131,7 @@ public partial class GodotBoard : GridContainer
         }
     }
 
-    private void SetNewBoard(Board newBoard)
+    private async void SetNewBoard(Board newBoard)
     {
         Board = newBoard;
         
@@ -142,24 +144,24 @@ public partial class GodotBoard : GridContainer
             {
                 // CHECKMATE
                 GD.Print($"{otherColor} WINS");
-                // FinishLevelAndSpawnSetup();
+                FinishLevelAndSpawnSetup();
                 return;
             }
             // STALEMATE
             GD.Print($"STALEMATE");
-            // FinishLevelAndSpawnSetup();
-            return;
-        }
-
-        if (newBoard.Turn % 2 != 0)
-        {
-            // White just played, black should respond by engine
-            Board engineResponse = engine.GenerateNextMove(newBoard);
-            GD.Print(engineResponse);
-            SetNewBoard(engineResponse);
+            FinishLevelAndSpawnSetup();
             return;
         }
         RenderPieces();
+        
+        if (newBoard.Turn % 2 != 0)
+        {
+            // White just played, black should respond by engine
+            // Stopwatch stopwatch = Stopwatch.StartNew();
+            Board engineResponse = await Task.Run(() => engine.GenerateNextMove(newBoard));
+            // GD.Print($"Response: {engineResponse}, time: {stopwatch.Elapsed}");
+            SetNewBoard(engineResponse);
+        }
     }
 
     private void RenderPieces()
