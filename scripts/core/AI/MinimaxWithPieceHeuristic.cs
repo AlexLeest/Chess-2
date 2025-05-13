@@ -1,6 +1,7 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
 
@@ -12,29 +13,43 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
 public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
 {
     private int maxDepth = maxDepth;
+
+    private Board bestMove;
+    private float bestEval;
+    private int betaPruned;
     
     public Board GenerateNextMove(Board board)
     {
-        List<Board> moves = board.GenerateMoves();
-        Board bestMove = null;
-        float bestMoveScore = float.NegativeInfinity;
-        
-        foreach (Board move in moves)
-        {
-            float moveScore = -NegaMax(move, maxDepth - 1);
-            GD.Print($"Move: {move.LastMove}, score: {moveScore}");
-            if (moveScore > bestMoveScore)
-            {
-                GD.Print($"Preferred move: {move.LastMove}");
-                bestMoveScore = moveScore;
-                bestMove = move;
-            }
-        }
-        
+        Stopwatch timer = Stopwatch.StartNew();
+        GD.Print(-NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, maxDepth));
+        GD.Print($"{bestEval}, {bestMove}, {timer.Elapsed}, pruned: {betaPruned}");
         return bestMove;
+
+        // betaPruned = 0;
+        // bestMove = null;
+        // bestEval = float.NegativeInfinity;
+        // timer.Restart();
+        // List<Board> moves = board.GenerateMoves();
+        // Board bestMove = null;
+        // float bestMoveScore = float.NegativeInfinity;
+        //
+        // foreach (Board move in moves)
+        // {
+        //     float moveScore = -NegaMax(move, float.NegativeInfinity, float.PositiveInfinity, maxDepth - 1);
+        //     // GD.Print($"Move: {move.LastMove}, score: {moveScore}");
+        //     if (moveScore > bestMoveScore)
+        //     {
+        //         // GD.Print($"Preferred move: {move.LastMove}");
+        //         bestMoveScore = moveScore;
+        //         bestMove = move;
+        //     }
+        // }
+        //
+        // GD.Print($"{bestMoveScore}, {bestMove}, {timer.Elapsed}, pruned: {betaPruned}");
+        // return bestMove;
     }
 
-    private float NegaMax(Board board, int depth)
+    private float NegaMax(Board board, float alpha, float beta, int depth)
     {
         if (depth == 0)
         {
@@ -52,10 +67,22 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
         
         foreach (Board move in nextMoves)
         {
-            float score = -NegaMax(move, depth - 1);
+            float score = -NegaMax(move, -beta, -alpha, depth - 1);
             if (score > max)
             {
                 max = score;
+                alpha = Math.Max(alpha, score);
+
+                if (depth == maxDepth)
+                {
+                    bestMove = move;
+                    bestEval = score;
+                }
+            }
+            if (score >= beta)
+            {
+                betaPruned++;
+                return max;
             }
         }
         return max;
