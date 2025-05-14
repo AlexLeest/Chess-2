@@ -23,7 +23,7 @@ public class CannibalKing : IMovement
                     continue;
                 
                 Piece target = board.Squares[targetCoords.X, targetCoords.Y];
-                if (target is null || target.Color != color)
+                if (target is null || target.Color != color || target.SpecialPieceType == SpecialPieceTypes.KING)
                     continue;
                 
                 moves.Add(new Move(id, from, targetCoords, target));

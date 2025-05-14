@@ -12,7 +12,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 [GlobalClass]
 public partial class GodotBoard : GridContainer
 {
-    public static int Level;
+    public static int Level = -1;
     
     public Board Board;
     [Export] private PlayerSetup playerSetup;

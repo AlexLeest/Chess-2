@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="EnemySetup" load_steps=19 format=3 uid="uid://cnws85ni83aen"]
+[gd_resource type="Resource" script_class="EnemySetup" load_steps=20 format=3 uid="uid://cnws85ni83aen"]
 
-[ext_resource type="Script" uid="uid://du1aaoy1w0a5m" path="res://scripts/godot/data/EnemySetup.cs" id="1_428u1"]
-[ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="2_2ewus"]
+[ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="1_q18wj"]
+[ext_resource type="Resource" uid="uid://cvngs6nnud0yp" path="res://data/AI engines/full_random.tres" id="2_q18wj"]
+[ext_resource type="Script" uid="uid://du1aaoy1w0a5m" path="res://scripts/godot/data/EnemySetup.cs" id="3_iijh1"]
 
 [sub_resource type="Resource" id="Resource_0jdyo"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(0, 6)
 Items = []
 PieceType = 0
@@ -12,7 +13,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_803if"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(1, 6)
 Items = []
 PieceType = 0
@@ -20,7 +21,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_6nnes"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(2, 6)
 Items = []
 PieceType = 0
@@ -28,7 +29,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_fmps7"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(3, 6)
 Items = []
 PieceType = 0
@@ -36,7 +37,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_6q10a"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(4, 6)
 Items = []
 PieceType = 0
@@ -44,7 +45,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_y4nfu"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(5, 6)
 Items = []
 PieceType = 0
@@ -52,7 +53,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_80y2r"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(6, 6)
 Items = []
 PieceType = 0
@@ -60,7 +61,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_rgctt"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(7, 6)
 Items = []
 PieceType = 0
@@ -68,7 +69,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_xdfx4"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(0, 7)
 Items = []
 PieceType = 1
@@ -76,7 +77,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_pb6af"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(1, 7)
 Items = []
 PieceType = 3
@@ -84,7 +85,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_eks25"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(2, 7)
 Items = []
 PieceType = 2
@@ -92,7 +93,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_et3rk"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(3, 7)
 Items = []
 PieceType = 4
@@ -100,7 +101,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_avlx5"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(4, 7)
 Items = []
 PieceType = 5
@@ -108,7 +109,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_5f6jb"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(5, 7)
 Items = []
 PieceType = 2
@@ -116,7 +117,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_pxhsf"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(6, 7)
 Items = []
 PieceType = 3
@@ -124,7 +125,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_llupd"]
-script = ExtResource("2_2ewus")
+script = ExtResource("1_q18wj")
 StartPosition = Vector2i(7, 7)
 Items = []
 PieceType = 1
@@ -132,6 +133,7 @@ Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [resource]
-script = ExtResource("1_428u1")
+script = ExtResource("3_iijh1")
 EnemyPieces = Array[Object]([SubResource("Resource_0jdyo"), SubResource("Resource_803if"), SubResource("Resource_6nnes"), SubResource("Resource_fmps7"), SubResource("Resource_6q10a"), SubResource("Resource_y4nfu"), SubResource("Resource_80y2r"), SubResource("Resource_rgctt"), SubResource("Resource_xdfx4"), SubResource("Resource_pb6af"), SubResource("Resource_eks25"), SubResource("Resource_et3rk"), SubResource("Resource_avlx5"), SubResource("Resource_5f6jb"), SubResource("Resource_pxhsf"), SubResource("Resource_llupd")])
+Engine = ExtResource("2_q18wj")
 metadata/_custom_type_script = "uid://du1aaoy1w0a5m"

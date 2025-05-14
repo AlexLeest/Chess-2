@@ -23,7 +23,7 @@ public class PromotionExplosion(byte pieceId) : AbstractItem(pieceId, ItemTrigge
                     continue;
                 
                 Piece toKill = board.Squares[toKillPos.X, toKillPos.Y];
-                if (toKill is null)
+                if (toKill is null || toKill.SpecialPieceType == SpecialPieceTypes.KING)
                     continue;
 
                 // Remove piece from pieces list and squares repr

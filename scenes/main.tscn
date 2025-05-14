@@ -8,11 +8,8 @@
 
 [node name="Canvas" type="CanvasLayer"]
 
-[node name="PreparationBoard" parent="." instance=ExtResource("1_tbgi4")]
-
-[node name="MoveCounter" type="Node" parent="." node_paths=PackedStringArray("gdBoard")]
+[node name="MoveCounter" type="Node" parent="."]
 script = ExtResource("2_sugp2")
-gdBoard = NodePath("")
 depth = 1
 countInternalNodes = true
 
@@ -50,14 +47,11 @@ fit_content = true
 
 [node name="Upgrades" type="VBoxContainer" parent="."]
 visible = false
-custom_minimum_size = Vector2(200, 512)
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -20.0
-offset_right = 40.0
-offset_bottom = 20.0
-grow_vertical = 2
+custom_minimum_size = Vector2(200, 0)
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 250.0
+offset_bottom = 208.0
 size_flags_horizontal = 0
 
 [node name="UpgradeChoiceButton" type="Button" parent="Upgrades"]
@@ -85,3 +79,5 @@ button_group = ExtResource("4_tbgi4")
 script = ExtResource("5_tefeu")
 Type = 2
 metadata/_custom_type_script = "uid://cd31idbxsl0ts"
+
+[node name="PreparationBoard" parent="." instance=ExtResource("1_tbgi4")]

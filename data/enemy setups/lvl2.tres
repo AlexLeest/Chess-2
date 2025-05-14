@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://du1aaoy1w0a5m" path="res://scripts/godot/data/EnemySetup.cs" id="1_ety8u"]
 [ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="1_iex5o"]
-[ext_resource type="Resource" uid="uid://cvngs6nnud0yp" path="res://data/AI engines/full_random.tres" id="2_2upir"]
+[ext_resource type="Resource" uid="uid://cc16rnibah0u3" path="res://data/AI engines/minimax_2.tres" id="2_iex5o"]
 
 [sub_resource type="Resource" id="Resource_0jdyo"]
 script = ExtResource("1_iex5o")
@@ -135,5 +135,5 @@ metadata/_custom_type_script = "uid://cul58y3sumplo"
 [resource]
 script = ExtResource("1_ety8u")
 EnemyPieces = Array[Object]([SubResource("Resource_0jdyo"), SubResource("Resource_803if"), SubResource("Resource_6nnes"), SubResource("Resource_fmps7"), SubResource("Resource_6q10a"), SubResource("Resource_y4nfu"), SubResource("Resource_80y2r"), SubResource("Resource_rgctt"), SubResource("Resource_xdfx4"), SubResource("Resource_pb6af"), SubResource("Resource_eks25"), SubResource("Resource_et3rk"), SubResource("Resource_avlx5"), SubResource("Resource_5f6jb"), SubResource("Resource_pxhsf"), SubResource("Resource_llupd")])
-Engine = ExtResource("2_2upir")
+Engine = ExtResource("2_iex5o")
 metadata/_custom_type_script = "uid://du1aaoy1w0a5m"
