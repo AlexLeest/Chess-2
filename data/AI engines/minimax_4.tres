@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GDMinimax" load_steps=2 format=3 uid="uid://cp8oy1hc4u0hm"]
+
+[ext_resource type="Script" uid="uid://cra5gm68p653t" path="res://scripts/godot/AI/GDMinimax.cs" id="1_g6etu"]
+
+[resource]
+script = ExtResource("1_g6etu")
+depth = 4
+metadata/_custom_type_script = "uid://cra5gm68p653t"

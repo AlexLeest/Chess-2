@@ -174,7 +174,7 @@ public partial class PreparationBoard : GridContainer
     {
         Node canvas = GetTree().CurrentScene;
         // Spawn the "main" scene
-        // BoardSetup resource should handle board spawning correctly?
+        GodotBoard.Level++;
 
         PackedScene prepBoard = ResourceLoader.Load<PackedScene>("res://prefabs/godot_board.tscn");
         Node board = prepBoard.Instantiate();

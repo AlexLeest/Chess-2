@@ -1,29 +1,26 @@
-﻿using Godot;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
 
 /// <summary>
 /// First earnest attempt at a chess AI:
-/// Use iterative deepening negamax with alpha-beta pruning to a set depth (no quiescence search).
+/// Use negamax with alpha-beta pruning to a set depth (no quiescence search).
 /// Then use naive piece scores (no positioning, no items being taken into account) to determine the heuristic score of the leaf boards.
 /// </summary>
 public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
 {
-    private int maxDepth = maxDepth;
-
     private Board bestMove;
     private float bestEval;
     private int betaPruned;
     
     public Board GenerateNextMove(Board board)
     {
-        Stopwatch timer = Stopwatch.StartNew();
+        bestMove = null;
+        bestEval = 0;
         betaPruned = 0;
+        
         float score = NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, maxDepth);
-        GD.Print($"{bestEval}/{score}, {bestMove}, {timer.Elapsed}, pruned: {betaPruned}");
         return bestMove;
     }
 
@@ -36,10 +33,12 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
 
         float max = float.NegativeInfinity;
         List<Board> nextMoves = board.GenerateMoves();
+        // SortMoves(nextMoves);
+        
         if (nextMoves.Count == 0)
         {
             if (board.IsInCheck(board.ColorToMove))
-                return float.NegativeInfinity;
+                return float.MinValue;
             return 0;
         }
         
@@ -64,6 +63,20 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
             }
         }
         return max;
+    }
+
+    private void SortMoves(List<Board> moves)
+    {
+        moves.Sort(delegate(Board a, Board b)
+        {
+            if (a.LastMove is null || b.LastMove is null)
+                return 0;
+            if (a.LastMove?.Captured is not null && b.LastMove?.Captured is null)
+                return 1;
+            if (b.LastMove?.Captured is not null && a.LastMove?.Captured is null)
+                return -1;
+            return 0;
+        });
     }
 
     public float DetermineScore(Board board)

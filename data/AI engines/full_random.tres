@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="GDFullRandom" load_steps=2 format=3 uid="uid://cvngs6nnud0yp"]
+
+[ext_resource type="Script" uid="uid://dqvtkwgmcntml" path="res://scripts/godot/AI/GDFullRandom.cs" id="1_0re8g"]
+
+[resource]
+script = ExtResource("1_0re8g")
+metadata/_custom_type_script = "uid://dqvtkwgmcntml"

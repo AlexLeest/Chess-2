@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using CHESS2THESEQUELTOCHESS.scripts.godot.AI;
+using Godot;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 
@@ -6,4 +7,5 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 public partial class EnemySetup : Resource
 {
     [Export] public PieceResource[] EnemyPieces;
+    [Export] public GodotEngine Engine;
 }

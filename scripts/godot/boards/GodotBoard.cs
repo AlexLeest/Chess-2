@@ -39,7 +39,7 @@ public partial class GodotBoard : GridContainer
         if (fen != null)
             Board = FENConverter.FENToBoard(fen);
         else
-            Board = playerSetup.ConvertToBoard(levelModel.EnemySetups[Level]);
+            Board = playerSetup.ConvertToBoard(levelModel.GetPieces(Level));
         squares = new GodotSquare[8, 8];
         foreach (Node node in GetChildren())
         {
@@ -57,7 +57,7 @@ public partial class GodotBoard : GridContainer
         
         RenderPieces();
 
-        engine = new MinimaxWithPieceHeuristic(4);
+        engine = levelModel.GetEngine(Level);
     }
     
     public override void _Input(InputEvent input)
@@ -107,7 +107,7 @@ public partial class GodotBoard : GridContainer
                 if (possibleBoard.LastMove?.From != selectedPiece?.Piece.Position || possibleBoard.LastMove?.To != corePos)
                     continue;
 
-                SetNewBoard(possibleBoard);
+                await SetNewBoard(possibleBoard);
                 selectedPiece = null;
                 return;
             }
@@ -131,16 +131,15 @@ public partial class GodotBoard : GridContainer
         }
     }
 
-    private async void SetNewBoard(Board newBoard)
+    private async Task SetNewBoard(Board newBoard)
     {
         Board = newBoard;
         
         // Check for checkmate or stalemate
         if (newBoard.GenerateMoves().Count == 0)
         {
-            bool colorToMove = newBoard.Turn % 2 == 0;
-            string otherColor = colorToMove ? "Black" : "White";
-            if (newBoard.IsInCheck(colorToMove))
+            string otherColor = newBoard.ColorToMove ? "Black" : "White";
+            if (newBoard.IsInCheck(newBoard.ColorToMove))
             {
                 // CHECKMATE
                 GD.Print($"{otherColor} WINS");
@@ -157,9 +156,9 @@ public partial class GodotBoard : GridContainer
         if (newBoard.Turn % 2 != 0)
         {
             // White just played, black should respond by engine
-            // Stopwatch stopwatch = Stopwatch.StartNew();
+            Stopwatch stopwatch = Stopwatch.StartNew();
             Board engineResponse = await Task.Run(() => engine.GenerateNextMove(newBoard));
-            // GD.Print($"Response: {engineResponse}, time: {stopwatch.Elapsed}");
+            GD.Print($"Response: {engineResponse}, time: {stopwatch.Elapsed}");
             SetNewBoard(engineResponse);
         }
     }

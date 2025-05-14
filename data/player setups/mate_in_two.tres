@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="PlayerSetup" load_steps=5 format=3 uid="uid://utawrw7soxou"]
+
+[ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="1_hgbho"]
+[ext_resource type="Script" uid="uid://dxjj038hvehvy" path="res://scripts/godot/data/PlayerSetup.cs" id="2_gvjuf"]
+
+[sub_resource type="Resource" id="Resource_aokf8"]
+script = ExtResource("1_hgbho")
+StartPosition = Vector2i(5, 5)
+Items = []
+PieceType = 5
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_hgbho"]
+script = ExtResource("1_hgbho")
+StartPosition = Vector2i(6, 5)
+Items = []
+PieceType = 1
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[resource]
+script = ExtResource("2_gvjuf")
+PlayerPieces = Array[Object]([SubResource("Resource_aokf8"), SubResource("Resource_hgbho")])
+metadata/_custom_type_script = "uid://dxjj038hvehvy"

@@ -12,9 +12,9 @@ public partial class PlayerSetup : Resource
 {
     [Export] public PieceResource[] PlayerPieces;
 
-    public Board ConvertToBoard(EnemySetup enemySetup)
+    public Board ConvertToBoard(PieceResource[] enemyPieces)
     {
-        Piece[] pieces = new Piece[PlayerPieces.Length + enemySetup.EnemyPieces.Length];
+        Piece[] pieces = new Piece[PlayerPieces.Length + enemyPieces.Length];
         Dictionary<byte, IItem[]> itemDict = [];
         byte index = 0;
         foreach (PieceResource playerPiece in PlayerPieces)
@@ -27,7 +27,7 @@ public partial class PlayerSetup : Resource
                 itemDict.Add(index, items.ToArray());
             index++;
         }
-        foreach (PieceResource enemyPiece in enemySetup.EnemyPieces)
+        foreach (PieceResource enemyPiece in enemyPieces)
         {
             pieces[index] = enemyPiece.ConvertToPiece(index, false);
             List<IItem> items = [];
