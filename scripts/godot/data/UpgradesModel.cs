@@ -25,8 +25,8 @@ public partial class UpgradesModel : Resource
         float luck = GD.Randf();
         return luck switch
         {
-            <= .01f => ItemRarity.LEGENDARY,
-            <= .1f => ItemRarity.RARE,
+            <= .05f => ItemRarity.LEGENDARY,
+            <= .25f => ItemRarity.RARE,
             _ => ItemRarity.COMMON,
         };
     }
