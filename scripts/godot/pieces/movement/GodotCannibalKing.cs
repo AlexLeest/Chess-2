@@ -12,8 +12,8 @@ public partial class GodotCannibalKing : GodotMovement
         return new CannibalKing();
     }
 
-    public override string ToString()
-    {
-        return "Cannibal:\nCan capture friendly pieces right next to it without moving";
-    }
+    // public override string ToString()
+    // {
+    //     return "Cannibal:\nCan capture friendly pieces right next to it without moving";
+    // }
 }

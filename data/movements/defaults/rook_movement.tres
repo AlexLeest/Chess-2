@@ -6,5 +6,5 @@
 script = ExtResource("1_44ymn")
 offsets = PackedVector2Array(1, 0, 0, 1, -1, 0, 0, -1)
 multiplier = 7
-Rarity = 0
+Rarity = 1
 metadata/_custom_type_script = "uid://b885h4jlofknj"

@@ -24,7 +24,7 @@ public partial class UpgradeChoiceButton : Button
                 break;
             case UpgradeType.MOVEMENT:
                 Movement = model.GetRandomMovementByRarity(rarity);
-                Text = Movement.ToString();
+                Text = $"Movement:\n{Movement}";
                 break;
             case UpgradeType.PIECE:
                 Piece = model.GetRandomPieceByRarity(rarity);

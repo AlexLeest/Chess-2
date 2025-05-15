@@ -153,13 +153,14 @@ public partial class GodotBoard : GridContainer
         }
         RenderPieces();
         
-        if (newBoard.Turn % 2 != 0)
+        if (newBoard.ColorToMove == false)
         {
             // White just played, black should respond by engine
+            // TODO: Set up a "computer is thinking" visual while the engine is doing its thing
             Stopwatch stopwatch = Stopwatch.StartNew();
             Board engineResponse = await Task.Run(() => engine.GenerateNextMove(newBoard));
             GD.Print($"Response: {engineResponse}, time: {stopwatch.Elapsed}");
-            SetNewBoard(engineResponse);
+            await SetNewBoard(engineResponse);
         }
     }
 

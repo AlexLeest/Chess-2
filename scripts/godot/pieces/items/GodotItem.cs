@@ -44,10 +44,7 @@ public abstract partial class GodotItem : Resource
 
 public enum ItemRarity
 {
-    // TODO: Maybe simplify this to 3 tiers instead
     COMMON,
-    UNCOMMON,
     RARE,
-    EPIC,
     LEGENDARY,
 }

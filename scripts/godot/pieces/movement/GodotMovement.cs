@@ -12,9 +12,7 @@ public abstract partial class GodotMovement : Resource
     [Export] public ItemRarity Rarity;
 
     public abstract IMovement GetMovement();
-
-    public abstract override string ToString();
-
+    
     public static GodotMovement CreateFromIMovement(IMovement movement)
     {
         switch (movement)
@@ -34,5 +32,10 @@ public abstract partial class GodotMovement : Resource
                 return new GodotCannibalKing();
         }
         throw new System.NotImplementedException();
+    }
+
+    public override string ToString()
+    {
+        return GetMovement().ToString() ?? string.Empty;
     }
 }

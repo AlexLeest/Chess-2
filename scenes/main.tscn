@@ -45,37 +45,101 @@ custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 fit_content = true
 
-[node name="Upgrades" type="VBoxContainer" parent="."]
-visible = false
-custom_minimum_size = Vector2(200, 0)
-offset_left = 50.0
+[node name="Upgrades" type="GridContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -379.0
 offset_top = 50.0
-offset_right = 250.0
-offset_bottom = 208.0
+offset_right = 379.0
+offset_bottom = 358.0
+grow_horizontal = 2
 size_flags_horizontal = 0
+columns = 3
 
 [node name="UpgradeChoiceButton" type="Button" parent="Upgrades"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(250, 70)
 layout_mode = 2
 toggle_mode = true
 button_group = ExtResource("4_tbgi4")
+text_overrun_behavior = 3
 script = ExtResource("5_tefeu")
 metadata/_custom_type_script = "uid://cd31idbxsl0ts"
 
 [node name="UpgradeChoiceButton2" type="Button" parent="Upgrades"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(250, 70)
 layout_mode = 2
 toggle_mode = true
 button_group = ExtResource("4_tbgi4")
+text_overrun_behavior = 3
 script = ExtResource("5_tefeu")
 Type = 1
 metadata/_custom_type_script = "uid://cd31idbxsl0ts"
 
 [node name="UpgradeChoiceButton3" type="Button" parent="Upgrades"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(250, 70)
 layout_mode = 2
 toggle_mode = true
 button_group = ExtResource("4_tbgi4")
+text_overrun_behavior = 3
+script = ExtResource("5_tefeu")
+Type = 2
+metadata/_custom_type_script = "uid://cd31idbxsl0ts"
+
+[node name="UpgradeChoiceButton4" type="Button" parent="Upgrades"]
+custom_minimum_size = Vector2(250, 70)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("4_tbgi4")
+text_overrun_behavior = 3
+script = ExtResource("5_tefeu")
+metadata/_custom_type_script = "uid://cd31idbxsl0ts"
+
+[node name="UpgradeChoiceButton5" type="Button" parent="Upgrades"]
+custom_minimum_size = Vector2(250, 70)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("4_tbgi4")
+text_overrun_behavior = 3
+script = ExtResource("5_tefeu")
+Type = 1
+metadata/_custom_type_script = "uid://cd31idbxsl0ts"
+
+[node name="UpgradeChoiceButton6" type="Button" parent="Upgrades"]
+custom_minimum_size = Vector2(250, 70)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("4_tbgi4")
+text_overrun_behavior = 3
+script = ExtResource("5_tefeu")
+Type = 2
+metadata/_custom_type_script = "uid://cd31idbxsl0ts"
+
+[node name="UpgradeChoiceButton7" type="Button" parent="Upgrades"]
+custom_minimum_size = Vector2(250, 70)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("4_tbgi4")
+text_overrun_behavior = 3
+script = ExtResource("5_tefeu")
+metadata/_custom_type_script = "uid://cd31idbxsl0ts"
+
+[node name="UpgradeChoiceButton8" type="Button" parent="Upgrades"]
+custom_minimum_size = Vector2(250, 70)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("4_tbgi4")
+text_overrun_behavior = 3
+script = ExtResource("5_tefeu")
+Type = 1
+metadata/_custom_type_script = "uid://cd31idbxsl0ts"
+
+[node name="UpgradeChoiceButton9" type="Button" parent="Upgrades"]
+custom_minimum_size = Vector2(250, 70)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("4_tbgi4")
+text_overrun_behavior = 3
 script = ExtResource("5_tefeu")
 Type = 2
 metadata/_custom_type_script = "uid://cd31idbxsl0ts"

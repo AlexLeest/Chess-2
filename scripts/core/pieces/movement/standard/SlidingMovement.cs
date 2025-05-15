@@ -147,18 +147,20 @@ public class SlidingMovement : IMovement
 
     public override string ToString()
     {
-        if (offsets.SequenceEqual(Vector2Int.AllDirections))
+        HashSet<Vector2Int> offsetsSet = offsets.ToHashSet();
+        
+        if (offsetsSet.SetEquals(Vector2Int.AllDirections))
         {
             if (multiplier == 1)
                 return "KING";
             if (multiplier == 7)
                 return "QUEEN";
         }
-        if (offsets.SequenceEqual(Vector2Int.Diagonals))
+        if (offsetsSet.SetEquals(Vector2Int.Diagonals))
             return "BISHOP";
-        if (offsets.SequenceEqual(Vector2Int.Cardinals))
+        if (offsetsSet.SetEquals(Vector2Int.Cardinals))
             return "ROOK";
-        if (offsets.SequenceEqual(Vector2Int.KnightHops))
+        if (offsetsSet.SetEquals(Vector2Int.KnightHops))
             return "KNIGHT";
         
         return base.ToString();

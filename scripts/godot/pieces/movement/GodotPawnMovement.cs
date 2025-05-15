@@ -11,8 +11,8 @@ public partial class GodotPawnMovement : GodotMovement
         return new PawnMovement();
     }
 
-    public override string ToString()
-    {
-        return "Movement: Pawn";
-    }
+    // public override string ToString()
+    // {
+    //     return "Movement: Pawn";
+    // }
 }

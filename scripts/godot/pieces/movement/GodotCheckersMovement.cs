@@ -12,8 +12,8 @@ public partial class GodotCheckersMovement : GodotMovement
         return new CheckersMovement();
     }
 
-    public override string ToString()
-    {
-        return "Movement: Checkers";
-    }
+    // public override string ToString()
+    // {
+    //     return "Movement: Checkers";
+    // }
 }

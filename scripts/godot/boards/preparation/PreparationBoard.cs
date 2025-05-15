@@ -55,9 +55,11 @@ public partial class PreparationBoard : GridContainer
 
         foreach (UpgradeChoiceButton upgradeButton in upgradeButtons)
         {
+            // TODO: Odds for item rarity instead of just hardcoded COMMON
+            
             upgradeButton.SetUpgrade(upgradesModel, ItemRarity.COMMON);
         }
-        upgradeButtons[0].GetParent<VBoxContainer>().Visible = true;
+        upgradeButtons[0].GetParent<Container>().Visible = true;
     }
     
     public override void _Input(InputEvent input)
@@ -92,7 +94,7 @@ public partial class PreparationBoard : GridContainer
             bool upgradeApplied = HandleUpgrade(coords);
             if (upgradeApplied)
             {
-                upgradeButtons[0].GetParent<VBoxContainer>().Visible = false;
+                upgradeButtons[0].GetParent<Container>().Visible = false;
                 upgradeMode = false;
             }
             return;

@@ -15,10 +15,8 @@ public partial class UpgradesModel : Resource
     private Dictionary<ItemRarity, List<GodotMovement>> movementsByRarity;
     private Dictionary<ItemRarity, List<BasePiece>> piecesByRarity = new()
     {
-        { ItemRarity.COMMON, [BasePiece.PAWN, BasePiece.CHECKERS] },
-        { ItemRarity.UNCOMMON, [BasePiece.KNIGHT] },
-        { ItemRarity.RARE, [BasePiece.BISHOP] },
-        { ItemRarity.EPIC, [BasePiece.ROOK] },
+        { ItemRarity.COMMON, [BasePiece.PAWN, BasePiece.CHECKERS, BasePiece.KNIGHT] },
+        { ItemRarity.RARE, [BasePiece.BISHOP, BasePiece.ROOK] },
         { ItemRarity.LEGENDARY, [BasePiece.QUEEN] },
     };
     
