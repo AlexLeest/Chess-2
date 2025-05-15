@@ -1,5 +1,6 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.AI;
 using Godot;
+using System;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 
@@ -11,11 +12,13 @@ public partial class LevelModel : Resource
 
     public PieceResource[] GetPieces(int level)
     {
+        level = Math.Clamp(level, 0, EnemySetups.Length - 1);
         return EnemySetups[level].EnemyPieces;
     }
 
     public IEngine GetEngine(int level)
     {
+        level = Math.Clamp(level, 0, EnemySetups.Length - 1);
         return EnemySetups[level].Engine.GetEngine();
     }
 }

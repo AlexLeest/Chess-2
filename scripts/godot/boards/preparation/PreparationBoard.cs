@@ -55,9 +55,8 @@ public partial class PreparationBoard : GridContainer
 
         foreach (UpgradeChoiceButton upgradeButton in upgradeButtons)
         {
-            // TODO: Odds for item rarity instead of just hardcoded COMMON
-            
-            upgradeButton.SetUpgrade(upgradesModel, ItemRarity.COMMON);
+            ItemRarity rarity = upgradesModel.GetWeightedRandomItemRarity();
+            upgradeButton.SetUpgrade(upgradesModel, rarity);
         }
         upgradeButtons[0].GetParent<Container>().Visible = true;
     }

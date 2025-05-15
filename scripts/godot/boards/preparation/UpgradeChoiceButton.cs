@@ -31,6 +31,24 @@ public partial class UpgradeChoiceButton : Button
                 Text = Piece.ToString();
                 break;
         }
+
+        switch (rarity)
+        {
+            case ItemRarity.COMMON:
+                Set("theme_override_colors/font_color", Colors.Gray);
+                // GetTheme().SetColor("font_color", "", Colors.Gray);
+                break;
+            case ItemRarity.RARE:
+                Set("theme_override_colors/font_color", Colors.Green);
+                // GetTheme().SetColor("font_color", "", Colors.Blue);
+                break;
+            case ItemRarity.LEGENDARY:
+                Set("theme_override_colors/font_color", Colors.Gold);
+                // GetTheme().SetColor("font_color", "", Colors.Gold);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(rarity), rarity, null);
+        }
     }
 }
 

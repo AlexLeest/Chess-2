@@ -44,7 +44,10 @@ public abstract partial class GodotItem : Resource
 
 public enum ItemRarity
 {
+    // 90% chance for common
     COMMON,
+    // 9% chance for rare
     RARE,
+    // 1% chance for legendary
     LEGENDARY,
 }

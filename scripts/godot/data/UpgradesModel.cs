@@ -19,6 +19,17 @@ public partial class UpgradesModel : Resource
         { ItemRarity.RARE, [BasePiece.BISHOP, BasePiece.ROOK] },
         { ItemRarity.LEGENDARY, [BasePiece.QUEEN] },
     };
+
+    public ItemRarity GetWeightedRandomItemRarity()
+    {
+        float luck = GD.Randf();
+        return luck switch
+        {
+            <= .01f => ItemRarity.LEGENDARY,
+            <= .1f => ItemRarity.RARE,
+            _ => ItemRarity.COMMON,
+        };
+    }
     
     public GodotItem GetRandomItemByRarity(ItemRarity itemRarity)
     {
