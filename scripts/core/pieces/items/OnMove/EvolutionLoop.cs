@@ -13,7 +13,10 @@ public class EvolutionLoop(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
     public override Board Execute(Board board, Move move)
     {
         Piece moved = board.GetPiece(PieceId);
-        moved.Upgrade();
+        if (moved.BasePiece == BasePiece.QUEEN)
+            moved.ChangeTo(BasePiece.PAWN);
+        else
+            moved.Upgrade();
         return board;
     }
 }

@@ -30,4 +30,19 @@ public static class PieceExtensions
 
         return piece;
     }
+
+    public static Piece ChangeTo(this Piece piece, BasePiece newBasePiece)
+    {
+        // Change BasePiece type to the next one, change the first movement entry out for the default of the next one as well
+        piece.BasePiece = newBasePiece;
+            
+        // Have to copy the movement array over because it's passed by reference and editing spot 0 changes it for every board
+        IMovement[] newMovement = new IMovement[piece.Movement.Length];
+        newMovement[0] = DefaultMovements.Get(newBasePiece);
+        for (int i = 1; i < piece.Movement.Length; i++)
+            newMovement[i] = piece.Movement[i];
+        piece.Movement = newMovement;
+
+        return piece;
+    }
 }
