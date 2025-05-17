@@ -2,7 +2,6 @@
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
-using Godot.Collections;
 using System;
 using System.Linq;
 
@@ -24,6 +23,8 @@ public partial class PreparationBoard : GridContainer
     private UpgradeChoiceButton[] upgradeButtons;
     private PieceResource selectedPiece;
     private GodotSquare highlightedSquare;
+
+    private Button ContinueButton;
     private PieceTooltip tooltip;
     private bool upgradeMode = true;
 
@@ -43,6 +44,9 @@ public partial class PreparationBoard : GridContainer
             square.OnMouseExited += SquareMouseExit;
         }
         UpgradeButtonsSetup();
+        ContinueButton = GetNode<Button>("../ContinueButton");
+        ContinueButton.Visible = true;
+        ContinueButton.Pressed += FinishSetupAndStartLevel;
         
         tooltip = GetNode<PieceTooltip>("../Tooltip");
         
@@ -61,12 +65,12 @@ public partial class PreparationBoard : GridContainer
         upgradeButtons[0].GetParent<Container>().Visible = true;
     }
     
-    public override void _Input(InputEvent input)
-    {
-        if (input is InputEventKey eventKey && eventKey.Pressed)
-            if (eventKey.Keycode == Key.Space)
-                FinishSetupAndStartLevel();
-    }
+    // public override void _Input(InputEvent input)
+    // {
+    //     if (input is InputEventKey eventKey && eventKey.Pressed)
+    //         if (eventKey.Keycode == Key.Space)
+    //             FinishSetupAndStartLevel();
+    // }
 
     private void SquareMouseEnter(Vector2I coords)
     {
@@ -173,6 +177,9 @@ public partial class PreparationBoard : GridContainer
 
     private void FinishSetupAndStartLevel()
     {
+        ContinueButton.Visible = false;
+        upgradeButtons[0].GetParent<Container>().Visible = false;
+        
         Node canvas = GetTree().CurrentScene;
         // Spawn the "main" scene
         GodotBoard.Level++;

@@ -153,4 +153,19 @@ script = ExtResource("5_tefeu")
 Type = 2
 metadata/_custom_type_script = "uid://cd31idbxsl0ts"
 
+[node name="ContinueButton" type="Button" parent="."]
+custom_minimum_size = Vector2(100, 50)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -126.0
+offset_top = -112.0
+offset_right = -26.0
+offset_bottom = -62.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "CONTINUE"
+
 [node name="PreparationBoard" parent="." instance=ExtResource("1_tbgi4")]
