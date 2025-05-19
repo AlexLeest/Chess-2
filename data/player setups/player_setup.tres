@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="PlayerSetup" load_steps=18 format=3 uid="uid://dab655gk8f2w"]
+[gd_resource type="Resource" script_class="PlayerSetup" load_steps=19 format=3 uid="uid://dab655gk8f2w"]
 
 [ext_resource type="Resource" uid="uid://bif220mgfmh7r" path="res://data/items/OnCapture/cannibal_teeth.tres" id="1_adotn"]
 [ext_resource type="Resource" uid="uid://c1mkja0qcs72x" path="res://data/movements/nonstandard/cannibal_king.tres" id="2_wf1x1"]
 [ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="3_wf1x1"]
 [ext_resource type="Resource" uid="uid://cgby8a71b0g6t" path="res://data/items/OnMove/hand_holder.tres" id="4_hcmeg"]
+[ext_resource type="Resource" uid="uid://cp01hnn4lv6xe" path="res://data/items/OnTurn/wander_forward.tres" id="5_hcmeg"]
 [ext_resource type="Resource" uid="uid://do1heo3x146tb" path="res://data/movements/standard/checkers_jump.tres" id="5_s1lyh"]
 [ext_resource type="Resource" uid="uid://dw34xrube8jnj" path="res://data/items/OnCastle/opponent_royal_swap.tres" id="6_b3ito"]
 [ext_resource type="Resource" uid="uid://df3ylqibf8b47" path="res://data/items/OnCastle/upgrade_non_king_piece.tres" id="6_wf1x1"]
@@ -23,7 +24,7 @@ metadata/_custom_type_script = "uid://cul58y3sumplo"
 [sub_resource type="Resource" id="Resource_hf6m6"]
 script = ExtResource("3_wf1x1")
 StartPosition = Vector2i(5, 1)
-Items = [ExtResource("4_hcmeg")]
+Items = [ExtResource("4_hcmeg"), ExtResource("5_hcmeg")]
 PieceType = 0
 Movement = [ExtResource("5_s1lyh")]
 metadata/_custom_type_script = "uid://cul58y3sumplo"

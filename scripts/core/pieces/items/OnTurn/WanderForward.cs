@@ -29,10 +29,13 @@ public class WanderForward(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
         Piece inFrontOf = board.Squares[forward.X, forward.Y];
         if (inFrontOf is not null)
             return board;
+        Vector2Int startPos = piece.Position;
 
         board.Squares[piece.Position.X, piece.Position.Y] = null;
         piece.Position = forward;
         board.Squares[forward.X, forward.Y] = piece;
+
+        board = board.ActivateItems(pieceId, ItemTriggers.ON_MOVE, board, new Move(PieceId, startPos, forward));
 
         return board;
     }
