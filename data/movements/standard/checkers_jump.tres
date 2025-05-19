@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GodotCheckersMovement" load_steps=2 format=3 uid="uid://do1heo3x146tb"]
+
+[ext_resource type="Script" uid="uid://dxf4iu0bbc3fh" path="res://scripts/godot/pieces/movement/standard/GodotCheckersMovement.cs" id="1_dk4w0"]
+
+[resource]
+script = ExtResource("1_dk4w0")
+Rarity = 0
+metadata/_custom_type_script = "uid://b885h4jlofknj"

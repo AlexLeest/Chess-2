@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GDColorConverter" load_steps=2 format=3 uid="uid://by71jv7jjftu5"]
+
+[ext_resource type="Script" uid="uid://cukyg8cbt2t5v" path="res://scripts/godot/pieces/items/OnCapture/GDColorConverter.cs" id="1_pkpx7"]
+
+[resource]
+script = ExtResource("1_pkpx7")
+Rarity = 0
+metadata/_custom_type_script = "uid://cukyg8cbt2t5v"

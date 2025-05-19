@@ -6,7 +6,16 @@ using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnPromotion;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnTurn;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCastle;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
+using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnCapture;
+using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnCaptured;
+using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnCastle;
+using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnMove;
+using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnOpponentCastle;
+using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnPromotion;
+using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnTurn;
 using Godot;
+using System;
+using SelfDestruct = CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured.SelfDestruct;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.items;
 
@@ -23,20 +32,20 @@ public abstract partial class GodotItem : Resource
     {
         return item switch
         {
-            CannibalTeeth => new pieces.items.OnCapture.CannibalTeeth(),
-            Gun => new pieces.items.OnCapture.Gun(),
-            Respawn => new pieces.items.OnCaptured.Respawn(),
-            SelfDestruct => new pieces.items.OnCaptured.SelfDestruct(),
-            OpponentRoyalSwap => new pieces.items.OnCastle.OpponentRoyalSwap(),
-            EvolutionLoop => new pieces.items.OnMove.EvolutionLoop(),
-            LeaveBombOnMove => new pieces.items.OnMove.LeaveBombOnMove(),
-            PromotionExplosion => new pieces.items.OnPromotion.PromotionExplosion(),
-            KingOfTheHill => new pieces.items.OnTurn.KingOfTheHill(),
-            WanderForward => new pieces.items.OnTurn.WanderForward(),
-            CaptureNonKingPiece => new pieces.items.OnOpponentCastle.CaptureNonKingPiece(),
-            UpgradeNonKingPiece => new pieces.items.OnCastle.UpgradeNonKingPiece(),
-            SpawnPawnFence => new pieces.items.OnCastle.SpawnPawnFence(),
-            _ => throw new System.NotImplementedException(),
+            CannibalTeeth => new GDCannibalTeeth(),
+            Gun => new GDGun(),
+            Respawn => new GDRespawn(),
+            SelfDestruct => new GDSelfDestruct(),
+            OpponentRoyalSwap => new GDOpponentRoyalSwap(),
+            EvolutionLoop => new GDEvolutionLoop(),
+            LeaveBombOnMove => new GDLeaveBombOnMove(),
+            PromotionExplosion => new GDPromotionExplosion(),
+            KingOfTheHill => new GDKingOfTheHill(),
+            WanderForward => new GDWanderForward(),
+            CaptureNonKingPiece => new GDCaptureNonKingPiece(),
+            UpgradeNonKingPiece => new GDUpgradeNonKingPiece(),
+            SpawnPawnFence => new GDSpawnPawnFence(),
+            _ => throw new NotImplementedException(),
         };
 
     }

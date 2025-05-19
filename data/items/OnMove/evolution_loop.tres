@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="EvolutionLoop" load_steps=2 format=3 uid="uid://ny0jv6ydl5se"]
+[gd_resource type="Resource" script_class="GDEvolutionLoop" load_steps=2 format=3 uid="uid://dvuxkeoey5glf"]
 
-[ext_resource type="Script" uid="uid://bddtnrp54met0" path="res://scripts/godot/pieces/items/OnMove/EvolutionLoop.cs" id="1_tjq5i"]
+[ext_resource type="Script" uid="uid://cdctkmll8bn5g" path="res://scripts/godot/pieces/items/OnMove/GDEvolutionLoop.cs" id="1_tr2vt"]
 
 [resource]
-script = ExtResource("1_tjq5i")
-Rarity = 1
-metadata/_custom_type_script = "uid://bddtnrp54met0"
+script = ExtResource("1_tr2vt")
+Rarity = 0
+metadata/_custom_type_script = "uid://cdctkmll8bn5g"

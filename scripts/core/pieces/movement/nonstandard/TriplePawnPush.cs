@@ -36,4 +36,9 @@ public class TriplePawnPush : IMovement
         // None of these move capture anything
         return false;
     }
+
+    public override string ToString()
+    {
+        return "TRIPLE PAWN PUSH";
+    }
 }

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GDHandHolder" load_steps=2 format=3 uid="uid://cgby8a71b0g6t"]
+
+[ext_resource type="Script" uid="uid://b1qdh7sblhgq8" path="res://scripts/godot/pieces/items/OnMove/GDHandHolder.cs" id="1_k5hxf"]
+
+[resource]
+script = ExtResource("1_k5hxf")
+Rarity = 0
+metadata/_custom_type_script = "uid://b1qdh7sblhgq8"

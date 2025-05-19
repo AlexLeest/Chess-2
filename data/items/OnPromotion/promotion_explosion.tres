@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="PromotionExplosion" load_steps=2 format=3 uid="uid://cry0orp0abx7r"]
+[gd_resource type="Resource" script_class="GDPromotionExplosion" load_steps=2 format=3 uid="uid://b0w36udkd15e8"]
 
-[ext_resource type="Script" uid="uid://bejw4b23l7oei" path="res://scripts/godot/pieces/items/OnPromotion/PromotionExplosion.cs" id="1_bwxju"]
+[ext_resource type="Script" uid="uid://c2rss6lp6if2v" path="res://scripts/godot/pieces/items/OnPromotion/GDPromotionExplosion.cs" id="1_tdbao"]
 
 [resource]
-script = ExtResource("1_bwxju")
-Rarity = 1
-metadata/_custom_type_script = "uid://bejw4b23l7oei"
+script = ExtResource("1_tdbao")
+Rarity = 0
+metadata/_custom_type_script = "uid://c2rss6lp6if2v"

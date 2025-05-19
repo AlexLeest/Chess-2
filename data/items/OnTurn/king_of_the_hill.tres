@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="KingOfTheHill" load_steps=2 format=3 uid="uid://dpfd24xbjinfk"]
+[gd_resource type="Resource" script_class="GDKingOfTheHill" load_steps=2 format=3 uid="uid://ck5txxd0xkamt"]
 
-[ext_resource type="Script" uid="uid://dlc0vft1pjm0m" path="res://scripts/godot/pieces/items/OnTurn/KingOfTheHill.cs" id="1_pok1p"]
+[ext_resource type="Script" uid="uid://b8lfpsshfn5fi" path="res://scripts/godot/pieces/items/OnTurn/GDKingOfTheHill.cs" id="1_o482l"]
 
 [resource]
-script = ExtResource("1_pok1p")
-Rarity = 2
-metadata/_custom_type_script = "uid://dlc0vft1pjm0m"
+script = ExtResource("1_o482l")
+Rarity = 0
+metadata/_custom_type_script = "uid://b8lfpsshfn5fi"

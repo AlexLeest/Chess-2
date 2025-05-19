@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GDTriplePawnPush" load_steps=2 format=3 uid="uid://drldwbx1tc0lh"]
+
+[ext_resource type="Script" uid="uid://quaumd5llavw" path="res://scripts/godot/pieces/movement/nonstandard/GDTriplePawnPush.cs" id="1_mc3bm"]
+
+[resource]
+script = ExtResource("1_mc3bm")
+Rarity = 0
+metadata/_custom_type_script = "uid://quaumd5llavw"

@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="Respawn" load_steps=2 format=3 uid="uid://bjd78u2gbe48b"]
+[gd_resource type="Resource" script_class="GDRespawn" load_steps=2 format=3 uid="uid://c22218i23epb"]
 
-[ext_resource type="Script" uid="uid://b8yxk8omsm8gc" path="res://scripts/godot/pieces/items/OnCaptured/Respawn.cs" id="1_hx6y0"]
+[ext_resource type="Script" uid="uid://n26mb7yw0mt5" path="res://scripts/godot/pieces/items/OnCaptured/GDRespawn.cs" id="1_0px8j"]
 
 [resource]
-script = ExtResource("1_hx6y0")
+script = ExtResource("1_0px8j")
 Rarity = 0
-metadata/_custom_type_script = "uid://b8yxk8omsm8gc"
+metadata/_custom_type_script = "uid://n26mb7yw0mt5"

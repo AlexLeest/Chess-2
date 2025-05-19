@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="WanderForward" load_steps=2 format=3 uid="uid://dcbdyvflrg644"]
+[gd_resource type="Resource" script_class="GDWanderForward" load_steps=2 format=3 uid="uid://cp01hnn4lv6xe"]
 
-[ext_resource type="Script" uid="uid://cqyu642fnhxos" path="res://scripts/godot/pieces/items/OnTurn/WanderForward.cs" id="1_brh1v"]
+[ext_resource type="Script" uid="uid://dho1qaa8njva5" path="res://scripts/godot/pieces/items/OnTurn/GDWanderForward.cs" id="1_km7oj"]
 
 [resource]
-script = ExtResource("1_brh1v")
+script = ExtResource("1_km7oj")
 Rarity = 0
-metadata/_custom_type_script = "uid://cqyu642fnhxos"
+metadata/_custom_type_script = "uid://dho1qaa8njva5"

@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="OpponentRoyalSwap" load_steps=2 format=3 uid="uid://bwrjcp6rj316b"]
+[gd_resource type="Resource" script_class="GDOpponentRoyalSwap" load_steps=2 format=3 uid="uid://dw34xrube8jnj"]
 
-[ext_resource type="Script" uid="uid://bp2qpkwmlp6yo" path="res://scripts/godot/pieces/items/OnCastle/OpponentRoyalSwap.cs" id="1_teg6v"]
+[ext_resource type="Script" uid="uid://cvrqrbfpx7251" path="res://scripts/godot/pieces/items/OnCastle/GDOpponentRoyalSwap.cs" id="1_u8xft"]
 
 [resource]
-script = ExtResource("1_teg6v")
-Rarity = 1
-metadata/_custom_type_script = "uid://bp2qpkwmlp6yo"
+script = ExtResource("1_u8xft")
+Rarity = 0
+metadata/_custom_type_script = "uid://cvrqrbfpx7251"

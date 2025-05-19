@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="CaptureNonKingPiece" load_steps=2 format=3 uid="uid://c67m4tyoaewst"]
+[gd_resource type="Resource" script_class="GDCaptureNonKingPiece" load_steps=2 format=3 uid="uid://bxtft2oa0hjhw"]
 
-[ext_resource type="Script" uid="uid://b84g7g55g7sxy" path="res://scripts/godot/pieces/items/OnOpponentCastle/CaptureNonKingPiece.cs" id="1_wkgcr"]
+[ext_resource type="Script" uid="uid://dwgj1un6ilijm" path="res://scripts/godot/pieces/items/OnOpponentCastle/GDCaptureNonKingPiece.cs" id="1_s45w7"]
 
 [resource]
-script = ExtResource("1_wkgcr")
-Rarity = 2
-metadata/_custom_type_script = "uid://b84g7g55g7sxy"
+script = ExtResource("1_s45w7")
+Rarity = 0
+metadata/_custom_type_script = "uid://dwgj1un6ilijm"

@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="SelfDestruct" load_steps=2 format=3 uid="uid://cldkdae8ac6gy"]
+[gd_resource type="Resource" script_class="GDSelfDestruct" load_steps=2 format=3 uid="uid://duswxfbsowy4j"]
 
-[ext_resource type="Script" uid="uid://dh52xobpaec63" path="res://scripts/godot/pieces/items/OnCaptured/SelfDestruct.cs" id="1_ger7l"]
+[ext_resource type="Script" uid="uid://dwqgjjbiknpbr" path="res://scripts/godot/pieces/items/OnCaptured/GDSelfDestruct.cs" id="1_4i51h"]
 
 [resource]
-script = ExtResource("1_ger7l")
+script = ExtResource("1_4i51h")
 Rarity = 0
-metadata/_custom_type_script = "uid://dh52xobpaec63"
+metadata/_custom_type_script = "uid://dwqgjjbiknpbr"

@@ -29,7 +29,7 @@ public abstract partial class GodotMovement : Resource
             case CheckersMovement:
                 return new GodotCheckersMovement();
             case CannibalKing:
-                return new GodotCannibalKing();
+                return new GDCannibalKing();
         }
         throw new System.NotImplementedException();
     }

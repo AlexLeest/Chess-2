@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="SpawnPawnFence" load_steps=2 format=3 uid="uid://pww6fxg1g8ik"]
+[gd_resource type="Resource" script_class="GDSpawnPawnFence" load_steps=2 format=3 uid="uid://b8jts62phq6h6"]
 
-[ext_resource type="Script" uid="uid://bikleeagn3oi8" path="res://scripts/godot/pieces/items/OnCastle/SpawnPawnFence.cs" id="1_4mu5x"]
+[ext_resource type="Script" uid="uid://06sy7b85thwi" path="res://scripts/godot/pieces/items/OnCastle/GDSpawnPawnFence.cs" id="1_7qvcd"]
 
 [resource]
-script = ExtResource("1_4mu5x")
-Rarity = 2
-metadata/_custom_type_script = "uid://bikleeagn3oi8"
+script = ExtResource("1_7qvcd")
+Rarity = 0
+metadata/_custom_type_script = "uid://06sy7b85thwi"
