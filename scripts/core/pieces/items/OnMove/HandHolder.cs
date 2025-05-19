@@ -29,7 +29,7 @@ public class HandHolder(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MO
         if (!position.Inside(boardWidth, boardHeight))
             return;
         Piece toBeMoved = board.Squares[position.X, position.Y];
-        if (toBeMoved is null || toBeMoved.BasePiece != piece.BasePiece || toBeMoved.Color != piece.Color)
+        if (toBeMoved is null || toBeMoved.Id == PieceId || toBeMoved.BasePiece != piece.BasePiece || toBeMoved.Color != piece.Color)
             return;
         Vector2Int goalPos = position + delta;
         if (!goalPos.Inside(boardWidth, boardHeight))

@@ -19,6 +19,7 @@ public static class PieceExtensions
         {
             // Change BasePiece type to the next one, change the first movement entry out for the default of the next one as well
             piece.BasePiece = nextBasePiece;
+            piece.SpecialPieceType = nextBasePiece == BasePiece.PAWN ? SpecialPieceTypes.PAWN : SpecialPieceTypes.NONE;
             
             // Have to copy the movement array over because it's passed by reference and editing spot 0 changes it for every board
             IMovement[] newMovement = new IMovement[piece.Movement.Length];
@@ -35,6 +36,7 @@ public static class PieceExtensions
     {
         // Change BasePiece type to the next one, change the first movement entry out for the default of the next one as well
         piece.BasePiece = newBasePiece;
+        piece.SpecialPieceType = newBasePiece == BasePiece.PAWN ? SpecialPieceTypes.PAWN : SpecialPieceTypes.NONE;
             
         // Have to copy the movement array over because it's passed by reference and editing spot 0 changes it for every board
         IMovement[] newMovement = new IMovement[piece.Movement.Length];

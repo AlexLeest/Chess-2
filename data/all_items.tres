@@ -1,17 +1,19 @@
-[gd_resource type="Resource" script_class="UpgradesModel" load_steps=23 format=3 uid="uid://dnfklsd6c1fcm"]
+[gd_resource type="Resource" script_class="UpgradesModel" load_steps=25 format=3 uid="uid://dnfklsd6c1fcm"]
 
-[ext_resource type="Resource" uid="uid://ny0jv6ydl5se" path="res://data/items/OnMove/evolution_loop.tres" id="1_l6gso"]
-[ext_resource type="Resource" uid="uid://hyy20rkr31ix" path="res://data/items/OnCapture/cannibal_teeth.tres" id="1_p6ufp"]
-[ext_resource type="Resource" uid="uid://ddw4dh1uhmihm" path="res://data/items/OnCapture/gun.tres" id="2_p6ufp"]
-[ext_resource type="Resource" uid="uid://dpfd24xbjinfk" path="res://data/items/OnTurn/king_of_the_hill.tres" id="3_7vb0p"]
-[ext_resource type="Resource" uid="uid://bwrjcp6rj316b" path="res://data/items/OnCastle/opponent_royal_swap.tres" id="4_4100q"]
-[ext_resource type="Resource" uid="uid://cry0orp0abx7r" path="res://data/items/OnPromotion/promotion_explosion.tres" id="5_8o2jt"]
-[ext_resource type="Resource" uid="uid://bjd78u2gbe48b" path="res://data/items/OnCaptured/respawn.tres" id="6_day28"]
-[ext_resource type="Resource" uid="uid://cldkdae8ac6gy" path="res://data/items/OnCaptured/self_destruct.tres" id="7_a152i"]
-[ext_resource type="Resource" uid="uid://dcbdyvflrg644" path="res://data/items/OnTurn/wander_forward.tres" id="8_auni3"]
-[ext_resource type="Resource" uid="uid://c67m4tyoaewst" path="res://data/items/OnOpponentCastle/capture_non_king_piece.tres" id="9_apx1c"]
-[ext_resource type="Resource" uid="uid://dx7o5eb2ntg61" path="res://data/items/OnCastle/upgrade_non_king_piece.tres" id="10_pwvtq"]
-[ext_resource type="Resource" uid="uid://pww6fxg1g8ik" path="res://data/items/OnCastle/spawn_pawn_fence.tres" id="11_hsboa"]
+[ext_resource type="Resource" uid="uid://dvuxkeoey5glf" path="res://data/items/OnMove/evolution_loop.tres" id="1_l6gso"]
+[ext_resource type="Resource" uid="uid://bif220mgfmh7r" path="res://data/items/OnCapture/cannibal_teeth.tres" id="1_p6ufp"]
+[ext_resource type="Resource" uid="uid://by71jv7jjftu5" path="res://data/items/OnCapture/color_converter.tres" id="2_day28"]
+[ext_resource type="Resource" uid="uid://cv0yvlh7f4dy2" path="res://data/items/OnCapture/gun.tres" id="2_p6ufp"]
+[ext_resource type="Resource" uid="uid://ck5txxd0xkamt" path="res://data/items/OnTurn/king_of_the_hill.tres" id="3_7vb0p"]
+[ext_resource type="Resource" uid="uid://dw34xrube8jnj" path="res://data/items/OnCastle/opponent_royal_swap.tres" id="4_4100q"]
+[ext_resource type="Resource" uid="uid://b0w36udkd15e8" path="res://data/items/OnPromotion/promotion_explosion.tres" id="5_8o2jt"]
+[ext_resource type="Resource" uid="uid://c22218i23epb" path="res://data/items/OnCaptured/respawn.tres" id="6_day28"]
+[ext_resource type="Resource" uid="uid://duswxfbsowy4j" path="res://data/items/OnCaptured/self_destruct.tres" id="7_a152i"]
+[ext_resource type="Resource" uid="uid://cp01hnn4lv6xe" path="res://data/items/OnTurn/wander_forward.tres" id="8_auni3"]
+[ext_resource type="Resource" uid="uid://bxtft2oa0hjhw" path="res://data/items/OnOpponentCastle/capture_non_king_piece.tres" id="9_apx1c"]
+[ext_resource type="Resource" uid="uid://cgby8a71b0g6t" path="res://data/items/OnMove/hand_holder.tres" id="10_a152i"]
+[ext_resource type="Resource" uid="uid://df3ylqibf8b47" path="res://data/items/OnCastle/upgrade_non_king_piece.tres" id="10_pwvtq"]
+[ext_resource type="Resource" uid="uid://b8jts62phq6h6" path="res://data/items/OnCastle/spawn_pawn_fence.tres" id="11_hsboa"]
 [ext_resource type="Resource" uid="uid://do1heo3x146tb" path="res://data/movements/standard/checkers_jump.tres" id="13_4100q"]
 [ext_resource type="Resource" uid="uid://cfx0jw73qy21n" path="res://data/movements/standard/bishop_movement.tres" id="14_8o2jt"]
 [ext_resource type="Resource" uid="uid://nrdvag5iu0f1" path="res://data/movements/standard/king_movement.tres" id="15_day28"]
@@ -25,5 +27,5 @@
 
 [resource]
 script = ExtResource("16_8o2jt")
-items = Array[Resource]([ExtResource("1_p6ufp"), ExtResource("2_p6ufp"), ExtResource("6_day28"), ExtResource("7_a152i"), ExtResource("4_4100q"), ExtResource("11_hsboa"), ExtResource("10_pwvtq"), ExtResource("1_l6gso"), ExtResource("9_apx1c"), ExtResource("5_8o2jt"), ExtResource("3_7vb0p"), ExtResource("8_auni3")])
+items = Array[Resource]([ExtResource("1_p6ufp"), ExtResource("2_day28"), ExtResource("2_p6ufp"), ExtResource("6_day28"), ExtResource("7_a152i"), ExtResource("4_4100q"), ExtResource("11_hsboa"), ExtResource("10_pwvtq"), ExtResource("1_l6gso"), ExtResource("10_a152i"), ExtResource("9_apx1c"), ExtResource("5_8o2jt"), ExtResource("3_7vb0p"), ExtResource("8_auni3")])
 movements = Array[Object]([ExtResource("13_4100q"), ExtResource("14_8o2jt"), ExtResource("15_day28"), ExtResource("16_a152i"), ExtResource("17_auni3"), ExtResource("18_apx1c"), ExtResource("19_pwvtq"), ExtResource("20_hsboa"), ExtResource("21_fjmva")])

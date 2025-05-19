@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="GDCannibalKing" load_steps=2 format=3 uid="uid://c1mkja0qcs72x"]
 
-[ext_resource type="Script" uid="uid://bfny0w8nr7i2j" path="res://scripts/godot/pieces/movement/nonstandard/GDCannibalKing.cs" id="1_hpas5"]
+[ext_resource type="Script" uid="uid://bfny0w8nr7i2j" path="res://scripts/godot/pieces/movement/nonstandard/GDCannibalKing.cs" id="1_dm8qf"]
 
 [resource]
-script = ExtResource("1_hpas5")
-Rarity = 1
+script = ExtResource("1_dm8qf")
+Rarity = 0
 metadata/_custom_type_script = "uid://b4iqifg4583uc"

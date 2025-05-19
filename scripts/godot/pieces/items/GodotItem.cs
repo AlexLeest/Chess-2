@@ -45,6 +45,8 @@ public abstract partial class GodotItem : Resource
             CaptureNonKingPiece => new GDCaptureNonKingPiece(),
             UpgradeNonKingPiece => new GDUpgradeNonKingPiece(),
             SpawnPawnFence => new GDSpawnPawnFence(),
+            HandHolder => new GDHandHolder(),
+            ColorConverter => new GDColorConverter(),
             _ => throw new NotImplementedException(),
         };
 
