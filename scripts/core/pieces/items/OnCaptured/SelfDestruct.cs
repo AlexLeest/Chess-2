@@ -12,7 +12,9 @@ public class SelfDestruct(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_
     {
         Vector2Int moveTo = move.To;
         
-        Piece toBeDestroyed = board.Squares[moveTo.X, moveTo.Y];
+        Piece toBeDestroyed = board.GetPiece(move.Moving);
+        if (toBeDestroyed is null)
+            return board;
         Piece[] newPieces = new Piece[board.Pieces.Length - 1];
         int i = 0;
         foreach (Piece piece in board.Pieces)
