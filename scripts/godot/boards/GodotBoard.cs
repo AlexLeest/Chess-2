@@ -59,17 +59,6 @@ public partial class GodotBoard : GridContainer
 
         engine = levelModel.GetEngine(Level);
     }
-    
-    // public override void _Input(InputEvent input)
-    // {
-    //     if (input is InputEventKey eventKey && eventKey.Pressed)
-    //     {
-    //         if (eventKey.Keycode == Key.Space)
-    //         {
-    //             FinishLevelAndSpawnSetup();
-    //         }
-    //     }
-    // }
 
     private void SquareMouseEnter(Vector2I coords)
     {

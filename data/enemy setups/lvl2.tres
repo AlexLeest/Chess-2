@@ -1,27 +1,27 @@
-[gd_resource type="Resource" script_class="EnemySetup" load_steps=13 format=3 uid="uid://csfyrs8o07lmi"]
+[gd_resource type="Resource" script_class="EnemySetup" load_steps=12 format=3 uid="uid://csfyrs8o07lmi"]
 
-[ext_resource type="Resource" uid="uid://bjd78u2gbe48b" path="res://data/items/OnCaptured/respawn.tres" id="1_2upir"]
 [ext_resource type="Script" uid="uid://du1aaoy1w0a5m" path="res://scripts/godot/data/EnemySetup.cs" id="1_ety8u"]
 [ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="1_iex5o"]
+[ext_resource type="Script" uid="uid://dxjj038hvehvy" path="res://scripts/godot/data/PlayerSetup.cs" id="2_2upir"]
 [ext_resource type="Resource" uid="uid://cc16rnibah0u3" path="res://data/AI engines/minimax_2.tres" id="2_iex5o"]
 
-[sub_resource type="Resource" id="Resource_6q10a"]
+[sub_resource type="Resource" id="Resource_gm3ke"]
 script = ExtResource("1_iex5o")
 StartPosition = Vector2i(4, 6)
-Items = [ExtResource("1_2upir")]
+Items = []
 PieceType = 0
 Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
-[sub_resource type="Resource" id="Resource_y4nfu"]
+[sub_resource type="Resource" id="Resource_j125w"]
 script = ExtResource("1_iex5o")
 StartPosition = Vector2i(5, 6)
-Items = [ExtResource("1_2upir")]
+Items = []
 PieceType = 0
 Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
-[sub_resource type="Resource" id="Resource_80y2r"]
+[sub_resource type="Resource" id="Resource_nqmrs"]
 script = ExtResource("1_iex5o")
 StartPosition = Vector2i(6, 6)
 Items = []
@@ -29,15 +29,7 @@ PieceType = 0
 Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
-[sub_resource type="Resource" id="Resource_rgctt"]
-script = ExtResource("1_iex5o")
-StartPosition = Vector2i(7, 6)
-Items = []
-PieceType = 0
-Movement = []
-metadata/_custom_type_script = "uid://cul58y3sumplo"
-
-[sub_resource type="Resource" id="Resource_avlx5"]
+[sub_resource type="Resource" id="Resource_clhaq"]
 script = ExtResource("1_iex5o")
 StartPosition = Vector2i(4, 7)
 Items = []
@@ -45,7 +37,7 @@ PieceType = 5
 Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
-[sub_resource type="Resource" id="Resource_5f6jb"]
+[sub_resource type="Resource" id="Resource_3akys"]
 script = ExtResource("1_iex5o")
 StartPosition = Vector2i(5, 7)
 Items = []
@@ -53,7 +45,7 @@ PieceType = 2
 Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
-[sub_resource type="Resource" id="Resource_pxhsf"]
+[sub_resource type="Resource" id="Resource_icgl0"]
 script = ExtResource("1_iex5o")
 StartPosition = Vector2i(6, 7)
 Items = []
@@ -61,16 +53,13 @@ PieceType = 3
 Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
-[sub_resource type="Resource" id="Resource_llupd"]
-script = ExtResource("1_iex5o")
-StartPosition = Vector2i(7, 7)
-Items = []
-PieceType = 1
-Movement = []
-metadata/_custom_type_script = "uid://cul58y3sumplo"
+[sub_resource type="Resource" id="Resource_y6y2s"]
+script = ExtResource("2_2upir")
+PlayerPieces = Array[Object]([SubResource("Resource_gm3ke"), SubResource("Resource_j125w"), SubResource("Resource_nqmrs"), SubResource("Resource_clhaq"), SubResource("Resource_3akys"), SubResource("Resource_icgl0")])
+metadata/_custom_type_script = "uid://dxjj038hvehvy"
 
 [resource]
 script = ExtResource("1_ety8u")
-EnemyPieces = Array[Object]([SubResource("Resource_6q10a"), SubResource("Resource_y4nfu"), SubResource("Resource_80y2r"), SubResource("Resource_rgctt"), SubResource("Resource_avlx5"), SubResource("Resource_5f6jb"), SubResource("Resource_pxhsf"), SubResource("Resource_llupd")])
+EnemyPieces = SubResource("Resource_y6y2s")
 Engine = ExtResource("2_iex5o")
 metadata/_custom_type_script = "uid://du1aaoy1w0a5m"

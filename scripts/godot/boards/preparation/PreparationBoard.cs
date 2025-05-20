@@ -64,13 +64,6 @@ public partial class PreparationBoard : GridContainer
         }
         upgradeButtons[0].GetParent<Container>().Visible = true;
     }
-    
-    // public override void _Input(InputEvent input)
-    // {
-    //     if (input is InputEventKey eventKey && eventKey.Pressed)
-    //         if (eventKey.Keycode == Key.Space)
-    //             FinishSetupAndStartLevel();
-    // }
 
     private void SquareMouseEnter(Vector2I coords)
     {

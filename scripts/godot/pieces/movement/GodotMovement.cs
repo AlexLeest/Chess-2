@@ -1,5 +1,6 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.movement;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.movement.nonstandard;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using Godot;
@@ -30,6 +31,8 @@ public abstract partial class GodotMovement : Resource
                 return new GodotCheckersMovement();
             case CannibalKing:
                 return new GDCannibalKing();
+            case TriplePawnPush:
+                return new GDTriplePawnPush();
         }
         throw new System.NotImplementedException();
     }

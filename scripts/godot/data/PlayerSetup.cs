@@ -11,6 +11,13 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 public partial class PlayerSetup : Resource
 {
     [Export] public PieceResource[] PlayerPieces;
+    
+    public PlayerSetup() { }
+
+    public PlayerSetup(PieceResource[] pieces)
+    {
+        PlayerPieces = pieces;
+    }
 
     public Board ConvertToBoard(PieceResource[] enemyPieces)
     {
