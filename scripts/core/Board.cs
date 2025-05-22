@@ -90,18 +90,7 @@ public class Board
             Piece.Rook(31, false, new Vector2Int(7, 7), SpecialPieceTypes.QUEEN_SIDE_CASTLE),
         ];
         
-        // DEBUG:
-        // Item dictionary for testing purposes
         Dictionary<byte, IItem[]> itemsPerPiece = new();
-        // itemsPerPiece.Add(12, [new OpponentRoyalSwap(12)]);
-        // for (byte i = 0; i < 8; i++)
-        // {
-        //     itemsPerPiece.Add(i, [new Respawn(i)]);
-        // }
-        // for (byte i = 16; i < 24; i++)
-        // {
-        //     itemsPerPiece.Add(i, [new SelfDestruct(i)]);
-        // }
 
         return new Board(0, pieces, [true, true], [true, true], itemsPerPiece);
     }
@@ -434,6 +423,28 @@ public class Board
         }
 
         return result;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is not Board board)
+            return false;
+
+        if (board.Turn != Turn)
+            return false;
+        if (!board.CastleKingSide.SequenceEqual(CastleKingSide))
+            return false;
+        if (!board.CastleQueenSide.SequenceEqual(CastleQueenSide))
+            return false;
+        if (board.LastMove != LastMove)
+            return false;
+
+        HashSet<Piece> ownPieces = Pieces.ToHashSet();
+        HashSet<Piece> otherPieces = board.Pieces.ToHashSet();
+        if (!ownPieces.SetEquals(otherPieces))
+            return false;
+
+        return true;
     }
 
     public override string ToString()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
@@ -10,73 +11,94 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
 /// </summary>
 public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
 {
-    private Board bestMove;
-    private float bestEval;
-    private int betaPruned;
+    // private Board bestMove;
+    // private float bestEval;
+    // private int betaPruned;
+    // private int nodeCount;
+
+    // private int sortAmount;
+    private List<Board> lastPrincipalVariation = [];
     
     public Board GenerateNextMove(Board board)
     {
-        bestMove = null;
-        bestEval = 0;
-        betaPruned = 0;
+        lastPrincipalVariation = [];
+        // bestEval = 0;
+        // betaPruned = 0;
+        // nodeCount = 0;
         
-        float score = NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, maxDepth);
-        return bestMove;
+        for (int i = 1; i <= maxDepth; i++)
+        {
+            // sortAmount = 0;
+            // betaPruned = 0;
+            // nodeCount = 0;
+            NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, i, out List<Board> principalVariation);
+            lastPrincipalVariation = principalVariation;
+        }
+        // GD.Print($"Pruned amount: {betaPruned}, sorted amount: {sortAmount}, nodes: {nodeCount}");
+
+        return lastPrincipalVariation[^2];
     }
 
-    private float NegaMax(Board board, float alpha, float beta, int depth)
+    private float NegaMax(Board board, float alpha, float beta, int depth, out List<Board> principalVariation)
     {
-        if (depth == 0)
+        // nodeCount++;
+        if (depth <= 0)
         {
+            principalVariation = [board];
             return DetermineScore(board);
         }
 
         float max = float.NegativeInfinity;
         List<Board> nextMoves = board.GenerateMoves();
-        // SortMoves(nextMoves);
+        
+        SortByPrincipalVariation(nextMoves, depth);
         
         if (nextMoves.Count == 0)
         {
+            principalVariation = [board];
             if (board.IsInCheck(board.ColorToMove))
                 return float.MinValue;
             return 0;
         }
-        
+
+        List<Board> bestMoves = [];
         foreach (Board move in nextMoves)
         {
-            float score = -NegaMax(move, -beta, -alpha, depth - 1);
+            float score = -NegaMax(move, -beta, -alpha, depth - 1, out List<Board> possibleMoves);
+            
             if (score > max)
             {
+                possibleMoves.Add(board);
+                principalVariation = bestMoves = possibleMoves;
                 max = score;
                 alpha = Math.Max(alpha, score);
-
-                if (depth == maxDepth)
-                {
-                    bestMove = move;
-                    bestEval = score;
-                }
             }
             if (score >= beta)
             {
-                betaPruned++;
+                principalVariation = bestMoves;
+                // betaPruned++;
                 return max;
             }
         }
+
+        principalVariation = bestMoves;
         return max;
     }
 
-    private void SortMoves(List<Board> moves)
+    private void SortByPrincipalVariation(List<Board> moves, int depth)
     {
-        moves.Sort(delegate(Board a, Board b)
-        {
-            if (a.LastMove is null || b.LastMove is null)
-                return 0;
-            if (a.LastMove?.Captured is not null && b.LastMove?.Captured is null)
-                return 1;
-            if (b.LastMove?.Captured is not null && a.LastMove?.Captured is null)
-                return -1;
-            return 0;
-        });
+        // Check if this list of moves has the pre-calculated principal variation in there as an option
+        // If so, put that up front
+        int pvIndex = depth - 2;
+        if (pvIndex < 0 || pvIndex >= lastPrincipalVariation.Count)
+            return;
+        
+        Board moveToPrioritize = lastPrincipalVariation[pvIndex];
+        int index = moves.FindIndex(move => move.LastMove == moveToPrioritize.LastMove);
+        if (index == -1)
+            return;
+        
+        (moves[index], moves[0]) = (moves[0], moves[index]);
     }
 
     public float DetermineScore(Board board)

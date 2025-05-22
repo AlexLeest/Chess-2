@@ -1,0 +1,137 @@
+[gd_resource type="Resource" script_class="PlayerSetup" load_steps=19 format=3 uid="uid://yqv6atffu7gw"]
+
+[ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="1_lkb6j"]
+[ext_resource type="Script" uid="uid://dxjj038hvehvy" path="res://scripts/godot/data/PlayerSetup.cs" id="2_02bqw"]
+
+[sub_resource type="Resource" id="Resource_vfsky"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(0, 6)
+Items = []
+PieceType = 0
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_4ba5r"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(1, 6)
+Items = []
+PieceType = 0
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_bofbn"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(2, 6)
+Items = []
+PieceType = 0
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_uagmt"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(3, 6)
+Items = []
+PieceType = 0
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_8468k"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(4, 6)
+Items = []
+PieceType = 0
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_eklll"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(5, 6)
+Items = []
+PieceType = 0
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_k0313"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(6, 6)
+Items = []
+PieceType = 0
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_3nmb1"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(7, 6)
+Items = []
+PieceType = 0
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_ryvkv"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(0, 7)
+Items = []
+PieceType = 1
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_icxxk"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(1, 7)
+Items = []
+PieceType = 3
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_e5xq8"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(2, 7)
+Items = []
+PieceType = 2
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_l7c57"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(3, 7)
+Items = []
+PieceType = 4
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_3ddhu"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(4, 7)
+Items = []
+PieceType = 5
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_grscx"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(5, 7)
+Items = []
+PieceType = 2
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_2b5ws"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(6, 7)
+Items = []
+PieceType = 3
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_q4718"]
+script = ExtResource("1_lkb6j")
+StartPosition = Vector2i(7, 7)
+Items = []
+PieceType = 1
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[resource]
+script = ExtResource("2_02bqw")
+PlayerPieces = Array[Object]([SubResource("Resource_vfsky"), SubResource("Resource_4ba5r"), SubResource("Resource_bofbn"), SubResource("Resource_uagmt"), SubResource("Resource_8468k"), SubResource("Resource_eklll"), SubResource("Resource_k0313"), SubResource("Resource_3nmb1"), SubResource("Resource_ryvkv"), SubResource("Resource_icxxk"), SubResource("Resource_e5xq8"), SubResource("Resource_l7c57"), SubResource("Resource_3ddhu"), SubResource("Resource_grscx"), SubResource("Resource_2b5ws"), SubResource("Resource_q4718")])
+metadata/_custom_type_script = "uid://dxjj038hvehvy"

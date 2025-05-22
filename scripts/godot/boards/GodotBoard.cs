@@ -111,12 +111,12 @@ public partial class GodotBoard : GridContainer
             return;
         }
         selectedPiece = square.GdPiece;
-        GD.Print($"Selected piece {selectedPiece.Id}");
+        // GD.Print($"Selected piece {selectedPiece.Id}");
         // TODO: Show possible moves for piece
         foreach (Move move in selectedPiece.Piece.GetMovementOptions(Board))
         {
             // TODO: Highlight these squares
-            GD.Print($"Move {move} allowed");
+            // GD.Print($"Move {move} allowed");
         }
     }
 
