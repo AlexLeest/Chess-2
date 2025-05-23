@@ -17,7 +17,7 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
     // private int nodeCount;
 
     // private int sortAmount;
-    private List<Board> lastPrincipalVariation = [];
+    private Board[] lastPrincipalVariation = [];
     
     public Board GenerateNextMove(Board board)
     {
@@ -31,7 +31,7 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
             // sortAmount = 0;
             // betaPruned = 0;
             // nodeCount = 0;
-            NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, i, out List<Board> principalVariation);
+            NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, i, out Board[] principalVariation);
             lastPrincipalVariation = principalVariation;
         }
         // GD.Print($"Pruned amount: {betaPruned}, sorted amount: {sortAmount}, nodes: {nodeCount}");
@@ -39,7 +39,7 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
         return lastPrincipalVariation[^2];
     }
 
-    private float NegaMax(Board board, float alpha, float beta, int depth, out List<Board> principalVariation)
+    private float NegaMax(Board board, float alpha, float beta, int depth, out Board[] principalVariation)
     {
         // nodeCount++;
         if (depth <= 0)
@@ -60,16 +60,19 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
                 return float.MinValue;
             return 0;
         }
-
-        List<Board> bestMoves = [];
+        
+        Board[] bestMoves = [];
         foreach (Board move in nextMoves)
         {
-            float score = -NegaMax(move, -beta, -alpha, depth - 1, out List<Board> possibleMoves);
+            float score = -NegaMax(move, -beta, -alpha, depth - 1, out Board[] possibleMoves);
             
             if (score > max)
             {
-                possibleMoves.Add(board);
-                principalVariation = bestMoves = possibleMoves;
+                bestMoves = new Board[possibleMoves.Length + 1];
+                possibleMoves.CopyTo(bestMoves, 0);
+                bestMoves[^1] = board;
+                
+                principalVariation = bestMoves;
                 max = score;
                 alpha = Math.Max(alpha, score);
             }
@@ -90,14 +93,15 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
         // Check if this list of moves has the pre-calculated principal variation in there as an option
         // If so, put that up front
         int pvIndex = depth - 2;
-        if (pvIndex < 0 || pvIndex >= lastPrincipalVariation.Count)
+        if (pvIndex < 0 || pvIndex >= lastPrincipalVariation.Length)
             return;
         
         Board moveToPrioritize = lastPrincipalVariation[pvIndex];
         int index = moves.FindIndex(move => move.LastMove == moveToPrioritize.LastMove);
         if (index == -1)
             return;
-        
+
+        // sortAmount++;
         (moves[index], moves[0]) = (moves[0], moves[index]);
     }
 
