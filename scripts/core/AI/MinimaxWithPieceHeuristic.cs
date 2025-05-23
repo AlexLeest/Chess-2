@@ -6,8 +6,10 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
 
 /// <summary>
 /// First earnest attempt at a chess AI:
-/// Use negamax with alpha-beta pruning to a set depth (no quiescence search).
+/// Use iterative negamax with alpha-beta pruning to a set depth (no quiescence search).
 /// Then use naive piece scores (no positioning, no items being taken into account) to determine the heuristic score of the leaf boards.
+///
+/// DEVELOPMENT ON THIS ENGINE IS DONE, MAKE A NEW ONE
 /// </summary>
 public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
 {

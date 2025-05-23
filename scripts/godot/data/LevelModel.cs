@@ -1,5 +1,6 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
 using CHESS2THESEQUELTOCHESS.scripts.core.AI;
+using CHESS2THESEQUELTOCHESS.scripts.godot.AI;
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using Godot;
 using System;
@@ -11,32 +12,27 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 [GlobalClass]
 public partial class LevelModel : Resource
 {
-    // To hold all the sequential EnemySetups, which will function as levels. Possibly add random generation down the line.
-    [Export] public EnemySetup[] EnemySetups;
-
+    [Export] public PlayerSetup EnemySetup;
+    [Export] public GodotEngine[] Engines;
     [Export] private UpgradesModel upgrades;
 
     public PieceResource[] GetPieces(int level)
     {
-        while (level > EnemySetups.Length - 1)
-            GenerateNextLevel();
-        
-        level = Math.Clamp(level, 0, EnemySetups.Length - 1);
-        return EnemySetups[level].EnemyPieces.PlayerPieces;
+        return GenerateNextLevel().PlayerPieces;
     }
 
     public IEngine GetEngine(int level)
     {
-        level = Math.Clamp(level, 0, EnemySetups.Length - 1);
-        return EnemySetups[level].Engine.GetEngine();
+        level = Math.Clamp(level, 0, Engines.Length - 1);
+        return Engines[level].GetEngine();
     }
 
-    private void GenerateNextLevel()
+    private PlayerSetup GenerateNextLevel()
     {
         // Add a random piece and item/movement
 
         // Pick a random piece and an unused position to spawn it on
-        PlayerSetup setup = new(EnemySetups[^1].EnemyPieces.PlayerPieces);
+        PlayerSetup setup = new(EnemySetup.PlayerPieces);
         
         BasePiece pieceType = upgrades.GetRandomPieceByRarity(upgrades.GetWeightedRandomItemRarity());
         Vector2I spawnPos = new(GD.RandRange(0, 7), GD.RandRange(6, 7));
@@ -52,8 +48,6 @@ public partial class LevelModel : Resource
         PieceResource randomPiece = setup.PlayerPieces[GD.RandRange(0, setup.PlayerPieces.Length - 1)];
         setup.SetItem(randomPiece.StartPosition, randomItem);
 
-        List<EnemySetup> newSetups = EnemySetups.ToList();
-        newSetups.Add(new EnemySetup(setup, EnemySetups[^1].Engine));
-        EnemySetups = newSetups.ToArray();
+        return setup;
     }
 }

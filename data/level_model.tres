@@ -1,11 +1,16 @@
-[gd_resource type="Resource" script_class="LevelModel" load_steps=4 format=3 uid="uid://b3v0pgb12c2n3"]
+[gd_resource type="Resource" script_class="LevelModel" load_steps=8 format=3 uid="uid://b3v0pgb12c2n3"]
 
+[ext_resource type="Resource" uid="uid://c5onfr36eyxpm" path="res://data/enemy setups/enemy_setup.tres" id="1_5p1i5"]
 [ext_resource type="Script" uid="uid://d4jbqkmx4hwho" path="res://scripts/godot/data/LevelModel.cs" id="1_k7ub5"]
-[ext_resource type="Resource" uid="uid://g01wi6n66yy4" path="res://data/enemy setups/lvl3.tres" id="3_82edy"]
+[ext_resource type="Resource" uid="uid://cvngs6nnud0yp" path="res://data/AI engines/full_random.tres" id="2_0uucd"]
+[ext_resource type="Resource" uid="uid://cc16rnibah0u3" path="res://data/AI engines/minimax_2.tres" id="3_iqlbt"]
+[ext_resource type="Resource" uid="uid://cp8oy1hc4u0hm" path="res://data/AI engines/minimax_4.tres" id="4_y3fyr"]
+[ext_resource type="Resource" uid="uid://bjo6an3t0ff1k" path="res://data/AI engines/minimax_5.tres" id="5_fn8si"]
 [ext_resource type="Resource" uid="uid://dnfklsd6c1fcm" path="res://data/all_items.tres" id="5_p7r78"]
 
 [resource]
 script = ExtResource("1_k7ub5")
-EnemySetups = Array[Object]([ExtResource("3_82edy")])
+EnemySetup = ExtResource("1_5p1i5")
+Engines = Array[Resource]([ExtResource("2_0uucd"), ExtResource("3_iqlbt"), ExtResource("4_y3fyr"), ExtResource("5_fn8si")])
 upgrades = ExtResource("5_p7r78")
 metadata/_custom_type_script = "uid://d4jbqkmx4hwho"
