@@ -11,6 +11,7 @@ public static class ZobristCalculator
     private static Dictionary<(bool, Vector2Int, BasePiece ), int> basePieceHashes = [];
     private static Dictionary<(bool, Vector2Int, SpecialPieceTypes), int> pieceTypeHashes = [];
     private static Dictionary<(bool, Vector2Int, Type), int> itemHashes = [];
+    private static Dictionary<(bool, Vector2Int, Type), int> movementHashes = [];
 
     private static int[] castlingHashes = [];
 
@@ -38,6 +39,15 @@ public static class ZobristCalculator
             return hash;
         int result = rng.Next(int.MinValue, int.MaxValue);
         itemHashes[(color, position, item.GetType())] = result;
+        return result;
+    }
+
+    public static int GetZobristHash(bool color, Vector2Int position, IMovement movement)
+    {
+        if (movementHashes.TryGetValue((color, position, movement.GetType()), out int hash))
+            return hash;
+        int result = rng.Next(int.MinValue, int.MaxValue);
+        movementHashes[(color, position, movement.GetType())] = result;
         return result;
     }
 
