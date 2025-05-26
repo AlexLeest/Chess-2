@@ -48,6 +48,7 @@ public partial class LevelModel : Resource
         PieceResource randomPiece = setup.PlayerPieces[GD.RandRange(0, setup.PlayerPieces.Length - 1)];
         setup.SetItem(randomPiece.StartPosition, randomItem);
 
+        EnemySetup = setup;
         return setup;
     }
 }

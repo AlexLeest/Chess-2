@@ -145,6 +145,12 @@ public class SlidingMovement : IMovement
         return false;
     }
 
+    public int GetZobristHash(bool color, Vector2Int position)
+    {
+        // TODO: Non standard zobrist hashing.
+        throw new System.NotImplementedException();
+    }
+
     public override string ToString()
     {
         HashSet<Vector2Int> offsetsSet = offsets.ToHashSet();

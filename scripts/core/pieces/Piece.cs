@@ -26,6 +26,22 @@ public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position
         return new Piece(Id, BasePiece, Color, Position, Movement, SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN ? SpecialPieceTypes.PAWN : SpecialPieceType);
     }
 
+    public int GetZobristHash()
+    {
+        // Zobrist hash for piece is the zobrist hash for every IMovement it has XORed
+        // XOR BasePiece hash
+        // XOR SpecialPieceTypes hash
+        int result = 0;
+        foreach (IMovement movement in Movement)
+        {
+            result ^= movement.GetZobristHash(color, Position);
+        }
+        result ^= ZobristCalculator.GetZobristHash(color, BasePiece, Position);
+        result ^= ZobristCalculator.GetZobristHash(color, SpecialPieceType, Position);
+
+        return result;
+    }
+
     private static readonly char[] files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     public override string ToString()
     {

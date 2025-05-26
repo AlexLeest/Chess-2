@@ -1,67 +1,97 @@
-[gd_resource type="Resource" script_class="PlayerSetup" load_steps=19 format=3 uid="uid://dab655gk8f2w"]
+[gd_resource type="Resource" script_class="PlayerSetup" load_steps=14 format=3 uid="uid://dab655gk8f2w"]
 
-[ext_resource type="Resource" uid="uid://bif220mgfmh7r" path="res://data/items/OnCapture/cannibal_teeth.tres" id="1_adotn"]
-[ext_resource type="Resource" uid="uid://c1mkja0qcs72x" path="res://data/movements/nonstandard/cannibal_king.tres" id="2_wf1x1"]
 [ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="3_wf1x1"]
-[ext_resource type="Resource" uid="uid://cgby8a71b0g6t" path="res://data/items/OnMove/hand_holder.tres" id="4_hcmeg"]
-[ext_resource type="Resource" uid="uid://cp01hnn4lv6xe" path="res://data/items/OnTurn/wander_forward.tres" id="5_hcmeg"]
-[ext_resource type="Resource" uid="uid://do1heo3x146tb" path="res://data/movements/standard/checkers_jump.tres" id="5_s1lyh"]
-[ext_resource type="Resource" uid="uid://dw34xrube8jnj" path="res://data/items/OnCastle/opponent_royal_swap.tres" id="6_b3ito"]
-[ext_resource type="Resource" uid="uid://df3ylqibf8b47" path="res://data/items/OnCastle/upgrade_non_king_piece.tres" id="6_wf1x1"]
-[ext_resource type="Resource" uid="uid://b8jts62phq6h6" path="res://data/items/OnCastle/spawn_pawn_fence.tres" id="7_fapxq"]
-[ext_resource type="Resource" uid="uid://cv0yvlh7f4dy2" path="res://data/items/OnCapture/gun.tres" id="8_3mnws"]
 [ext_resource type="Script" uid="uid://dxjj038hvehvy" path="res://scripts/godot/data/PlayerSetup.cs" id="9_g37bp"]
-[ext_resource type="Resource" uid="uid://by71jv7jjftu5" path="res://data/items/OnCapture/color_converter.tres" id="10_wf1x1"]
 
-[sub_resource type="Resource" id="Resource_wg7p6"]
+[sub_resource type="Resource" id="Resource_2dgya"]
+script = ExtResource("3_wf1x1")
+StartPosition = Vector2i(1, 1)
+Items = []
+PieceType = 0
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_l5ds2"]
+script = ExtResource("3_wf1x1")
+StartPosition = Vector2i(2, 1)
+Items = []
+PieceType = 0
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_8qh0p"]
+script = ExtResource("3_wf1x1")
+StartPosition = Vector2i(3, 1)
+Items = []
+PieceType = 0
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_e4c23"]
 script = ExtResource("3_wf1x1")
 StartPosition = Vector2i(4, 1)
-Items = [ExtResource("1_adotn")]
+Items = []
 PieceType = 0
-Movement = [ExtResource("2_wf1x1")]
+Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
-[sub_resource type="Resource" id="Resource_hf6m6"]
+[sub_resource type="Resource" id="Resource_h260y"]
 script = ExtResource("3_wf1x1")
 StartPosition = Vector2i(5, 1)
-Items = [ExtResource("4_hcmeg"), ExtResource("5_hcmeg")]
+Items = []
 PieceType = 0
-Movement = [ExtResource("5_s1lyh")]
+Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
-[sub_resource type="Resource" id="Resource_efkg3"]
+[sub_resource type="Resource" id="Resource_1qeb3"]
 script = ExtResource("3_wf1x1")
 StartPosition = Vector2i(6, 1)
 Items = []
 PieceType = 0
-Movement = [ExtResource("5_s1lyh")]
+Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
-[sub_resource type="Resource" id="Resource_v8lho"]
+[sub_resource type="Resource" id="Resource_u3j57"]
+script = ExtResource("3_wf1x1")
+StartPosition = Vector2i(1, 0)
+Items = []
+PieceType = 3
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_adotn"]
+script = ExtResource("3_wf1x1")
+StartPosition = Vector2i(2, 0)
+Items = []
+PieceType = 2
+Movement = []
+metadata/_custom_type_script = "uid://cul58y3sumplo"
+
+[sub_resource type="Resource" id="Resource_1wvge"]
 script = ExtResource("3_wf1x1")
 StartPosition = Vector2i(4, 0)
-Items = [ExtResource("6_wf1x1"), ExtResource("6_b3ito"), ExtResource("7_fapxq")]
+Items = []
 PieceType = 5
-Movement = [ExtResource("5_s1lyh")]
+Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
-[sub_resource type="Resource" id="Resource_5tybr"]
+[sub_resource type="Resource" id="Resource_wf1x1"]
 script = ExtResource("3_wf1x1")
 StartPosition = Vector2i(5, 0)
-Items = [ExtResource("8_3mnws"), ExtResource("10_wf1x1")]
+Items = []
 PieceType = 2
-Movement = [ExtResource("5_s1lyh")]
+Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
-[sub_resource type="Resource" id="Resource_vy20r"]
+[sub_resource type="Resource" id="Resource_hcmeg"]
 script = ExtResource("3_wf1x1")
 StartPosition = Vector2i(6, 0)
 Items = []
 PieceType = 3
-Movement = [ExtResource("5_s1lyh")]
+Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [resource]
 script = ExtResource("9_g37bp")
-PlayerPieces = Array[Object]([SubResource("Resource_wg7p6"), SubResource("Resource_hf6m6"), SubResource("Resource_efkg3"), SubResource("Resource_v8lho"), SubResource("Resource_5tybr"), SubResource("Resource_vy20r")])
+PlayerPieces = Array[Object]([SubResource("Resource_2dgya"), SubResource("Resource_l5ds2"), SubResource("Resource_8qh0p"), SubResource("Resource_e4c23"), SubResource("Resource_h260y"), SubResource("Resource_1qeb3"), SubResource("Resource_u3j57"), SubResource("Resource_adotn"), SubResource("Resource_1wvge"), SubResource("Resource_wf1x1"), SubResource("Resource_hcmeg")])
 metadata/_custom_type_script = "uid://dxjj038hvehvy"

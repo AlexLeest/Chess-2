@@ -13,13 +13,6 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
     {
         // Find original position for this piece (first board, pieceId, position)
         // If position currently not free, return false
-        Board currentBoard = board.LastBoard;
-        while (currentBoard.LastBoard is not null)
-        {
-            if (currentBoard.LastMove?.Captured?.Id == PieceId)
-                return false;
-            currentBoard = currentBoard.LastBoard;
-        }
         
         Vector2Int respawnPos = GetRootPosition(board);
         if (board.Squares[respawnPos.X, respawnPos.Y] is not null)
@@ -46,6 +39,30 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
         newPieces[^1] = toRespawn;
         board.Pieces = newPieces;
         board.Squares[respawnPos.X, respawnPos.Y] = toRespawn;
+        
+        // Remove the respawn item from the dict
+        Dictionary<byte, IItem[]> newItems = new();
+        foreach (KeyValuePair<byte, IItem[]> pieceToItem in board.ItemsPerPiece)
+        {
+            if (pieceToItem.Key == PieceId)
+            {
+                // Copy over all items but remove self
+                IItem[] newItemsForPiece = new IItem[pieceToItem.Value.Length - 1];
+                int index = 0;
+                foreach (IItem item in pieceToItem.Value)
+                {
+                    if (item == this)
+                        continue;
+                    newItemsForPiece[index] = item;
+                    index++;
+                }
+                newItems[pieceToItem.Key] = newItemsForPiece;
+                continue;
+            }
+            // Unaffected piece, copy over and continue
+            newItems[pieceToItem.Key] = pieceToItem.Value;
+        }
+        board.ItemsPerPiece = newItems;
 
         return board;
     }

@@ -37,6 +37,12 @@ public class TriplePawnPush : IMovement
         return false;
     }
 
+    public int GetZobristHash(bool color, Vector2Int position)
+    {
+        // TODO: Standard movement zobrist hash, random value for every color/square combination (128 on a 8x8)
+        throw new System.NotImplementedException();
+    }
+
     public override string ToString()
     {
         return "TRIPLE PAWN PUSH";

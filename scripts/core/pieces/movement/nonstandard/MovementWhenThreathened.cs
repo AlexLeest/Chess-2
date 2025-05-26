@@ -35,6 +35,12 @@ public class MovementWhenThreathened(IMovement baseMovement) : IMovement
         return baseMovement.AttacksAny(from, targets, board, color);
     }
 
+    public int GetZobristHash(bool color, Vector2Int position)
+    {
+        // TODO: Non standard zobrist hashing.
+        throw new System.NotImplementedException();
+    }
+
     public override string ToString()
     {
         return $"WHEN THREATENED: {baseMovement}";

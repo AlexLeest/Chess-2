@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GDMinimax" load_steps=2 format=3 uid="uid://cc16rnibah0u3"]
+[gd_resource type="Resource" script_class="GDMinimax" load_steps=2 format=3 uid="uid://b6uhmtpvr2tit"]
 
 [ext_resource type="Script" uid="uid://cra5gm68p653t" path="res://scripts/godot/AI/GDMinimax.cs" id="1_raudj"]
 

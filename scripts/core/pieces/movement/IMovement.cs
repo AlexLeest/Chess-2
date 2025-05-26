@@ -34,4 +34,11 @@ public interface IMovement
     /// <param name="color">Color of moving piece</param>
     /// <returns>True if yes</returns>
     public bool AttacksAny(Vector2Int from, Vector2Int[] targets, Board board, bool color);
+
+    /// <summary>
+    /// Returns the zobrist hash for this movement on this position, to be XOR-ed with all other values
+    /// </summary>
+    /// <param name="position">Position on board</param>
+    /// <returns>Integer hash value</returns>
+    public int GetZobristHash(bool color, Vector2Int position);
 }

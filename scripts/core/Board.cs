@@ -17,7 +17,7 @@ public class Board
     public bool[] CastleQueenSide;
     public bool[] CastleKingSide;
 
-    public readonly Dictionary<byte, IItem[]> ItemsPerPiece;
+    public Dictionary<byte, IItem[]> ItemsPerPiece;
 
     public bool ColorToMove => Turn % 2 == 0;
 
@@ -423,6 +423,14 @@ public class Board
         }
 
         return result;
+    }
+
+    public int GetZobristHash()
+    {
+        // Returns the zobrist hash of this board, which is a hash that takes into account:
+        //  - 
+
+        return 0;
     }
 
     public override bool Equals(object obj)
