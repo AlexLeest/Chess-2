@@ -427,10 +427,26 @@ public class Board
 
     public int GetZobristHash()
     {
-        // Returns the zobrist hash of this board, which is a hash that takes into account:
-        //  - 
+        int result = 0;
 
-        return 0;
+        foreach (Piece piece in Pieces)
+        {
+            // Hash for piece (including base piece, special type, all movements)
+            result ^= piece.GetZobristHash();
+            
+            if (ItemsPerPiece.TryGetValue(piece.Id, out IItem[] items))
+            {
+                foreach (IItem item in items)
+                {
+                    // Hash for every item
+                    result ^= item.GetZobristHash(piece.Color, piece.Position);
+                }
+            }
+        }
+        // For castling rights
+        result ^= ZobristCalculator.GetZobristHash(CastleKingSide, CastleQueenSide);
+        
+        return result;
     }
 
     public override bool Equals(object obj)

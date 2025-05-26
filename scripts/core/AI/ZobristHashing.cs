@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
 
@@ -8,13 +9,85 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
 /// <param name="maxDepth">Max search depth</param>
 public class ZobristHashing(int maxDepth) : IEngine
 {
-    // TODO: Implement custom Zobrist hashing for pieces/moments/items
+    
+    private Board[] lastPrincipalVariation = [];
+    
     public Board GenerateNextMove(Board board)
     {
-        throw new System.NotImplementedException();
+        lastPrincipalVariation = [];
+        
+        for (int i = 1; i <= maxDepth; i++)
+        {
+            NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, i, out Board[] principalVariation);
+            lastPrincipalVariation = principalVariation;
+        }
+
+        return lastPrincipalVariation[^2];
+    }
+
+    private float NegaMax(Board board, float alpha, float beta, int depth, out Board[] principalVariation)
+    {
+        if (depth <= 0)
+        {
+            principalVariation = [board];
+            return DetermineScore(board);
+        }
+
+        float max = float.NegativeInfinity;
+        List<Board> nextMoves = board.GenerateMoves();
+        
+        SortByPrincipalVariation(nextMoves, depth);
+        
+        if (nextMoves.Count == 0)
+        {
+            principalVariation = [board];
+            if (board.IsInCheck(board.ColorToMove))
+                return float.MinValue;
+            return 0;
+        }
+        
+        Board[] bestMoves = [];
+        foreach (Board move in nextMoves)
+        {
+            float score = -NegaMax(move, -beta, -alpha, depth - 1, out Board[] possibleMoves);
+            
+            if (score > max)
+            {
+                bestMoves = new Board[possibleMoves.Length + 1];
+                possibleMoves.CopyTo(bestMoves, 0);
+                bestMoves[^1] = board;
+                
+                principalVariation = bestMoves;
+                max = score;
+                alpha = Math.Max(alpha, score);
+            }
+            if (score >= beta)
+            {
+                principalVariation = bestMoves;
+                return max;
+            }
+        }
+
+        principalVariation = bestMoves;
+        return max;
+    }
+
+    private void SortByPrincipalVariation(List<Board> moves, int depth)
+    {
+        // Check if this list of moves has the pre-calculated principal variation in there as an option
+        // If so, put that up front
+        int pvIndex = depth - 2;
+        if (pvIndex < 0 || pvIndex >= lastPrincipalVariation.Length)
+            return;
+        
+        Board moveToPrioritize = lastPrincipalVariation[pvIndex];
+        int index = moves.FindIndex(move => move.LastMove == moveToPrioritize.LastMove);
+        if (index == -1)
+            return;
+
+        (moves[index], moves[0]) = (moves[0], moves[index]);
     }
     
-    // Straight copy from MinimaxWithPieceHeuristic.cs
     public float DetermineScore(Board board)
     {
         float score = 0;

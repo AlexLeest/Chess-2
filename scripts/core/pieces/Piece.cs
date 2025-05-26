@@ -36,8 +36,8 @@ public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position
         {
             result ^= movement.GetZobristHash(color, Position);
         }
-        result ^= ZobristCalculator.GetZobristHash(color, BasePiece, Position);
-        result ^= ZobristCalculator.GetZobristHash(color, SpecialPieceType, Position);
+        result ^= ZobristCalculator.GetZobristHash(color, Position, BasePiece);
+        result ^= ZobristCalculator.GetZobristHash(color, Position, SpecialPieceType);
 
         return result;
     }

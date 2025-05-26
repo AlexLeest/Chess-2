@@ -1,4 +1,6 @@
-﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 
 public interface IItem
 {
@@ -8,4 +10,6 @@ public interface IItem
     public bool ConditionsMet(Board board, Move move);
 
     public Board Execute(Board board, Move move);
+
+    public int GetZobristHash(bool color, Vector2Int position);
 }
