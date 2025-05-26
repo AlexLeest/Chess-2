@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using System;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
@@ -7,9 +8,10 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 /// Movement option that only becomes available when the piece is threatened
 /// </summary>
 /// <param name="baseMovement">The movement in question</param>
-public class MovementWhenThreathened(IMovement baseMovement) : IMovement
+public class MovementWhenThreatened(IMovement baseMovement) : IMovement
 {
     private IMovement baseMovement = baseMovement;
+    private static int threatenHash;
 
     public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
     {
@@ -37,8 +39,13 @@ public class MovementWhenThreathened(IMovement baseMovement) : IMovement
 
     public int GetZobristHash(bool color, Vector2Int position)
     {
-        // TODO: Non standard zobrist hashing.
-        throw new System.NotImplementedException();
+        if (threatenHash == 0)
+        {
+            Random rng = new();
+            threatenHash = rng.Next(int.MinValue, int.MaxValue);
+        }
+
+        return baseMovement.GetZobristHash(color, position) ^ threatenHash;
     }
 
     public override string ToString()

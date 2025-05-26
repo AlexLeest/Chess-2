@@ -18,6 +18,9 @@ public class SlidingMovement : IMovement
     
     // For example, king movement would be offsets: [(1,1),(1,0),(1,-1),(0,1),(0,-1),(-1,1),(-1,0),(-1,-1)] and multiplier: 1
 
+    private static Dictionary<(bool, Vector2Int), int> positionHashes = [];
+    private static Random rng = new();
+
     public SlidingMovement(Vector2Int[] offsets, int multiplier)
     {
         this.offsets = offsets;
@@ -137,9 +140,6 @@ public class SlidingMovement : IMovement
                     }
                 }
             }
-
-
-
         }
 
         return false;
@@ -147,8 +147,18 @@ public class SlidingMovement : IMovement
 
     public int GetZobristHash(bool color, Vector2Int position)
     {
-        // TODO: Non standard zobrist hashing.
-        throw new System.NotImplementedException();
+        if (!positionHashes.TryGetValue((color, position), out int hash))
+        {
+            positionHashes[(color, position)] = hash = rng.Next(int.MinValue, int.MaxValue);
+        }
+        
+        foreach (Vector2Int offset in offsets)
+        {
+            hash ^= offset.GetHashCode();
+        }
+        hash ^= multiplier.GetHashCode();
+
+        return hash;
     }
 
     public override string ToString()
