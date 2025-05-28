@@ -9,8 +9,9 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
 /// <param name="maxDepth">Max search depth</param>
 public class ZobristHashing(int maxDepth) : IEngine
 {
-    
     private Board[] lastPrincipalVariation = [];
+    
+    private TranspositionTable transpositionTable = new TranspositionTable();
     
     public Board GenerateNextMove(Board board)
     {
@@ -27,6 +28,18 @@ public class ZobristHashing(int maxDepth) : IEngine
 
     private float NegaMax(Board board, float alpha, float beta, int depth, out Board[] principalVariation)
     {
+        // Look up board in transposition table
+        int zobristHash = board.GetZobristHash();
+        if (transpositionTable.TryGetEntry(zobristHash, out Entry entry))
+        {
+            // If TTable entry has a higher depth (meaning more ply's searched down left), use those results instead
+            if (entry.Depth >= depth)
+            {
+                principalVariation = entry.BestMoves;
+                return entry.Score;
+            }
+        }
+        
         if (depth <= 0)
         {
             principalVariation = [board];
@@ -63,11 +76,12 @@ public class ZobristHashing(int maxDepth) : IEngine
             }
             if (score >= beta)
             {
-                principalVariation = bestMoves;
-                return max;
+                break;
             }
         }
 
+        transpositionTable.AddEntry(zobristHash, depth, max, bestMoves);
+        
         principalVariation = bestMoves;
         return max;
     }

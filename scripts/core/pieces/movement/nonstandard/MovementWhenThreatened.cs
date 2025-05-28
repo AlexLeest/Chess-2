@@ -11,7 +11,8 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 public class MovementWhenThreatened(IMovement baseMovement) : IMovement
 {
     private IMovement baseMovement = baseMovement;
-    private static int threatenHash;
+    private static Dictionary<(bool, Vector2Int, int), int> zobristHashes = [];
+    private static Random rng = new();
 
     public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
     {
@@ -39,13 +40,15 @@ public class MovementWhenThreatened(IMovement baseMovement) : IMovement
 
     public int GetZobristHash(bool color, Vector2Int position)
     {
-        if (threatenHash == 0)
+        int baseHash = baseMovement.GetZobristHash(color, position);
+        (bool, Vector2Int, int) index = (color, position, baseHash);
+        
+        if (!zobristHashes.TryGetValue(index, out int result))
         {
-            Random rng = new();
-            threatenHash = rng.Next(int.MinValue, int.MaxValue);
+            zobristHashes[index] = result = rng.Next(int.MinValue, int.MaxValue);
         }
-
-        return baseMovement.GetZobristHash(color, position) ^ threatenHash;
+        
+        return result;
     }
 
     public override string ToString()
