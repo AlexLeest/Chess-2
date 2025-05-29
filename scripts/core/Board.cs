@@ -445,6 +445,8 @@ public class Board
         }
         // For castling rights
         result ^= ZobristCalculator.GetZobristHash(CastleKingSide, CastleQueenSide);
+        // Side to move
+        result ^= ZobristCalculator.GetZobristHash(ColorToMove);
         
         return result;
     }
@@ -453,16 +455,27 @@ public class Board
     {
         if (obj is not Board board)
             return false;
-
-        if (board.Turn != Turn)
-            return false;
         if (!board.CastleKingSide.SequenceEqual(CastleKingSide))
             return false;
         if (!board.CastleQueenSide.SequenceEqual(CastleQueenSide))
             return false;
-        if (board.LastMove != LastMove)
-            return false;
 
+        string ownFEN = FENConverter.BoardToFEN(this, false);
+        string otherFEN = FENConverter.BoardToFEN(board, false);
+        if (ownFEN == otherFEN)
+            return true;
+
+        return false;
+        // if (board.Turn != Turn)
+        //     return false;
+        if (!board.CastleKingSide.SequenceEqual(CastleKingSide))
+            return false;
+        if (!board.CastleQueenSide.SequenceEqual(CastleQueenSide))
+            return false;
+        // if (board.LastMove != LastMove)
+        //     return false;
+
+        // BUG: This never matches, pieces stored per board don't equal eachother even if it seems they should
         HashSet<Piece> ownPieces = Pieces.ToHashSet();
         HashSet<Piece> otherPieces = board.Pieces.ToHashSet();
         if (!ownPieces.SetEquals(otherPieces))

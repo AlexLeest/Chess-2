@@ -14,6 +14,7 @@ public static class ZobristCalculator
     private static Dictionary<(bool, Vector2Int, Type), int> movementHashes = [];
 
     private static int[] castlingHashes = [];
+    private static int[] sideTomoveHashes = [rng.Next(int.MinValue, int.MaxValue), rng.Next(int.MinValue, int.MaxValue)];
 
     public static int GetZobristHash(bool color, Vector2Int position, BasePiece piece)
     {
@@ -49,6 +50,11 @@ public static class ZobristCalculator
         int result = rng.Next(int.MinValue, int.MaxValue);
         movementHashes[(color, position, movement.GetType())] = result;
         return result;
+    }
+
+    public static int GetZobristHash(bool color)
+    {
+        return sideTomoveHashes[color ? 0 : 1];
     }
 
     public static int GetZobristHash(bool[] kingSide, bool[] queenSide)

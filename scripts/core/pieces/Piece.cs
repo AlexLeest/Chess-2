@@ -42,6 +42,11 @@ public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position
         return result;
     }
 
+    public override int GetHashCode()
+    {
+        return GetZobristHash();
+    }
+
     private static readonly char[] files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     public override string ToString()
     {

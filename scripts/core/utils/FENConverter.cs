@@ -88,4 +88,89 @@ public static class FENConverter
 
         return new Board(turn, pieces.ToArray(), castleQueenSide, castleKingSide, []);
     }
+
+    /// <summary>
+    /// Converter from board to FEN string. Only works on boards only containing regular pieces
+    /// </summary>
+    public static string BoardToFEN(Board board, bool withMoveClocks = true)
+    {
+        string result = "";
+
+        for (int rank = 7; rank >= 0; rank--)
+        {
+            int emptySpaces = 0;
+            for (int file = 0; file < 8; file++)
+            {
+                Piece onSquare = board.Squares[file, rank];
+                if (onSquare is null)
+                {
+                    emptySpaces++;
+                }
+                else
+                {
+                    if (emptySpaces > 0)
+                    {
+                        result += emptySpaces.ToString();
+                    }
+                    result += PieceToChar(onSquare.Color, onSquare.BasePiece);
+                    emptySpaces = 0;
+                }
+            }
+            if (emptySpaces > 0)
+                result += emptySpaces.ToString();
+            if (rank != 0)
+                result += '/';
+        }
+        result += board.ColorToMove ? " w " : " b ";
+        string castlingRights = "";
+        if (board.CastleKingSide[0])
+            castlingRights += 'K';
+        if (board.CastleQueenSide[0])
+            castlingRights += 'Q';
+        if (board.CastleKingSide[1])
+            castlingRights += 'k';
+        if (board.CastleQueenSide[1])
+            castlingRights += 'q';
+        if (castlingRights == "")
+            castlingRights = "-";
+        result += castlingRights;
+
+        if (!withMoveClocks)
+            return result;
+
+        // En passant square and halfmove clock (ignored)
+        result += " - 0 ";
+
+        result += (board.Turn + 1).ToString();
+
+        return result;
+    }
+
+    private static char PieceToChar(bool color, BasePiece piece)
+    {
+        if (color)
+        {
+            return piece switch
+            {
+                BasePiece.PAWN => 'P',
+                BasePiece.ROOK => 'R',
+                BasePiece.BISHOP => 'B',
+                BasePiece.KNIGHT => 'N',
+                BasePiece.QUEEN => 'Q',
+                BasePiece.KING => 'K',
+                _ => throw new NotImplementedException(),
+            };
+        }
+        return piece switch
+        {
+
+            BasePiece.PAWN => 'p',
+            BasePiece.ROOK => 'r',
+            BasePiece.BISHOP => 'b',
+            BasePiece.KNIGHT => 'n',
+            BasePiece.QUEEN => 'q',
+            BasePiece.KING => 'k',
+            _ => throw new NotImplementedException(),
+        };
+    }
 }
