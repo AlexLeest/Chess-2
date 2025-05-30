@@ -8,6 +8,7 @@ public static class ZobristCalculator
 {
     private static Random rng = new();
 
+    // TODO: Improve performance on ALL OF THESE
     private static Dictionary<(bool, Vector2Int, BasePiece ), uint> basePieceHashes = [];
     private static Dictionary<(bool, Vector2Int, SpecialPieceTypes), uint> pieceTypeHashes = [];
     private static Dictionary<(bool, Vector2Int, Type), uint> itemHashes = [];

@@ -1,21 +1,40 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
 
 public class TranspositionTable
 {
-    // TODO: Find a way to track collisions (even if just for debug purposes)
-    private Dictionary<uint, Entry> table = [];
+    // private Dictionary<uint, Entry> table = [];
+    private Entry[] entries;
+
+    private int count;
+
+    public TranspositionTable(int sizeMB = 512)
+    {
+        int entrySizeInBytes = System.Runtime.InteropServices.Marshal.SizeOf(typeof(Entry));
+        int desiredTableSize = sizeMB * 1024 * 1024;
+
+        count = desiredTableSize / entrySizeInBytes;
+        
+        entries = new Entry[count];
+    }
 
     public bool TryGetEntry(uint zobristHash, out Entry entry)
     {
-        return table.TryGetValue(zobristHash, out entry);
+        entry = entries[GetIndex(zobristHash)];
+        return entry.ZobristHash != 0;
     }
 
     public void AddEntry(uint zobristHash, int depth, float score, Board[] bestMoves)
     {
         Entry entry = new(zobristHash, depth, score, bestMoves);
-        table[zobristHash] = entry;
+        entries[GetIndex(zobristHash)] = entry;
+    }
+
+    private int GetIndex(uint zobristHash)
+    {
+        return (int)(zobristHash % count);
     }
 }
 
