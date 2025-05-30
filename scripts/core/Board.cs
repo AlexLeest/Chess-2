@@ -425,9 +425,9 @@ public class Board
         return result;
     }
 
-    public int GetZobristHash()
+    public uint GetZobristHash()
     {
-        int result = 0;
+        uint result = 0;
 
         foreach (Piece piece in Pieces)
         {

@@ -40,5 +40,5 @@ public interface IMovement
     /// </summary>
     /// <param name="position">Position on board</param>
     /// <returns>Integer hash value</returns>
-    public int GetZobristHash(bool color, Vector2Int position);
+    public uint GetZobristHash(bool color, Vector2Int position);
 }

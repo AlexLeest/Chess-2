@@ -18,7 +18,7 @@ public class SlidingMovement : IMovement
     
     // For example, king movement would be offsets: [(1,1),(1,0),(1,-1),(0,1),(0,-1),(-1,1),(-1,0),(-1,-1)] and multiplier: 1
 
-    private static Dictionary<(bool, Vector2Int, int), int> positionHashes = [];
+    private static Dictionary<(bool, Vector2Int, int), uint> positionHashes = [];
     private static Random rng = new();
 
     public SlidingMovement(Vector2Int[] offsets, int multiplier)
@@ -145,14 +145,14 @@ public class SlidingMovement : IMovement
         return false;
     }
 
-    public int GetZobristHash(bool color, Vector2Int position)
+    public uint GetZobristHash(bool color, Vector2Int position)
     {
         int localHash = HashCode.Combine(offsets, multiplier);
         (bool, Vector2Int, int) index = (color, position, localHash);
         
-        if (!positionHashes.TryGetValue(index, out int result))
+        if (!positionHashes.TryGetValue(index, out uint result))
         {
-            positionHashes[index] = result = rng.Next(int.MinValue, int.MaxValue);
+            positionHashes[index] = result = ZobristCalculator.RandomUint();
         }
 
         return result;

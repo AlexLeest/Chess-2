@@ -15,11 +15,11 @@ public class ZobristHashing(int maxDepth) : IEngine
     private TranspositionTable transpositionTable = new();
     
     // Debug counts
-    private int tTableFinds, tTableUses, tTableMismatch;
+    // private int tTableFinds, tTableUses, tTableMismatch;
     
     public Board GenerateNextMove(Board board)
     {
-        tTableFinds = tTableUses = tTableMismatch = 0;
+        // tTableFinds = tTableUses = tTableMismatch = 0;
         
         lastPrincipalVariation = [];
         
@@ -29,24 +29,24 @@ public class ZobristHashing(int maxDepth) : IEngine
             lastPrincipalVariation = principalVariation;
         }
 
-        GD.Print($"Hash matches: {tTableFinds}, entry uses: {tTableUses}, mismatches: {tTableMismatch}");
+        // GD.Print($"Hash matches: {tTableFinds}, entry uses: {tTableUses}, mismatches: {tTableMismatch}");
         return lastPrincipalVariation[^2];
     }
 
     private float NegaMax(Board board, float alpha, float beta, int depth, out Board[] principalVariation)
     {
         // Look up board in transposition table
-        int zobristHash = board.GetZobristHash();
+        uint zobristHash = board.GetZobristHash();
         if (transpositionTable.TryGetEntry(zobristHash, out Entry entry))
         {
-            tTableFinds++;
-            if (!board.Equals(entry.BestMoves[^1]))
-                tTableMismatch++;
+            // tTableFinds++;
+            // if (!board.Equals(entry.BestMoves[^1]))
+            //     tTableMismatch++;
             // GD.Print("Transposition table match found!");
             // If TTable entry has a higher depth (meaning more ply's searched down left), use those results instead
             if (entry.Depth >= depth)
             {
-                tTableUses++;
+                // tTableUses++;
                 // GD.Print("TTable match used instead of recalculating that shit!");
                 principalVariation = entry.BestMoves;
                 return entry.Score;

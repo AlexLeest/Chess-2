@@ -37,7 +37,7 @@ public class TriplePawnPush : IMovement
         return false;
     }
 
-    public int GetZobristHash(bool color, Vector2Int position)
+    public uint GetZobristHash(bool color, Vector2Int position)
     {
         return ZobristCalculator.GetZobristHash(color, position, this);
     }

@@ -47,11 +47,11 @@ public partial class MoveCounter : Node
         }
     }
 
-    private Dictionary<int, Board> zobristCollisionCheck = [];
+    private Dictionary<uint, Board> zobristCollisionCheck = [];
 
     private int CountBoardAmounts(Board currentBoard, int depth, bool print = false)
     {
-        int zobristHash = currentBoard.GetZobristHash();
+        uint zobristHash = currentBoard.GetZobristHash();
         if (zobristCollisionCheck.TryGetValue(zobristHash, out Board board))
         {
             if (!currentBoard.Equals(board))

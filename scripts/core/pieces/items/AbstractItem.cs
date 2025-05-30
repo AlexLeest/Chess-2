@@ -20,7 +20,7 @@ public abstract class AbstractItem(byte pieceId, ItemTriggers trigger) : IItem
 
     public abstract Board Execute(Board board, Move move);
 
-    public virtual int GetZobristHash(bool color, Vector2Int position)
+    public virtual uint GetZobristHash(bool color, Vector2Int position)
     {
         return ZobristCalculator.GetZobristHash(color, position, this);
     }

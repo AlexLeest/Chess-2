@@ -8,64 +8,58 @@ public static class ZobristCalculator
 {
     private static Random rng = new();
 
-    private static Dictionary<(bool, Vector2Int, BasePiece ), int> basePieceHashes = [];
-    private static Dictionary<(bool, Vector2Int, SpecialPieceTypes), int> pieceTypeHashes = [];
-    private static Dictionary<(bool, Vector2Int, Type), int> itemHashes = [];
-    private static Dictionary<(bool, Vector2Int, Type), int> movementHashes = [];
+    private static Dictionary<(bool, Vector2Int, BasePiece ), uint> basePieceHashes = [];
+    private static Dictionary<(bool, Vector2Int, SpecialPieceTypes), uint> pieceTypeHashes = [];
+    private static Dictionary<(bool, Vector2Int, Type), uint> itemHashes = [];
+    private static Dictionary<(bool, Vector2Int, Type), uint> movementHashes = [];
 
-    private static int[] castlingHashes = [];
-    private static int[] sideTomoveHashes = [rng.Next(int.MinValue, int.MaxValue), rng.Next(int.MinValue, int.MaxValue)];
+    private static uint[] castlingHashes = [RandomUint(), RandomUint(), RandomUint(), RandomUint()];
+    private static uint whiteToMoveHash = RandomUint();
 
-    public static int GetZobristHash(bool color, Vector2Int position, BasePiece piece)
+    public static uint GetZobristHash(bool color, Vector2Int position, BasePiece piece)
     {
-        if (basePieceHashes.TryGetValue((color, position, piece), out int hash))
+        if (basePieceHashes.TryGetValue((color, position, piece), out uint hash))
             return hash;
-        int result = rng.Next(int.MinValue, int.MaxValue);
+        uint result = RandomUint();
         basePieceHashes[(color, position, piece)] = result;
         return result;
     }
 
-    public static int GetZobristHash(bool color, Vector2Int position, SpecialPieceTypes type)
+    public static uint GetZobristHash(bool color, Vector2Int position, SpecialPieceTypes type)
     {
-        if (pieceTypeHashes.TryGetValue((color, position, type), out int hash))
+        if (pieceTypeHashes.TryGetValue((color, position, type), out uint hash))
             return hash;
-        int result = rng.Next(int.MinValue, int.MaxValue);
+        uint result = RandomUint();
         pieceTypeHashes[(color, position, type)] = result;
         return result;
     }
 
-    public static int GetZobristHash(bool color, Vector2Int position, IItem item)
+    public static uint GetZobristHash(bool color, Vector2Int position, IItem item)
     {
-        if (itemHashes.TryGetValue((color, position, item.GetType()), out int hash))
+        if (itemHashes.TryGetValue((color, position, item.GetType()), out uint hash))
             return hash;
-        int result = rng.Next(int.MinValue, int.MaxValue);
+        uint result = RandomUint();
         itemHashes[(color, position, item.GetType())] = result;
         return result;
     }
 
-    public static int GetZobristHash(bool color, Vector2Int position, IMovement movement)
+    public static uint GetZobristHash(bool color, Vector2Int position, IMovement movement)
     {
-        if (movementHashes.TryGetValue((color, position, movement.GetType()), out int hash))
+        if (movementHashes.TryGetValue((color, position, movement.GetType()), out uint hash))
             return hash;
-        int result = rng.Next(int.MinValue, int.MaxValue);
+        uint result = RandomUint();
         movementHashes[(color, position, movement.GetType())] = result;
         return result;
     }
 
-    public static int GetZobristHash(bool color)
+    public static uint GetZobristHash(bool color)
     {
-        return sideTomoveHashes[color ? 0 : 1];
+        return color ? whiteToMoveHash : 0;
     }
 
-    public static int GetZobristHash(bool[] kingSide, bool[] queenSide)
+    public static uint GetZobristHash(bool[] kingSide, bool[] queenSide)
     {
-        if (castlingHashes.Length == 0)
-        {
-            castlingHashes = new int[4];
-            for (int i = 0; i < 4; i++)
-                castlingHashes[i] = rng.Next(int.MinValue, int.MaxValue);
-        }
-        int result = 0;
+        uint result = 0;
 
         if (kingSide[0])
             result ^= castlingHashes[0];
@@ -77,5 +71,12 @@ public static class ZobristCalculator
             result ^= castlingHashes[3];
 
         return result;
+    }
+
+    public static uint RandomUint()
+    {
+        byte[] buffer = new byte[4];
+        rng.NextBytes(buffer);
+        return BitConverter.ToUInt32(buffer, 0);
     }
 }

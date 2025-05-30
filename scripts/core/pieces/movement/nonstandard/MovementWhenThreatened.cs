@@ -11,7 +11,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 public class MovementWhenThreatened(IMovement baseMovement) : IMovement
 {
     private IMovement baseMovement = baseMovement;
-    private static Dictionary<(bool, Vector2Int, int), int> zobristHashes = [];
+    private static Dictionary<(bool, Vector2Int, uint), uint> zobristHashes = [];
     private static Random rng = new();
 
     public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
@@ -38,14 +38,14 @@ public class MovementWhenThreatened(IMovement baseMovement) : IMovement
         return baseMovement.AttacksAny(from, targets, board, color);
     }
 
-    public int GetZobristHash(bool color, Vector2Int position)
+    public uint GetZobristHash(bool color, Vector2Int position)
     {
-        int baseHash = baseMovement.GetZobristHash(color, position);
-        (bool, Vector2Int, int) index = (color, position, baseHash);
+        uint baseHash = baseMovement.GetZobristHash(color, position);
+        (bool, Vector2Int, uint) index = (color, position, baseHash);
         
-        if (!zobristHashes.TryGetValue(index, out int result))
+        if (!zobristHashes.TryGetValue(index, out uint result))
         {
-            zobristHashes[index] = result = rng.Next(int.MinValue, int.MaxValue);
+            zobristHashes[index] = result = ZobristCalculator.RandomUint();
         }
         
         return result;
