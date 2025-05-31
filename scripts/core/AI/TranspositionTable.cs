@@ -6,30 +6,29 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
 public class TranspositionTable
 {
     // private Dictionary<uint, Entry> table = [];
-    private Entry[] entries;
+    private Dictionary<uint, Entry> entries = [];
 
     private int count;
 
-    public TranspositionTable(int sizeMB = 512)
-    {
-        int entrySizeInBytes = System.Runtime.InteropServices.Marshal.SizeOf(typeof(Entry));
-        int desiredTableSize = sizeMB * 1024 * 1024;
-
-        count = desiredTableSize / entrySizeInBytes;
-        
-        entries = new Entry[count];
-    }
+    // public TranspositionTable(int sizeMB = 312)
+    // {
+    //     int entrySizeInBytes = System.Runtime.InteropServices.Marshal.SizeOf(typeof(Entry));
+    //     int desiredTableSize = sizeMB * 1024 * 1024;
+    //
+    //     count = desiredTableSize / entrySizeInBytes;
+    //     
+    //     entries = new Entry[count];
+    // }
 
     public bool TryGetEntry(uint zobristHash, out Entry entry)
     {
-        entry = entries[GetIndex(zobristHash)];
-        return entry.ZobristHash != 0;
+        return entries.TryGetValue(zobristHash, out entry);
     }
 
     public void AddEntry(uint zobristHash, int depth, float score, Board[] bestMoves)
     {
         Entry entry = new(zobristHash, depth, score, bestMoves);
-        entries[GetIndex(zobristHash)] = entry;
+        entries[zobristHash] = entry;
     }
 
     private int GetIndex(uint zobristHash)

@@ -19,6 +19,8 @@ public class Board
 
     public Dictionary<byte, IItem[]> ItemsPerPiece;
 
+    public uint ZobristHash;
+
     public bool ColorToMove => Turn % 2 == 0;
 
     public Board(
@@ -34,16 +36,59 @@ public class Board
         Turn = turn;
         Pieces = pieces;
 
-        this.CastleQueenSide = castleQueenSide;
-        this.CastleKingSide = castleKingSide;
-        this.ItemsPerPiece = itemsPerPiece;
-        this.LastMove = lastMove;
-        this.LastBoard = lastBoard;
+        CastleQueenSide = castleQueenSide;
+        CastleKingSide = castleKingSide;
+        ItemsPerPiece = itemsPerPiece;
+        LastMove = lastMove;
+        LastBoard = lastBoard;
         
         Squares = new Piece[8, 8];
         foreach (Piece piece in pieces)
         {
             Squares[piece.Position.X, piece.Position.Y] = piece;
+        }
+
+        if (lastBoard is not null && lastMove is not null)
+        {
+            // Instead of recalculating the whole hash from scratch, take the hash from last board and XOR out the changed elements
+            uint newZobristHash = lastBoard.ZobristHash;
+            Move move = lastMove.Value;
+            
+            // XOR out/in the moved piece
+            newZobristHash ^= lastBoard.GetPiece(move.Moving).GetZobristHash();
+            Piece movedPiece = GetPiece(move.Moving);
+            newZobristHash ^= movedPiece.GetZobristHash();
+            // Do the same for the items
+            if (itemsPerPiece.TryGetValue(move.Moving, out IItem[] movedItems))
+            {
+                foreach (IItem item in movedItems)
+                {
+                    newZobristHash ^= item.GetZobristHash(movedPiece.Color, move.From);
+                    newZobristHash ^= item.GetZobristHash(movedPiece.Color, move.To);
+                }
+            }
+            
+            // If necessary, XOR out captured piece
+            if (move.Captured is not null)
+            {
+                newZobristHash ^= move.Captured.GetZobristHash();
+                if (ItemsPerPiece.TryGetValue(move.Captured.Id, out IItem[] capturedItems))
+                {
+                    foreach (IItem item in capturedItems)
+                    {
+                        newZobristHash ^= item.GetZobristHash(move.Captured.Color, move.To);
+                    }
+                }
+            }
+            // XOR out/in the color-to-move
+            newZobristHash ^= ZobristCalculator.GetZobristHash(lastBoard.ColorToMove);
+            newZobristHash ^= ZobristCalculator.GetZobristHash(ColorToMove);
+
+            ZobristHash = newZobristHash;
+        }
+        else
+        {
+            ZobristHash = GetZobristHash();
         }
     }
 
@@ -89,10 +134,8 @@ public class Board
             Piece.Knight(30, false, new Vector2Int(6, 7)),
             Piece.Rook(31, false, new Vector2Int(7, 7), SpecialPieceTypes.QUEEN_SIDE_CASTLE),
         ];
-        
-        Dictionary<byte, IItem[]> itemsPerPiece = new();
 
-        return new Board(0, pieces, [true, true], [true, true], itemsPerPiece);
+        return new Board(0, pieces, [true, true], [true, true], []);
     }
 
     public Piece GetPiece(byte id)
@@ -427,6 +470,9 @@ public class Board
 
     public uint GetZobristHash()
     {
+        // if (ZobristHash != 0)
+        //     return ZobristHash;
+        
         uint result = 0;
 
         foreach (Piece piece in Pieces)

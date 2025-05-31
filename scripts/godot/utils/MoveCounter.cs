@@ -52,12 +52,16 @@ public partial class MoveCounter : Node
     private int CountBoardAmounts(Board currentBoard, int depth, bool print = false)
     {
         uint zobristHash = currentBoard.GetZobristHash();
+        if (currentBoard.ZobristHash == zobristHash)
+            good++;
+        else
+            fuckups++;
         if (zobristCollisionCheck.TryGetValue(zobristHash, out Board board))
         {
-            if (!currentBoard.Equals(board))
-                fuckups++;
-            else
-                good++;
+            // if (!currentBoard.Equals(board))
+            //     fuckups++;
+            // else
+            //     good++;
         }
         else
         {

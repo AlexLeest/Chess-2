@@ -36,6 +36,8 @@ public partial class GodotBoard : GridContainer
 
     public override void _Ready()
     {
+        ZobristCalculator.Initialize();
+        
         if (fen != null)
             Board = FENConverter.FENToBoard(fen);
         else

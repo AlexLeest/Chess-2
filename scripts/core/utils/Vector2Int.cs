@@ -13,6 +13,11 @@ public struct Vector2Int : IEquatable<Vector2Int>
         Y = y;
     }
 
+    public int ToIndex()
+    {
+        return X * 8 + Y;
+    }
+
     public static Vector2Int operator +(Vector2Int a, Vector2Int b)
     {
         return new Vector2Int(a.X + b.X, a.Y + b.Y);
