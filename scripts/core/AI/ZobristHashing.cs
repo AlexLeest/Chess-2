@@ -22,6 +22,7 @@ public class ZobristHashing(int maxDepth) : IEngine
         // tTableFinds = tTableUses = tTableMismatch = 0;
         
         lastPrincipalVariation = [];
+        // transpositionTable.Clear();
         
         for (int i = 1; i <= maxDepth; i++)
         {
@@ -62,7 +63,7 @@ public class ZobristHashing(int maxDepth) : IEngine
         float max = float.NegativeInfinity;
         List<Board> nextMoves = board.GenerateMoves();
         
-        SortByPrincipalVariation(nextMoves, depth);
+        SortByPrincipalVariation(board, nextMoves, depth);
         
         if (nextMoves.Count == 0)
         {
@@ -99,7 +100,7 @@ public class ZobristHashing(int maxDepth) : IEngine
         return max;
     }
 
-    private void SortByPrincipalVariation(List<Board> moves, int depth)
+    private void SortByPrincipalVariation(Board board, List<Board> moves, int depth)
     {
         // Check if this list of moves has the pre-calculated principal variation in there as an option
         // If so, put that up front
@@ -108,6 +109,10 @@ public class ZobristHashing(int maxDepth) : IEngine
             return;
         
         Board moveToPrioritize = lastPrincipalVariation[pvIndex];
+        if (transpositionTable.TryGetEntry(board.ZobristHash, out Entry entry))
+        {
+            moveToPrioritize = entry.BestMoves[^2];
+        }
         int index = moves.FindIndex(move => move.LastMove == moveToPrioritize.LastMove);
         if (index == -1)
             return;

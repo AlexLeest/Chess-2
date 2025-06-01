@@ -17,7 +17,7 @@ public partial class MoveCounter : Node
     [Export] private bool debugPrint, countInternalNodes;
 
     private int internalNodes = 0;
-    private int fuckups, good;
+    private int newFuckups, fuckups, good;
 
     public override void _Input(InputEvent input)
     {
@@ -37,12 +37,12 @@ public partial class MoveCounter : Node
             }
             if (eventKey.Keycode == Key.W)
             {
-                fuckups = good = 0;
+                newFuckups = fuckups = good = 0;
                 Stopwatch sw = Stopwatch.StartNew();
                 int nodeCount = CountBoardAmounts(gdBoard.Board, depth, debugPrint);
                 long time = sw.ElapsedMilliseconds;
                 GD.Print($"Depth: {depth}, Count: {nodeCount}, Time: {time} ms, NPS: {nodeCount/(time/1000f)}");
-                GD.Print($"Unique zobrist hashes: {zobristCollisionCheck.Count}, good {good}, fuckups {fuckups}");
+                GD.Print($"Unique zobrist hashes: {zobristCollisionCheck.Count}, good {good}, fuckups {fuckups}, of which new {newFuckups}");
             }
         }
     }
@@ -52,21 +52,36 @@ public partial class MoveCounter : Node
     private int CountBoardAmounts(Board currentBoard, int depth, bool print = false)
     {
         uint zobristHash = currentBoard.GetZobristHash();
-        if (currentBoard.ZobristHash == zobristHash)
-            good++;
-        else
-            fuckups++;
-        if (zobristCollisionCheck.TryGetValue(zobristHash, out Board board))
+        if (currentBoard.LastBoard is not null)
         {
-            // if (!currentBoard.Equals(board))
-            //     fuckups++;
-            // else
-            //     good++;
+            if (currentBoard.ZobristHash == zobristHash)
+            {
+                if (good == 0)
+                    GD.Print($"BOTH CORRECT: {FENConverter.BoardToFEN(currentBoard.LastBoard)}\nBOTH CORRECT: {FENConverter.BoardToFEN(currentBoard)}");
+                good++;
+            }
+            else
+            {
+                fuckups++;
+                if (currentBoard.LastBoard.ZobristHash == currentBoard.LastBoard.GetZobristHash())
+                {
+                    // if (newFuckups == 0)
+                    GD.Print($"fuckup when: {currentBoard.LastMove}");
+                    newFuckups++;
+                }
+            }
         }
-        else
-        {
+        // if (zobristCollisionCheck.TryGetValue(zobristHash, out Board board))
+        // {
+        //     // if (!currentBoard.Equals(board))
+        //     //     fuckups++;
+        //     // else
+        //     //     good++;
+        // }
+        // else
+        // {
             zobristCollisionCheck[zobristHash] = currentBoard;
-        }
+        // }
         
         if (depth <= 0)
         {
