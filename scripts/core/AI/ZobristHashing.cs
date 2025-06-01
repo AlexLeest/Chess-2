@@ -10,7 +10,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
 /// <param name="maxDepth">Max search depth</param>
 public class ZobristHashing(int maxDepth) : IEngine
 {
-    private Board[] lastPrincipalVariation = [];
+    // private Board[] lastPrincipalVariation = [];
     
     private TranspositionTable transpositionTable = new();
     
@@ -21,21 +21,24 @@ public class ZobristHashing(int maxDepth) : IEngine
     {
         // tTableFinds = tTableUses = tTableMismatch = 0;
         
-        lastPrincipalVariation = [];
-        // transpositionTable.Clear();
+        // lastPrincipalVariation = [];
+        transpositionTable.Clear();
+        Board lastKnownBestMove = null;
         
         for (int i = 1; i <= maxDepth; i++)
         {
-            NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, i, out Board[] principalVariation);
-            lastPrincipalVariation = principalVariation;
+            NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, i, out Board bestMove);
+            // lastPrincipalVariation = principalVariation;
+            lastKnownBestMove = bestMove;
         }
 
         // GD.Print($"Hash matches: {tTableFinds}, entry uses: {tTableUses}, mismatches: {tTableMismatch}");
-        return lastPrincipalVariation[^2];
+        return lastKnownBestMove;
     }
 
-    private float NegaMax(Board board, float alpha, float beta, int depth, out Board[] principalVariation)
+    private float NegaMax(Board board, float alpha, float beta, int depth, out Board bestMove)
     {
+        bestMove = board;
         // Look up board in transposition table
         uint zobristHash = board.GetZobristHash();
         if (transpositionTable.TryGetEntry(zobristHash, out Entry entry))
@@ -49,14 +52,14 @@ public class ZobristHashing(int maxDepth) : IEngine
             {
                 // tTableUses++;
                 // GD.Print("TTable match used instead of recalculating that shit!");
-                principalVariation = entry.BestMoves;
+                bestMove = entry.BestMove;
                 return entry.Score;
             }
         }
         
         if (depth <= 0)
         {
-            principalVariation = [board];
+            // bestMove = board;
             return DetermineScore(board);
         }
 
@@ -67,24 +70,25 @@ public class ZobristHashing(int maxDepth) : IEngine
         
         if (nextMoves.Count == 0)
         {
-            principalVariation = [board];
+            // bestMove = board;
             if (board.IsInCheck(board.ColorToMove))
                 return float.MinValue;
             return 0;
         }
         
-        Board[] bestMoves = [];
+        // Board[] bestMoves = [];
         foreach (Board move in nextMoves)
         {
-            float score = -NegaMax(move, -beta, -alpha, depth - 1, out Board[] possibleMoves);
+            float score = -NegaMax(move, -beta, -alpha, depth - 1, out Board possibleMove);
             
             if (score > max)
             {
-                bestMoves = new Board[possibleMoves.Length + 1];
-                possibleMoves.CopyTo(bestMoves, 0);
-                bestMoves[^1] = board;
+                // bestMoves = new Board[possibleMoves.Length + 1];
+                // possibleMoves.CopyTo(bestMoves, 0);
+                // bestMoves[^1] = board;
                 
-                principalVariation = bestMoves;
+                // principalVariation = bestMoves;
+                bestMove = move;
                 max = score;
                 alpha = Math.Max(alpha, score);
             }
@@ -94,9 +98,10 @@ public class ZobristHashing(int maxDepth) : IEngine
             }
         }
 
-        transpositionTable.AddEntry(zobristHash, depth, max, bestMoves);
         
-        principalVariation = bestMoves;
+        transpositionTable.AddEntry(zobristHash, depth, max, bestMove);
+        
+        // principalVariation = bestMoves;
         return max;
     }
 
@@ -104,15 +109,16 @@ public class ZobristHashing(int maxDepth) : IEngine
     {
         // Check if this list of moves has the pre-calculated principal variation in there as an option
         // If so, put that up front
-        int pvIndex = depth - 2;
-        if (pvIndex < 0 || pvIndex >= lastPrincipalVariation.Length)
-            return;
-        
-        Board moveToPrioritize = lastPrincipalVariation[pvIndex];
-        if (transpositionTable.TryGetEntry(board.ZobristHash, out Entry entry))
+        // int pvIndex = depth - 2;
+        // if (pvIndex < 0 || pvIndex >= lastPrincipalVariation.Length)
+        //     return;
+        //
+        // Board moveToPrioritize = lastPrincipalVariation[pvIndex];
+        if (!transpositionTable.TryGetEntry(board.ZobristHash, out Entry entry))
         {
-            moveToPrioritize = entry.BestMoves[^2];
+            return;
         }
+        Board moveToPrioritize = entry.BestMove;
         int index = moves.FindIndex(move => move.LastMove == moveToPrioritize.LastMove);
         if (index == -1)
             return;
