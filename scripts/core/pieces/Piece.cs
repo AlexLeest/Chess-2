@@ -82,6 +82,6 @@ public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position
 
     public static Piece King(byte id, bool color, Vector2Int position, SpecialPieceTypes specialPiece = SpecialPieceTypes.KING)
     {
-        return new Piece(id, BasePiece.KING, color, position, [SlidingMovement.King], specialPiece);
+        return new Piece(id, BasePiece.KING, color, position, [SlidingMovement.King, new CastlingMovement()], specialPiece);
     }
 }

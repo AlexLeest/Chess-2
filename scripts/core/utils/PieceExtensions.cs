@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
@@ -22,8 +23,9 @@ public static class PieceExtensions
             piece.SpecialPieceType = nextBasePiece == BasePiece.PAWN ? SpecialPieceTypes.PAWN : SpecialPieceTypes.NONE;
             
             // Have to copy the movement array over because it's passed by reference and editing spot 0 changes it for every board
+            // BUG: BREAKS WHEN IT'S ABOUT A KING
             IMovement[] newMovement = new IMovement[piece.Movement.Length];
-            newMovement[0] = DefaultMovements.Get(nextBasePiece);
+            newMovement[0] = DefaultMovements.Get(nextBasePiece)[0];
             for (int i = 1; i < piece.Movement.Length; i++)
                 newMovement[i] = piece.Movement[i];
             piece.Movement = newMovement;
@@ -39,8 +41,9 @@ public static class PieceExtensions
         piece.SpecialPieceType = newBasePiece == BasePiece.PAWN ? SpecialPieceTypes.PAWN : SpecialPieceTypes.NONE;
             
         // Have to copy the movement array over because it's passed by reference and editing spot 0 changes it for every board
+        // BUG: BREAKS WHEN IT'S ABOUT A KING
         IMovement[] newMovement = new IMovement[piece.Movement.Length];
-        newMovement[0] = DefaultMovements.Get(newBasePiece);
+        newMovement[0] = DefaultMovements.Get(newBasePiece)[0];
         for (int i = 1; i < piece.Movement.Length; i++)
             newMovement[i] = piece.Movement[i];
         piece.Movement = newMovement;

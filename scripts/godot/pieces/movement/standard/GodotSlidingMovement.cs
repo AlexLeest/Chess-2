@@ -28,9 +28,4 @@ public partial class GodotSlidingMovement : GodotMovement
         }
         return new SlidingMovement(intOffsets.ToArray(), multiplier);
     }
-
-    // public override string ToString()
-    // {
-    //     return $"Movement: Sliding,\noffsets: {string.Join(", ", offsets)},\nmultiplier: {multiplier}";
-    // }
 }

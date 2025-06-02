@@ -11,6 +11,7 @@ public class PawnMovement : IMovement
     public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
     {
         Piece[,] squares = board.Squares;
+        SpecialMoveFlag moveFlag = from.Y == (color ? 6 : 1) ? SpecialMoveFlag.PROMOTION : SpecialMoveFlag.NONE;
         
         int boardWidth = squares.GetLength(0);
         int boardHeight = squares.GetLength(1);
@@ -22,7 +23,7 @@ public class PawnMovement : IMovement
         Vector2Int forward = from + direction;
         if (forward.Inside(boardWidth, boardHeight) && squares[forward.X, forward.Y] is null)
         {
-            options.Add(new Move(id, from, forward));
+            options.Add(new Move(id, from, forward, null, moveFlag));
             // Double move forward
             bool onDoubleMoveRow = (color && from.Y == 1) || (!color && from.Y == 6);
             if (onDoubleMoveRow)
@@ -34,18 +35,17 @@ public class PawnMovement : IMovement
         }
         
         // Captures
-        Vector2Int upLeft = new Vector2Int(forward.X - 1, forward.Y);
+        Vector2Int upLeft = new(forward.X - 1, forward.Y);
         Piece captureLeft = AttemptCapture(squares, color, upLeft);
         if (captureLeft is not null)
-            options.Add(new Move(id, from, upLeft, captureLeft));
+            options.Add(new Move(id, from, upLeft, captureLeft, moveFlag));
         
-        Vector2Int upRight = new Vector2Int(forward.X + 1, forward.Y);
+        Vector2Int upRight = new(forward.X + 1, forward.Y);
         Piece captureRight = AttemptCapture(squares, color, upRight);
         if (captureRight is not null)
-            options.Add(new Move(id, from, upRight, captureRight));
+            options.Add(new Move(id, from, upRight, captureRight, moveFlag));
         
         // En passant checks
-        // TODO: Does not currently handle actually CAPTURING that pawn
         Vector2Int enPassantLeft = new(from.X - 1, from.Y);
         if (enPassantLeft.Inside(boardWidth, boardHeight))
         {

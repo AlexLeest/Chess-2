@@ -2,13 +2,12 @@
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
-public struct Move(byte pieceId, Vector2Int from, Vector2Int to, Piece captured = null)
+public struct Move(byte pieceId, Vector2Int from, Vector2Int to, Piece captured = null, SpecialMoveFlag flag = SpecialMoveFlag.NONE)
 {
     public Vector2Int From = from, To = to;
     public byte Moving = pieceId;
     public Piece Captured = captured;
-
-    private static readonly char[] files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+    public SpecialMoveFlag Flag = flag;
 
     public static bool operator ==(Move? a, Move? b)
     {
@@ -23,8 +22,18 @@ public struct Move(byte pieceId, Vector2Int from, Vector2Int to, Piece captured 
         return !(a == b);
     }
 
+    private static readonly char[] files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
     public override string ToString()
     {
         return $"{files[From.X]}{From.Y + 1}{files[To.X]}{To.Y + 1}";
     }
+}
+
+public enum SpecialMoveFlag : byte
+{
+    NONE,
+    CASTLE_KINGSIDE,
+    CASTLE_QUEENSIDE,
+    PROMOTION,
 }

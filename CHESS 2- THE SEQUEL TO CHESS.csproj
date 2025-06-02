@@ -11,6 +11,5 @@
     <Folder Include="scripts\core\pieces\items\OnThreathened\" />
     <Folder Include="scripts\godot\pieces\items\OnCaptured\" />
     <Folder Include="scripts\godot\pieces\items\OnThreatened\" />
-    <Folder Include="scripts\godot\pieces\movement\standard\" />
   </ItemGroup>
 </Project>

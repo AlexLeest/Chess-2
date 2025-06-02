@@ -47,7 +47,7 @@ public partial class PieceResource : Resource
 
     public Piece ConvertToPiece(byte id, bool color)
     {
-        List<IMovement> movement = [DefaultMovements.Get(PieceType)];
+        List<IMovement> movement = DefaultMovements.Get(PieceType).ToList();
         foreach (GodotMovement mov in Movement)
             movement.Add(mov.GetMovement());
         SpecialPieceTypes pieceType = PieceType switch

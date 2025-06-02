@@ -33,6 +33,8 @@ public abstract partial class GodotMovement : Resource
                 return new GDCannibalKing();
             case TriplePawnPush:
                 return new GDTriplePawnPush();
+            case CastlingMovement:
+                return new GodotCastlingMovement();
         }
         throw new System.NotImplementedException();
     }
