@@ -7,12 +7,15 @@ public class FullRandom : IEngine
 {
     Random rng = new();
     
-    public Board GenerateNextMove(Board board)
+    public Move GenerateNextMove(Board board)
     {
-        List<Board> choices = board.GenerateMoves();
+        List<Move> choices = board.GetMoves();
         if (choices.Count == 0)
-            return board;
-        return choices[rng.Next(choices.Count)];
+            return new Move();
+        Move move = choices[rng.Next(choices.Count)];
+        while (board.ApplyMove(move) is null)
+            move = choices[rng.Next(choices.Count)];
+        return move;
     }
 
     public float DetermineScore(Board board)

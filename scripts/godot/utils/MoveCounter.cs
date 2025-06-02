@@ -95,8 +95,12 @@ public partial class MoveCounter : Node
         // return counts.Sum() + internalNodes;
 
         int count = 0;
-        foreach (Board nextBoard in currentBoard.GenerateMoves())
+        foreach (Move move in currentBoard.GetMoves())
         {
+            Board nextBoard = currentBoard.ApplyMove(move);
+            if (nextBoard is null)
+                continue;
+            
             int localCount = CountBoardAmounts(nextBoard, depth - 1, false);
             if (print)
             {

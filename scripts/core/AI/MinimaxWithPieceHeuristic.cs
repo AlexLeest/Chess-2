@@ -21,7 +21,7 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
     // private int sortAmount;
     private Move[] lastPrincipalVariation = [];
     
-    public Board GenerateNextMove(Board board)
+    public Move GenerateNextMove(Board board)
     {
         lastPrincipalVariation = [];
         // bestEval = 0;
@@ -38,7 +38,7 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
         }
         // GD.Print($"Pruned amount: {betaPruned}, sorted amount: {sortAmount}, nodes: {nodeCount}");
 
-        return board.ApplyMove(lastPrincipalVariation[^1]);
+        return lastPrincipalVariation[^1];
     }
 
     private float NegaMax(Board board, float alpha, float beta, int depth, out Move[] principalVariation)
