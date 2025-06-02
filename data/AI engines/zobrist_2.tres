@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GDZobristHashing" load_steps=2 format=3 uid="uid://qvp4k4csqssq"]
+
+[ext_resource type="Script" uid="uid://dgl0iuqxbm60w" path="res://scripts/godot/AI/GDZobristHashing.cs" id="1_mni4x"]
+
+[resource]
+script = ExtResource("1_mni4x")
+depth = 2
+metadata/_custom_type_script = "uid://dgl0iuqxbm60w"
