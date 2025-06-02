@@ -10,7 +10,7 @@
 
 [node name="MoveCounter" type="Node" parent="."]
 script = ExtResource("2_sugp2")
-depth = 4
+depth = 5
 
 [node name="Tooltip" type="VBoxContainer" parent="." node_paths=PackedStringArray("pieceNameLabel", "movementsLabel", "itemsLabel")]
 custom_minimum_size = Vector2(200, 512)
