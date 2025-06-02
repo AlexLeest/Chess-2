@@ -214,6 +214,8 @@ public class Board
 
     public List<Board> GenerateMoves(Piece piece)
     {
+        // TODO: Instead of this, split off a way to apply a Move to a Board (so moves can be saved instead of full boards)
+        
         bool colorToMove = Turn % 2 == 0;
         int colorIndex = Turn % 2;
         int nextTurn = Turn + 1;
@@ -307,6 +309,8 @@ public class Board
                 result.Add(possibleMove);
         }
 
+        // TODO: Make a Movement for castling so it fits in the IMovement structure
+        
         // Castling, separate from any preset movements
         if (piece.SpecialPieceType == SpecialPieceTypes.KING && !IsInCheck(colorToMove))
         {
@@ -396,6 +400,99 @@ public class Board
         }
 
         return result;
+    }
+
+    public Board ApplyMove(Piece piece, Move move)
+    {
+
+        bool colorToMove = Turn % 2 == 0;
+        int colorIndex = Turn % 2;
+        int nextTurn = Turn + 1;
+
+        bool promotion = false;
+        Piece capturedPiece = move.Captured;
+
+        // Make full copy of all unmoved pieces
+        Piece[] newPieces;
+        if (capturedPiece == null)
+            newPieces = DeepcopyPieces(piece.Id);
+        else
+            newPieces = DeepcopyPieces(piece.Id, capturedPiece.Id);
+
+        // Add moved piece (in new position) back to the list
+        Piece newPiece;
+        if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && move.To.Y == (piece.Color ? 7 : 0))
+        {
+            // Promotion! Just to queen for now
+            // TODO: Promotion to bishop, rook, knight
+            promotion = true;
+            newPiece = new Piece(piece.Id, BasePiece.QUEEN, piece.Color, move.To, [SlidingMovement.Queen]);
+        }
+        else if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && Math.Abs(move.To.Y - piece.Position.Y) == 2)
+        {
+            newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move.To, piece.Movement, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
+        }
+        else
+        {
+            newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move.To, piece.Movement, piece.SpecialPieceType);
+        }
+        newPieces[^1] = newPiece;
+
+        // If any of the castling pieces move, disallow castling in future boards
+        bool[] newCastleQueenSide = [CastleQueenSide[0], CastleQueenSide[1]];
+        bool[] newCastleKingSide = [CastleKingSide[0], CastleKingSide[1]];
+        switch (piece.SpecialPieceType)
+        {
+            case SpecialPieceTypes.KING:
+                newCastleQueenSide[colorIndex] = false;
+                newCastleKingSide[colorIndex] = false;
+                break;
+            case SpecialPieceTypes.QUEEN_SIDE_CASTLE:
+                newCastleQueenSide[colorIndex] = false;
+                break;
+            case SpecialPieceTypes.KING_SIDE_CASTLE:
+                newCastleKingSide[colorIndex] = false;
+                break;
+        }
+        if (capturedPiece is not null)
+        {
+            int otherColorIndex = nextTurn % 2;
+            switch (capturedPiece.SpecialPieceType)
+            {
+                case SpecialPieceTypes.QUEEN_SIDE_CASTLE:
+                    newCastleQueenSide[otherColorIndex] = false;
+                    break;
+                case SpecialPieceTypes.KING_SIDE_CASTLE:
+                    newCastleKingSide[otherColorIndex] = false;
+                    break;
+            }
+        }
+
+        // Make new board add to results
+        // Move committedMove = new(piece.Id, piece.Position, move, capturedPiece);
+        Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, ItemsPerPiece, move, this);
+
+        // Trigger ON_MOVE items
+        possibleMove = ActivateItems(piece.Id, ItemTriggers.ON_MOVE, possibleMove, move);
+
+        if (capturedPiece is not null)
+        {
+            // Trigger ON_CAPTURE and ON_CAPTURED items
+            possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_CAPTURE, possibleMove, move);
+            possibleMove = possibleMove.ActivateItems(capturedPiece.Id, ItemTriggers.ON_CAPTURED, possibleMove, move);
+        }
+        if (promotion)
+        {
+            // Trigger ON_PROMOTION items if that flag is set
+            possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_PROMOTION, possibleMove, move);
+        }
+
+        // Trigger all ON_TURN items
+        possibleMove = possibleMove.ActivateItems(colorToMove, ItemTriggers.ON_TURN, possibleMove, move);
+
+        if (!possibleMove.IsInCheck(colorToMove))
+            return possibleMove;
+        return null;
     }
 
     public Piece[] DeepcopyPieces(params byte[] idToSkip)

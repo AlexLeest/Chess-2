@@ -24,10 +24,11 @@ public class TranspositionTable
     }
 }
 
-public struct Entry(uint zobristHash, int depth, float score, Board bestMove)
+public struct Entry(uint zobristHash, int depth, float score, Board nextBoard)
 {
     public uint ZobristHash = zobristHash;
     public int Depth = depth;
     public float Score = score;
-    public Board BestMove = bestMove;
+    public Board NextBoard = nextBoard;
+    public Move BestMove;
 }

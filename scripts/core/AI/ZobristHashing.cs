@@ -22,7 +22,7 @@ public class ZobristHashing(int maxDepth) : IEngine
         // tTableFinds = tTableUses = tTableMismatch = 0;
         
         // lastPrincipalVariation = [];
-        transpositionTable.Clear();
+        // transpositionTable.Clear();
         Board lastKnownBestMove = null;
         
         for (int i = 1; i <= maxDepth; i++)
@@ -31,6 +31,8 @@ public class ZobristHashing(int maxDepth) : IEngine
             // lastPrincipalVariation = principalVariation;
             lastKnownBestMove = bestMove;
         }
+        transpositionTable.Clear();
+        GC.Collect();
 
         // GD.Print($"Hash matches: {tTableFinds}, entry uses: {tTableUses}, mismatches: {tTableMismatch}");
         return lastKnownBestMove;
@@ -52,7 +54,7 @@ public class ZobristHashing(int maxDepth) : IEngine
             {
                 // tTableUses++;
                 // GD.Print("TTable match used instead of recalculating that shit!");
-                bestMove = entry.BestMove;
+                bestMove = entry.NextBoard;
                 return entry.Score;
             }
         }
@@ -98,7 +100,6 @@ public class ZobristHashing(int maxDepth) : IEngine
             }
         }
 
-        
         transpositionTable.AddEntry(zobristHash, depth, max, bestMove);
         
         // principalVariation = bestMoves;
@@ -118,7 +119,7 @@ public class ZobristHashing(int maxDepth) : IEngine
         {
             return;
         }
-        Board moveToPrioritize = entry.BestMove;
+        Board moveToPrioritize = entry.NextBoard;
         int index = moves.FindIndex(move => move.LastMove == moveToPrioritize.LastMove);
         if (index == -1)
             return;
