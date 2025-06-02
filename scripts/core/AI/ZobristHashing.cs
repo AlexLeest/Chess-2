@@ -23,11 +23,11 @@ public class ZobristHashing(int maxDepth) : IEngine
         
         // lastPrincipalVariation = [];
         // transpositionTable.Clear();
-        Board lastKnownBestMove = null;
+        Move lastKnownBestMove = new();
         
         for (int i = 1; i <= maxDepth; i++)
         {
-            NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, i, out Board bestMove);
+            NegaMax(board, float.NegativeInfinity, float.PositiveInfinity, i, out Move bestMove);
             // lastPrincipalVariation = principalVariation;
             lastKnownBestMove = bestMove;
         }
@@ -35,12 +35,13 @@ public class ZobristHashing(int maxDepth) : IEngine
         GC.Collect();
 
         // GD.Print($"Hash matches: {tTableFinds}, entry uses: {tTableUses}, mismatches: {tTableMismatch}");
-        return lastKnownBestMove;
+        return board.ApplyMove(lastKnownBestMove);
     }
 
-    private float NegaMax(Board board, float alpha, float beta, int depth, out Board bestMove)
+    private float NegaMax(Board board, float alpha, float beta, int depth, out Move bestMove)
     {
-        bestMove = board;
+        bestMove = new Move();
+        
         // Look up board in transposition table
         uint zobristHash = board.GetZobristHash();
         if (transpositionTable.TryGetEntry(zobristHash, out Entry entry))
@@ -54,34 +55,37 @@ public class ZobristHashing(int maxDepth) : IEngine
             {
                 // tTableUses++;
                 // GD.Print("TTable match used instead of recalculating that shit!");
-                bestMove = entry.NextBoard;
+                bestMove = entry.BestMove;
                 return entry.Score;
             }
         }
         
         if (depth <= 0)
         {
-            // bestMove = board;
+            bestMove = new Move();
             return DetermineScore(board);
         }
 
         float max = float.NegativeInfinity;
-        List<Board> nextMoves = board.GenerateMoves();
+        List<Move> nextMoves = board.GetMoves();
         
         SortByPrincipalVariation(board, nextMoves, depth);
         
         if (nextMoves.Count == 0)
         {
-            // bestMove = board;
+            bestMove = new Move();
             if (board.IsInCheck(board.ColorToMove))
                 return float.MinValue;
             return 0;
         }
         
         // Board[] bestMoves = [];
-        foreach (Board move in nextMoves)
+        foreach (Move move in nextMoves)
         {
-            float score = -NegaMax(move, -beta, -alpha, depth - 1, out Board possibleMove);
+            Board nextBoard = board.ApplyMove(move);
+            if (nextBoard is null)
+                continue;
+            float score = -NegaMax(nextBoard, -beta, -alpha, depth - 1, out Move possibleMove);
             
             if (score > max)
             {
@@ -106,7 +110,7 @@ public class ZobristHashing(int maxDepth) : IEngine
         return max;
     }
 
-    private void SortByPrincipalVariation(Board board, List<Board> moves, int depth)
+    private void SortByPrincipalVariation(Board board, List<Move> moves, int depth)
     {
         // Check if this list of moves has the pre-calculated principal variation in there as an option
         // If so, put that up front
@@ -119,8 +123,8 @@ public class ZobristHashing(int maxDepth) : IEngine
         {
             return;
         }
-        Board moveToPrioritize = entry.NextBoard;
-        int index = moves.FindIndex(move => move.LastMove == moveToPrioritize.LastMove);
+        Move moveToPrioritize = entry.BestMove;
+        int index = moves.FindIndex(move => move == moveToPrioritize);
         if (index == -1)
             return;
 

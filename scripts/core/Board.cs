@@ -204,6 +204,33 @@ public class Board
         return false;
     }
 
+    public List<Move> GetMoves()
+    {
+        List<Move> result = [];
+        foreach (Piece piece in Pieces)
+        {
+            if (piece.Color != colorToMove)
+                continue;
+            foreach (Move move in piece.GetMovementOptions(this))
+            {
+                result.Add(move);
+            }
+        }
+        return result;
+    }
+
+    public List<Move> GetMoves(Piece piece)
+    {
+        List<Move> result = [];
+        
+        foreach (Move move in piece.GetMovementOptions(this))
+        {
+            result.Add(move);
+        }
+
+        return result;
+    }
+
     public List<Board> GenerateMoves()
     {
         bool colorToMove = Turn % 2 == 0;
@@ -414,6 +441,12 @@ public class Board
         // }
 
         return result;
+    }
+
+    public Board ApplyMove(Move move)
+    {
+        Piece piece = GetPiece(move.Moving);
+        return ApplyMove(piece, move);
     }
 
     public Board ApplyMove(Piece piece, Move move)

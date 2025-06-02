@@ -12,7 +12,7 @@ public class TranspositionTable
         return entries.TryGetValue(zobristHash, out entry);
     }
 
-    public void AddEntry(uint zobristHash, int depth, float score, Board bestMove)
+    public void AddEntry(uint zobristHash, int depth, float score, Move bestMove)
     {
         Entry entry = new(zobristHash, depth, score, bestMove);
         entries[zobristHash] = entry;
@@ -24,11 +24,11 @@ public class TranspositionTable
     }
 }
 
-public struct Entry(uint zobristHash, int depth, float score, Board nextBoard)
+public struct Entry(uint zobristHash, int depth, float score, Move bestMove)
 {
     public uint ZobristHash = zobristHash;
     public int Depth = depth;
     public float Score = score;
-    public Board NextBoard = nextBoard;
-    public Move BestMove;
+    // public Board NextBoard = nextBoard;
+    public Move BestMove = bestMove;
 }
