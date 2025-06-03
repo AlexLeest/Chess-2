@@ -12,7 +12,8 @@ public class CastlingMovement : IMovement
 
         int colorIndex = colorToMove ? 0 : 1;
         int rank = colorToMove ? 0 : 7;
-        if (board.CastleKingSide[colorIndex])
+        Piece toCastleKingSide = board.Squares[7, rank];
+        if (board.CastleKingSide[colorIndex] && toCastleKingSide is not null && toCastleKingSide.SpecialPieceType == SpecialPieceTypes.KING_SIDE_CASTLE)
         {
             Vector2Int[] checkPositions = [new(4, rank), new(5, rank), new(6, rank)];
             if (board.Squares[5, rank] is null && board.Squares[6, rank] is null && !board.IsInCheck(color, checkPositions))
@@ -20,7 +21,8 @@ public class CastlingMovement : IMovement
                 result.Add(new Move(id, from, new Vector2Int(6, rank), null, SpecialMoveFlag.CASTLE_KINGSIDE));
             }
         }
-        if (board.CastleQueenSide[colorIndex])
+        Piece toCastleQueenSide = board.Squares[0, rank];
+        if (board.CastleQueenSide[colorIndex] && toCastleQueenSide is not null && toCastleQueenSide.SpecialPieceType == SpecialPieceTypes.QUEEN_SIDE_CASTLE)
         {
             Vector2Int[] checkPositions = [new(4, rank), new(3, rank), new(2, rank)];
             if (board.Squares[3, rank] is null && board.Squares[2, rank] is null && board.Squares[1, rank] is null && !board.IsInCheck(color, checkPositions))
