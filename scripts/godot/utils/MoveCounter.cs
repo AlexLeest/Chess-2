@@ -78,36 +78,36 @@ public partial class MoveCounter : Node
             return 1;
         }
 
-        // ConcurrentBag<int> counts = new();
-        //
-        // Parallel.ForEach(currentBoard.GenerateMoves(),
-        //     nextBoard =>
-        //     {
-        //         int count = CountBoardAmounts(nextBoard, depth - 1, false);
-        //         if (print)
-        //         {
-        //             // TODO: Get a last-move field on the board for debug reasons (also visualisation maybe)
-        //             GD.Print($"{nextBoard.LastMove}: {count}");
-        //         }
-        //         counts.Add(count);
-        //     }
-        // );
-        // return counts.Sum() + internalNodes;
-
-        int count = 0;
-        foreach (Move move in currentBoard.GetMoves())
-        {
-            Board nextBoard = currentBoard.ApplyMove(move);
-            if (nextBoard is null)
-                continue;
-            
-            int localCount = CountBoardAmounts(nextBoard, depth - 1, false);
-            if (print)
+        ConcurrentBag<int> counts = new();
+        
+        Parallel.ForEach(currentBoard.GenerateMoves(),
+            nextBoard =>
             {
-                GD.Print($"{nextBoard.LastMove}: {localCount}");
+                int count = CountBoardAmounts(nextBoard, depth - 1, false);
+                if (print)
+                {
+                    // TODO: Get a last-move field on the board for debug reasons (also visualisation maybe)
+                    GD.Print($"{nextBoard.LastMove}: {count}");
+                }
+                counts.Add(count);
             }
-            count += localCount;
-        }
-        return count + internalNodes;
+        );
+        return counts.Sum() + internalNodes;
+
+        // int count = 0;
+        // foreach (Move move in currentBoard.GetMoves())
+        // {
+        //     Board nextBoard = currentBoard.ApplyMove(move);
+        //     if (nextBoard is null)
+        //         continue;
+        //     
+        //     int localCount = CountBoardAmounts(nextBoard, depth - 1, false);
+        //     if (print)
+        //     {
+        //         GD.Print($"{nextBoard.LastMove}: {localCount}");
+        //     }
+        //     count += localCount;
+        // }
+        // return count + internalNodes;
     }
 }
