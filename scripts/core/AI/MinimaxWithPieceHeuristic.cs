@@ -63,7 +63,7 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
             return 0;
         }
         
-        Move[] bestMoves = [];
+        Move[] bestMoves = [nextMoves[0]];
         foreach (Move move in nextMoves)
         {
             Board nextBoard = board.ApplyMove(move);

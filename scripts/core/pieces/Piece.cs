@@ -42,6 +42,22 @@ public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position
         return result;
     }
 
+    public uint GetZobristHash(Vector2Int position)
+    {
+        // Zobrist hash for piece is the zobrist hash for every IMovement it has XORed
+        // XOR BasePiece hash
+        // XOR SpecialPieceTypes hash
+        uint result = 0;
+        foreach (IMovement movement in Movement)
+        {
+            result ^= movement.GetZobristHash(color, position);
+        }
+        result ^= ZobristCalculator.GetZobristHash(color, position, BasePiece);
+        result ^= ZobristCalculator.GetZobristHash(color, position, SpecialPieceType);
+
+        return result;
+    }
+
     public override int GetHashCode()
     {
         // Possible overflow? Should I worry abt this?

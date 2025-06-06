@@ -109,8 +109,22 @@ public static class ZobristCalculator
         return result;
     }
 
+    public static uint IncrementallyAdjustZobristHash(Board lastBoard, IBoardEvent[] events)
+    {
+        uint zobristHash = lastBoard.ZobristHash;
+
+        foreach (IBoardEvent boardEvent in events)
+        {
+            zobristHash = boardEvent.AdjustZobristHash(zobristHash);
+        }
+
+        return zobristHash;
+    }
+
     public static uint IncrementallyAdjustZobristHash(Board lastBoard, Board currentBoard)
     {
+        // TODO: Handle items and all their wacky consequences (arbitrary board changes)
+        
         // Instead of recalculating the whole hash from scratch, take the hash from last board and XOR out the changed elements
         uint newZobristHash = lastBoard.ZobristHash;
         Move move = currentBoard.LastMove.Value;
