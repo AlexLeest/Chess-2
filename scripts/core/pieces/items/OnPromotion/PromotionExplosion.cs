@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnPromotion;
@@ -9,7 +10,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnPromotion;
 /// <param name="pieceId"></param>
 public class PromotionExplosion(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_PROMOTION)
 {
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         Vector2Int target = move.To;
 
@@ -38,7 +39,7 @@ public class PromotionExplosion(byte pieceId) : AbstractItem(pieceId, ItemTrigge
                 board.Squares[toKillPos.X, toKillPos.Y] = null;
                 
                 // Activate ON_CAPTURED items for that piece
-                board = board.ActivateItems(toKill.Id, ItemTriggers.ON_CAPTURED, board, move);
+                board = board.ActivateItems(toKill.Id, ItemTriggers.ON_CAPTURED, board, move, ref events);
             }
 
         return board;

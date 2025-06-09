@@ -1,4 +1,7 @@
-﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using System.Collections.Generic;
+
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
 
 /// <summary>
 /// "Shoots" the enemy piece, not actually moving this piece over there
@@ -6,7 +9,7 @@
 /// <param name="pieceId"></param>
 public class Gun(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURE)
 {
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         Piece piece = board.GetPiece(PieceId);
         
@@ -15,6 +18,8 @@ public class Gun(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURE)
         // Reset the squares as well
         board.Squares[move.To.X, move.To.Y] = null;
         board.Squares[move.From.X, move.From.Y] = piece;
+        
+        events.Add(new MovePieceEvent(piece, board.ItemsPerPiece, move.To, move.From));
 
         return board;
     }

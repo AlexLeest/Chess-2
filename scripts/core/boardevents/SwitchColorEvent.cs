@@ -1,9 +1,9 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using System.Collections.Generic;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-public class SwitchColorEvent(Piece before, Piece after, Dictionary<byte, IItem[]> itemDict) : IBoardEvent
+public readonly struct SwitchColorEvent(Piece before, Piece after, Dictionary<byte, IItem[]> itemDict) : IBoardEvent
 {
     public uint AdjustZobristHash(uint zobristHash)
     {

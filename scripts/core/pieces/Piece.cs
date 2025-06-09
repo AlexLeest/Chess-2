@@ -20,8 +20,11 @@ public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position
                 yield return move;
     }
 
-    public Piece DeepCopy()
+    public Piece DeepCopy(bool turnDecay = true)
     {
+        if (!turnDecay)
+            return new Piece(Id, BasePiece, Color, Position, Movement, SpecialPieceType);
+        
         // En-passant decay, otherwise copy everything
         return new Piece(Id, BasePiece, Color, Position, Movement, SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN ? SpecialPieceTypes.PAWN : SpecialPieceType);
     }

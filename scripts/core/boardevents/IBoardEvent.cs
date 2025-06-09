@@ -1,4 +1,4 @@
-﻿namespace CHESS2THESEQUELTOCHESS.scripts.core;
+﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
 public interface IBoardEvent
 {

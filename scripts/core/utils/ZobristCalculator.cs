@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
@@ -21,7 +22,7 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
         return true;
     }
 
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         // Get piece from last board (it's been captured in this one)
         Vector2Int respawnPos = GetRootPosition(board);

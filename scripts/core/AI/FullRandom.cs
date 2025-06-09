@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using System;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
@@ -13,7 +14,9 @@ public class FullRandom : IEngine
         if (choices.Count == 0)
             return new Move();
         Move move = choices[rng.Next(choices.Count)];
-        while (board.ApplyMove(move) is null)
+        
+        List<IBoardEvent> events = [];
+        while (board.ApplyMove(move, out _) is null)
             move = choices[rng.Next(choices.Count)];
         return move;
     }

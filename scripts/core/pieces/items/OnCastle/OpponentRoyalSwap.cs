@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCastle;
@@ -19,7 +20,7 @@ public class OpponentRoyalSwap(byte pieceId) : AbstractItem(pieceId, ItemTrigger
         return false;
     }
 
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         // Find out own color
         bool color = GetOwnColor(board);

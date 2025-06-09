@@ -1,4 +1,6 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 
@@ -8,7 +10,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 /// <param name="pieceId"></param>
 public class SelfDestruct(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURED)
 {
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         Vector2Int moveTo = move.To;
         
@@ -26,7 +28,7 @@ public class SelfDestruct(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_
         }
         board.Pieces = newPieces;
         board.Squares[moveTo.X, moveTo.Y] = null;
-        board = board.LastBoard.ActivateItems(toBeDestroyed.Id, ItemTriggers.ON_CAPTURED, board, move);
+        board = board.LastBoard.ActivateItems(toBeDestroyed.Id, ItemTriggers.ON_CAPTURED, board, move, ref events);
         
         return board;
     }

@@ -1,4 +1,7 @@
-﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using System.Collections.Generic;
+
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
 
 /// <summary>
 /// Leaves a bomb behind on the spot it just moved from, which is a piece that "lives" for 1 turn and has a SelfDestruct item associated with it.
@@ -6,7 +9,7 @@
 /// <param name="pieceId"></param>
 public class LeaveBombOnMove(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MOVE)
 {
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         // TODO: Think of a way to spawn a piece with a set lifespan AND different behavior on capture?
         //  - New SpecialPieceType that behaves similar to EN_PASSANTABLE_PAWN and deteriorates on DeepCopy?

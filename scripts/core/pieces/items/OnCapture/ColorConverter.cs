@@ -1,4 +1,7 @@
-﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using System.Collections.Generic;
+
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
 
 public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURE) 
 {
@@ -14,7 +17,7 @@ public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
         return true;
     }
 
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         // Instead of capturing, put the piece back with your own color and don't move your own piece
         Piece piece = board.GetPiece(PieceId);
@@ -26,6 +29,8 @@ public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
         board.Squares[move.To.X, move.To.Y] = convertPiece;
         board.Pieces = board.DeepcopyPieces();
         board.Pieces[^1] = convertPiece;
+        
+        events.Add(new SwitchColorEvent(board.LastBoard.GetPiece(move.Captured.Id), convertPiece, board.ItemsPerPiece));
 
         return board;
     }

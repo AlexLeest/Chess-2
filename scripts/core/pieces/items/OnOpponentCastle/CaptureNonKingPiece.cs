@@ -1,8 +1,11 @@
-﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnOpponentCastle;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using System.Collections.Generic;
+
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnOpponentCastle;
 
 public class CaptureNonKingPiece(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_OPPONENT_CASTLE)
 {
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         // Get non-king piece in castling, KILL
         int xCoord = move.To.X;

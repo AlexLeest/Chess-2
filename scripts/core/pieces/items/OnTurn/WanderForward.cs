@@ -1,4 +1,6 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnTurn;
 
@@ -18,7 +20,7 @@ public class WanderForward(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
         return true;
     }
 
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         Piece piece = board.GetPiece(pieceId);
         Vector2Int forward = new(piece.Position.X, piece.Position.Y + (piece.Color ? 1 : -1));
@@ -35,7 +37,7 @@ public class WanderForward(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
         piece.Position = forward;
         board.Squares[forward.X, forward.Y] = piece;
 
-        board = board.ActivateItems(pieceId, ItemTriggers.ON_MOVE, board, new Move(PieceId, startPos, forward));
+        board = board.ActivateItems(pieceId, ItemTriggers.ON_MOVE, board, new Move(PieceId, startPos, forward), ref events);
 
         return board;
     }

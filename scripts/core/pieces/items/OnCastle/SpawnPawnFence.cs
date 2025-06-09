@@ -1,11 +1,13 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCastle;
 
 public class SpawnPawnFence(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CASTLE)
 {
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         bool color = board.Turn % 2 == 1;
         // Put 3 pawns in front of the king (if possible)

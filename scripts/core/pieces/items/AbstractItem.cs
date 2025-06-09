@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ public abstract class AbstractItem(byte pieceId, ItemTriggers trigger) : IItem
         return true;
     }
 
-    public abstract Board Execute(Board board, Move move);
+    public abstract Board Execute(Board board, Move move, ref List<IBoardEvent> events);
 
     public virtual uint GetZobristHash(bool color, Vector2Int position)
     {

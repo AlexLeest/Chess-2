@@ -1,4 +1,6 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
 
@@ -16,9 +18,10 @@ public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
         return piece.Color == captured.Color;
     }
 
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         Piece piece = board.GetPiece(PieceId);
+        Piece before = piece.DeepCopy(false);
         piece.Upgrade();
         
         return board;

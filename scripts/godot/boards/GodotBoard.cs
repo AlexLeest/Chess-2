@@ -1,5 +1,6 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
 using CHESS2THESEQUELTOCHESS.scripts.core.AI;
+using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
@@ -150,7 +151,7 @@ public partial class GodotBoard : GridContainer
             // TODO: Set up a "computer is thinking" visual while the engine is doing its thing
             Stopwatch stopwatch = Stopwatch.StartNew();
             Move engineResponse = await Task.Run(() => engine.GenerateNextMove(newBoard));
-            Board nextBoard = newBoard.ApplyMove(engineResponse);
+            Board nextBoard = newBoard.ApplyMove(engineResponse, out List<IBoardEvent> events);
             GD.Print($"Response: {nextBoard}, time: {stopwatch.Elapsed}");
             await SetNewBoard(nextBoard);
         }

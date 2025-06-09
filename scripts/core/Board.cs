@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,7 @@ public class Board
 
         if (lastBoard is not null && lastMove is not null)
         {
+            // TODO: Adjust this to use the IBoardEvent[] version of zobrist adjusting instead
             ZobristHash = ZobristCalculator.IncrementallyAdjustZobristHash(lastBoard, this);
         }
         else
@@ -125,27 +127,27 @@ public class Board
         return null;
     }
 
-    public Board ActivateItems(bool color, ItemTriggers trigger, Board board, Move move)
+    public Board ActivateItems(bool color, ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
     {
         foreach (Piece piece in Pieces)
         {
             if (piece.Color != color)
                 continue;
-            board = board.ActivateItems(piece.Id, trigger, board, move);
+            board = board.ActivateItems(piece.Id, trigger, board, move, ref events);
         }
         return board;
     }
 
-    public Board ActivateItems(ItemTriggers trigger, Board board, Move move)
+    public Board ActivateItems(ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
     {
         foreach (var pair in board.ItemsPerPiece)
         {
-            board = board.ActivateItems(pair.Key, trigger, board, move);
+            board = board.ActivateItems(pair.Key, trigger, board, move, ref events);
         }
         return board;
     }
 
-    public Board ActivateItems(byte pieceId, ItemTriggers trigger, Board board, Move move)
+    public Board ActivateItems(byte pieceId, ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
     {
         if (board.ItemsPerPiece.TryGetValue(pieceId, out IItem[] captureItems))
         {
@@ -153,7 +155,7 @@ public class Board
             {
                 if (item.Trigger == trigger && item.ConditionsMet(board, move))
                 {
-                    board = item.Execute(board, move);
+                    board = item.Execute(board, move, ref events);
                 }
             }
         }
@@ -254,7 +256,7 @@ public class Board
         // For each possible move
         foreach (Move move in piece.GetMovementOptions(this))
         {
-            Board nextBoard = ApplyMove(piece, move);
+            Board nextBoard = ApplyMove(piece, move, out _);
             if (nextBoard != null)
                 result.Add(nextBoard);
         }
@@ -262,17 +264,19 @@ public class Board
         return result;
     }
 
-    public Board ApplyMove(Move move)
+    public Board ApplyMove(Move move, out List<IBoardEvent> events)
     {
         Piece piece = GetPiece(move.Moving);
-        return ApplyMove(piece, move);
+        return ApplyMove(piece, move, out events);
     }
 
-    public Board ApplyMove(Piece piece, Move move)
+    public Board ApplyMove(Piece piece, Move move, out List<IBoardEvent> events)
     {
         Piece[] newPieces;
         bool[] newCastleQueenSide = [CastleQueenSide[0], CastleQueenSide[1]];
         bool[] newCastleKingSide = [CastleKingSide[0], CastleKingSide[1]];
+
+        events = [];
         
         if (move.Flag == SpecialMoveFlag.CASTLE_KINGSIDE)
         {
@@ -295,10 +299,10 @@ public class Board
             foreach (Piece toActivate in castledBoard.Pieces)
             {
                 ItemTriggers trigger = toActivate.Color == colorToMove ? ItemTriggers.ON_CASTLE : ItemTriggers.ON_OPPONENT_CASTLE;
-                castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove);
+                castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove, ref events);
             }
         
-            castledBoard = castledBoard.ActivateItems(ItemTriggers.ON_TURN, castledBoard, castleMove);
+            castledBoard = castledBoard.ActivateItems(ItemTriggers.ON_TURN, castledBoard, castleMove, ref events);
             // Add to results
             return castledBoard;
         }
@@ -322,10 +326,10 @@ public class Board
             foreach (Piece toActivate in castledBoard.Pieces)
             {
                 ItemTriggers trigger = toActivate.Color == colorToMove ? ItemTriggers.ON_CASTLE : ItemTriggers.ON_OPPONENT_CASTLE;
-                castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove);
+                castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove, ref events);
             }
         
-            castledBoard = castledBoard.ActivateItems(ItemTriggers.ON_TURN, castledBoard, castleMove);
+            castledBoard = castledBoard.ActivateItems(ItemTriggers.ON_TURN, castledBoard, castleMove, ref events);
             // Add to results
             return castledBoard;
         }
@@ -391,22 +395,22 @@ public class Board
         Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, ItemsPerPiece, move, this);
 
         // Trigger ON_MOVE items
-        possibleMove = ActivateItems(piece.Id, ItemTriggers.ON_MOVE, possibleMove, move);
+        possibleMove = ActivateItems(piece.Id, ItemTriggers.ON_MOVE, possibleMove, move, ref events);
 
         if (capturedPiece is not null)
         {
             // Trigger ON_CAPTURE and ON_CAPTURED items
-            possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_CAPTURE, possibleMove, move);
-            possibleMove = possibleMove.ActivateItems(capturedPiece.Id, ItemTriggers.ON_CAPTURED, possibleMove, move);
+            possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_CAPTURE, possibleMove, move, ref events);
+            possibleMove = possibleMove.ActivateItems(capturedPiece.Id, ItemTriggers.ON_CAPTURED, possibleMove, move, ref events);
         }
         if (promotion)
         {
             // Trigger ON_PROMOTION items if that flag is set
-            possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_PROMOTION, possibleMove, move);
+            possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_PROMOTION, possibleMove, move, ref events);
         }
 
         // Trigger all ON_TURN items
-        possibleMove = possibleMove.ActivateItems(colorToMove, ItemTriggers.ON_TURN, possibleMove, move);
+        possibleMove = possibleMove.ActivateItems(colorToMove, ItemTriggers.ON_TURN, possibleMove, move, ref events);
 
         if (!possibleMove.IsInCheck(colorToMove))
             return possibleMove;

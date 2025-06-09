@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
@@ -10,7 +11,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
 /// <param name="pieceId"></param>
 public class EvolutionLoop(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MOVE)
 {
-    public override Board Execute(Board board, Move move)
+    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
         Piece moved = board.GetPiece(PieceId);
         if (moved.BasePiece == BasePiece.QUEEN)
