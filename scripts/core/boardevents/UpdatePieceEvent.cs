@@ -5,6 +5,16 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
 public readonly struct UpdatePieceEvent(Piece before, Piece after, Dictionary<byte, IItem[]> itemDict) : IBoardEvent
 {
+    public void AdjustBoard(Board board)
+    {
+        Piece[] newPieces = board.DeepcopyPieces(before.Id);
+        newPieces[^1] = after;
+        board.Pieces = newPieces;
+
+        board.Squares[before.Position.X, before.Position.Y] = null;
+        board.Squares[after.Position.X, after.Position.Y] = after;
+    }
+
     public uint AdjustZobristHash(uint zobristHash)
     {
         zobristHash ^= before.GetZobristHash();

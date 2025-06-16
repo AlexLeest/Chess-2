@@ -21,16 +21,21 @@ public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
     {
         // Instead of capturing, put the piece back with your own color and don't move your own piece
         Piece piece = board.GetPiece(PieceId);
+        
         Piece convertPiece = move.Captured.DeepCopy();
+        Piece convertBefore = convertPiece.DeepCopy(false);
         convertPiece.Color = piece.Color;
+        
+        events.Add(new UpdatePieceEvent(convertBefore, convertPiece, board.ItemsPerPiece));
 
+        Piece pieceBefore = piece.DeepCopy(false);
         piece.Position = move.From;
         board.Squares[move.From.X, move.From.Y] = piece;
         board.Squares[move.To.X, move.To.Y] = convertPiece;
         board.Pieces = board.DeepcopyPieces();
         board.Pieces[^1] = convertPiece;
-        
-        events.Add(new SwitchColorEvent(board.LastBoard.GetPiece(move.Captured.Id), convertPiece, board.ItemsPerPiece));
+
+        events.Add(new UpdatePieceEvent(pieceBefore, piece, board.ItemsPerPiece));
 
         return board;
     }

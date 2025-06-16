@@ -11,15 +11,15 @@ public class Gun(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURE)
 {
     public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
     {
-        Piece piece = board.GetPiece(PieceId);
+        Piece before = board.GetPiece(PieceId);
+        Piece after = before.DeepCopy(false);
+        after.Position = move.From;
         
         // Set the position back to FROM
-        piece.Position = move.From;
+        before.Position = move.From;
         // Reset the squares as well
         board.Squares[move.To.X, move.To.Y] = null;
-        board.Squares[move.From.X, move.From.Y] = piece;
-        
-        events.Add(new MovePieceEvent(piece, board.ItemsPerPiece, move.To, move.From));
+        board.Squares[move.From.X, move.From.Y] = before;
 
         return board;
     }

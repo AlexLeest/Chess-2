@@ -4,26 +4,28 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-public readonly struct MovePieceEvent(Piece piece, Dictionary<byte, IItem[]> itemDict, Vector2Int from, Vector2Int to) : IBoardEvent
+public class MovePieceEvent(byte pieceId, Vector2Int to, Dictionary<byte, IItem[]> itemDict) : IBoardEvent
 {
-    public uint AdjustZobristHash(uint zobristHash)
+    public void AdjustBoard(Board board)
     {
-        // XOR out the from pos
-        zobristHash ^= piece.GetZobristHash(from);
-        // XOR in the to pos
-        zobristHash ^= piece.GetZobristHash(to);
-        
-        if (!itemDict.TryGetValue(piece.Id, out IItem[] items))
-            return zobristHash;
+        Piece piece = board.GetPiece(pieceId);
+        // XOR out the hash for this piece at old position
+        XorPieceHash(board, piece);
 
-        foreach (IItem item in items)
-        {
-            // XOR out the from pos
-            zobristHash ^= item.GetZobristHash(piece.Color, from);
-            // XOR in the to pos
-            zobristHash ^= item.GetZobristHash(piece.Color, to);
-        }
+        // Change position, adjust board properly
+        board.Squares[piece.Position.X, piece.Position.Y] = null;
+        board.Squares[to.X, to.Y] = piece;
+        piece.Position = to;
 
-        return zobristHash;
+        // XOR in hash for piece at new position
+        XorPieceHash(board, piece);
+    }
+
+    private void XorPieceHash(Board board, Piece piece)
+    {
+        board.ZobristHash ^= piece.GetZobristHash();
+        if (itemDict.TryGetValue(pieceId, out IItem[] items))
+            foreach (IItem item in items)
+                board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
     }
 }

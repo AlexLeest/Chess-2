@@ -9,7 +9,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
 public class Board
 {
-    public readonly int Turn;
+    public int Turn;
     public Piece[] Pieces;
     public Piece[,] Squares;
     public readonly Move? LastMove;

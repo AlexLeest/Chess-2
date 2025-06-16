@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
 
 /// <summary>
-/// When piece captures a piece of it's own color, evolve the piece
+/// When piece captures a piece of its own color, evolve the piece
 /// </summary>
 /// <param name="pieceId"></param>
 public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURE)
@@ -22,7 +22,9 @@ public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
     {
         Piece piece = board.GetPiece(PieceId);
         Piece before = piece.DeepCopy(false);
+        
         piece.Upgrade();
+        events.Add(new UpdatePieceEvent(before, piece, board.ItemsPerPiece));
         
         return board;
     }
