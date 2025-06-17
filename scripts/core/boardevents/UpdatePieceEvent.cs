@@ -5,7 +5,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
 public readonly struct UpdatePieceEvent(Piece before, Piece after, Dictionary<byte, IItem[]> itemDict) : IBoardEvent
 {
-    public void AdjustBoard(Board board)
+    public void AdjustBoard(Board board, Move move)
     {
         Piece[] newPieces = board.DeepcopyPieces(before.Id);
         newPieces[^1] = after;

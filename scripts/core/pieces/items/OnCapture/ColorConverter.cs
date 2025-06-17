@@ -23,10 +23,9 @@ public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
         Piece piece = board.GetPiece(PieceId);
         
         Piece convertPiece = move.Captured.DeepCopy();
-        Piece convertBefore = convertPiece.DeepCopy(false);
         convertPiece.Color = piece.Color;
         
-        events.Add(new UpdatePieceEvent(convertBefore, convertPiece, board.ItemsPerPiece));
+        events.Add(new ChangeColorEvent(convertPiece.Id, piece.Color));
 
         Piece pieceBefore = piece.DeepCopy(false);
         piece.Position = move.From;

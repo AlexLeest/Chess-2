@@ -9,7 +9,6 @@ public interface IBoardEvent
     /// Changes the board according to this event's specifications
     /// </summary>
     /// <param name="board">Board to be adjusted</param>
-    public void AdjustBoard(Board board);
-
-    // public void AdjustZobristHash(Board board);
+    /// <param name="move">Move this event is being performed on</param>
+    public void AdjustBoard(Board board, Move move);
 }

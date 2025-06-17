@@ -120,6 +120,13 @@ public class Board
         return new Board(0, pieces, [true, true], [true, true], []);
     }
 
+    public Board Copy()
+    {
+        Piece[] pieces = new Piece[Pieces.Length];
+        Array.Copy(Pieces, pieces, Pieces.Length);
+        return new Board(Turn, pieces, CastleQueenSide, CastleKingSide, ItemsPerPiece);
+    }
+
     public Piece GetPiece(byte id)
     {
         if (pieceDict.TryGetValue(id, out Piece result))

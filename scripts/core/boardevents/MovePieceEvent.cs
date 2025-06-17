@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-public class MovePieceEvent(byte pieceId, Vector2Int to, Dictionary<byte, IItem[]> itemDict) : IBoardEvent
+public class MovePieceEvent(byte pieceId, Vector2Int to) : IBoardEvent
 {
-    public void AdjustBoard(Board board)
+    public void AdjustBoard(Board board, Move move)
     {
         Piece piece = board.GetPiece(pieceId);
         // XOR out the hash for this piece at old position
-        XorPieceHash(board, piece);
+        ZobristCalculator.AdjustZobristHash(piece, board);
 
         // Change position, adjust board properly
         board.Squares[piece.Position.X, piece.Position.Y] = null;
@@ -18,14 +18,6 @@ public class MovePieceEvent(byte pieceId, Vector2Int to, Dictionary<byte, IItem[
         piece.Position = to;
 
         // XOR in hash for piece at new position
-        XorPieceHash(board, piece);
-    }
-
-    private void XorPieceHash(Board board, Piece piece)
-    {
-        board.ZobristHash ^= piece.GetZobristHash();
-        if (itemDict.TryGetValue(pieceId, out IItem[] items))
-            foreach (IItem item in items)
-                board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
+        ZobristCalculator.AdjustZobristHash(piece, board);
     }
 }

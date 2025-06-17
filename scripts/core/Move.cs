@@ -1,9 +1,10 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
-public struct Move(byte pieceId, Vector2Int from, Vector2Int to, IBoardEvent[] events, Board result)
+public struct Move(byte pieceId, Vector2Int from, Vector2Int to, Board startingBoard)
 {
     // id of the piece that got the move command
     public byte Moving = pieceId;
@@ -11,12 +12,22 @@ public struct Move(byte pieceId, Vector2Int from, Vector2Int to, IBoardEvent[] e
     // To does not necessarily match up with the resulting position!
     public Vector2Int From = from, To = to;
     // List of events that happened because of this move, in order.
-    public IBoardEvent[] Events = events;
+    public List<IBoardEvent> Events = [];
     // Resulting board state (can be an illegal board)
-    public Board Result = result;
-    
-    // public Piece Captured = captured;
-    // public SpecialMoveFlag Flag = flag;
+    public Board Result = startingBoard.Copy();
+
+    public void ApplyEvent(IBoardEvent boardEvent)
+    {
+        Events.Add(boardEvent);
+        // Changes the result board through side effects as well
+        boardEvent.AdjustBoard(Result, this);
+    }
+
+    public bool IsLegal()
+    {
+        // TODO: Implement legality check for Result board
+        return true;
+    }
 
     public static bool operator ==(Move? a, Move? b)
     {

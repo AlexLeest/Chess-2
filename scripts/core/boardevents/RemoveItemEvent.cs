@@ -5,7 +5,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
 public readonly struct RemoveItemEvent(byte pieceId, IItem item) : IBoardEvent
 {
-    public void AdjustBoard(Board board)
+    public void AdjustBoard(Board board, Move move)
     {
         Piece piece = board.GetPiece(pieceId);
         IItem[] itemsForPiece = board.ItemsPerPiece[piece.Id];

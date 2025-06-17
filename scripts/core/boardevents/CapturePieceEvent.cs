@@ -3,10 +3,12 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-public readonly struct CapturePieceEvent(byte pieceId, Dictionary<byte, IItem[]> itemDict) : IBoardEvent
+public readonly struct CapturePieceEvent(byte pieceId) : IBoardEvent
 {
-    public void AdjustBoard(Board board)
+    public void AdjustBoard(Board board, Move move)
     {
+        // TODO: Add ON_CAPTURE item triggers
+        
         Piece piece = board.GetPiece(pieceId);
         
         Piece[] newPieces = new Piece[board.Pieces.Length - 1];
@@ -25,7 +27,7 @@ public readonly struct CapturePieceEvent(byte pieceId, Dictionary<byte, IItem[]>
         board.ZobristHash ^= piece.GetZobristHash();
         
         // XOR out items
-        if (itemDict.TryGetValue(piece.Id, out IItem[] items))
+        if (board.ItemsPerPiece.TryGetValue(piece.Id, out IItem[] items))
             foreach (IItem item in items)
                 board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
     }
