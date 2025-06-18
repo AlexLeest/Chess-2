@@ -38,6 +38,39 @@ public class NewPawnMovement : IMovement
             }
         }
         
+        // Capture left
+        Vector2Int capLeftPos = forwardPos + Vector2Int.Left;
+        if (capLeftPos.Inside(width, height) && board.Squares[capLeftPos.X, capLeftPos.Y] is not null)
+        {
+            Piece toCapture = board.Squares[capLeftPos.X, capLeftPos.Y];
+            if (toCapture.Color != color)
+            {
+                Move capLeftMove = new Move(id, from, capLeftPos, board);
+                MovePieceEvent moveLeft = new MovePieceEvent(id, capLeftPos);
+                CapturePieceEvent capLeft = new CapturePieceEvent(toCapture.Id);
+                capLeftMove.ApplyEvent(moveLeft);
+                capLeftMove.ApplyEvent(capLeft);
+                
+                result.Add(capLeftMove);
+            }
+        }
+        
+        // Capture right
+        Vector2Int capRightPos = forwardPos + Vector2Int.Right;
+        if (capRightPos.Inside(width, height) && board.Squares[capRightPos.X, capRightPos.Y] is not null)
+        {
+            Piece toCapture = board.Squares[capRightPos.X, capRightPos.Y];
+            if (toCapture.Color != color)
+            {
+                Move capLeftMove = new Move(id, from, capRightPos, board);
+                MovePieceEvent moveLeft = new MovePieceEvent(id, capRightPos);
+                CapturePieceEvent capLeft = new CapturePieceEvent(toCapture.Id);
+                capLeftMove.ApplyEvent(moveLeft);
+                capLeftMove.ApplyEvent(capLeft);
+                
+                result.Add(capLeftMove);
+            }
+        }
 
         return result;
     }
