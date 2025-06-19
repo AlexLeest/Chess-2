@@ -279,150 +279,156 @@ public class Board
 
     public Board ApplyMove(Piece piece, Move move, out List<IBoardEvent> events)
     {
-        Piece[] newPieces;
-        bool[] newCastleQueenSide = [CastleQueenSide[0], CastleQueenSide[1]];
-        bool[] newCastleKingSide = [CastleKingSide[0], CastleKingSide[1]];
-
-        events = [];
-        
-        if (move.Flag == SpecialMoveFlag.CASTLE_KINGSIDE)
-        {
-            // Piece = king
-            int colorRank = move.From.Y;
-            Piece toCastle = Squares[7, colorRank];
-            newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
-            // Move king
-            newPieces[^2] = new Piece(piece.Id, piece.BasePiece, piece.Color, new Vector2Int(6, colorRank), piece.Movement, piece.SpecialPieceType);
-            // Move piece
-            newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(5, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
-        
-            // Remove castling rights
-            newCastleQueenSide[colorIndex] = false;
-            newCastleKingSide[colorIndex] = false;
-            Move castleMove = new(piece.Id, piece.Position, new Vector2Int(6, colorRank));
-            Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, ItemsPerPiece, castleMove, this);
-        
-            // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
-            foreach (Piece toActivate in castledBoard.Pieces)
-            {
-                ItemTriggers trigger = toActivate.Color == colorToMove ? ItemTriggers.ON_CASTLE : ItemTriggers.ON_OPPONENT_CASTLE;
-                castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove, ref events);
-            }
-        
-            castledBoard = castledBoard.ActivateItems(ItemTriggers.ON_TURN, castledBoard, castleMove, ref events);
-            // Add to results
-            return castledBoard;
-        }
-        if (move.Flag == SpecialMoveFlag.CASTLE_QUEENSIDE)
-        {
-            int colorRank = move.From.Y;
-            Piece toCastle = Squares[0, colorRank];
-            newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
-            // Move king
-            newPieces[^2] = new Piece(piece.Id, piece.BasePiece, piece.Color, new Vector2Int(2, colorRank), piece.Movement, piece.SpecialPieceType);
-            // Move piece
-            newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(3, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
-        
-            // Remove castling rights
-            newCastleQueenSide[colorIndex] = false;
-            newCastleKingSide[colorIndex] = false;
-            Move castleMove = new(piece.Id, piece.Position, new Vector2Int(2, colorRank));
-            Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, ItemsPerPiece, castleMove, this);
-        
-            // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
-            foreach (Piece toActivate in castledBoard.Pieces)
-            {
-                ItemTriggers trigger = toActivate.Color == colorToMove ? ItemTriggers.ON_CASTLE : ItemTriggers.ON_OPPONENT_CASTLE;
-                castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove, ref events);
-            }
-        
-            castledBoard = castledBoard.ActivateItems(ItemTriggers.ON_TURN, castledBoard, castleMove, ref events);
-            // Add to results
-            return castledBoard;
-        }
-        
-        bool promotion = false;
-        Piece capturedPiece = move.Captured;
-
-        // Make full copy of all unmoved pieces
-        if (capturedPiece == null)
-            newPieces = DeepcopyPieces(piece.Id);
-        else
-            newPieces = DeepcopyPieces(piece.Id, capturedPiece.Id);
-
-        // Add moved piece (in new position) back to the list
-        Piece newPiece;
-        if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && move.To.Y == (piece.Color ? 7 : 0))
-        {
-            // Promotion! Just to queen for now
-            // TODO: Promotion to bishop, rook, knight
-            promotion = true;
-            newPiece = new Piece(piece.Id, BasePiece.QUEEN, piece.Color, move.To, [SlidingMovement.Queen]);
-        }
-        else if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && Math.Abs(move.To.Y - piece.Position.Y) == 2)
-        {
-            newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move.To, piece.Movement, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
-        }
-        else
-        {
-            newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move.To, piece.Movement, piece.SpecialPieceType);
-        }
-        newPieces[^1] = newPiece;
-
-        // If any of the castling pieces move, disallow castling in future boards
-        switch (piece.SpecialPieceType)
-        {
-            case SpecialPieceTypes.KING:
-                newCastleQueenSide[colorIndex] = false;
-                newCastleKingSide[colorIndex] = false;
-                break;
-            case SpecialPieceTypes.QUEEN_SIDE_CASTLE:
-                newCastleQueenSide[colorIndex] = false;
-                break;
-            case SpecialPieceTypes.KING_SIDE_CASTLE:
-                newCastleKingSide[colorIndex] = false;
-                break;
-        }
-        if (capturedPiece is not null)
-        {
-            int otherColorIndex = nextTurn % 2;
-            switch (capturedPiece.SpecialPieceType)
-            {
-                case SpecialPieceTypes.QUEEN_SIDE_CASTLE:
-                    newCastleQueenSide[otherColorIndex] = false;
-                    break;
-                case SpecialPieceTypes.KING_SIDE_CASTLE:
-                    newCastleKingSide[otherColorIndex] = false;
-                    break;
-            }
-        }
-
-        // Make new board add to results
-        // Move committedMove = new(piece.Id, piece.Position, move, capturedPiece);
-        Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, ItemsPerPiece, move, this);
-
-        // Trigger ON_MOVE items
-        possibleMove = ActivateItems(piece.Id, ItemTriggers.ON_MOVE, possibleMove, move, ref events);
-
-        if (capturedPiece is not null)
-        {
-            // Trigger ON_CAPTURE and ON_CAPTURED items
-            possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_CAPTURE, possibleMove, move, ref events);
-            possibleMove = possibleMove.ActivateItems(capturedPiece.Id, ItemTriggers.ON_CAPTURED, possibleMove, move, ref events);
-        }
-        if (promotion)
-        {
-            // Trigger ON_PROMOTION items if that flag is set
-            possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_PROMOTION, possibleMove, move, ref events);
-        }
-
-        // Trigger all ON_TURN items
-        possibleMove = possibleMove.ActivateItems(colorToMove, ItemTriggers.ON_TURN, possibleMove, move, ref events);
-
-        if (!possibleMove.IsInCheck(colorToMove))
-            return possibleMove;
-        return null;
+        events = move.Events;
+        return move.Result;
     }
+
+    // public Board ApplyMove(Piece piece, Move move, out List<IBoardEvent> events)
+    // {
+    //     Piece[] newPieces;
+    //     bool[] newCastleQueenSide = [CastleQueenSide[0], CastleQueenSide[1]];
+    //     bool[] newCastleKingSide = [CastleKingSide[0], CastleKingSide[1]];
+    //
+    //     events = [];
+    //     
+    //     if (move.Flag == SpecialMoveFlag.CASTLE_KINGSIDE)
+    //     {
+    //         // Piece = king
+    //         int colorRank = move.From.Y;
+    //         Piece toCastle = Squares[7, colorRank];
+    //         newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
+    //         // Move king
+    //         newPieces[^2] = new Piece(piece.Id, piece.BasePiece, piece.Color, new Vector2Int(6, colorRank), piece.Movement, piece.SpecialPieceType);
+    //         // Move piece
+    //         newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(5, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
+    //     
+    //         // Remove castling rights
+    //         newCastleQueenSide[colorIndex] = false;
+    //         newCastleKingSide[colorIndex] = false;
+    //         Move castleMove = new(piece.Id, piece.Position, new Vector2Int(6, colorRank));
+    //         Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, ItemsPerPiece, castleMove, this);
+    //     
+    //         // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
+    //         foreach (Piece toActivate in castledBoard.Pieces)
+    //         {
+    //             ItemTriggers trigger = toActivate.Color == colorToMove ? ItemTriggers.ON_CASTLE : ItemTriggers.ON_OPPONENT_CASTLE;
+    //             castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove, ref events);
+    //         }
+    //     
+    //         castledBoard = castledBoard.ActivateItems(ItemTriggers.ON_TURN, castledBoard, castleMove, ref events);
+    //         // Add to results
+    //         return castledBoard;
+    //     }
+    //     if (move.Flag == SpecialMoveFlag.CASTLE_QUEENSIDE)
+    //     {
+    //         int colorRank = move.From.Y;
+    //         Piece toCastle = Squares[0, colorRank];
+    //         newPieces = CastleDeepcopy(piece.Id, toCastle.Id);
+    //         // Move king
+    //         newPieces[^2] = new Piece(piece.Id, piece.BasePiece, piece.Color, new Vector2Int(2, colorRank), piece.Movement, piece.SpecialPieceType);
+    //         // Move piece
+    //         newPieces[^1] = new Piece(toCastle.Id, toCastle.BasePiece, toCastle.Color, new Vector2Int(3, colorRank), toCastle.Movement, toCastle.SpecialPieceType);
+    //     
+    //         // Remove castling rights
+    //         newCastleQueenSide[colorIndex] = false;
+    //         newCastleKingSide[colorIndex] = false;
+    //         Move castleMove = new(piece.Id, piece.Position, new Vector2Int(2, colorRank));
+    //         Board castledBoard = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, ItemsPerPiece, castleMove, this);
+    //     
+    //         // Activate any possible ON_CASTLE/ON_OPPONENT_CASTLE items
+    //         foreach (Piece toActivate in castledBoard.Pieces)
+    //         {
+    //             ItemTriggers trigger = toActivate.Color == colorToMove ? ItemTriggers.ON_CASTLE : ItemTriggers.ON_OPPONENT_CASTLE;
+    //             castledBoard = castledBoard.ActivateItems(toActivate.Id, trigger, castledBoard, castleMove, ref events);
+    //         }
+    //     
+    //         castledBoard = castledBoard.ActivateItems(ItemTriggers.ON_TURN, castledBoard, castleMove, ref events);
+    //         // Add to results
+    //         return castledBoard;
+    //     }
+    //     
+    //     bool promotion = false;
+    //     Piece capturedPiece = move.Captured;
+    //
+    //     // Make full copy of all unmoved pieces
+    //     if (capturedPiece == null)
+    //         newPieces = DeepcopyPieces(piece.Id);
+    //     else
+    //         newPieces = DeepcopyPieces(piece.Id, capturedPiece.Id);
+    //
+    //     // Add moved piece (in new position) back to the list
+    //     Piece newPiece;
+    //     if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && move.To.Y == (piece.Color ? 7 : 0))
+    //     {
+    //         // Promotion! Just to queen for now
+    //         // TODO: Promotion to bishop, rook, knight
+    //         promotion = true;
+    //         newPiece = new Piece(piece.Id, BasePiece.QUEEN, piece.Color, move.To, [SlidingMovement.Queen]);
+    //     }
+    //     else if (piece.SpecialPieceType == SpecialPieceTypes.PAWN && Math.Abs(move.To.Y - piece.Position.Y) == 2)
+    //     {
+    //         newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move.To, piece.Movement, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
+    //     }
+    //     else
+    //     {
+    //         newPiece = new Piece(piece.Id, piece.BasePiece, piece.Color, move.To, piece.Movement, piece.SpecialPieceType);
+    //     }
+    //     newPieces[^1] = newPiece;
+    //
+    //     // If any of the castling pieces move, disallow castling in future boards
+    //     switch (piece.SpecialPieceType)
+    //     {
+    //         case SpecialPieceTypes.KING:
+    //             newCastleQueenSide[colorIndex] = false;
+    //             newCastleKingSide[colorIndex] = false;
+    //             break;
+    //         case SpecialPieceTypes.QUEEN_SIDE_CASTLE:
+    //             newCastleQueenSide[colorIndex] = false;
+    //             break;
+    //         case SpecialPieceTypes.KING_SIDE_CASTLE:
+    //             newCastleKingSide[colorIndex] = false;
+    //             break;
+    //     }
+    //     if (capturedPiece is not null)
+    //     {
+    //         int otherColorIndex = nextTurn % 2;
+    //         switch (capturedPiece.SpecialPieceType)
+    //         {
+    //             case SpecialPieceTypes.QUEEN_SIDE_CASTLE:
+    //                 newCastleQueenSide[otherColorIndex] = false;
+    //                 break;
+    //             case SpecialPieceTypes.KING_SIDE_CASTLE:
+    //                 newCastleKingSide[otherColorIndex] = false;
+    //                 break;
+    //         }
+    //     }
+    //
+    //     // Make new board add to results
+    //     // Move committedMove = new(piece.Id, piece.Position, move, capturedPiece);
+    //     Board possibleMove = new(nextTurn, newPieces, newCastleQueenSide, newCastleKingSide, ItemsPerPiece, move, this);
+    //
+    //     // Trigger ON_MOVE items
+    //     possibleMove = ActivateItems(piece.Id, ItemTriggers.ON_MOVE, possibleMove, move, ref events);
+    //
+    //     if (capturedPiece is not null)
+    //     {
+    //         // Trigger ON_CAPTURE and ON_CAPTURED items
+    //         possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_CAPTURE, possibleMove, move, ref events);
+    //         possibleMove = possibleMove.ActivateItems(capturedPiece.Id, ItemTriggers.ON_CAPTURED, possibleMove, move, ref events);
+    //     }
+    //     if (promotion)
+    //     {
+    //         // Trigger ON_PROMOTION items if that flag is set
+    //         possibleMove = possibleMove.ActivateItems(piece.Id, ItemTriggers.ON_PROMOTION, possibleMove, move, ref events);
+    //     }
+    //
+    //     // Trigger all ON_TURN items
+    //     possibleMove = possibleMove.ActivateItems(colorToMove, ItemTriggers.ON_TURN, possibleMove, move, ref events);
+    //
+    //     if (!possibleMove.IsInCheck(colorToMove))
+    //         return possibleMove;
+    //     return null;
+    // }
 
     public Piece[] DeepcopyPieces(params byte[] idToSkip)
     {

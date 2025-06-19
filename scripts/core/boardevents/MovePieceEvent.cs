@@ -8,6 +8,8 @@ public class MovePieceEvent(byte pieceId, Vector2Int to) : IBoardEvent
 {
     public void AdjustBoard(Board board, Move move)
     {
+        // TODO: Add ON_MOVE item triggers
+
         Piece piece = board.GetPiece(pieceId);
         // XOR out the hash for this piece at old position
         ZobristCalculator.AdjustZobristHash(piece, board);

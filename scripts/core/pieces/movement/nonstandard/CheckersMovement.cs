@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,11 @@ public class CheckersMovement : IMovement
             Piece diagPiece = board.Squares[diagCoords.X, diagCoords.Y];
             if (diagPiece is null)
             {
-                result.Add(new Move(id, from, diagCoords));
+                Move move = new(id, from, diagCoords, board);
+                MovePieceEvent movePiece = new(id, diagCoords);
+                move.ApplyEvent(movePiece);
+
+                result.Add(move);
                 continue;
             }
             if (diagPiece.Color == color)
@@ -37,7 +42,13 @@ public class CheckersMovement : IMovement
             if (behindPiece is not null)
                 continue;
             
-            result.Add(new Move(id, from, behindPieceCoords, diagPiece));
+            Move capMove = new(id, from, behindPieceCoords, board);
+            MovePieceEvent jump = new(id, behindPieceCoords);
+            CapturePieceEvent capture = new(diagPiece.Id);
+            capMove.ApplyEvent(jump);
+            capMove.ApplyEvent(capture);
+            
+            result.Add(capMove);
         }
 
         return result;

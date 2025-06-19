@@ -14,12 +14,12 @@ public abstract class AbstractItem(byte pieceId, ItemTriggers trigger) : IItem
     public byte PieceId { get; } = pieceId;
     public ItemTriggers Trigger { get; } = trigger;
 
-    public virtual bool ConditionsMet(Board board, Move move)
+    public virtual bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
         return true;
     }
 
-    public abstract Board Execute(Board board, Move move, ref List<IBoardEvent> events);
+    public abstract Board Execute(Board board, Move move, IBoardEvent trigger);
 
     public virtual uint GetZobristHash(bool color, Vector2Int position)
     {

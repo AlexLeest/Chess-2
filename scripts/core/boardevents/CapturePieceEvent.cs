@@ -5,6 +5,8 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
 public readonly struct CapturePieceEvent(byte pieceId) : IBoardEvent
 {
+    public readonly byte PieceId = pieceId;
+    
     public void AdjustBoard(Board board, Move move)
     {
         // TODO: Add ON_CAPTURE item triggers

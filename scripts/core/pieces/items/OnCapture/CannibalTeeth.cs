@@ -10,20 +10,22 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
 /// <param name="pieceId"></param>
 public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURE)
 {
-    public override bool ConditionsMet(Board board, Move move)
+    public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
-        Piece piece = board.GetPiece(PieceId);
-        Piece captured = move.Captured;
+        Piece piece = move.Result.GetPiece(pieceId);
+        if (trigger is not CapturePieceEvent captureEvent)
+            return false;
 
+        Piece captured = move.Result.GetPiece(captureEvent.PieceId);
         return piece.Color == captured.Color;
     }
 
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
         Piece piece = board.GetPiece(PieceId);
         Piece before = piece.DeepCopy(false);
         
-        piece.Upgrade();
+        // piece.Upgrade();
         events.Add(new UpdatePieceEvent(before, piece, board.ItemsPerPiece));
         
         return board;
