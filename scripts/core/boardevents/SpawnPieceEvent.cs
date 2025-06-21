@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-public readonly struct SpawnPieceEvent(Piece piece, Dictionary<byte, IItem[]> itemDict) : IBoardEvent
+public readonly struct SpawnPieceEvent(Piece piece) : IBoardEvent
 {
     public void AdjustBoard(Board board, Move move)
     {
@@ -12,20 +12,20 @@ public readonly struct SpawnPieceEvent(Piece piece, Dictionary<byte, IItem[]> it
         board.Squares[piece.Position.X, piece.Position.Y] = piece;
         
         board.ZobristHash ^= piece.GetZobristHash();
-        if (itemDict.TryGetValue(piece.Id, out IItem[] items))
+        if (board.ItemsPerPiece.TryGetValue(piece.Id, out IItem[] items))
             foreach (IItem item in items)
                 board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
     }
 
-    public uint AdjustZobristHash(uint zobristHash)
-    {
-        zobristHash ^= piece.GetZobristHash();
-        if (!itemDict.TryGetValue(piece.Id, out IItem[] items))
-            return zobristHash;
-
-        foreach (IItem item in items)
-            zobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
-
-        return zobristHash;
-    }
+    // public uint AdjustZobristHash(uint zobristHash)
+    // {
+    //     zobristHash ^= piece.GetZobristHash();
+    //     if (!itemDict.TryGetValue(piece.Id, out IItem[] items))
+    //         return zobristHash;
+    //
+    //     foreach (IItem item in items)
+    //         zobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
+    //
+    //     return zobristHash;
+    // }
 }

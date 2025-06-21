@@ -22,11 +22,13 @@ public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
 
     public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
-        Piece piece = board.GetPiece(PieceId);
-        Piece before = piece.DeepCopy(false);
+        Piece before = board.GetPiece(PieceId);
         
-        // piece.Upgrade();
-        events.Add(new UpdatePieceEvent(before, piece, board.ItemsPerPiece));
+        // Don't want to actually change the piece itself, copy and work on those
+        Piece after = before.DeepCopy(false);
+        after.Upgrade();
+        
+        move.ApplyEvent(new UpdatePieceEvent(before, after));
         
         return board;
     }

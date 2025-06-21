@@ -10,19 +10,19 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 /// <param name="pieceId"></param>
 public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURED)
 {
-    public override bool ConditionsMet(Board board, Move move)
+    public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
         // Find original position for this piece (first board, pieceId, position)
         // If position currently not free, return false
         
         Vector2Int respawnPos = GetRootPosition(board);
-        if (board.Squares[respawnPos.X, respawnPos.Y] is not null)
+        if (move.Result.Squares[respawnPos.X, respawnPos.Y] is not null)
             return false;
         
         return true;
     }
 
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
         // Get piece from last board (it's been captured in this one)
         Vector2Int respawnPos = GetRootPosition(board);
@@ -31,39 +31,42 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
             return board;
         
         toRespawn = new Piece(PieceId, toRespawn.BasePiece, toRespawn.Color, respawnPos, toRespawn.Movement, toRespawn.SpecialPieceType);
+        move.ApplyEvent(new SpawnPieceEvent(toRespawn));
         
-        Piece[] newPieces = new Piece[board.Pieces.Length + 1];
-        for (int i = 0; i < board.Pieces.Length; i++)
-        {
-            newPieces[i] = board.Pieces[i];
-        }
-        newPieces[^1] = toRespawn;
-        board.Pieces = newPieces;
-        board.Squares[respawnPos.X, respawnPos.Y] = toRespawn;
+        // Piece[] newPieces = new Piece[board.Pieces.Length + 1];
+        // for (int i = 0; i < board.Pieces.Length; i++)
+        // {
+        //     newPieces[i] = board.Pieces[i];
+        // }
+        // newPieces[^1] = toRespawn;
+        // board.Pieces = newPieces;
+        // board.Squares[respawnPos.X, respawnPos.Y] = toRespawn;
         
-        // Remove the respawn item from the dict
-        Dictionary<byte, IItem[]> newItems = new();
-        foreach (KeyValuePair<byte, IItem[]> pieceToItem in board.ItemsPerPiece)
-        {
-            if (pieceToItem.Key == PieceId)
-            {
-                // Copy over all items but remove self
-                IItem[] newItemsForPiece = new IItem[pieceToItem.Value.Length - 1];
-                int index = 0;
-                foreach (IItem item in pieceToItem.Value)
-                {
-                    if (item == this)
-                        continue;
-                    newItemsForPiece[index] = item;
-                    index++;
-                }
-                newItems[pieceToItem.Key] = newItemsForPiece;
-                continue;
-            }
-            // Unaffected piece, copy over and continue
-            newItems[pieceToItem.Key] = pieceToItem.Value;
-        }
-        board.ItemsPerPiece = newItems;
+        move.ApplyEvent(new RemoveItemEvent(toRespawn.Id, this));
+        
+        // // Remove the respawn item from the dict
+        // Dictionary<byte, IItem[]> newItems = new();
+        // foreach (KeyValuePair<byte, IItem[]> pieceToItem in board.ItemsPerPiece)
+        // {
+        //     if (pieceToItem.Key == PieceId)
+        //     {
+        //         // Copy over all items but remove self
+        //         IItem[] newItemsForPiece = new IItem[pieceToItem.Value.Length - 1];
+        //         int index = 0;
+        //         foreach (IItem item in pieceToItem.Value)
+        //         {
+        //             if (item == this)
+        //                 continue;
+        //             newItemsForPiece[index] = item;
+        //             index++;
+        //         }
+        //         newItems[pieceToItem.Key] = newItemsForPiece;
+        //         continue;
+        //     }
+        //     // Unaffected piece, copy over and continue
+        //     newItems[pieceToItem.Key] = pieceToItem.Value;
+        // }
+        // board.ItemsPerPiece = newItems;
 
         return board;
     }

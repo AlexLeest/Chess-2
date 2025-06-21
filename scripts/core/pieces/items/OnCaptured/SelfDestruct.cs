@@ -10,8 +10,18 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 /// <param name="pieceId"></param>
 public class SelfDestruct(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURED)
 {
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
+        return trigger is CapturePieceEvent;
+    }
+
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
+    {
+        if (trigger is not CapturePieceEvent captureEvent)
+            return board;
+
+        // Piece piece = move.Result.GetPiece(captureEvent.PieceId);
+        
         Vector2Int moveTo = move.To;
         
         Piece toBeDestroyed = board.GetPiece(move.Moving);

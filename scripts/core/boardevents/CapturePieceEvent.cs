@@ -3,15 +3,16 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-public readonly struct CapturePieceEvent(byte pieceId) : IBoardEvent
+public readonly struct CapturePieceEvent(byte pieceId, bool triggersEvents = true) : IBoardEvent
 {
+    // TODO: Add CAPTURING piece id
     public readonly byte PieceId = pieceId;
     
     public void AdjustBoard(Board board, Move move)
     {
         // TODO: Add ON_CAPTURE item triggers
         
-        Piece piece = board.GetPiece(pieceId);
+        Piece piece = board.GetPiece(PieceId);
         
         Piece[] newPieces = new Piece[board.Pieces.Length - 1];
         int index = 0;

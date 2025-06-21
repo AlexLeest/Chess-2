@@ -5,9 +5,12 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
 
 public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURE) 
 {
-    public override bool ConditionsMet(Board board, Move move)
+    public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
-        Piece capturedPiece = move.Captured;
+        if (trigger is not CapturePieceEvent captureEvent)
+            return false;
+        
+        Piece capturedPiece = board.GetPiece(captureEvent.PieceId);
         if (capturedPiece is null)
             return false;
 
@@ -17,24 +20,15 @@ public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
         return true;
     }
 
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
+        if (trigger is not CapturePieceEvent captureEvent)
+            return board;
         // Instead of capturing, put the piece back with your own color and don't move your own piece
         Piece piece = board.GetPiece(PieceId);
         
-        Piece convertPiece = move.Captured.DeepCopy();
-        convertPiece.Color = piece.Color;
-        
-        events.Add(new ChangeColorEvent(convertPiece.Id, piece.Color));
-
-        Piece pieceBefore = piece.DeepCopy(false);
-        piece.Position = move.From;
-        board.Squares[move.From.X, move.From.Y] = piece;
-        board.Squares[move.To.X, move.To.Y] = convertPiece;
-        board.Pieces = board.DeepcopyPieces();
-        board.Pieces[^1] = convertPiece;
-
-        events.Add(new UpdatePieceEvent(pieceBefore, piece, board.ItemsPerPiece));
+        move.ApplyEvent(new ChangeColorEvent(captureEvent.PieceId, piece.Color));
+        move.ApplyEvent(new MovePieceEvent(PieceId, move.From));
 
         return board;
     }
