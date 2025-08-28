@@ -26,7 +26,7 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
     {
         // Get piece from last board (it's been captured in this one)
         Vector2Int respawnPos = GetRootPosition(board);
-        Piece toRespawn = GetPiece(board.LastBoard);
+        Piece toRespawn = GetPiece(board.LastBoard).DeepCopy(false);
         if (toRespawn is null)
             return board;
         

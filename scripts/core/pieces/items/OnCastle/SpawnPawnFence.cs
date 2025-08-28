@@ -7,7 +7,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCastle;
 
 public class SpawnPawnFence(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CASTLE)
 {
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
         bool color = board.Turn % 2 == 1;
         // Put 3 pawns in front of the king (if possible)

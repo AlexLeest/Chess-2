@@ -124,7 +124,7 @@ public class Board
     {
         Piece[] pieces = new Piece[Pieces.Length];
         Array.Copy(Pieces, pieces, Pieces.Length);
-        return new Board(Turn, pieces, CastleQueenSide, CastleKingSide, ItemsPerPiece);
+        return new Board(Turn, pieces, CastleQueenSide, CastleKingSide, ItemsPerPiece, null, this);
     }
 
     public Piece GetPiece(byte id)

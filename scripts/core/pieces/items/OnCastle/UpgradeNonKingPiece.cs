@@ -6,7 +6,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCastle;
 
 public class UpgradeNonKingPiece(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CASTLE) 
 {
-    private readonly System.Collections.Generic.Dictionary<BasePiece, BasePiece> evolutionSteps = new()
+    private readonly Dictionary<BasePiece, BasePiece> evolutionSteps = new()
     {
         { BasePiece.PAWN, BasePiece.KNIGHT },
         { BasePiece.KNIGHT, BasePiece.BISHOP },
@@ -15,13 +15,14 @@ public class UpgradeNonKingPiece(byte pieceId) : AbstractItem(pieceId, ItemTrigg
         // { BasePiece.QUEEN, BasePiece.KING }
     };
 
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
         // Get non-king piece from castling move
-        int xCoord = move.To.X;
-        
-        Piece nonKingPiece = xCoord == 2 ? board.Squares[3, move.To.Y] : board.Squares[5, move.To.Y];
-        nonKingPiece.Upgrade();
+        Piece before = move.To.X == 2 ? move.Result.Squares[3, move.To.Y] : move.Result.Squares[5, move.To.Y];
+        Piece after = before.DeepCopy(false);
+        after.Upgrade();
+
+        move.ApplyEvent(new UpdatePieceEvent(before, after));
         
         return board;
     }

@@ -63,10 +63,8 @@ public class PawnMovement : IMovement
             if (toCapture is not null && toCapture.Color != color)
             {
                 Move capLeftMove = new(id, from, capLeftPos, board);
-                MovePieceEvent moveLeft = new(id, capLeftPos);
-                CapturePieceEvent capLeft = new(toCapture.Id);
-                capLeftMove.ApplyEvent(moveLeft);
-                capLeftMove.ApplyEvent(capLeft);
+                capLeftMove.ApplyEvent(new MovePieceEvent(id, capLeftPos));
+                capLeftMove.ApplyEvent(new CapturePieceEvent(toCapture.Id, id));
                 capLeftMove.ApplyEvent(new NextTurnEvent());
                 
                 result.Add(capLeftMove);
@@ -88,10 +86,9 @@ public class PawnMovement : IMovement
             if (toCapture is not null && toCapture.Color != color)
             {
                 Move capRightMove = new(id, from, capRightPos, board);
-                MovePieceEvent moveLeft = new(id, capRightPos);
-                CapturePieceEvent capLeft = new(toCapture.Id);
-                capRightMove.ApplyEvent(moveLeft);
-                capRightMove.ApplyEvent(capLeft);
+                
+                capRightMove.ApplyEvent(new MovePieceEvent(id, capRightPos));
+                capRightMove.ApplyEvent(new CapturePieceEvent(toCapture.Id, id));
                 capRightMove.ApplyEvent(new NextTurnEvent());
                 
                 result.Add(capRightMove);

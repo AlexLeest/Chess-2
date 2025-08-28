@@ -20,13 +20,10 @@ public class CastlingMovement : IMovement
             if (board.Squares[5, rank] is null && board.Squares[6, rank] is null && !board.IsInCheck(color, checkPositions))
             {
                 Move castleKingSide = new(id, from, new Vector2Int(6, rank), board);
-                MovePieceEvent moveKing = new(id, new Vector2Int(6, rank));
-                MovePieceEvent movePiece = new(toCastleKingSide.Id, new Vector2Int(5, rank));
-                CastleEvent castle = new(color);
 
-                castleKingSide.ApplyEvent(moveKing);
-                castleKingSide.ApplyEvent(movePiece);
-                castleKingSide.ApplyEvent(castle);
+                castleKingSide.ApplyEvent(new MovePieceEvent(id, new Vector2Int(6, rank)));
+                castleKingSide.ApplyEvent(new MovePieceEvent(toCastleKingSide.Id, new Vector2Int(5, rank)));
+                castleKingSide.ApplyEvent(new CastleEvent(color));
                 castleKingSide.ApplyEvent(new NextTurnEvent());
                 
                 result.Add(castleKingSide);

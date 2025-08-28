@@ -16,7 +16,7 @@ public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
         if (trigger is not CapturePieceEvent captureEvent)
             return false;
 
-        Piece captured = move.Result.GetPiece(captureEvent.PieceId);
+        Piece captured = move.Result.GetPiece(captureEvent.CapturedPieceId);
         return piece.Color == captured.Color;
     }
 

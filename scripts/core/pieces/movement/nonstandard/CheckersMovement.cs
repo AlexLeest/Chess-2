@@ -43,10 +43,8 @@ public class CheckersMovement : IMovement
                 continue;
             
             Move capMove = new(id, from, behindPieceCoords, board);
-            MovePieceEvent jump = new(id, behindPieceCoords);
-            CapturePieceEvent capture = new(diagPiece.Id);
-            capMove.ApplyEvent(jump);
-            capMove.ApplyEvent(capture);
+            capMove.ApplyEvent(new MovePieceEvent(id, behindPieceCoords));
+            capMove.ApplyEvent(new CapturePieceEvent(diagPiece.Id, id));
             
             result.Add(capMove);
         }

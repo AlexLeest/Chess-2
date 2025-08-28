@@ -49,14 +49,13 @@ public class SlidingMovement : IMovement
                 
                 Piece onSquare = squares[currentPos.X, currentPos.Y];
                 Move move = new(id, from, currentPos, board);
-                MovePieceEvent movePiece = new(id, currentPos);
-                move.ApplyEvent(movePiece);
+                
+                move.ApplyEvent(new MovePieceEvent(id, currentPos));
                 if (onSquare != null)
                 {
                     if (onSquare.Color != color)
                     {
-                        CapturePieceEvent capture = new(onSquare.Id);
-                        move.ApplyEvent(capture);
+                        move.ApplyEvent(new CapturePieceEvent(onSquare.Id, id));
                     }
                     break;
                 }

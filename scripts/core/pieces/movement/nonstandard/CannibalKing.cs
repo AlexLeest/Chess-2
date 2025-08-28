@@ -28,10 +28,8 @@ public class CannibalKing : IMovement
                     continue;
 
                 Move move = new(id, from, targetCoords, board);
-                MovePieceEvent movePiece = new(id, targetCoords);
-                move.ApplyEvent(movePiece);
-                CapturePieceEvent cannibalize = new(target.Id);
-                move.ApplyEvent(cannibalize);
+                move.ApplyEvent(new MovePieceEvent(id, targetCoords));
+                move.ApplyEvent(new CapturePieceEvent(target.Id, id));
 
                 moves.Add(move);
             }

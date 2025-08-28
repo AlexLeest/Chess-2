@@ -10,7 +10,7 @@ public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
         if (trigger is not CapturePieceEvent captureEvent)
             return false;
         
-        Piece capturedPiece = board.GetPiece(captureEvent.PieceId);
+        Piece capturedPiece = board.GetPiece(captureEvent.CapturedPieceId);
         if (capturedPiece is null)
             return false;
 
@@ -27,7 +27,7 @@ public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
         // Instead of capturing, put the piece back with your own color and don't move your own piece
         Piece piece = board.GetPiece(PieceId);
         
-        move.ApplyEvent(new ChangeColorEvent(captureEvent.PieceId, piece.Color));
+        move.ApplyEvent(new ChangeColorEvent(captureEvent.CapturedPieceId, piece.Color));
         move.ApplyEvent(new MovePieceEvent(PieceId, move.From));
 
         return board;

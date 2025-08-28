@@ -20,25 +20,33 @@ public class SelfDestruct(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_
         if (trigger is not CapturePieceEvent captureEvent)
             return board;
 
+        Piece captured = move.Result.GetPiece(PieceId);
+        Piece capturer = move.Result.GetPiece(captureEvent.CapturingPieceId);
+        
+        // BUG: Check that this doesn't infinite loop if 2 self-destruct pieces capture eachother?
+        //  Keep track of whether an item has already been triggered? Maybe delete the selfdestruct after it gets used to avoid this?
+        if (capturer.Position == captured.Position)
+            move.ApplyEvent(new CapturePieceEvent(capturer.Id, captured.Id));
+
         // Piece piece = move.Result.GetPiece(captureEvent.PieceId);
         
-        Vector2Int moveTo = move.To;
-        
-        Piece toBeDestroyed = board.GetPiece(move.Moving);
-        if (toBeDestroyed is null)
-            return board;
-        Piece[] newPieces = new Piece[board.Pieces.Length - 1];
-        int i = 0;
-        foreach (Piece piece in board.Pieces)
-        {
-            if (piece == toBeDestroyed)
-                continue;
-            newPieces[i] = piece;
-            i++;
-        }
-        board.Pieces = newPieces;
-        board.Squares[moveTo.X, moveTo.Y] = null;
-        board = board.LastBoard.ActivateItems(toBeDestroyed.Id, ItemTriggers.ON_CAPTURED, board, move, ref events);
+        // Vector2Int moveTo = move.To;
+        //
+        // Piece toBeDestroyed = board.GetPiece(move.Moving);
+        // if (toBeDestroyed is null)
+        //     return board;
+        // Piece[] newPieces = new Piece[board.Pieces.Length - 1];
+        // int i = 0;
+        // foreach (Piece piece in board.Pieces)
+        // {
+        //     if (piece == toBeDestroyed)
+        //         continue;
+        //     newPieces[i] = piece;
+        //     i++;
+        // }
+        // board.Pieces = newPieces;
+        // board.Squares[moveTo.X, moveTo.Y] = null;
+        // board = board.LastBoard.ActivateItems(toBeDestroyed.Id, ItemTriggers.ON_CAPTURED, board, move, ref events);
         
         return board;
     }
