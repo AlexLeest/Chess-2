@@ -12,7 +12,7 @@ public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
 {
     public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
-        Piece piece = move.Result.GetPiece(pieceId);
+        Piece piece = move.Result.GetPiece(PieceId);
         if (trigger is not CapturePieceEvent captureEvent)
             return false;
 

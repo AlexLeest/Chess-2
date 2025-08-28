@@ -19,20 +19,30 @@ public class HandHolder(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MO
         boardHeight = board.Squares.GetLength(1);
 
         Vector2Int left = new(move.From.X - 1, move.From.Y);
-        AttemptPieceMove(move, left, moveDelta);
+        AttemptPieceMove(move, left, moveDelta, trigger);
         Vector2Int right = new(move.From.X + 1, move.From.Y);
-        AttemptPieceMove(move, right, moveDelta);
+        AttemptPieceMove(move, right, moveDelta, trigger);
 
         return move.Result;
     }
 
-    private void AttemptPieceMove(Move move, Vector2Int from, Vector2Int delta)
+    private void AttemptPieceMove(Move move, Vector2Int from, Vector2Int delta, IBoardEvent trigger)
     {
-        if (!from.Inside(boardWidth, boardHeight))
+        // Check if starting and goal location are on board
+        Vector2Int goalPos = from + delta;
+        if (!from.Inside(boardWidth, boardHeight) || !goalPos.Inside(boardWidth, boardHeight))
             return;
+        
+        // Check if that location has a piece with the same color and base piece type
         Piece toBeMoved = move.Result.Squares[from.X, from.Y];
         if (toBeMoved is null || toBeMoved.BasePiece != piece.BasePiece)
             return;
+
+        // ALSO check if that piece wasn't the piece that was moved right before this, to prevent looping behavior
+        if (trigger is MovePieceEvent movePieceTrigger && movePieceTrigger.PieceId == PieceId)
+            return;
+
+        move.ApplyEvent(new MovePieceEvent(toBeMoved.Id, from + delta));
     }
 
     // private Board AttemptPieceMove(Board board, Vector2Int position, Vector2Int delta, ref List<IBoardEvent> events)

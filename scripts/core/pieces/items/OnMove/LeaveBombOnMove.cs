@@ -9,7 +9,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
 /// <param name="pieceId"></param>
 public class LeaveBombOnMove(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MOVE)
 {
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
         // TODO: Think of a way to spawn a piece with a set lifespan AND different behavior on capture?
         //  - New SpecialPieceType that behaves similar to EN_PASSANTABLE_PAWN and deteriorates on DeepCopy?

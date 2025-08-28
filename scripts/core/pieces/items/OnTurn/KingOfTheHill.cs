@@ -11,7 +11,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnTurn;
 /// <param name="pieceId"></param>
 public class KingOfTheHill(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_TURN)
 {
-    public override bool ConditionsMet(Board board, Move move)
+    public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
         if (move.Moving == PieceId)
             return false;
@@ -23,10 +23,12 @@ public class KingOfTheHill(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
         return false;
     }
 
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
-        Piece piece = board.GetPiece(PieceId);
-        piece.Upgrade();
+        Piece before = board.GetPiece(PieceId);
+        Piece after = before.DeepCopy(false);
+        after.Upgrade();
+        move.ApplyEvent(new UpdatePieceEvent(before, after));
         return board;
     }
 }

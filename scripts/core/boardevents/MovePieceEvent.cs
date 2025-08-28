@@ -6,12 +6,14 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
 public class MovePieceEvent(byte pieceId, Vector2Int to, bool triggersEvents = true) : IBoardEvent
 {
+    public readonly byte PieceId = pieceId;
+    
     public void AdjustBoard(Board board, Move move)
     {
         // TODO: Add ON_MOVE item triggers
         // TODO: Handle castling rights
 
-        Piece piece = board.GetPiece(pieceId);
+        Piece piece = board.GetPiece(PieceId);
         // XOR out the hash for this piece at old position
         ZobristCalculator.AdjustZobristHash(piece, board);
 
