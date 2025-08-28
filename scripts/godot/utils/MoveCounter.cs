@@ -80,14 +80,14 @@ public partial class MoveCounter : Node
 
         ConcurrentBag<int> counts = new();
         
-        Parallel.ForEach(currentBoard.GenerateMoves(),
-            nextBoard =>
+        Parallel.ForEach(currentBoard.GetMoves(),
+            move =>
             {
-                int count = CountBoardAmounts(nextBoard, depth - 1, false);
+                int count = CountBoardAmounts(move.Result, depth - 1, false);
                 if (print)
                 {
                     // TODO: Get a last-move field on the board for debug reasons (also visualisation maybe)
-                    GD.Print($"{nextBoard.LastMove}: {count}");
+                    GD.Print($"{move}: {count}");
                 }
                 counts.Add(count);
             }

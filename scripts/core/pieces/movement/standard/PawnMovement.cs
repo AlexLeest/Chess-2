@@ -25,8 +25,8 @@ public class PawnMovement : IMovement
         {
             Move forward = new(id, from, forwardPos, board);
             
-            MovePieceEvent push = new(id, forwardPos);
-            forward.ApplyEvent(push);
+            // MovePieceEvent push = new(id, forwardPos);
+            forward.ApplyEvent(new MovePieceEvent(id, forwardPos));
             forward.ApplyEvent(new NextTurnEvent());
             
             result.Add(forward);
@@ -39,8 +39,8 @@ public class PawnMovement : IMovement
                 if (board.Squares[doubleMovePos.X, doubleMovePos.Y] is null)
                 {
                     Move doubleMove = new(id, from, doubleMovePos, board);
-                    MovePieceEvent doublePush = new(id, doubleMovePos);
-                    doubleMove.ApplyEvent(doublePush);
+                    // MovePieceEvent doublePush = new(id, doubleMovePos);
+                    doubleMove.ApplyEvent(new MovePieceEvent(id, doubleMovePos));
                     doubleMove.ApplyEvent(new NextTurnEvent());
                     
                     result.Add(doubleMove);

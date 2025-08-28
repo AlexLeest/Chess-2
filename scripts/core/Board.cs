@@ -1,6 +1,7 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ public class Board
     
     private Dictionary<byte, Piece> pieceDict = [];
 
-    private readonly bool colorToMove;
+    // private readonly bool colorToMove;
     private readonly int colorIndex;
     private readonly int nextTurn;
 
@@ -42,7 +43,7 @@ public class Board
         Turn = turn;
         Pieces = pieces;
         
-        colorToMove = Turn % 2 == 0;
+        // colorToMove = Turn % 2 == 0;
         colorIndex = Turn % 2;
         nextTurn = Turn + 1;
 
@@ -63,15 +64,15 @@ public class Board
             }
         }
 
-        if (lastBoard is not null && lastMove is not null)
-        {
-            // TODO: Adjust this to use the IBoardEvent[] version of zobrist adjusting instead
-            ZobristHash = ZobristCalculator.IncrementallyAdjustZobristHash(lastBoard, this);
-        }
-        else
-        {
-            ZobristHash = GetZobristHash();
-        }
+        // if (lastBoard is not null && lastMove is not null)
+        // {
+        //     // TODO: Adjust this to use the IBoardEvent[] version of zobrist adjusting instead
+        //     ZobristHash = ZobristCalculator.IncrementallyAdjustZobristHash(lastBoard, this);
+        // }
+        // else
+        // {
+        //     ZobristHash = GetZobristHash();
+        // }
     }
 
     public static Board DefaultBoard()
@@ -123,7 +124,11 @@ public class Board
     public Board Copy()
     {
         Piece[] pieces = new Piece[Pieces.Length];
-        Array.Copy(Pieces, pieces, Pieces.Length);
+        // Array.Copy(Pieces, pieces, Pieces.Length);
+        for (int i = 0; i < Pieces.Length; i++)
+        {
+            pieces[i] = Pieces[i].DeepCopy(false);
+        }
         return new Board(Turn, pieces, CastleQueenSide, CastleKingSide, ItemsPerPiece, null, this);
     }
 
@@ -134,40 +139,40 @@ public class Board
         return null;
     }
 
-    public Board ActivateItems(bool color, ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
-    {
-        foreach (Piece piece in Pieces)
-        {
-            if (piece.Color != color)
-                continue;
-            board = board.ActivateItems(piece.Id, trigger, board, move, ref events);
-        }
-        return board;
-    }
+    // public Board ActivateItems(bool color, ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
+    // {
+    //     foreach (Piece piece in Pieces)
+    //     {
+    //         if (piece.Color != color)
+    //             continue;
+    //         board = board.ActivateItems(piece.Id, trigger, board, move, ref events);
+    //     }
+    //     return board;
+    // }
 
-    public Board ActivateItems(ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
-    {
-        foreach (var pair in board.ItemsPerPiece)
-        {
-            board = board.ActivateItems(pair.Key, trigger, board, move, ref events);
-        }
-        return board;
-    }
+    // public Board ActivateItems(ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
+    // {
+    //     foreach (var pair in board.ItemsPerPiece)
+    //     {
+    //         board = board.ActivateItems(pair.Key, trigger, board, move, ref events);
+    //     }
+    //     return board;
+    // }
 
-    public Board ActivateItems(byte pieceId, ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
-    {
-        if (board.ItemsPerPiece.TryGetValue(pieceId, out IItem[] captureItems))
-        {
-            foreach (IItem item in captureItems)
-            {
-                if (item.Trigger == trigger && item.ConditionsMet(board, move))
-                {
-                    board = item.Execute(board, move, ref events);
-                }
-            }
-        }
-        return board;
-    }
+    // public Board ActivateItems(byte pieceId, ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
+    // {
+    //     if (board.ItemsPerPiece.TryGetValue(pieceId, out IItem[] captureItems))
+    //     {
+    //         foreach (IItem item in captureItems)
+    //         {
+    //             if (item.Trigger == trigger && item.ConditionsMet(board, move))
+    //             {
+    //                 board = item.Execute(board, move, ref events);
+    //             }
+    //         }
+    //     }
+    //     return board;
+    // }
 
     public bool IsInCheck(bool color)
     {
@@ -218,11 +223,18 @@ public class Board
         List<Move> result = [];
         foreach (Piece piece in Pieces)
         {
-            if (piece.Color != colorToMove)
+            if (piece.Color != ColorToMove)
                 continue;
             foreach (Move move in piece.GetMovementOptions(this))
             {
-                result.Add(move);
+                if (!move.Result.IsInCheck(ColorToMove))
+                {
+                    result.Add(move);
+                }
+                else
+                {
+                    GD.Print("yeah you fucked up somewhere dog");
+                }
             }
         }
         return result;
@@ -234,54 +246,61 @@ public class Board
         
         foreach (Move move in piece.GetMovementOptions(this))
         {
-            result.Add(move);
-        }
-
-        return result;
-    }
-
-    public List<Board> GenerateMoves()
-    {
-        bool colorToMove = Turn % 2 == 0;
-        List<Board> result = [];
-        foreach (Piece piece in Pieces)
-        {
-            if (piece.Color != colorToMove)
-                continue;
-            foreach (Board move in GenerateMoves(piece))
+            if (!move.Result.IsInCheck(piece.Color))
             {
                 result.Add(move);
             }
-        }
-        return result;
-    }
-
-    public List<Board> GenerateMoves(Piece piece)
-    {
-        List<Board> result = [];
-
-        // For each possible move
-        foreach (Move move in piece.GetMovementOptions(this))
-        {
-            Board nextBoard = ApplyMove(piece, move, out _);
-            if (nextBoard != null)
-                result.Add(nextBoard);
+            else
+            {
+                GD.Print("yeah you fucked up somewhere dog");
+            }
         }
 
         return result;
     }
 
-    public Board ApplyMove(Move move, out List<IBoardEvent> events)
-    {
-        Piece piece = GetPiece(move.Moving);
-        return ApplyMove(piece, move, out events);
-    }
-
-    public Board ApplyMove(Piece piece, Move move, out List<IBoardEvent> events)
-    {
-        events = move.Events;
-        return move.Result;
-    }
+    // public List<Board> GenerateMoves()
+    // {
+    //     bool colorToMove = Turn % 2 == 0;
+    //     List<Board> result = [];
+    //     foreach (Piece piece in Pieces)
+    //     {
+    //         if (piece.Color != colorToMove)
+    //             continue;
+    //         foreach (Board move in GenerateMoves(piece))
+    //         {
+    //             result.Add(move);
+    //         }
+    //     }
+    //     return result;
+    // }
+    //
+    // public List<Board> GenerateMoves(Piece piece)
+    // {
+    //     List<Board> result = [];
+    //
+    //     // For each possible move
+    //     foreach (Move move in piece.GetMovementOptions(this))
+    //     {
+    //         Board nextBoard = ApplyMove(piece, move, out _);
+    //         if (nextBoard != null)
+    //             result.Add(nextBoard);
+    //     }
+    //
+    //     return result;
+    // }
+    //
+    // public Board ApplyMove(Move move, out List<IBoardEvent> events)
+    // {
+    //     Piece piece = GetPiece(move.Moving);
+    //     return ApplyMove(piece, move, out events);
+    // }
+    //
+    // public Board ApplyMove(Piece piece, Move move, out List<IBoardEvent> events)
+    // {
+    //     events = move.Events;
+    //     return move.Result;
+    // }
 
     // public Board ApplyMove(Piece piece, Move move, out List<IBoardEvent> events)
     // {
