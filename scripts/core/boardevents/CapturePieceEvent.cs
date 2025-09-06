@@ -1,5 +1,4 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
-using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 

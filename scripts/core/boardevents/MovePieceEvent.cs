@@ -1,6 +1,4 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
-using CHESS2THESEQUELTOCHESS.scripts.core.utils;
-using System.Collections.Generic;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 

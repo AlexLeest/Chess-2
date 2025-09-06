@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
@@ -6,7 +7,7 @@ public class NextTurnEvent : IBoardEvent
 {
     public void AdjustBoard(Board board, Move move)
     {
-        // TODO: Add ON_TURN item triggers
+        board.ActivateItems(board.ColorToMove, ItemTriggers.ON_TURN, board, move, this);
         
         board.Turn++;
         // XORs the color hash, since this flips back and forth per turn

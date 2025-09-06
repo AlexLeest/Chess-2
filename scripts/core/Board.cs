@@ -146,6 +146,24 @@ public class Board
         return null;
     }
 
+    public void ActivateItems(bool color, ItemTriggers trigger, Board board, Move move, IBoardEvent triggerEvent)
+    {
+        foreach (Piece piece in Pieces)
+        {
+            if (piece.Color != color)
+                continue;
+            board.ActivateItems(piece.Id, trigger, board, move, triggerEvent);
+        }
+    }
+
+    public void ActivateItems(ItemTriggers trigger, Board board, Move move, IBoardEvent triggerEvent)
+    {
+        foreach (var pair in board.ItemsPerPiece)
+        {
+            board.ActivateItems(pair.Key, trigger, board, move, triggerEvent);
+        }
+    }
+
     // public Board ActivateItems(bool color, ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
     // {
     //     foreach (Piece piece in Pieces)
@@ -156,7 +174,7 @@ public class Board
     //     }
     //     return board;
     // }
-
+    //
     // public Board ActivateItems(ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
     // {
     //     foreach (var pair in board.ItemsPerPiece)
@@ -166,20 +184,19 @@ public class Board
     //     return board;
     // }
 
-    // public Board ActivateItems(byte pieceId, ItemTriggers trigger, Board board, Move move, ref List<IBoardEvent> events)
-    // {
-    //     if (board.ItemsPerPiece.TryGetValue(pieceId, out IItem[] captureItems))
-    //     {
-    //         foreach (IItem item in captureItems)
-    //         {
-    //             if (item.Trigger == trigger && item.ConditionsMet(board, move))
-    //             {
-    //                 board = item.Execute(board, move, ref events);
-    //             }
-    //         }
-    //     }
-    //     return board;
-    // }
+    public void ActivateItems(byte pieceId, ItemTriggers trigger, Board board, Move move, IBoardEvent triggerEvent)
+    {
+        if (board.ItemsPerPiece.TryGetValue(pieceId, out IItem[] captureItems))
+        {
+            foreach (IItem item in captureItems)
+            {
+                if (item.Trigger == trigger && item.ConditionsMet(board, move, triggerEvent))
+                {
+                    board = item.Execute(board, move, triggerEvent);
+                }
+            }
+        }
+    }
 
     public bool IsInCheck(bool color)
     {

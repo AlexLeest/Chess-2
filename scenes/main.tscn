@@ -10,7 +10,7 @@
 
 [node name="MoveCounter" type="Node" parent="."]
 script = ExtResource("2_sugp2")
-depth = 3
+depth = 5
 debugPrint = true
 
 [node name="Tooltip" type="VBoxContainer" parent="." node_paths=PackedStringArray("pieceNameLabel", "movementsLabel", "itemsLabel")]
