@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="LevelModel" load_steps=5 format=3 uid="uid://b3v0pgb12c2n3"]
+[gd_resource type="Resource" script_class="LevelModel" load_steps=6 format=3 uid="uid://b3v0pgb12c2n3"]
 
 [ext_resource type="Resource" uid="uid://c5onfr36eyxpm" path="res://data/enemy setups/enemy_setup.tres" id="1_5p1i5"]
 [ext_resource type="Script" uid="uid://d4jbqkmx4hwho" path="res://scripts/godot/data/LevelModel.cs" id="1_k7ub5"]
 [ext_resource type="Resource" uid="uid://dlr7el6h5ioe1" path="res://data/AI engines/zobrist_5.tres" id="2_82edy"]
+[ext_resource type="Resource" uid="uid://bjo6an3t0ff1k" path="res://data/AI engines/minimax_5.tres" id="2_p7r78"]
 [ext_resource type="Resource" uid="uid://dnfklsd6c1fcm" path="res://data/all_items.tres" id="5_p7r78"]
 
 [resource]
 script = ExtResource("1_k7ub5")
 EnemySetup = ExtResource("1_5p1i5")
-Engines = Array[Resource]([ExtResource("2_82edy")])
+Engines = Array[Resource]([ExtResource("2_p7r78"), ExtResource("2_82edy")])
 upgrades = ExtResource("5_p7r78")
 metadata/_custom_type_script = "uid://d4jbqkmx4hwho"
