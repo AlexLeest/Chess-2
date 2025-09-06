@@ -231,10 +231,10 @@ public class Board
                 {
                     result.Add(move);
                 }
-                else
-                {
-                    GD.Print("yeah you fucked up somewhere dog");
-                }
+                // else
+                // {
+                //     GD.Print("yeah you fucked up somewhere dog");
+                // }
             }
         }
         return result;
@@ -250,10 +250,10 @@ public class Board
             {
                 result.Add(move);
             }
-            else
-            {
-                GD.Print("yeah you fucked up somewhere dog");
-            }
+            // else
+            // {
+            //     GD.Print("yeah you fucked up somewhere dog");
+            // }
         }
 
         return result;

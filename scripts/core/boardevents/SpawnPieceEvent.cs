@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-public readonly struct SpawnPieceEvent(Piece piece) : IBoardEvent
+public class SpawnPieceEvent(Piece piece) : IBoardEvent
 {
     public void AdjustBoard(Board board, Move move)
     {

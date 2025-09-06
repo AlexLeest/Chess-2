@@ -2,7 +2,7 @@
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-public readonly struct NextTurnEvent : IBoardEvent
+public class NextTurnEvent : IBoardEvent
 {
     public void AdjustBoard(Board board, Move move)
     {

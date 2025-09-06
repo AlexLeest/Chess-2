@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-public readonly struct CapturePieceEvent(byte capturedPieceId, byte capturingPieceId, bool triggersEvents = true) : IBoardEvent
+public class CapturePieceEvent(byte capturedPieceId, byte capturingPieceId, bool triggersEvents = true) : IBoardEvent
 {
     public readonly byte CapturedPieceId = capturedPieceId;
     public readonly byte CapturingPieceId = capturingPieceId;

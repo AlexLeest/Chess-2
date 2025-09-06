@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
+// TODO: Make thread-safe
 public static class ZobristCalculator
 {
     private static Random rng = new();

@@ -12,6 +12,7 @@ public class MovePieceEvent(byte pieceId, Vector2Int to, bool triggersEvents = t
     {
         // TODO: Add ON_MOVE item triggers
         // TODO: Handle castling rights
+        // TODO: Add pawn promotion
 
         Piece piece = board.GetPiece(PieceId);
         // XOR out the hash for this piece at old position

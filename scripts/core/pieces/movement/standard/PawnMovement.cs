@@ -13,7 +13,7 @@ public class PawnMovement : IMovement
     {
         // TODO: Handle promotion (here or in MovePieceEvent?)
         
-        List<Move> result = [];
+        List<Move> options = [];
         Vector2Int direction = new(0, (color ? 1 : -1));
 
         int width = board.Squares.GetLength(0);
@@ -29,7 +29,7 @@ public class PawnMovement : IMovement
             forward.ApplyEvent(new MovePieceEvent(id, forwardPos));
             forward.ApplyEvent(new NextTurnEvent());
             
-            result.Add(forward);
+            options.Add(forward);
             
             // Double push (if possible)
             bool onDoubleMoveRow = (color && from.Y == 1) || (!color && from.Y == 6);
@@ -43,7 +43,7 @@ public class PawnMovement : IMovement
                     doubleMove.ApplyEvent(new MovePieceEvent(id, doubleMovePos));
                     doubleMove.ApplyEvent(new NextTurnEvent());
                     
-                    result.Add(doubleMove);
+                    options.Add(doubleMove);
                 }
             }
         }
@@ -67,7 +67,7 @@ public class PawnMovement : IMovement
                 capLeftMove.ApplyEvent(new CapturePieceEvent(toCapture.Id, id));
                 capLeftMove.ApplyEvent(new NextTurnEvent());
                 
-                result.Add(capLeftMove);
+                options.Add(capLeftMove);
             }
         }
         
@@ -91,11 +91,11 @@ public class PawnMovement : IMovement
                 capRightMove.ApplyEvent(new CapturePieceEvent(toCapture.Id, id));
                 capRightMove.ApplyEvent(new NextTurnEvent());
                 
-                result.Add(capRightMove);
+                options.Add(capRightMove);
             }
         }
 
-        return result;
+        return options;
     }
     // public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
     // {
