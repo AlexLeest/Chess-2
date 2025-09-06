@@ -136,7 +136,7 @@ public class Board
                 ZobristHash ^= ZobristCalculator.GetZobristHash(toCopy.Color, toCopy.Position, SpecialPieceTypes.NONE);
             }
         }
-        return new Board(Turn, pieces, CastleQueenSide, CastleKingSide, ItemsPerPiece, null, this);
+        return new Board(Turn, pieces, [CastleQueenSide[0], CastleQueenSide[1]], [CastleKingSide[0], CastleKingSide[1]], ItemsPerPiece, null, this);
     }
 
     public Piece GetPiece(byte id)
