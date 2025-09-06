@@ -12,6 +12,7 @@ public class PawnMovement : IMovement
     public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
     {
         // TODO: Handle promotion (here or in MovePieceEvent?)
+        // TODO: Add making a pawn en-passantable
         
         List<Move> options = [];
         Vector2Int direction = new(0, (color ? 1 : -1));
@@ -41,6 +42,7 @@ public class PawnMovement : IMovement
                     Move doubleMove = new(id, from, doubleMovePos, board);
                     // MovePieceEvent doublePush = new(id, doubleMovePos);
                     doubleMove.ApplyEvent(new MovePieceEvent(id, doubleMovePos));
+                    doubleMove.ApplyEvent(new ChangePieceTypeEvent(id, SpecialPieceTypes.EN_PASSANTABLE_PAWN));
                     doubleMove.ApplyEvent(new NextTurnEvent());
                     
                     options.Add(doubleMove);
@@ -50,7 +52,8 @@ public class PawnMovement : IMovement
         
         // Capture left
         Vector2Int capLeftPos = forwardPos + Vector2Int.Left;
-        if (capLeftPos.Inside(width, height) && board.Squares[capLeftPos.X, capLeftPos.Y] is not null)
+        // if (capLeftPos.Inside(width, height) && board.Squares[capLeftPos.X, capLeftPos.Y] is not null)
+        if (capLeftPos.Inside(width, height))
         {
             Piece toCapture = board.Squares[capLeftPos.X, capLeftPos.Y];
             
@@ -73,7 +76,8 @@ public class PawnMovement : IMovement
         
         // Capture right
         Vector2Int capRightPos = forwardPos + Vector2Int.Right;
-        if (capRightPos.Inside(width, height) && board.Squares[capRightPos.X, capRightPos.Y] is not null)
+        // if (capRightPos.Inside(width, height) && board.Squares[capRightPos.X, capRightPos.Y] is not null)
+        if (capRightPos.Inside(width, height))
         {
             Piece toCapture = board.Squares[capRightPos.X, capRightPos.Y];
             

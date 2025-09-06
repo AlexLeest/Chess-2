@@ -25,7 +25,10 @@ public class CapturePieceEvent(byte capturedPieceId, byte capturingPieceId, bool
             index++;
         }
         board.Pieces = newPieces;
-        board.Squares[piece.Position.X, piece.Position.Y] = null;
+        
+        // To make sure we're only deleting the captured piece and not a piece already moved on top of it
+        if (board.Squares[piece.Position.X, piece.Position.Y].Id == CapturedPieceId)
+            board.Squares[piece.Position.X, piece.Position.Y] = null;
         
         // XOR out piece hash
         board.ZobristHash ^= piece.GetZobristHash();

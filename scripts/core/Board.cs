@@ -123,11 +123,19 @@ public class Board
 
     public Board Copy()
     {
+        // TODO: Handle en passant decay
+        
         Piece[] pieces = new Piece[Pieces.Length];
         // Array.Copy(Pieces, pieces, Pieces.Length);
         for (int i = 0; i < Pieces.Length; i++)
         {
-            pieces[i] = Pieces[i].DeepCopy(false);
+            Piece toCopy = Pieces[i];
+            pieces[i] = toCopy.DeepCopy();
+            if (toCopy.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
+            {
+                ZobristHash ^= ZobristCalculator.GetZobristHash(toCopy.Color, toCopy.Position, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
+                ZobristHash ^= ZobristCalculator.GetZobristHash(toCopy.Color, toCopy.Position, SpecialPieceTypes.NONE);
+            }
         }
         return new Board(Turn, pieces, CastleQueenSide, CastleKingSide, ItemsPerPiece, null, this);
     }
