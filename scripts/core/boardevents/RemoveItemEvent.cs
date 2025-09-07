@@ -7,8 +7,6 @@ public class RemoveItemEvent(byte pieceId, IItem item) : IBoardEvent
 {
     public void AdjustBoard(Board board, Move move)
     {
-        // BUG: Removes the item from other boards as well
-        
         Piece piece = board.GetPiece(pieceId);
         IItem[] itemsForPiece = board.ItemsPerPiece[piece.Id];
         List<IItem> newItems = [];

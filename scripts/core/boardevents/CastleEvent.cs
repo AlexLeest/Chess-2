@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
@@ -25,5 +26,8 @@ public class CastleEvent(bool color) : IBoardEvent
 
         board.CastleKingSide = kingSide;
         board.CastleQueenSide = queenSide;
+        
+        board.ActivateItems(board.ColorToMove, ItemTriggers.ON_CASTLE, board, move, this);
+        board.ActivateItems(!board.ColorToMove, ItemTriggers.ON_OPPONENT_CASTLE, board, move, this);
     }
 }
