@@ -158,7 +158,7 @@ public class Board
 
     public void ActivateItems(ItemTriggers trigger, Board board, Move move, IBoardEvent triggerEvent)
     {
-        foreach (var pair in board.ItemsPerPiece)
+        foreach (KeyValuePair<byte, IItem[]> pair in board.ItemsPerPiece)
         {
             board.ActivateItems(pair.Key, trigger, board, move, triggerEvent);
         }
@@ -186,9 +186,9 @@ public class Board
 
     public void ActivateItems(byte pieceId, ItemTriggers trigger, Board board, Move move, IBoardEvent triggerEvent)
     {
-        if (board.ItemsPerPiece.TryGetValue(pieceId, out IItem[] captureItems))
+        if (board.ItemsPerPiece.TryGetValue(pieceId, out IItem[] items))
         {
-            foreach (IItem item in captureItems)
+            foreach (IItem item in items)
             {
                 if (item.Trigger == trigger && item.ConditionsMet(board, move, triggerEvent))
                 {
