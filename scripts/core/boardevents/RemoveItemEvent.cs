@@ -7,6 +7,8 @@ public class RemoveItemEvent(byte pieceId, IItem item) : IBoardEvent
 {
     public void AdjustBoard(Board board, Move move)
     {
+        // BUG: Removes the item from other boards as well
+        
         Piece piece = board.GetPiece(pieceId);
         IItem[] itemsForPiece = board.ItemsPerPiece[piece.Id];
         List<IItem> newItems = [];
@@ -16,7 +18,15 @@ public class RemoveItemEvent(byte pieceId, IItem item) : IBoardEvent
                 continue;
             newItems.Add(currentItem);
         }
-        board.ItemsPerPiece[piece.Id] = newItems.ToArray();
+        Dictionary<byte, IItem[]> newItemsPerPiece = [];
+        foreach (var pair in board.ItemsPerPiece)
+        {
+            if (pair.Key == piece.Id)
+                newItemsPerPiece[pair.Key] = newItems.ToArray();
+            else
+                newItemsPerPiece[pair.Key] = pair.Value;
+        }
+        board.ItemsPerPiece = newItemsPerPiece;
         
         board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
     }
