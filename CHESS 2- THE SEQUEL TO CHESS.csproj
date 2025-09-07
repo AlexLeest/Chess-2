@@ -8,13 +8,7 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="scripts\core\pieces\items\AfterCaptured\" />
-    <Folder Include="scripts\core\pieces\items\BeforeCaptured\" />
     <Folder Include="scripts\core\pieces\items\OnThreathened\" />
-    <Folder Include="scripts\godot\pieces\items\AfterCaptured\" />
-    <Folder Include="scripts\godot\pieces\items\AfterCapture\" />
-    <Folder Include="scripts\godot\pieces\items\BeforeCaptured\" />
-    <Folder Include="scripts\godot\pieces\items\OnCaptured\" />
     <Folder Include="scripts\godot\pieces\items\OnThreatened\" />
   </ItemGroup>
 </Project>

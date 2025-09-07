@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="GDCannibalTeeth" load_steps=2 format=3 uid="uid://bif220mgfmh7r"]
 
-[ext_resource type="Script" uid="uid://cawlmw0b6qxmf" path="res://scripts/godot/pieces/items/OnCapture/GDCannibalTeeth.cs" id="1_47fa0"]
+[ext_resource type="Script" uid="uid://cawlmw0b6qxmf" path="res://scripts/godot/pieces/items/BeforeCapture/GDCannibalTeeth.cs" id="1_47fa0"]
 
 [resource]
 script = ExtResource("1_47fa0")

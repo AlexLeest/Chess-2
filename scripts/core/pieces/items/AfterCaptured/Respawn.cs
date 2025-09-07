@@ -8,7 +8,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 /// When this piece is captured, it instead respawns on it's starting location (once, and only if that location is empty)
 /// </summary>
 /// <param name="pieceId"></param>
-public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURED)
+public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.AFTER_CAPTURED)
 {
     public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
@@ -26,47 +26,13 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
     {
         // Get piece from last board (it's been captured in this one)
         Vector2Int respawnPos = GetRootPosition(board);
-        Piece toRespawn = board.GetPiece(PieceId).DeepCopy(false);
+        Piece toRespawn = board.LastBoard.GetPiece(PieceId).DeepCopy(false);
         if (toRespawn is null)
             return board;
         
         toRespawn = new Piece(PieceId, toRespawn.BasePiece, toRespawn.Color, respawnPos, toRespawn.Movement, toRespawn.SpecialPieceType);
         move.ApplyEvent(new SpawnPieceEvent(toRespawn));
-        
-        // Piece[] newPieces = new Piece[board.Pieces.Length + 1];
-        // for (int i = 0; i < board.Pieces.Length; i++)
-        // {
-        //     newPieces[i] = board.Pieces[i];
-        // }
-        // newPieces[^1] = toRespawn;
-        // board.Pieces = newPieces;
-        // board.Squares[respawnPos.X, respawnPos.Y] = toRespawn;
-        
         move.ApplyEvent(new RemoveItemEvent(toRespawn.Id, this));
-        
-        // // Remove the respawn item from the dict
-        // Dictionary<byte, IItem[]> newItems = new();
-        // foreach (KeyValuePair<byte, IItem[]> pieceToItem in board.ItemsPerPiece)
-        // {
-        //     if (pieceToItem.Key == PieceId)
-        //     {
-        //         // Copy over all items but remove self
-        //         IItem[] newItemsForPiece = new IItem[pieceToItem.Value.Length - 1];
-        //         int index = 0;
-        //         foreach (IItem item in pieceToItem.Value)
-        //         {
-        //             if (item == this)
-        //                 continue;
-        //             newItemsForPiece[index] = item;
-        //             index++;
-        //         }
-        //         newItems[pieceToItem.Key] = newItemsForPiece;
-        //         continue;
-        //     }
-        //     // Unaffected piece, copy over and continue
-        //     newItems[pieceToItem.Key] = pieceToItem.Value;
-        // }
-        // board.ItemsPerPiece = newItems;
 
         return board;
     }
@@ -84,11 +50,5 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
             return piece.Position;
         
         throw new KeyNotFoundException($"Piece with id {PieceId} not found at root board");
-        // foreach (Piece piece in rootBoard.Pieces)
-        // {
-        //     if (piece.Id != PieceId)
-        //         continue;
-        //     return piece.Position;
-        // }
     }
 }

@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="GDGun" load_steps=2 format=3 uid="uid://cv0yvlh7f4dy2"]
 
-[ext_resource type="Script" uid="uid://qh6kdy6xyr26" path="res://scripts/godot/pieces/items/OnCapture/GDGun.cs" id="1_5xxar"]
+[ext_resource type="Script" uid="uid://qh6kdy6xyr26" path="res://scripts/godot/pieces/items/BeforeCapture/GDGun.cs" id="1_k4xdr"]
 
 [resource]
-script = ExtResource("1_5xxar")
+script = ExtResource("1_k4xdr")
 Rarity = 2
 metadata/_custom_type_script = "uid://qh6kdy6xyr26"

@@ -30,6 +30,10 @@ public class CapturePieceEvent(byte capturedPieceId, byte capturingPieceId, bool
         if (board.Squares[piece.Position.X, piece.Position.Y]?.Id == CapturedPieceId)
             board.Squares[piece.Position.X, piece.Position.Y] = null;
         
+        // Activating items 
+        board.ActivateItems(CapturingPieceId, ItemTriggers.AFTER_CAPTURE, board, move, this);
+        board.ActivateItems(CapturedPieceId, ItemTriggers.AFTER_CAPTURED, board, move, this);
+        
         // XOR out piece hash
         board.ZobristHash ^= piece.GetZobristHash();
         
@@ -37,8 +41,5 @@ public class CapturePieceEvent(byte capturedPieceId, byte capturingPieceId, bool
         if (board.ItemsPerPiece.TryGetValue(piece.Id, out IItem[] items))
             foreach (IItem item in items)
                 board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
-        
-        board.ActivateItems(CapturingPieceId, ItemTriggers.AFTER_CAPTURE, board, move, this);
-        board.ActivateItems(CapturedPieceId, ItemTriggers.AFTER_CAPTURED, board, move, this);
     }
 }
