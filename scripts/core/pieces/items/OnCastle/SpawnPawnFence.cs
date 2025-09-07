@@ -9,7 +9,7 @@ public class SpawnPawnFence(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
 {
     public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
-        bool color = board.Turn % 2 == 1;
+        bool color = board.Turn % 2 == 0;
         // Put 3 pawns in front of the king (if possible)
         int kingX = move.To.X;
         int pawnY = move.To.Y == 0 ? 1 : 6;
