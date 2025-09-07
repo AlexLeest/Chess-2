@@ -1,14 +1,13 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
-using System.Collections.Generic;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.BeforeCapture;
 
 /// <summary>
 /// When piece captures a piece of its own color, evolve the piece
 /// </summary>
 /// <param name="pieceId"></param>
-public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTURE)
+public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.BEFORE_CAPTURE)
 {
     public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {

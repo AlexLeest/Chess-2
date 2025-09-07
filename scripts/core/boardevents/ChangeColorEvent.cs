@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
@@ -13,12 +14,10 @@ public class ChangeColorEvent(byte pieceId, bool color) : IBoardEvent
             return;
         
         // XOR out current piece hash, since the color changing switches everything
-        board.ZobristHash ^= piece.GetZobristHash();
-        if (board.ItemsPerPiece.TryGetValue(pieceId, out IItem[] items))
-            foreach (IItem item in items)
-                board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
+        ZobristCalculator.AdjustZobristHash(piece, board);
 
+        // Change color, XOR in new hash
         piece.Color = color;
-        
+        ZobristCalculator.AdjustZobristHash(piece, board);
     }
 }

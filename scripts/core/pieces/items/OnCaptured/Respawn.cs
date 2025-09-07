@@ -26,7 +26,7 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
     {
         // Get piece from last board (it's been captured in this one)
         Vector2Int respawnPos = GetRootPosition(board);
-        Piece toRespawn = GetPiece(board.LastBoard).DeepCopy(false);
+        Piece toRespawn = board.GetPiece(PieceId).DeepCopy(false);
         if (toRespawn is null)
             return board;
         
@@ -71,19 +71,6 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
         return board;
     }
 
-    private Piece GetPiece(Board board)
-    {
-        Piece toRespawn = null;
-        foreach (Piece piece in board.Pieces)
-        {
-            if (piece.Id != PieceId)
-                continue;
-            
-            toRespawn = piece;
-        }
-        return toRespawn;
-    }
-
     private Vector2Int GetRootPosition(Board board)
     {
         // Get root board
@@ -92,12 +79,16 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CAPTU
         {
             rootBoard = rootBoard.LastBoard;
         }
-        foreach (Piece piece in rootBoard.Pieces)
-        {
-            if (piece.Id != PieceId)
-                continue;
+        Piece piece = rootBoard.GetPiece(PieceId);
+        if (piece is not null)
             return piece.Position;
-        }
+        
         throw new KeyNotFoundException($"Piece with id {PieceId} not found at root board");
+        // foreach (Piece piece in rootBoard.Pieces)
+        // {
+        //     if (piece.Id != PieceId)
+        //         continue;
+        //     return piece.Position;
+        // }
     }
 }

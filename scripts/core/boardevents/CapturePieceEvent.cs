@@ -9,11 +9,12 @@ public class CapturePieceEvent(byte capturedPieceId, byte capturingPieceId, bool
     
     public void AdjustBoard(Board board, Move move)
     {
-        // TODO: Add ON_CAPTURE and ON_CAPTURED item triggers
-        //  to note ON_CAPTURED should be triggered before actually deleting the piece off the board state (?)
-        
         Piece piece = board.GetPiece(CapturedPieceId);
+
+        board.ActivateItems(CapturingPieceId, ItemTriggers.BEFORE_CAPTURE, board, move, this);
+        board.ActivateItems(CapturedPieceId, ItemTriggers.BEFORE_CAPTURED, board, move, this);
         
+        // Removal of captured piece
         Piece[] newPieces = new Piece[board.Pieces.Length - 1];
         int index = 0;
         foreach (Piece toCopy in board.Pieces)
@@ -26,7 +27,7 @@ public class CapturePieceEvent(byte capturedPieceId, byte capturingPieceId, bool
         board.Pieces = newPieces;
         
         // To make sure we're only deleting the captured piece and not a piece already moved on top of it
-        if (board.Squares[piece.Position.X, piece.Position.Y].Id == CapturedPieceId)
+        if (board.Squares[piece.Position.X, piece.Position.Y]?.Id == CapturedPieceId)
             board.Squares[piece.Position.X, piece.Position.Y] = null;
         
         // XOR out piece hash
@@ -36,20 +37,8 @@ public class CapturePieceEvent(byte capturedPieceId, byte capturingPieceId, bool
         if (board.ItemsPerPiece.TryGetValue(piece.Id, out IItem[] items))
             foreach (IItem item in items)
                 board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
+        
+        board.ActivateItems(CapturingPieceId, ItemTriggers.AFTER_CAPTURE, board, move, this);
+        board.ActivateItems(CapturedPieceId, ItemTriggers.AFTER_CAPTURED, board, move, this);
     }
-
-    // public uint AdjustZobristHash(uint zobristHash)
-    // {
-    //     // XOR out piece hash
-    //     zobristHash ^= piece.GetZobristHash();
-    //     
-    //     if (!itemDict.TryGetValue(piece.Id, out IItem[] items))
-    //         return zobristHash;
-    //
-    //     // XOR out items
-    //     foreach (IItem item in items)
-    //         zobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
-    //
-    //     return zobristHash;
-    // }
 }

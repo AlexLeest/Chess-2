@@ -10,7 +10,6 @@ public class MovePieceEvent(byte pieceId, Vector2Int to, bool triggersEvents = t
     
     public void AdjustBoard(Board board, Move move)
     {
-        // TODO: Add ON_MOVE item triggers
         // TODO: Handle castling rights
         // TODO: Add pawn promotion
 

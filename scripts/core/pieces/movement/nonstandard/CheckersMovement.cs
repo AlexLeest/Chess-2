@@ -25,8 +25,8 @@ public class CheckersMovement : IMovement
             if (diagPiece is null)
             {
                 Move move = new(id, from, diagCoords, board);
-                MovePieceEvent movePiece = new(id, diagCoords);
-                move.ApplyEvent(movePiece);
+                move.ApplyEvent(new MovePieceEvent(id, diagCoords));
+                move.ApplyEvent(new NextTurnEvent());
 
                 result.Add(move);
                 continue;
@@ -45,6 +45,7 @@ public class CheckersMovement : IMovement
             Move capMove = new(id, from, behindPieceCoords, board);
             capMove.ApplyEvent(new MovePieceEvent(id, behindPieceCoords));
             capMove.ApplyEvent(new CapturePieceEvent(diagPiece.Id, id));
+            capMove.ApplyEvent(new NextTurnEvent());
             
             result.Add(capMove);
         }

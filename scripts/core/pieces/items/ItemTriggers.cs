@@ -4,7 +4,11 @@ public enum ItemTriggers
 {
     ON_TURN,
     ON_MOVE,
+    BEFORE_CAPTURE,
+    AFTER_CAPTURE,
     ON_CAPTURE,
+    BEFORE_CAPTURED,
+    AFTER_CAPTURED,
     ON_CAPTURED,
     ON_PROMOTION,
     ON_THREATENED,
