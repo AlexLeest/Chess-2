@@ -24,11 +24,9 @@ public class Board
     
     private Dictionary<byte, Piece> pieceDict = [];
 
-    // private readonly bool colorToMove;
-    private readonly int colorIndex;
-    private readonly int nextTurn;
 
     public bool ColorToMove => Turn % 2 == 0;
+    public int ColorIndex => Turn % 2;
 
     public Board(
         int turn,
@@ -42,10 +40,6 @@ public class Board
     {
         Turn = turn;
         Pieces = pieces;
-        
-        // colorToMove = Turn % 2 == 0;
-        colorIndex = Turn % 2;
-        nextTurn = Turn + 1;
 
         CastleQueenSide = castleQueenSide;
         CastleKingSide = castleKingSide;
@@ -64,15 +58,10 @@ public class Board
             }
         }
 
-        // if (lastBoard is not null && lastMove is not null)
-        // {
-        //     // TODO: Adjust this to use the IBoardEvent[] version of zobrist adjusting instead
-        //     ZobristHash = ZobristCalculator.IncrementallyAdjustZobristHash(lastBoard, this);
-        // }
-        // else
-        // {
-        //     ZobristHash = GetZobristHash();
-        // }
+        if (ZobristHash == 0)
+        {
+            ZobristHash = GetZobristHash();
+        }
     }
 
     public static Board DefaultBoard()
@@ -129,12 +118,12 @@ public class Board
         {
             Piece toCopy = Pieces[i];
             pieces[i] = toCopy.DeepCopy();
-            if (toCopy.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
-            {
-                // Reflect en passant decay in the zobrist hash
-                ZobristHash ^= ZobristCalculator.GetZobristHash(toCopy.Color, toCopy.Position, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
-                ZobristHash ^= ZobristCalculator.GetZobristHash(toCopy.Color, toCopy.Position, SpecialPieceTypes.NONE);
-            }
+            // if (toCopy.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
+            // {
+            //     // Reflect en passant decay in the zobrist hash
+            //     ZobristHash ^= ZobristCalculator.GetZobristHash(toCopy.Color, toCopy.Position, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
+            //     ZobristHash ^= ZobristCalculator.GetZobristHash(toCopy.Color, toCopy.Position, SpecialPieceTypes.NONE);
+            // }
         }
         return new Board(Turn, pieces, [CastleQueenSide[0], CastleQueenSide[1]], [CastleKingSide[0], CastleKingSide[1]], ItemsPerPiece, null, this);
     }
@@ -513,8 +502,8 @@ public class Board
 
     public uint GetZobristHash()
     {
-        if (ZobristHash != 0)
-            return ZobristHash;
+        // if (ZobristHash != 0)
+        //     return ZobristHash;
         
         uint result = 0;
 

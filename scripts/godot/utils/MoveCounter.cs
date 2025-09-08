@@ -37,6 +37,7 @@ public partial class MoveCounter : Node
             }
             if (eventKey.Keycode == Key.W)
             {
+                zobristCollisionCheck.Clear();
                 newFuckups = fuckups = good = 0;
                 Stopwatch sw = Stopwatch.StartNew();
                 int nodeCount = CountBoardAmounts(gdBoard.Board, depth, debugPrint);
@@ -49,26 +50,24 @@ public partial class MoveCounter : Node
 
     private Dictionary<uint, Board> zobristCollisionCheck = [];
 
-    private int CountBoardAmounts(Board currentBoard, int depth, bool print = false)
+    private int CountBoardAmounts(Board currentBoard, int depth, bool print = false, Move? lastMove = null)
     {
-        uint zobristHash = currentBoard.GetZobristHash();
-        if (currentBoard.LastBoard is not null)
+        uint zobristHash = currentBoard.ZobristHash;
+        // GD.Print(zobristHash);
+        if (currentBoard.GetZobristHash() == zobristHash)
         {
-            if (currentBoard.ZobristHash == zobristHash)
+            // if (good == 0)
+            //     GD.Print($"BOTH CORRECT: {FENConverter.BoardToFEN(currentBoard.LastBoard)}\nBOTH CORRECT: {FENConverter.BoardToFEN(currentBoard)}");
+            good++;
+        }
+        else
+        {
+            fuckups++;
+            if (currentBoard.LastBoard is not null && currentBoard.LastBoard.ZobristHash == currentBoard.LastBoard.GetZobristHash())
             {
-                if (good == 0)
-                    GD.Print($"BOTH CORRECT: {FENConverter.BoardToFEN(currentBoard.LastBoard)}\nBOTH CORRECT: {FENConverter.BoardToFEN(currentBoard)}");
-                good++;
-            }
-            else
-            {
-                fuckups++;
-                if (currentBoard.LastBoard.ZobristHash == currentBoard.LastBoard.GetZobristHash())
-                {
-                    // if (newFuckups == 0)
-                    GD.Print($"fuckup when: {currentBoard.LastMove}");
-                    newFuckups++;
-                }
+                if (newFuckups == 0)
+                    GD.Print($"fuckup on turn: {currentBoard.Turn} on move: {lastMove.Value.Moving} {lastMove}");
+                newFuckups++;
             }
         }
         zobristCollisionCheck[zobristHash] = currentBoard;
@@ -103,7 +102,7 @@ public partial class MoveCounter : Node
             if (nextBoard is null)
                 continue;
             
-            int localCount = CountBoardAmounts(nextBoard, depth - 1, false);
+            int localCount = CountBoardAmounts(nextBoard, depth - 1, false, move);
             if (print)
             {
                 GD.Print($"{move}: {localCount}");

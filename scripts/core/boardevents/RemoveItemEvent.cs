@@ -28,10 +28,4 @@ public class RemoveItemEvent(byte pieceId, IItem item) : IBoardEvent
         
         board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
     }
-    
-    // public void AdjustZobristHash(Board board)
-    // {
-    //     Piece piece = board.GetPiece(pieceId);
-    //     board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
-    // }
 }

@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="PlayerSetup" load_steps=9 format=3 uid="uid://c5onfr36eyxpm"]
+[gd_resource type="Resource" script_class="PlayerSetup" load_steps=10 format=3 uid="uid://c5onfr36eyxpm"]
 
 [ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="1_wn6dh"]
+[ext_resource type="Resource" uid="uid://bxtft2oa0hjhw" path="res://data/items/OnOpponentCastle/capture_non_king_piece.tres" id="2_c7g86"]
 [ext_resource type="Script" uid="uid://dxjj038hvehvy" path="res://scripts/godot/data/PlayerSetup.cs" id="2_pipk8"]
 
 [sub_resource type="Resource" id="Resource_iijh1"]
@@ -30,7 +31,7 @@ metadata/_custom_type_script = "uid://cul58y3sumplo"
 [sub_resource type="Resource" id="Resource_1umtu"]
 script = ExtResource("1_wn6dh")
 StartPosition = Vector2i(4, 7)
-Items = []
+Items = [ExtResource("2_c7g86")]
 PieceType = 5
 Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
