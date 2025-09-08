@@ -24,45 +24,16 @@ public class MovePieceEvent(byte pieceId, Vector2Int to, bool triggersEvents = t
 
         // Handle castling rights
         int colorIndex = board.ColorIndex;
-        // SpecialPieceTypes pieceType = piece.SpecialPieceType;
-        // if (board.CastleKingSide[colorIndex] && (pieceType == SpecialPieceTypes.KING_SIDE_CASTLE || pieceType == SpecialPieceTypes.KING))
-        // {
-        //     board.CastleKingSide[colorIndex] = false;
-        //     board.ZobristHash ^= ZobristCalculator.CastlingHashes[colorIndex];
-        // }
-        // if (board.CastleQueenSide[colorIndex] && (pieceType == SpecialPieceTypes.QUEEN_SIDE_CASTLE || pieceType == SpecialPieceTypes.KING))
-        // {
-        //     board.CastleQueenSide[colorIndex] = false;
-        //     board.ZobristHash ^= ZobristCalculator.CastlingHashes[colorIndex + 2];
-        // }
-        switch (piece.SpecialPieceType)
+        SpecialPieceTypes pieceType = piece.SpecialPieceType;
+        if (board.CastleKingSide[colorIndex] && (pieceType == SpecialPieceTypes.KING_SIDE_CASTLE || pieceType == SpecialPieceTypes.KING))
         {
-            case SpecialPieceTypes.KING:
-                if (board.CastleKingSide[colorIndex])
-                {
-                    board.CastleKingSide[colorIndex] = false;
-                    board.ZobristHash ^= ZobristCalculator.CastlingHashes[colorIndex];
-                }
-                if (board.CastleQueenSide[colorIndex])
-                {
-                    board.CastleQueenSide[colorIndex] = false;
-                    board.ZobristHash ^= ZobristCalculator.CastlingHashes[colorIndex + 2];
-                }
-                break;
-            case SpecialPieceTypes.KING_SIDE_CASTLE:
-                if (board.CastleKingSide[colorIndex])
-                {
-                    board.CastleKingSide[colorIndex] = false;
-                    board.ZobristHash ^= ZobristCalculator.CastlingHashes[colorIndex];
-                }
-                break;
-            case SpecialPieceTypes.QUEEN_SIDE_CASTLE:
-                if (board.CastleQueenSide[colorIndex])
-                {
-                    board.CastleQueenSide[colorIndex] = false;
-                    board.ZobristHash ^= ZobristCalculator.CastlingHashes[colorIndex + 2];
-                }
-                break;
+            board.CastleKingSide[colorIndex] = false;
+            board.ZobristHash ^= ZobristCalculator.CastlingHashes[colorIndex];
+        }
+        if (board.CastleQueenSide[colorIndex] && (pieceType == SpecialPieceTypes.QUEEN_SIDE_CASTLE || pieceType == SpecialPieceTypes.KING))
+        {
+            board.CastleQueenSide[colorIndex] = false;
+            board.ZobristHash ^= ZobristCalculator.CastlingHashes[colorIndex + 2];
         }
 
         board.ActivateItems(PieceId, ItemTriggers.ON_MOVE, board, move, this);

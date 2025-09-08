@@ -35,7 +35,8 @@ public class Board
         bool[] castleKingSide,
         Dictionary<byte, IItem[]> itemsPerPiece,
         Move? lastMove = null,
-        Board lastBoard = null
+        Board lastBoard = null,
+        uint zobristHash = 0
     )
     {
         Turn = turn;
@@ -58,6 +59,7 @@ public class Board
             }
         }
 
+        ZobristHash = zobristHash;
         if (ZobristHash == 0)
         {
             ZobristHash = GetZobristHash();
@@ -110,22 +112,24 @@ public class Board
         return new Board(0, pieces, [true, true], [true, true], []);
     }
 
-    public Board Copy()
+    public Board Copy(Move? lastMove = null)
     {
         Piece[] pieces = new Piece[Pieces.Length];
+        uint zobrist = ZobristHash;
         // Array.Copy(Pieces, pieces, Pieces.Length);
         for (int i = 0; i < Pieces.Length; i++)
         {
             Piece toCopy = Pieces[i];
+            
             pieces[i] = toCopy.DeepCopy();
-            // if (toCopy.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
-            // {
-            //     // Reflect en passant decay in the zobrist hash
-            //     ZobristHash ^= ZobristCalculator.GetZobristHash(toCopy.Color, toCopy.Position, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
-            //     ZobristHash ^= ZobristCalculator.GetZobristHash(toCopy.Color, toCopy.Position, SpecialPieceTypes.NONE);
-            // }
+            if (toCopy.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
+            {
+                // Reflect en passant decay in the zobrist hash
+                zobrist ^= ZobristCalculator.GetZobristHash(toCopy.Color, toCopy.Position, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
+                zobrist ^= ZobristCalculator.GetZobristHash(toCopy.Color, toCopy.Position, toCopy.BasePiece == BasePiece.PAWN ? SpecialPieceTypes.PAWN : SpecialPieceTypes.NONE);
+            }
         }
-        return new Board(Turn, pieces, [CastleQueenSide[0], CastleQueenSide[1]], [CastleKingSide[0], CastleKingSide[1]], ItemsPerPiece, null, this);
+        return new Board(Turn, pieces, [CastleQueenSide[0], CastleQueenSide[1]], [CastleKingSide[0], CastleKingSide[1]], ItemsPerPiece, lastMove, this, zobrist);
     }
 
     public Piece GetPiece(byte id)

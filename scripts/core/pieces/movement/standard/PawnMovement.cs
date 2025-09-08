@@ -40,6 +40,7 @@ public class PawnMovement : IMovement
                 {
                     Move doubleMove = new(id, from, doubleMovePos, board);
                     doubleMove.ApplyEvent(new MovePieceEvent(id, doubleMovePos));
+                    // BUG: This breaks the zobrist logic when the piece is changed into not being a pawn by the MovePieceEvent
                     doubleMove.ApplyEvent(new ChangePieceTypeEvent(id, SpecialPieceTypes.EN_PASSANTABLE_PAWN));
                     doubleMove.ApplyEvent(new NextTurnEvent());
                     

@@ -13,7 +13,7 @@ public class ChangePieceTypeEvent(byte pieceId, SpecialPieceTypes type) : IBoard
         
         // XOR out the old type, XOR in the new type
         board.ZobristHash ^= ZobristCalculator.GetZobristHash(piece.Color, piece.Position, piece.SpecialPieceType);
-        piece.SpecialPieceType = type;
-        board.ZobristHash ^= ZobristCalculator.GetZobristHash(piece.Color, piece.Position, type);
+        piece.SpecialPieceType = Type;
+        board.ZobristHash ^= ZobristCalculator.GetZobristHash(piece.Color, piece.Position, Type);
     }
 }
