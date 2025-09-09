@@ -28,19 +28,6 @@ public class PromotionExplosion(byte pieceId) : AbstractItem(pieceId, ItemTrigge
                     continue;
 
                 move.ApplyEvent(new CapturePieceEvent(toKill.Id, PieceId));
-                // Remove piece from pieces list and squares repr
-                // List<Piece> newPieces = [];
-                // foreach (Piece piece in board.Pieces)
-                // {
-                //     if (piece.Id == toKill.Id)
-                //         continue;
-                //     newPieces.Add(piece);
-                // }
-                // board.Pieces = newPieces.ToArray();
-                // board.Squares[toKillPos.X, toKillPos.Y] = null;
-
-                // Activate ON_CAPTURED items for that piece
-                // board = board.ActivateItems(toKill.Id, ItemTriggers.ON_CAPTURED, board, move, ref events);
             }
 
         return board;

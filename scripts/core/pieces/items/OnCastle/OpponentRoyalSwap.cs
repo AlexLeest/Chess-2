@@ -44,39 +44,6 @@ public class OpponentRoyalSwap(byte pieceId) : AbstractItem(pieceId, ItemTrigger
         Vector2Int queenPos = queen.Position;
         move.ApplyEvent(new MovePieceEvent(king.Id, queenPos, false));
         move.ApplyEvent(new MovePieceEvent(queen.Id, kingPos, false));
-        
-        // // Find out own color
-        // bool color = GetOwnColor(board);
-        //
-        // Piece king = null;
-        // Piece queen = null;
-        // foreach (Piece piece in board.Pieces)
-        // {
-        //     if (piece.SpecialPieceType == SpecialPieceTypes.KING && piece.Color != color)
-        //     {
-        //         king = piece;
-        //     }
-        //     else if (piece.BasePiece == BasePiece.QUEEN && piece.Color != color)
-        //     {
-        //         queen = piece;
-        //     }
-        // }
-        //
-        // if (king is null || queen is null)
-        // {
-        //     return board;
-        // }
-        // Vector2Int kingPos = king.Position;
-        // Vector2Int queenPos = queen.Position;
-        //
-        // king.Position = queenPos;
-        // queen.Position = kingPos;
-        // board.Squares[kingPos.X, kingPos.Y] = queen;
-        // board.Squares[queenPos.X, queenPos.Y] = king;
-        //
-        // int otherColorIndex = color ? 1 : 0;
-        // board.CastleQueenSide[otherColorIndex] = false;
-        // board.CastleKingSide[otherColorIndex] = false;
 
         return board;
     }

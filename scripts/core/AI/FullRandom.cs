@@ -15,9 +15,6 @@ public class FullRandom : IEngine
             return new Move();
         Move move = choices[rng.Next(choices.Count)];
         
-        // List<IBoardEvent> events = [];
-        // while (board.ApplyMove(move, out _) is null)
-        //     move = choices[rng.Next(choices.Count)];
         return move;
     }
 

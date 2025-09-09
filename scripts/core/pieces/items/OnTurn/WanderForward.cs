@@ -34,12 +34,6 @@ public class WanderForward(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
         // Vector2Int startPos = piece.Position;
         move.ApplyEvent(new MovePieceEvent(PieceId, forward));
 
-        // board.Squares[piece.Position.X, piece.Position.Y] = null;
-        // piece.Position = forward;
-        // board.Squares[forward.X, forward.Y] = piece;
-
-        // board = board.ActivateItems(pieceId, ItemTriggers.ON_MOVE, board, new Move(PieceId, startPos, forward), ref events);
-
         return board;
     }
 }

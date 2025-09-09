@@ -71,7 +71,6 @@ public class ZobristHashing(int maxDepth) : IEngine
         
         foreach (Move move in nextMoves)
         {
-            // Board nextBoard = board.ApplyMove(move, out _);
             Board nextBoard = move.Result;
             if (nextBoard is null)
                 continue;

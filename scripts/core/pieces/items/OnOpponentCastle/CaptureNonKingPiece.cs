@@ -19,7 +19,6 @@ public class CaptureNonKingPiece(byte pieceId) : AbstractItem(pieceId, ItemTrigg
             return board;
 
         move.ApplyEvent(new CapturePieceEvent(nonKingPiece.Id, PieceId));
-        // board.Pieces = board.DeepcopyPieces(nonKingPiece.Id, nonKingPiece.Id);
         return board;
     }
 }
