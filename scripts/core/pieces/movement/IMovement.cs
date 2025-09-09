@@ -38,6 +38,7 @@ public interface IMovement
     /// <summary>
     /// Returns the zobrist hash for this movement on this position, to be XOR-ed with all other values
     /// </summary>
+    /// <param name="color">Color of piece</param>
     /// <param name="position">Position on board</param>
     /// <returns>Integer hash value</returns>
     public uint GetZobristHash(bool color, Vector2Int position);

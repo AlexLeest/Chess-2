@@ -1,11 +1,11 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
-using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
+// TODO: Make thread-safe
 public static class ZobristCalculator
 {
     private static Random rng = new();
@@ -19,7 +19,7 @@ public static class ZobristCalculator
     private static Dictionary<(bool, Vector2Int, Type), uint> itemHashes = [];
     private static Dictionary<(bool, Vector2Int, Type), uint> movementHashes = [];
 
-    private static uint[] castlingHashes = [RandomUint(), RandomUint(), RandomUint(), RandomUint()];
+    public static uint[] CastlingHashes = [RandomUint(), RandomUint(), RandomUint(), RandomUint()];
     private static uint whiteToMoveHash = RandomUint();
     
     private static bool initialized = false;
@@ -99,81 +99,77 @@ public static class ZobristCalculator
         uint result = 0;
 
         if (kingSide[0])
-            result ^= castlingHashes[0];
+            result ^= CastlingHashes[0];
         if (kingSide[1])
-            result ^= castlingHashes[1];
+            result ^= CastlingHashes[1];
         if (queenSide[0])
-            result ^= castlingHashes[2];
+            result ^= CastlingHashes[2];
         if (queenSide[1])
-            result ^= castlingHashes[3];
+            result ^= CastlingHashes[3];
 
         return result;
     }
 
-    public static uint IncrementallyAdjustZobristHash(Board lastBoard, IBoardEvent[] events)
+    public static void AdjustZobristHash(Piece piece, Board board)
     {
-        uint zobristHash = lastBoard.ZobristHash;
-
-        foreach (IBoardEvent boardEvent in events)
-        {
-            zobristHash = boardEvent.AdjustZobristHash(zobristHash);
-        }
-
-        return zobristHash;
+        board.ZobristHash ^= piece.GetZobristHash();
+        if (board.ItemsPerPiece.TryGetValue(piece.Id, out IItem[] items))
+            foreach (IItem item in items)
+                board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
     }
 
-    public static uint IncrementallyAdjustZobristHash(Board lastBoard, Board currentBoard)
-    {
-        // TODO: Handle items and all their wacky consequences (arbitrary board changes)
-        
-        // Instead of recalculating the whole hash from scratch, take the hash from last board and XOR out the changed elements
-        uint newZobristHash = lastBoard.ZobristHash;
-        Move move = currentBoard.LastMove.Value;
-            
-        // XOR out/in the moved piece
-        newZobristHash ^= lastBoard.GetPiece(move.Moving).GetZobristHash();
-        Piece movedPiece = currentBoard.GetPiece(move.Moving);
-        newZobristHash ^= movedPiece.GetZobristHash();
-        // Do the same for the items
-        if (currentBoard.ItemsPerPiece.TryGetValue(move.Moving, out IItem[] movedItems))
-        {
-            foreach (IItem item in movedItems)
-            {
-                newZobristHash ^= item.GetZobristHash(movedPiece.Color, move.From);
-                newZobristHash ^= item.GetZobristHash(movedPiece.Color, move.To);
-            }
-        }
-            
-        // If necessary, XOR out captured piece
-        if (move.Captured is not null)
-        {
-            newZobristHash ^= move.Captured.GetZobristHash();
-            if (currentBoard.ItemsPerPiece.TryGetValue(move.Captured.Id, out IItem[] capturedItems))
-            {
-                foreach (IItem item in capturedItems)
-                {
-                    newZobristHash ^= item.GetZobristHash(move.Captured.Color, move.To);
-                }
-            }
-        }
-        // XOR out/in the color-to-move
-        newZobristHash ^= GetZobristHash(lastBoard.ColorToMove);
-        newZobristHash ^= GetZobristHash(currentBoard.ColorToMove);
-        
-        // En passant decay handling
-        if (lastBoard.EnPassantPawn is not null
-            && currentBoard.LastMove.HasValue && currentBoard.LastMove.Value.Captured != lastBoard.EnPassantPawn)
-        {
-            Piece enPassantPawn = lastBoard.EnPassantPawn;
-            newZobristHash ^= GetZobristHash(enPassantPawn.Color, enPassantPawn.Position, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
-            newZobristHash ^= GetZobristHash(enPassantPawn.Color, enPassantPawn.Position, SpecialPieceTypes.PAWN);
-        }
-
-        newZobristHash ^= GetZobristHash(lastBoard.CastleKingSide, lastBoard.CastleQueenSide);
-        newZobristHash ^= GetZobristHash(currentBoard.CastleKingSide, currentBoard.CastleQueenSide);
-
-        return newZobristHash;
-    }
+    // public static uint IncrementallyAdjustZobristHash(Board lastBoard, Board currentBoard)
+    // {
+    //     // TODO: Remove this, IBoardEvent.AdjustBoard() should handle this
+    //     
+    //     // Instead of recalculating the whole hash from scratch, take the hash from last board and XOR out the changed elements
+    //     uint newZobristHash = lastBoard.ZobristHash;
+    //     Move move = currentBoard.LastMove.Value;
+    //         
+    //     // XOR out/in the moved piece
+    //     newZobristHash ^= lastBoard.GetPiece(move.Moving).GetZobristHash();
+    //     Piece movedPiece = currentBoard.GetPiece(move.Moving);
+    //     newZobristHash ^= movedPiece.GetZobristHash();
+    //     // Do the same for the items
+    //     if (currentBoard.ItemsPerPiece.TryGetValue(move.Moving, out IItem[] movedItems))
+    //     {
+    //         foreach (IItem item in movedItems)
+    //         {
+    //             newZobristHash ^= item.GetZobristHash(movedPiece.Color, move.From);
+    //             newZobristHash ^= item.GetZobristHash(movedPiece.Color, move.To);
+    //         }
+    //     }
+    //         
+    //     // If necessary, XOR out captured piece
+    //     if (move.Captured is not null)
+    //     {
+    //         newZobristHash ^= move.Captured.GetZobristHash();
+    //         if (currentBoard.ItemsPerPiece.TryGetValue(move.Captured.Id, out IItem[] capturedItems))
+    //         {
+    //             foreach (IItem item in capturedItems)
+    //             {
+    //                 newZobristHash ^= item.GetZobristHash(move.Captured.Color, move.To);
+    //             }
+    //         }
+    //     }
+    //     // XOR out/in the color-to-move
+    //     newZobristHash ^= GetZobristHash(lastBoard.ColorToMove);
+    //     newZobristHash ^= GetZobristHash(currentBoard.ColorToMove);
+    //     
+    //     // En passant decay handling
+    //     if (lastBoard.EnPassantPawn is not null
+    //         && currentBoard.LastMove.HasValue && currentBoard.LastMove.Value.Captured != lastBoard.EnPassantPawn)
+    //     {
+    //         Piece enPassantPawn = lastBoard.EnPassantPawn;
+    //         newZobristHash ^= GetZobristHash(enPassantPawn.Color, enPassantPawn.Position, SpecialPieceTypes.EN_PASSANTABLE_PAWN);
+    //         newZobristHash ^= GetZobristHash(enPassantPawn.Color, enPassantPawn.Position, SpecialPieceTypes.PAWN);
+    //     }
+    //
+    //     newZobristHash ^= GetZobristHash(lastBoard.CastleKingSide, lastBoard.CastleQueenSide);
+    //     newZobristHash ^= GetZobristHash(currentBoard.CastleKingSide, currentBoard.CastleQueenSide);
+    //
+    //     return newZobristHash;
+    // }
 
     public static uint RandomUint()
     {

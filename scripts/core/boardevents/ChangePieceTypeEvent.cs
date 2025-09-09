@@ -1,10 +1,19 @@
-﻿namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
-public readonly struct ChangePieceTypeEvent(Piece piece, BasePiece before, BasePiece after) : IBoardEvent
+namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+
+public class ChangePieceTypeEvent(byte pieceId, SpecialPieceTypes type) : IBoardEvent
 {
-    public uint AdjustZobristHash(uint zobristHash)
+    public readonly byte PieceId = pieceId;
+    public readonly SpecialPieceTypes Type = type;
+    
+    public void AdjustBoard(Board board, Move move)
     {
-        // Isn't this covered in the MovePieceEvent?
-        throw new System.NotImplementedException();
+        Piece piece = board.GetPiece(PieceId);
+        
+        // XOR out the old type, XOR in the new type
+        board.ZobristHash ^= ZobristCalculator.GetZobristHash(piece.Color, piece.Position, piece.SpecialPieceType);
+        piece.SpecialPieceType = Type;
+        board.ZobristHash ^= ZobristCalculator.GetZobristHash(piece.Color, piece.Position, Type);
     }
 }

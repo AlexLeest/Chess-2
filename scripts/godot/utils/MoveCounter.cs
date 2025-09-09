@@ -14,7 +14,7 @@ public partial class MoveCounter : Node
 {
     [Export] private GodotBoard gdBoard;
     [Export] private int depth;
-    [Export] private bool debugPrint, countInternalNodes;
+    [Export] private bool debugPrint, countInternalNodes, checkZobrist;
 
     private int internalNodes = 0;
     private int newFuckups, fuckups, good;
@@ -37,77 +37,82 @@ public partial class MoveCounter : Node
             }
             if (eventKey.Keycode == Key.W)
             {
+                zobristCollisionCheck.Clear();
                 newFuckups = fuckups = good = 0;
                 Stopwatch sw = Stopwatch.StartNew();
                 int nodeCount = CountBoardAmounts(gdBoard.Board, depth, debugPrint);
                 long time = sw.ElapsedMilliseconds;
                 GD.Print($"Depth: {depth}, Count: {nodeCount}, Time: {time} ms, NPS: {nodeCount/(time/1000f)}");
-                GD.Print($"Unique zobrist hashes: {zobristCollisionCheck.Count}, good {good}, fuckups {fuckups}, of which new {newFuckups}");
+                if (checkZobrist)
+                    GD.Print($"Unique zobrist hashes: {zobristCollisionCheck.Count}, good {good}, fuckups {fuckups}, of which new {newFuckups}");
             }
         }
     }
 
     private Dictionary<uint, Board> zobristCollisionCheck = [];
 
-    private int CountBoardAmounts(Board currentBoard, int depth, bool print = false)
+    private int CountBoardAmounts(Board currentBoard, int depth, bool print = false, Move? lastMove = null)
     {
-        // uint zobristHash = currentBoard.GetZobristHash();
-        // if (currentBoard.LastBoard is not null)
-        // {
-        //     if (currentBoard.ZobristHash == zobristHash)
-        //     {
-        //         if (good == 0)
-        //             GD.Print($"BOTH CORRECT: {FENConverter.BoardToFEN(currentBoard.LastBoard)}\nBOTH CORRECT: {FENConverter.BoardToFEN(currentBoard)}");
-        //         good++;
-        //     }
-        //     else
-        //     {
-        //         fuckups++;
-        //         if (currentBoard.LastBoard.ZobristHash == currentBoard.LastBoard.GetZobristHash())
-        //         {
-        //             // if (newFuckups == 0)
-        //             GD.Print($"fuckup when: {currentBoard.LastMove}");
-        //             newFuckups++;
-        //         }
-        //     }
-        // }
-        // zobristCollisionCheck[zobristHash] = currentBoard;
+        if (checkZobrist)
+        {
+            uint zobristHash = currentBoard.ZobristHash;
+            // GD.Print(zobristHash);
+            if (currentBoard.GetZobristHash() == zobristHash)
+            {
+                // if (good == 0)
+                //     GD.Print($"BOTH CORRECT: {FENConverter.BoardToFEN(currentBoard.LastBoard)}\nBOTH CORRECT: {FENConverter.BoardToFEN(currentBoard)}");
+                good++;
+            }
+            else
+            {
+                fuckups++;
+                if (currentBoard.LastBoard is not null && currentBoard.LastBoard.ZobristHash == currentBoard.LastBoard.GetZobristHash())
+                {
+                    if (newFuckups == 0)
+                        GD.Print($"fuckup on turn: {currentBoard.Turn} on move: {lastMove.Value.Moving} {lastMove}");
+                    newFuckups++;
+                }
+            }
+            zobristCollisionCheck[zobristHash] = currentBoard;
+        }
         
         if (depth <= 0)
         {
             return 1;
         }
 
-        ConcurrentBag<int> counts = new();
-        
-        Parallel.ForEach(currentBoard.GenerateMoves(),
-            nextBoard =>
-            {
-                int count = CountBoardAmounts(nextBoard, depth - 1, false);
-                if (print)
-                {
-                    // TODO: Get a last-move field on the board for debug reasons (also visualisation maybe)
-                    GD.Print($"{nextBoard.LastMove}: {count}");
-                }
-                counts.Add(count);
-            }
-        );
-        return counts.Sum() + internalNodes;
-
-        // int count = 0;
-        // foreach (Move move in currentBoard.GetMoves())
-        // {
-        //     Board nextBoard = currentBoard.ApplyMove(move);
-        //     if (nextBoard is null)
-        //         continue;
-        //     
-        //     int localCount = CountBoardAmounts(nextBoard, depth - 1, false);
-        //     if (print)
+        // BUG: Zobrist hashing isn't thread-safe
+        //
+        // ConcurrentBag<int> counts = [];
+        //
+        // Parallel.ForEach(currentBoard.GetMoves(),
+        //     move =>
         //     {
-        //         GD.Print($"{nextBoard.LastMove}: {localCount}");
+        //         int count = CountBoardAmounts(move.Result, depth - 1, false);
+        //         if (print)
+        //         {
+        //             // TODO: Get a last-move field on the board for debug reasons (also visualisation maybe)
+        //             GD.Print($"{move}: {count}");
+        //         }
+        //         counts.Add(count);
         //     }
-        //     count += localCount;
-        // }
-        // return count + internalNodes;
+        // );
+        // return counts.Sum() + internalNodes;
+
+        int count = 0;
+        foreach (Move move in currentBoard.GetMoves())
+        {
+            Board nextBoard = move.Result;
+            if (nextBoard is null)
+                continue;
+            
+            int localCount = CountBoardAmounts(nextBoard, depth - 1, false, move);
+            if (print)
+            {
+                GD.Print($"{move}: {localCount}");
+            }
+            count += localCount;
+        }
+        return count + internalNodes;
     }
 }

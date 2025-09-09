@@ -11,13 +11,17 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
 /// <param name="pieceId"></param>
 public class EvolutionLoop(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MOVE)
 {
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
-        Piece moved = board.GetPiece(PieceId);
-        if (moved.BasePiece == BasePiece.QUEEN)
-            moved.ChangeTo(BasePiece.PAWN);
+        Piece before = move.Result.GetPiece(PieceId);
+        Piece after = before.DeepCopy(false);
+        if (before.BasePiece == BasePiece.QUEEN)
+            after.ChangeTo(BasePiece.PAWN);
         else
-            moved.Upgrade();
+            after.Upgrade();
+        
+        move.ApplyEvent(new UpdatePieceEvent(before, after));
+        
         return board;
     }
 }

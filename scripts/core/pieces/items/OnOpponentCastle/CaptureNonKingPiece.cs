@@ -5,7 +5,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnOpponentCastle;
 
 public class CaptureNonKingPiece(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_OPPONENT_CASTLE)
 {
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
         // Get non-king piece in castling, KILL
         int xCoord = move.To.X;
@@ -18,7 +18,8 @@ public class CaptureNonKingPiece(byte pieceId) : AbstractItem(pieceId, ItemTrigg
         if (nonKingPiece is null)
             return board;
 
-        board.Pieces = board.DeepcopyPieces(nonKingPiece.Id, nonKingPiece.Id);
+        move.ApplyEvent(new CapturePieceEvent(nonKingPiece.Id, PieceId));
+        // board.Pieces = board.DeepcopyPieces(nonKingPiece.Id, nonKingPiece.Id);
         return board;
     }
 }

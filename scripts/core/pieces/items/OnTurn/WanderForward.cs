@@ -10,19 +10,19 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnTurn;
 /// <param name="pieceId"></param>
 public class WanderForward(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_TURN)
 {
-    public override bool ConditionsMet(Board board, Move move)
+    public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
         if (move.Moving == PieceId)
             return false;
-        Piece piece = board.GetPiece(pieceId);
+        Piece piece = board.GetPiece(PieceId);
         if (piece is null)
             return false;
         return true;
     }
 
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
-        Piece piece = board.GetPiece(pieceId);
+        Piece piece = board.GetPiece(PieceId);
         Vector2Int forward = new(piece.Position.X, piece.Position.Y + (piece.Color ? 1 : -1));
 
         if (!forward.Inside(board.Squares.GetLength(0), board.Squares.GetLength(1)))
@@ -31,13 +31,14 @@ public class WanderForward(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
         Piece inFrontOf = board.Squares[forward.X, forward.Y];
         if (inFrontOf is not null)
             return board;
-        Vector2Int startPos = piece.Position;
+        // Vector2Int startPos = piece.Position;
+        move.ApplyEvent(new MovePieceEvent(PieceId, forward));
 
-        board.Squares[piece.Position.X, piece.Position.Y] = null;
-        piece.Position = forward;
-        board.Squares[forward.X, forward.Y] = piece;
+        // board.Squares[piece.Position.X, piece.Position.Y] = null;
+        // piece.Position = forward;
+        // board.Squares[forward.X, forward.Y] = piece;
 
-        board = board.ActivateItems(pieceId, ItemTriggers.ON_MOVE, board, new Move(PieceId, startPos, forward), ref events);
+        // board = board.ActivateItems(pieceId, ItemTriggers.ON_MOVE, board, new Move(PieceId, startPos, forward), ref events);
 
         return board;
     }

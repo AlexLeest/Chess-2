@@ -10,7 +10,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnPromotion;
 /// <param name="pieceId"></param>
 public class PromotionExplosion(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_PROMOTION)
 {
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
         Vector2Int target = move.To;
 
@@ -27,19 +27,20 @@ public class PromotionExplosion(byte pieceId) : AbstractItem(pieceId, ItemTrigge
                 if (toKill is null || toKill.SpecialPieceType == SpecialPieceTypes.KING)
                     continue;
 
+                move.ApplyEvent(new CapturePieceEvent(toKill.Id, PieceId));
                 // Remove piece from pieces list and squares repr
-                List<Piece> newPieces = [];
-                foreach (Piece piece in board.Pieces)
-                {
-                    if (piece.Id == toKill.Id)
-                        continue;
-                    newPieces.Add(piece);
-                }
-                board.Pieces = newPieces.ToArray();
-                board.Squares[toKillPos.X, toKillPos.Y] = null;
-                
+                // List<Piece> newPieces = [];
+                // foreach (Piece piece in board.Pieces)
+                // {
+                //     if (piece.Id == toKill.Id)
+                //         continue;
+                //     newPieces.Add(piece);
+                // }
+                // board.Pieces = newPieces.ToArray();
+                // board.Squares[toKillPos.X, toKillPos.Y] = null;
+
                 // Activate ON_CAPTURED items for that piece
-                board = board.ActivateItems(toKill.Id, ItemTriggers.ON_CAPTURED, board, move, ref events);
+                // board = board.ActivateItems(toKill.Id, ItemTriggers.ON_CAPTURED, board, move, ref events);
             }
 
         return board;

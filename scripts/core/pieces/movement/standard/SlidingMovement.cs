@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,14 +48,23 @@ public class SlidingMovement : IMovement
                     break;
                 
                 Piece onSquare = squares[currentPos.X, currentPos.Y];
+                Move move = new(id, from, currentPos, board);
+                
+                move.ApplyEvent(new MovePieceEvent(id, currentPos));
                 if (onSquare != null)
                 {
                     if (onSquare.Color != color)
-                        options.Add(new Move(id, from, currentPos, onSquare));
+                    {
+                        move.ApplyEvent(new CapturePieceEvent(onSquare.Id, id));
+                        move.ApplyEvent(new NextTurnEvent());
+                        options.Add(move);
+                    }
+                    // GD.Print("Capture on sliding move");
                     break;
                 }
 
-                options.Add(new Move(id, from, currentPos));
+                move.ApplyEvent(new NextTurnEvent());
+                options.Add(move);
             }
         }
 

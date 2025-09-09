@@ -13,10 +13,12 @@ public class ZobristHashing(int maxDepth) : IEngine
     private TranspositionTable transpositionTable = new();
     
     // Debug counts
-    // private int tTableFinds, tTableUses, tTableMismatch;
+    private int tTableFinds, tTableUses, tTableMismatch;
     
     public Move GenerateNextMove(Board board)
     {
+        tTableUses = 0;
+        
         Move lastKnownBestMove = new();
         
         for (int i = 1; i <= maxDepth; i++)
@@ -26,6 +28,7 @@ public class ZobristHashing(int maxDepth) : IEngine
         }
         transpositionTable.Clear();
 
+        GD.Print($"TTable used {tTableUses} times");
         return lastKnownBestMove;
     }
 
@@ -40,7 +43,7 @@ public class ZobristHashing(int maxDepth) : IEngine
             // If TTable entry has a higher depth (meaning more ply's searched down left), use those results instead
             if (entry.Depth >= depth)
             {
-                // tTableUses++;
+                tTableUses++;
                 // GD.Print("TTable match used instead of recalculating that shit!");
                 bestMove = entry.BestMove;
                 return entry.Score;
@@ -68,7 +71,8 @@ public class ZobristHashing(int maxDepth) : IEngine
         
         foreach (Move move in nextMoves)
         {
-            Board nextBoard = board.ApplyMove(move, out _);
+            // Board nextBoard = board.ApplyMove(move, out _);
+            Board nextBoard = move.Result;
             if (nextBoard is null)
                 continue;
             float score = -NegaMax(nextBoard, -beta, -alpha, depth - 1, out Move possibleMove);

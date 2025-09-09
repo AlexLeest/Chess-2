@@ -1,19 +1,22 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-public readonly struct SpawnPieceEvent(Piece piece, Dictionary<byte, IItem[]> itemDict) : IBoardEvent
+public class SpawnPieceEvent(Piece piece) : IBoardEvent
 {
-    public uint AdjustZobristHash(uint zobristHash)
+    public void AdjustBoard(Board board, Move move)
     {
-        zobristHash ^= piece.GetZobristHash();
-        if (!itemDict.TryGetValue(piece.Id, out IItem[] items))
-            return zobristHash;
+        Piece[] newPieces = board.DeepcopyPieces();
+        newPieces[^1] = piece;
+        board.Pieces = newPieces;
+        board.Squares[piece.Position.X, piece.Position.Y] = piece;
 
-        foreach (IItem item in items)
-            zobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
-
-        return zobristHash;
+        ZobristCalculator.AdjustZobristHash(piece, board);
+        // board.ZobristHash ^= piece.GetZobristHash();
+        // if (board.ItemsPerPiece.TryGetValue(piece.Id, out IItem[] items))
+        //     foreach (IItem item in items)
+        //         board.ZobristHash ^= item.GetZobristHash(piece.Color, piece.Position);
     }
 }

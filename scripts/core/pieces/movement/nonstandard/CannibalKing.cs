@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -25,8 +26,12 @@ public class CannibalKing : IMovement
                 Piece target = board.Squares[targetCoords.X, targetCoords.Y];
                 if (target is null || target.Color != color || target.SpecialPieceType == SpecialPieceTypes.KING)
                     continue;
-                
-                moves.Add(new Move(id, from, targetCoords, target));
+
+                Move move = new(id, from, targetCoords, board);
+                move.ApplyEvent(new MovePieceEvent(id, targetCoords));
+                move.ApplyEvent(new CapturePieceEvent(target.Id, id));
+
+                moves.Add(move);
             }
 
         return moves;

@@ -82,6 +82,7 @@ public partial class GodotBoard : GridContainer
 
     private async void SquareClicked(Vector2I coords)
     {
+        GD.Print($"Square clicked at {coords}");
         if (Board.Turn % 2 != 0)
         {
             GD.Print("It's black's turn");
@@ -94,12 +95,17 @@ public partial class GodotBoard : GridContainer
         {
             Piece pieceToMove = selectedPiece.Piece;
 
-            foreach (Board possibleBoard in Board.GenerateMoves(pieceToMove))
+            foreach (Move possibleMove in Board.GetMoves(pieceToMove))
             {
-                if (possibleBoard.LastMove?.From != selectedPiece?.Piece.Position || possibleBoard.LastMove?.To != corePos)
+                // GD.Print("HELLO?");
+                if (possibleMove.From != selectedPiece?.Piece.Position || possibleMove.To != corePos)
+                {
+                    // GD.Print("WRONG?");
                     continue;
+                }
 
-                await SetNewBoard(possibleBoard);
+                // GD.Print("YEAH OK?");
+                await SetNewBoard(possibleMove.Result);
                 selectedPiece = null;
                 return;
             }
@@ -114,21 +120,22 @@ public partial class GodotBoard : GridContainer
             return;
         }
         selectedPiece = square.GdPiece;
-        // GD.Print($"Selected piece {selectedPiece.Id}");
+        GD.Print($"Selected piece {selectedPiece.Id}");
         // TODO: Show possible moves for piece
-        foreach (Move move in selectedPiece.Piece.GetMovementOptions(Board))
+        foreach (Move move in Board.GetMoves(selectedPiece.Piece))
         {
             // TODO: Highlight these squares
-            // GD.Print($"Move {move} allowed");
+            GD.Print($"Move {move} allowed");
         }
     }
 
     private async Task SetNewBoard(Board newBoard)
     {
+        GD.Print($"turn: {newBoard.Turn}");
         Board = newBoard;
         
         // Check for checkmate or stalemate
-        if (newBoard.GenerateMoves().Count == 0)
+        if (newBoard.GetMoves().Count == 0)
         {
             string otherColor = newBoard.ColorToMove ? "Black" : "White";
             if (newBoard.IsInCheck(newBoard.ColorToMove))
@@ -143,6 +150,7 @@ public partial class GodotBoard : GridContainer
             FinishLevelAndSpawnSetup();
             return;
         }
+        // GD.Print("Yeah we are now RENDER?");
         RenderPieces();
         
         if (newBoard.ColorToMove == false)
@@ -151,7 +159,8 @@ public partial class GodotBoard : GridContainer
             // TODO: Set up a "computer is thinking" visual while the engine is doing its thing
             Stopwatch stopwatch = Stopwatch.StartNew();
             Move engineResponse = await Task.Run(() => engine.GenerateNextMove(newBoard));
-            Board nextBoard = newBoard.ApplyMove(engineResponse, out List<IBoardEvent> events);
+            // Board nextBoard = newBoard.ApplyMove(engineResponse, out List<IBoardEvent> events);
+            Board nextBoard = engineResponse.Result;
             GD.Print($"Response: {nextBoard}, time: {stopwatch.Elapsed}");
             await SetNewBoard(nextBoard);
         }
@@ -177,7 +186,7 @@ public partial class GodotBoard : GridContainer
             
             gdPiece.Texture = pieceTextures.GetPieceTexture(piece);
         }
-    }    
+    }
     
     private void FinishLevelAndSpawnSetup()
     {

@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.BeforeCapture;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnOpponentCastle;
@@ -15,6 +16,7 @@ using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnPromotion;
 using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnTurn;
 using Godot;
 using System;
+using GDCannibalTeeth = CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.BeforeCapture.GDCannibalTeeth;
 using SelfDestruct = CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured.SelfDestruct;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.godot.items;

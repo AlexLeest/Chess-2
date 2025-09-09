@@ -10,9 +10,12 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCastle;
 /// <param name="pieceId"></param>
 public class OpponentRoyalSwap(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_CASTLE) 
 {
-    public override bool ConditionsMet(Board board, Move move)
+    public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
-        bool color = GetOwnColor(board);
+        if (trigger is not CastleEvent castleEvent)
+            return false;
+        
+        bool color = castleEvent.Color;
         foreach (Piece piece in board.Pieces)
             if (piece.BasePiece == BasePiece.QUEEN && piece.Color != color)
                 return true;
@@ -20,52 +23,61 @@ public class OpponentRoyalSwap(byte pieceId) : AbstractItem(pieceId, ItemTrigger
         return false;
     }
 
-    public override Board Execute(Board board, Move move, ref List<IBoardEvent> events)
+    public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
-        // Find out own color
-        bool color = GetOwnColor(board);
-        
-        Piece king = null;
+        if (trigger is not CastleEvent castleEvent)
+            return board;
+
+        Piece king = move.Result.GetPiece(PieceId);
         Piece queen = null;
         foreach (Piece piece in board.Pieces)
-        {
-            if (piece.SpecialPieceType == SpecialPieceTypes.KING && piece.Color != color)
-            {
-                king = piece;
-            }
-            else if (piece.BasePiece == BasePiece.QUEEN && piece.Color != color)
+            if (piece.BasePiece == BasePiece.QUEEN)
             {
                 queen = piece;
+                break;
             }
-        }
 
-        if (king is null || queen is null)
-        {
+        if (queen == null)
             return board;
-        }
+
         Vector2Int kingPos = king.Position;
         Vector2Int queenPos = queen.Position;
-
-        king.Position = queenPos;
-        queen.Position = kingPos;
-        board.Squares[kingPos.X, kingPos.Y] = queen;
-        board.Squares[queenPos.X, queenPos.Y] = king;
+        move.ApplyEvent(new MovePieceEvent(king.Id, queenPos, false));
+        move.ApplyEvent(new MovePieceEvent(queen.Id, kingPos, false));
         
-        int otherColorIndex = color ? 1 : 0;
-        board.CastleQueenSide[otherColorIndex] = false;
-        board.CastleKingSide[otherColorIndex] = false;
+        // // Find out own color
+        // bool color = GetOwnColor(board);
+        //
+        // Piece king = null;
+        // Piece queen = null;
+        // foreach (Piece piece in board.Pieces)
+        // {
+        //     if (piece.SpecialPieceType == SpecialPieceTypes.KING && piece.Color != color)
+        //     {
+        //         king = piece;
+        //     }
+        //     else if (piece.BasePiece == BasePiece.QUEEN && piece.Color != color)
+        //     {
+        //         queen = piece;
+        //     }
+        // }
+        //
+        // if (king is null || queen is null)
+        // {
+        //     return board;
+        // }
+        // Vector2Int kingPos = king.Position;
+        // Vector2Int queenPos = queen.Position;
+        //
+        // king.Position = queenPos;
+        // queen.Position = kingPos;
+        // board.Squares[kingPos.X, kingPos.Y] = queen;
+        // board.Squares[queenPos.X, queenPos.Y] = king;
+        //
+        // int otherColorIndex = color ? 1 : 0;
+        // board.CastleQueenSide[otherColorIndex] = false;
+        // board.CastleKingSide[otherColorIndex] = false;
 
         return board;
-    }
-
-    private bool GetOwnColor(Board board)
-    {
-        foreach (Piece piece in board.Pieces)
-        {
-            if (piece.Id != PieceId)
-                continue;
-            return piece.Color;
-        }
-        throw new KeyNotFoundException($"Piece with Id {PieceId} does not exist on board");
     }
 }

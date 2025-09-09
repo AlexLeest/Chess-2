@@ -1,4 +1,5 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -11,18 +12,21 @@ public class TriplePawnPush : IMovement
 {
     public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
     {
-        if (board.Turn > 2)
+        if (board.Turn > 2 || from.Y is not (1 or 6))
+            return [];
+        
+        int offset = color ? 1 : -1;
+        int x = from.X;
+        int y = from.Y;
+        Vector2Int goalPos = new(x, y + (offset * 3));
+        if (board.Squares[x, y + offset] != null || board.Squares[x, y + (offset * 2)] != null || board.Squares[goalPos.X, goalPos.Y] != null)
             return [];
 
-        if (from.Y is not (1 or 6))
-            return [];
+        Move move = new(id, from, goalPos, board);
+        MovePieceEvent movePiece = new(id, goalPos);
+        move.ApplyEvent(movePiece);
 
-        int offset = color ? 3 : -3;
-        Vector2Int goalPos = new(from.X, from.Y + offset);
-        if (board.Squares[goalPos.X, goalPos.Y] is not null)
-            return [];
-
-        return [new Move(id, from, goalPos)];
+        return [move];
     }
 
     public bool Attacks(Vector2Int from, Vector2Int target, Board board, bool color)

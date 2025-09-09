@@ -1,20 +1,41 @@
-﻿using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
+using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
-public struct Move(byte pieceId, Vector2Int from, Vector2Int to, Piece captured = null, SpecialMoveFlag flag = SpecialMoveFlag.NONE)
+public struct Move(byte pieceId, Vector2Int from, Vector2Int to, Board startingBoard)
 {
-    public Vector2Int From = from, To = to;
+    // id of the piece that got the move command
     public byte Moving = pieceId;
-    public Piece Captured = captured;
-    public SpecialMoveFlag Flag = flag;
+    // positions the piece was moved from/to.
+    // To does not necessarily match up with the resulting position!
+    public Vector2Int From = from, To = to;
+    // List of events that happened because of this move, in order.
+    public List<IBoardEvent> Events = [];
+    // Resulting board state (can be an illegal board)
+    public Board Result = startingBoard.Copy();
+
+    public void ApplyEvent(IBoardEvent boardEvent)
+    {
+        Events.Add(boardEvent);
+        // Changes the result board through side effects as well
+        boardEvent.AdjustBoard(Result, this);
+    }
+
+    public bool IsLegal()
+    {
+        // TODO: Implement legality check for Result board
+        return true;
+    }
 
     public static bool operator ==(Move? a, Move? b)
     {
         if (a is null || b is null)
             return false;
 
-        return a?.Moving == b?.Moving && a?.From == b?.From && a?.To == b?.To && a?.Captured == b?.Captured;
+        // return a?.Moving == b?.Moving && a?.From == b?.From && a?.To == b?.To && a?.Captured == b?.Captured;
+        return a?.Moving == b?.Moving && a?.From == b?.From && a?.To == b?.To;
     }
 
     public static bool operator !=(Move? a, Move? b)

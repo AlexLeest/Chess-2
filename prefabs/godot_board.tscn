@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://cwi6nbxbpo8bs"]
 
 [ext_resource type="Script" uid="uid://54kjarjdjwgv" path="res://scripts/godot/boards/GodotBoard.cs" id="1_u7bof"]
-[ext_resource type="Resource" uid="uid://bcrexudceb4sh" path="res://data/basepiecetextures.tres" id="2_3pwqh"]
 [ext_resource type="Resource" uid="uid://dab655gk8f2w" path="res://data/player setups/player_setup.tres" id="2_rmr3w"]
 [ext_resource type="Resource" uid="uid://b3v0pgb12c2n3" path="res://data/level_model.tres" id="3_rmr3w"]
+[ext_resource type="Resource" uid="uid://bcrexudceb4sh" path="res://data/basepiecetextures.tres" id="4_rmr3w"]
 [ext_resource type="Script" uid="uid://c5frspbfxkamm" path="res://scripts/godot/boards/GodotSquare.cs" id="15_yf33j"]
 
 [node name="GodotBoard" type="GridContainer"]
@@ -24,8 +24,7 @@ columns = 8
 script = ExtResource("1_u7bof")
 playerSetup = ExtResource("2_rmr3w")
 levelModel = ExtResource("3_rmr3w")
-pieceTextures = ExtResource("2_3pwqh")
-fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+pieceTextures = ExtResource("4_rmr3w")
 metadata/_custom_type_script = "uid://54kjarjdjwgv"
 
 [node name="GodotSquare" type="ColorRect" parent="."]
