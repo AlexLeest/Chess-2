@@ -39,9 +39,8 @@ public class PawnMovement : IMovement
                 if (board.Squares[doubleMovePos.X, doubleMovePos.Y] is null)
                 {
                     Move doubleMove = new(id, from, doubleMovePos, board);
-                    doubleMove.ApplyEvent(new MovePieceEvent(id, doubleMovePos));
-                    // BUG: This breaks the zobrist logic when the piece is changed into not being a pawn by the MovePieceEvent
                     doubleMove.ApplyEvent(new ChangePieceTypeEvent(id, SpecialPieceTypes.EN_PASSANTABLE_PAWN));
+                    doubleMove.ApplyEvent(new MovePieceEvent(id, doubleMovePos));
                     doubleMove.ApplyEvent(new NextTurnEvent());
                     
                     options.Add(doubleMove);
