@@ -9,6 +9,6 @@
 [resource]
 script = ExtResource("1_k7ub5")
 EnemySetup = ExtResource("1_5p1i5")
-Engines = Array[Resource]([ExtResource("2_p7r78"), ExtResource("2_82edy")])
+Engines = Array[Resource]([ExtResource("2_82edy"), ExtResource("2_p7r78")])
 upgrades = ExtResource("5_p7r78")
 metadata/_custom_type_script = "uid://d4jbqkmx4hwho"
