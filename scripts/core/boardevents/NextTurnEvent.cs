@@ -9,6 +9,15 @@ public class NextTurnEvent : IBoardEvent
     {
         // TODO: Handle pawn promotion
         board.ActivateItems(board.ColorToMove, ItemTriggers.ON_TURN, board, move, this);
+
+        foreach (Piece piece in board.Pieces)
+        {
+            if (piece.BasePiece == BasePiece.PAWN && piece.Position.Y == (piece.Color ? 7 : 0))
+            {
+                Piece promoted = piece.DeepCopy(false).ChangeTo(BasePiece.QUEEN);
+                move.ApplyEvent(new UpdatePieceEvent(piece, promoted));
+            }
+        }
         
         board.Turn++;
         // XORs the color hash, since this flips back and forth per turn

@@ -16,6 +16,12 @@ public static class PieceExtensions
     
     public static Piece Upgrade(this Piece piece)
     {
+        if (piece.BasePiece == BasePiece.KING)
+        {
+            // For now, don't allow kings to change
+            return piece;
+        }
+        
         if (evolutionSteps.TryGetValue(piece.BasePiece, out BasePiece nextBasePiece))
         {
             // Change BasePiece type to the next one, change the first movement entry out for the default of the next one as well
@@ -36,6 +42,12 @@ public static class PieceExtensions
 
     public static Piece ChangeTo(this Piece piece, BasePiece newBasePiece)
     {
+        if (piece.BasePiece == BasePiece.KING)
+        {
+            // For now, don't allow kings to change
+            return piece;
+        }
+        
         // Change BasePiece type to the next one, change the first movement entry out for the default of the next one as well
         piece.BasePiece = newBasePiece;
         piece.SpecialPieceType = newBasePiece == BasePiece.PAWN ? SpecialPieceTypes.PAWN : SpecialPieceTypes.NONE;
