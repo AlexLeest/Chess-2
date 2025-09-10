@@ -117,7 +117,7 @@ public partial class PreparationBoard : GridContainer
         if (clickedPiece is not null)
         {
             selectedPiece = clickedPiece;
-            highlightedSquare = squares[coords.X, coords.Y];
+            highlightedSquare = squares.Get(coords);
             // Highlight the square
 
             return;

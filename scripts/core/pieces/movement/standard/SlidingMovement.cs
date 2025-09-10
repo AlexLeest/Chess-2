@@ -46,8 +46,8 @@ public class SlidingMovement : IMovement
                 currentPos += offset;
                 if (!currentPos.Inside(boardWidth, boardHeight))
                     break;
-                
-                Piece onSquare = squares[currentPos.X, currentPos.Y];
+
+                Piece onSquare = squares.Get(currentPos);
                 Move move = new(id, from, currentPos, board);
                 
                 move.ApplyEvent(new MovePieceEvent(id, currentPos));
@@ -98,7 +98,7 @@ public class SlidingMovement : IMovement
                 if (!currentPos.Inside(boardWidth, boardHeight))
                     break;
                 
-                Piece onSquare = squares[currentPos.X, currentPos.Y];
+                Piece onSquare = squares.Get(currentPos);
                 if (onSquare != null)
                 {
                     break;
@@ -143,7 +143,7 @@ public class SlidingMovement : IMovement
                     if (!currentPos.Inside(boardWidth, boardHeight))
                         break;
 
-                    Piece onSquare = squares[currentPos.X, currentPos.Y];
+                    Piece onSquare = squares.Get(currentPos);
                     if (onSquare != null)
                     {
                         break;

@@ -22,8 +22,8 @@ public class CannibalKing : IMovement
                 Vector2Int targetCoords = new(from.X + x, from.Y + y);
                 if (!targetCoords.Inside(board.Squares.GetLength(0), board.Squares.GetLength(1)))
                     continue;
-                
-                Piece target = board.Squares[targetCoords.X, targetCoords.Y];
+
+                Piece target = board.Squares.Get(targetCoords);
                 if (target is null || target.Color != color || target.SpecialPieceType == SpecialPieceTypes.KING)
                     continue;
 

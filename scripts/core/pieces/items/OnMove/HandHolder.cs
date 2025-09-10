@@ -39,7 +39,7 @@ public class HandHolder(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MO
             return;
         
         // Check if that location has a piece with the same color and base piece type
-        Piece toBeMoved = move.Result.Squares[from.X, from.Y];
+        Piece toBeMoved = move.Result.Squares.Get(from);
         if (toBeMoved is null || toBeMoved.BasePiece != piece.BasePiece)
             return;
     

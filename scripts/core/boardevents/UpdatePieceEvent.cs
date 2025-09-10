@@ -14,8 +14,8 @@ public class UpdatePieceEvent(Piece before, Piece after) : IBoardEvent
         newPieces[^1] = after;
         board.Pieces = newPieces;
 
-        board.Squares[before.Position.X, before.Position.Y] = null;
-        board.Squares[after.Position.X, after.Position.Y] = after;
+        board.Squares.Set(before.Position, null);//before.Position.X, before.Position.Y] = null;
+        board.Squares.Set(after.Position, after);//[after.Position.X, after.Position.Y] = after;
 
         ZobristCalculator.AdjustZobristHash(after, board);
 

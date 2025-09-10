@@ -1,6 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCastle;
@@ -28,7 +27,7 @@ public class SpawnPawnFence(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
             Piece[] newPieces = board.DeepcopyPieces();
             newPieces[^1] = newPawn;
             board.Pieces = newPieces;
-            board.Squares[pawnPos.X, pawnPos.Y] = newPawn;
+            board.Squares.Set(pawnPos, newPawn);
         }
 
         return board;

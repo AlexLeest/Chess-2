@@ -51,7 +51,7 @@ public class Board
         Squares = new Piece[8, 8];
         foreach (Piece piece in pieces)
         {
-            Squares[piece.Position.X, piece.Position.Y] = piece;
+            Squares.Set(piece.Position, piece);
             pieceDict[piece.Id] = piece;
             if (piece.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
             {

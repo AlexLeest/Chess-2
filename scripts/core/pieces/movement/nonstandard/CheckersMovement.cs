@@ -21,7 +21,7 @@ public class CheckersMovement : IMovement
             if (!diagCoords.Inside(board.Squares.GetLength(0), board.Squares.GetLength(1)))
                 continue;
             
-            Piece diagPiece = board.Squares[diagCoords.X, diagCoords.Y];
+            Piece diagPiece = board.Squares.Get(diagCoords);
             if (diagPiece is null)
             {
                 Move move = new(id, from, diagCoords, board);
@@ -38,7 +38,7 @@ public class CheckersMovement : IMovement
             if (!behindPieceCoords.Inside(board.Squares.GetLength(0), board.Squares.GetLength(1)))
                 continue;
             
-            Piece behindPiece = board.Squares[behindPieceCoords.X, behindPieceCoords.Y];
+            Piece behindPiece = board.Squares.Get(behindPieceCoords);
             if (behindPiece is not null)
                 continue;
             
@@ -64,7 +64,7 @@ public class CheckersMovement : IMovement
         if (!behindPieceCoords.Inside(board.Squares.GetLength(0), board.Squares.GetLength(1)))
             return false;
         
-        Piece behindPiece = board.Squares[behindPieceCoords.X, behindPieceCoords.Y];
+        Piece behindPiece = board.Squares.Get(behindPieceCoords);
         
         return behindPiece is null;
     }

@@ -27,8 +27,8 @@ public class WanderForward(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
 
         if (!forward.Inside(board.Squares.GetLength(0), board.Squares.GetLength(1)))
             return board;
-        
-        Piece inFrontOf = board.Squares[forward.X, forward.Y];
+
+        Piece inFrontOf = board.Squares.Get(forward);
         if (inFrontOf is not null)
             return board;
         // Vector2Int startPos = piece.Position;

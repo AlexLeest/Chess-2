@@ -16,7 +16,7 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.AFTER_CA
         // If position currently not free, return false
         
         Vector2Int respawnPos = GetRootPosition(board);
-        if (move.Result.Squares[respawnPos.X, respawnPos.Y] is not null)
+        if (move.Result.Squares.Get(respawnPos) is not null)
             return false;
         
         return true;

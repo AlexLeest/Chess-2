@@ -65,7 +65,7 @@ public partial class GodotBoard : GridContainer
 
     private void SquareMouseEnter(Vector2I coords)
     {
-        Piece mousedOver = squares[coords.X, coords.Y].GdPiece?.Piece;
+        Piece mousedOver = squares.Get(coords).GdPiece?.Piece;
         if (mousedOver is not null)
         {
             // Construct a PieceResource for this piece
@@ -112,8 +112,8 @@ public partial class GodotBoard : GridContainer
             // Clicked position couldn't be moved to by this piece.
             selectedPiece = null;
         }
-        
-        GodotSquare square = squares[coords.X, coords.Y];
+
+        GodotSquare square = squares.Get(coords);
         if (square.GdPiece == null || !square.GdPiece.Piece.Color == colorToMove)
         {
             selectedPiece = null;

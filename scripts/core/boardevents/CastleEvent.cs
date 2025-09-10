@@ -9,7 +9,6 @@ public class CastleEvent(bool color) : IBoardEvent
 
     public void AdjustBoard(Board board, Move move)
     {
-        // TODO: Add item trigger handling
         int colorIndex = Color ? 0 : 1;
         bool[] kingSide = move.Result.CastleKingSide;
         if (kingSide[colorIndex])

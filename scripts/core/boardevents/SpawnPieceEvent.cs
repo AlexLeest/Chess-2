@@ -11,7 +11,7 @@ public class SpawnPieceEvent(Piece piece) : IBoardEvent
         Piece[] newPieces = board.DeepcopyPieces();
         newPieces[^1] = piece;
         board.Pieces = newPieces;
-        board.Squares[piece.Position.X, piece.Position.Y] = piece;
+        board.Squares.Set(piece.Position, piece);//[piece.Position.X, piece.Position.Y] = piece;
 
         ZobristCalculator.AdjustZobristHash(piece, board);
         // board.ZobristHash ^= piece.GetZobristHash();

@@ -22,7 +22,7 @@ public class PawnMovement : IMovement
         
         // Push forward
         Vector2Int forwardPos = from + direction;
-        if (forwardPos.Inside(width, height) && board.Squares[forwardPos.X, forwardPos.Y] is null)
+        if (forwardPos.Inside(width, height) && board.Squares.Get(forwardPos) is null)
         {
             Move forward = new(id, from, forwardPos, board);
             
@@ -36,7 +36,7 @@ public class PawnMovement : IMovement
             if (onDoubleMoveRow)
             {
                 Vector2Int doubleMovePos = forwardPos + direction;
-                if (board.Squares[doubleMovePos.X, doubleMovePos.Y] is null)
+                if (board.Squares.Get(doubleMovePos) is null)
                 {
                     Move doubleMove = new(id, from, doubleMovePos, board);
                     doubleMove.ApplyEvent(new ChangePieceTypeEvent(id, SpecialPieceTypes.EN_PASSANTABLE_PAWN));
@@ -52,11 +52,11 @@ public class PawnMovement : IMovement
         Vector2Int capLeftPos = forwardPos + Vector2Int.Left;
         if (capLeftPos.Inside(width, height))
         {
-            Piece toCapture = board.Squares[capLeftPos.X, capLeftPos.Y];
+            Piece toCapture = board.Squares.Get(capLeftPos);
             
             // En passant, if possible
             Vector2Int enPassantPos = from + Vector2Int.Left;
-            Piece enPassant = board.Squares[enPassantPos.X, enPassantPos.Y];
+            Piece enPassant = board.Squares.Get(enPassantPos);
             if (toCapture is null && enPassant is not null && enPassant.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
                 toCapture = enPassant;
             
@@ -75,11 +75,11 @@ public class PawnMovement : IMovement
         Vector2Int capRightPos = forwardPos + Vector2Int.Right;
         if (capRightPos.Inside(width, height))
         {
-            Piece toCapture = board.Squares[capRightPos.X, capRightPos.Y];
+            Piece toCapture = board.Squares.Get(capRightPos);
             
             // En passant, if possible
             Vector2Int enPassantPos = from + Vector2Int.Right;
-            Piece enPassant = board.Squares[enPassantPos.X, enPassantPos.Y];
+            Piece enPassant = board.Squares.Get(enPassantPos);
             if (toCapture is null && enPassant is not null && enPassant.SpecialPieceType == SpecialPieceTypes.EN_PASSANTABLE_PAWN)
                 toCapture = enPassant;
             

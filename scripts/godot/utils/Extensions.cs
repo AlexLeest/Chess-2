@@ -14,14 +14,14 @@ public static class Extensions
     {
         return new Vector2Int(vector.X, vector.Y);
     }
-
-    public static T Get<T>(this T[,] array, Vector2Int position)
-    {
-        return array[position.X, position.Y];
-    }
     
     public static T Get<T>(this T[,] array, Vector2I position)
     {
         return array[position.X, position.Y];
+    }
+
+    public static void Set<T>(this T[,] array, T value, Vector2I position)
+    {
+        array[position.X, position.Y] = value;
     }
 }
