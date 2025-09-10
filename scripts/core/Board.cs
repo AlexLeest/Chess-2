@@ -139,6 +139,40 @@ public class Board
         return null;
     }
 
+    public void AddPiece(Piece piece)
+    {
+        Piece[] newPieces = DeepcopyPieces();
+        newPieces[^1] = piece;
+        Pieces = newPieces;
+        Squares.Set(piece.Position, piece);
+
+        ZobristCalculator.AdjustZobristHash(piece, this);
+    }
+
+    public bool RemovePiece(byte id)
+    {
+        if (!pieceDict.TryGetValue(id, out Piece toRemove))
+            return false;
+
+        int index = 0;
+        Piece[] newPieces = new Piece[Pieces.Length - 1];
+        foreach (Piece piece in Pieces)
+        {
+            if (piece.Id == id)
+                continue;
+            newPieces[index] = piece;
+            index++;
+        }
+        Pieces = newPieces;
+        pieceDict.Remove(id);
+        if (Squares.Get(toRemove.Position) == toRemove)
+            Squares.Set(toRemove.Position, null);
+        
+        ZobristCalculator.AdjustZobristHash(toRemove, this);
+
+        return true;
+    }
+
     public void ActivateItems(bool color, ItemTriggers trigger, Board board, Move move, IBoardEvent triggerEvent)
     {
         foreach (Piece piece in Pieces)

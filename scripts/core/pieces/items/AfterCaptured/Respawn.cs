@@ -32,6 +32,7 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.AFTER_CA
         
         toRespawn = new Piece(PieceId, toRespawn.BasePiece, toRespawn.Color, respawnPos, toRespawn.Movement, toRespawn.SpecialPieceType);
         move.ApplyEvent(new SpawnPieceEvent(toRespawn));
+        // BUG: NullRefs, somehow
         move.ApplyEvent(new RemoveItemEvent(toRespawn.Id, this));
 
         return board;

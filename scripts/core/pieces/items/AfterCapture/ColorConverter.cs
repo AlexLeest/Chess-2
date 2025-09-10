@@ -31,8 +31,8 @@ public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.A
         Piece capturedPiece = board.LastBoard.GetPiece(captureEvent.CapturedPieceId).DeepCopy(false);
         capturedPiece.Color = piece.Color;
         
-        move.ApplyEvent(new SpawnPieceEvent(capturedPiece));
         move.ApplyEvent(new MovePieceEvent(PieceId, move.From));
+        move.ApplyEvent(new SpawnPieceEvent(capturedPiece));
 
         return board;
     }

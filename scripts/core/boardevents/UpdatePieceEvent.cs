@@ -8,16 +8,19 @@ public class UpdatePieceEvent(Piece before, Piece after) : IBoardEvent
 {
     public void AdjustBoard(Board board, Move move)
     {
-        ZobristCalculator.AdjustZobristHash(before, board);
+        board.RemovePiece(before.Id);
+        board.AddPiece(after);
         
-        Piece[] newPieces = board.DeepcopyPieces(before.Id);
-        newPieces[^1] = after;
-        board.Pieces = newPieces;
-
-        board.Squares.Set(before.Position, null);//before.Position.X, before.Position.Y] = null;
-        board.Squares.Set(after.Position, after);//[after.Position.X, after.Position.Y] = after;
-
-        ZobristCalculator.AdjustZobristHash(after, board);
+        // ZobristCalculator.AdjustZobristHash(before, board);
+        //
+        // Piece[] newPieces = board.DeepcopyPieces(before.Id);
+        // newPieces[^1] = after;
+        // board.Pieces = newPieces;
+        //
+        // board.Squares.Set(before.Position, null);
+        // board.Squares.Set(after.Position, after);
+        //
+        // ZobristCalculator.AdjustZobristHash(after, board);
 
         // board.ZobristHash ^= before.GetZobristHash();
         // board.ZobristHash ^= after.GetZobristHash();

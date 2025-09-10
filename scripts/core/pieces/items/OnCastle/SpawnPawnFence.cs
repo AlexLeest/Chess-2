@@ -24,10 +24,11 @@ public class SpawnPawnFence(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
             highestId++;
             Vector2Int pawnPos = new(xPos, pawnY);
             Piece newPawn = new(highestId, BasePiece.PAWN, color, pawnPos, [new PawnMovement()], SpecialPieceTypes.PAWN);
-            Piece[] newPieces = board.DeepcopyPieces();
-            newPieces[^1] = newPawn;
-            board.Pieces = newPieces;
-            board.Squares.Set(pawnPos, newPawn);
+            move.ApplyEvent(new SpawnPieceEvent(newPawn));
+            // Piece[] newPieces = board.DeepcopyPieces();
+            // newPieces[^1] = newPawn;
+            // board.Pieces = newPieces;
+            // board.Squares.Set(pawnPos, newPawn);
         }
 
         return board;

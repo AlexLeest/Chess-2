@@ -13,6 +13,8 @@ public class PromotionExplosion(byte pieceId) : AbstractItem(pieceId, ItemTrigge
     public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
         Vector2Int target = move.To;
+        int boardWidth = board.Squares.GetLength(0);
+        int boardHeight = board.Squares.GetLength(1);
 
         for (int x = target.X - 1; x <= target.X + 1; x++)
             for (int y = target.Y - 1; y <= target.Y + 1; y++)
@@ -20,7 +22,7 @@ public class PromotionExplosion(byte pieceId) : AbstractItem(pieceId, ItemTrigge
                 if (x == target.X && y == target.Y)
                     continue;
                 Vector2Int toKillPos = new(x, y);
-                if (!toKillPos.Inside(board.Squares.GetLength(0), board.Squares.GetLength(1)))
+                if (!toKillPos.Inside(boardWidth, boardHeight))
                     continue;
                 
                 Piece toKill = board.Squares.Get(toKillPos);

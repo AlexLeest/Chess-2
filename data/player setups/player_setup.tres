@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PlayerSetup" load_steps=15 format=3 uid="uid://dab655gk8f2w"]
 
-[ext_resource type="Resource" uid="uid://b8jts62phq6h6" path="res://data/items/OnCastle/spawn_pawn_fence.tres" id="2_8qh0p"]
+[ext_resource type="Resource" uid="uid://by71jv7jjftu5" path="res://data/items/AfterCapture/color_converter.tres" id="2_l5ds2"]
 [ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="3_wf1x1"]
 [ext_resource type="Script" uid="uid://dxjj038hvehvy" path="res://scripts/godot/data/PlayerSetup.cs" id="9_g37bp"]
 
@@ -63,7 +63,7 @@ metadata/_custom_type_script = "uid://cul58y3sumplo"
 [sub_resource type="Resource" id="Resource_adotn"]
 script = ExtResource("3_wf1x1")
 StartPosition = Vector2i(2, 0)
-Items = []
+Items = [ExtResource("2_l5ds2")]
 PieceType = 2
 Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
@@ -71,7 +71,7 @@ metadata/_custom_type_script = "uid://cul58y3sumplo"
 [sub_resource type="Resource" id="Resource_1wvge"]
 script = ExtResource("3_wf1x1")
 StartPosition = Vector2i(4, 0)
-Items = [ExtResource("2_8qh0p")]
+Items = []
 PieceType = 5
 Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"

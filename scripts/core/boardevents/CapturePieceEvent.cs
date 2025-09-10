@@ -1,5 +1,4 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
-using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
@@ -10,31 +9,17 @@ public class CapturePieceEvent(byte capturedPieceId, byte capturingPieceId, bool
     
     public void AdjustBoard(Board board, Move move)
     {
-        Piece piece = board.GetPiece(CapturedPieceId);
-
+        if (board.GetPiece(CapturedPieceId) is null)
+            return;
+        
         board.ActivateItems(CapturingPieceId, ItemTriggers.BEFORE_CAPTURE, board, move, this);
         board.ActivateItems(CapturedPieceId, ItemTriggers.BEFORE_CAPTURED, board, move, this);
         
         // Removal of captured piece
-        Piece[] newPieces = new Piece[board.Pieces.Length - 1];
-        int index = 0;
-        foreach (Piece toCopy in board.Pieces)
-        {
-            if (toCopy.Id == piece.Id)
-                continue;
-            newPieces[index] = toCopy;
-            index++;
-        }
-        board.Pieces = newPieces;
-        
-        // To make sure we're only deleting the captured piece and not a piece already moved on top of it
-        if (board.Squares.Get(piece.Position)?.Id == CapturedPieceId)
-            board.Squares.Set(piece.Position, null);
+        board.RemovePiece(CapturedPieceId);
         
         // Activating items 
         board.ActivateItems(CapturingPieceId, ItemTriggers.AFTER_CAPTURE, board, move, this);
         board.ActivateItems(CapturedPieceId, ItemTriggers.AFTER_CAPTURED, board, move, this);
-
-        ZobristCalculator.AdjustZobristHash(piece, board);
     }
 }

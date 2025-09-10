@@ -8,6 +8,7 @@ public class RemoveItemEvent(byte pieceId, IItem item) : IBoardEvent
     public void AdjustBoard(Board board, Move move)
     {
         Piece piece = board.GetPiece(pieceId);
+        // BUG: NullRef? Coming from respawn?
         IItem[] itemsForPiece = board.ItemsPerPiece[piece.Id];
         List<IItem> newItems = [];
         foreach (IItem currentItem in itemsForPiece)
