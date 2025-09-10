@@ -13,8 +13,9 @@ public class KingOfTheHill(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
 {
     public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
-        if (move.Moving == PieceId)
-            return false;
+        foreach (IBoardEvent ev in move.Events)
+            if (ev is MovePieceEvent movePieceEvent && movePieceEvent.PieceId == pieceId)
+                return false;
         
         Piece piece = board.GetPiece(PieceId);
         if (piece?.Position.X is >= 3 and <= 4 && piece.Position.Y is >= 3 and <= 4)
