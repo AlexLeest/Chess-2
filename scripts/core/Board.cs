@@ -141,10 +141,14 @@ public class Board
 
     public void AddPiece(Piece piece)
     {
+        if (pieceDict.ContainsKey(piece.Id))
+            return;
+        
         Piece[] newPieces = DeepcopyPieces();
         newPieces[^1] = piece;
         Pieces = newPieces;
         Squares.Set(piece.Position, piece);
+        pieceDict.Add(piece.Id, piece);
 
         ZobristCalculator.AdjustZobristHash(piece, this);
     }
@@ -177,6 +181,8 @@ public class Board
     {
         foreach (Piece piece in Pieces)
         {
+            if (piece is null)
+            {}
             if (piece.Color != color)
                 continue;
             board.ActivateItems(piece.Id, trigger, board, move, triggerEvent);

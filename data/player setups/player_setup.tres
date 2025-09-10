@@ -63,7 +63,7 @@ metadata/_custom_type_script = "uid://cul58y3sumplo"
 [sub_resource type="Resource" id="Resource_adotn"]
 script = ExtResource("3_wf1x1")
 StartPosition = Vector2i(2, 0)
-Items = [ExtResource("2_l5ds2")]
+Items = [ExtResource("2_l5ds2"), ExtResource("2_l5ds2")]
 PieceType = 2
 Movement = []
 metadata/_custom_type_script = "uid://cul58y3sumplo"
