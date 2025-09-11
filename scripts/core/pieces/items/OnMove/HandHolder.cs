@@ -18,14 +18,14 @@ public class HandHolder(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MO
             return board;
         if (trigger is not MovePieceEvent movePieceEvent)
             return board;
-        Vector2Int moveDelta = movePieceEvent.To - move.From;
+        Vector2Int moveDelta = movePieceEvent.To - movePieceEvent.From;
     
         boardWidth = board.Squares.GetLength(0);
         boardHeight = board.Squares.GetLength(1);
     
-        Vector2Int left = move.From + Vector2Int.Left;
+        Vector2Int left = movePieceEvent.From + Vector2Int.Left;
         AttemptPieceMove(move, left, moveDelta, trigger);
-        Vector2Int right = move.From + Vector2Int.Right;
+        Vector2Int right = movePieceEvent.From + Vector2Int.Right;
         AttemptPieceMove(move, right, moveDelta, trigger);
     
         return move.Result;
@@ -46,7 +46,11 @@ public class HandHolder(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MO
         // ALSO check if that piece wasn't the piece that was moved right before this, to prevent looping behavior
         if (trigger is MovePieceEvent movePieceTrigger && movePieceTrigger.PieceId == toBeMoved.Id)
             return;
-    
-        move.ApplyEvent(new MovePieceEvent(toBeMoved.Id, from + delta));
+        
+        // Goal square actually empty
+        if (move.Result.Squares.Get(goalPos) is not null)
+            return;
+        
+        move.ApplyEvent(new MovePieceEvent(toBeMoved.Id, from, goalPos));
     }
 }

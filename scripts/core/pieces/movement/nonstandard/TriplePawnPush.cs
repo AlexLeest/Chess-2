@@ -23,7 +23,7 @@ public class TriplePawnPush : IMovement
             return [];
 
         Move move = new(id, from, goalPos, board);
-        move.ApplyEvent(new MovePieceEvent(id, goalPos));
+        move.ApplyEvent(new MovePieceEvent(id, from, goalPos));
         move.ApplyEvent(new NextTurnEvent());
 
         return [move];

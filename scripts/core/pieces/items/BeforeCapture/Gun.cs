@@ -11,7 +11,8 @@ public class Gun(byte pieceId) : AbstractItem(pieceId, ItemTriggers.BEFORE_CAPTU
 {
     public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
-        move.ApplyEvent(new MovePieceEvent(PieceId, move.From));
+        Piece piece = board.GetPiece(PieceId);
+        move.ApplyEvent(new MovePieceEvent(PieceId, piece.Position, move.From, false));
 
         return board;
     }

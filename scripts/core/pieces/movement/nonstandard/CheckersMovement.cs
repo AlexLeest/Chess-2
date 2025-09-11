@@ -10,6 +10,10 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 /// </summary>
 public class CheckersMovement : IMovement
 {
+    // TODO: Checkers can't move backwards.
+    // TODO: Different type of promotion on final row.
+    // TODO: Multi-capture?
+    
     public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
     {
         List<Move> result = [];
@@ -25,7 +29,7 @@ public class CheckersMovement : IMovement
             if (diagPiece is null)
             {
                 Move move = new(id, from, diagCoords, board);
-                move.ApplyEvent(new MovePieceEvent(id, diagCoords));
+                move.ApplyEvent(new MovePieceEvent(id, from, diagCoords));
                 move.ApplyEvent(new NextTurnEvent());
 
                 result.Add(move);
@@ -43,7 +47,7 @@ public class CheckersMovement : IMovement
                 continue;
             
             Move capMove = new(id, from, behindPieceCoords, board);
-            capMove.ApplyEvent(new MovePieceEvent(id, behindPieceCoords));
+            capMove.ApplyEvent(new MovePieceEvent(id, from, behindPieceCoords));
             capMove.ApplyEvent(new CapturePieceEvent(diagPiece.Id, id));
             capMove.ApplyEvent(new NextTurnEvent());
             

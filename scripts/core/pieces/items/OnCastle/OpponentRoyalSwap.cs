@@ -42,8 +42,8 @@ public class OpponentRoyalSwap(byte pieceId) : AbstractItem(pieceId, ItemTrigger
 
         Vector2Int kingPos = king.Position;
         Vector2Int queenPos = queen.Position;
-        move.ApplyEvent(new MovePieceEvent(king.Id, queenPos, false));
-        move.ApplyEvent(new MovePieceEvent(queen.Id, kingPos, false));
+        move.ApplyEvent(new MovePieceEvent(king.Id, kingPos, queenPos, false));
+        move.ApplyEvent(new MovePieceEvent(queen.Id, queenPos, kingPos, false));
 
         return board;
     }

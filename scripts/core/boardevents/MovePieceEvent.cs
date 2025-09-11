@@ -3,9 +3,10 @@ using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-public class MovePieceEvent(byte pieceId, Vector2Int to, bool triggersEvents = true) : IBoardEvent
+public class MovePieceEvent(byte pieceId, Vector2Int from, Vector2Int to, bool triggersEvents = true) : IBoardEvent
 {
     public readonly byte PieceId = pieceId;
+    public readonly Vector2Int From = from;
     public readonly Vector2Int To = to;
     
     public void AdjustBoard(Board board, Move move)
@@ -36,6 +37,7 @@ public class MovePieceEvent(byte pieceId, Vector2Int to, bool triggersEvents = t
             board.ZobristHash ^= ZobristCalculator.CastlingHashes[colorIndex + 2];
         }
 
-        board.ActivateItems(PieceId, ItemTriggers.ON_MOVE, board, move, this);
+        if (triggersEvents)
+            board.ActivateItems(PieceId, ItemTriggers.ON_MOVE, board, move, this);
     }
 }

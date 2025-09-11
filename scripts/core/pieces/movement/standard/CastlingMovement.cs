@@ -21,8 +21,8 @@ public class CastlingMovement : IMovement
             {
                 Move castleKingSide = new(id, from, new Vector2Int(6, rank), board);
 
-                castleKingSide.ApplyEvent(new MovePieceEvent(id, new Vector2Int(6, rank)));
-                castleKingSide.ApplyEvent(new MovePieceEvent(toCastleKingSide.Id, new Vector2Int(5, rank)));
+                castleKingSide.ApplyEvent(new MovePieceEvent(id, from, new Vector2Int(6, rank)));
+                castleKingSide.ApplyEvent(new MovePieceEvent(toCastleKingSide.Id, toCastleKingSide.Position, new Vector2Int(5, rank)));
                 castleKingSide.ApplyEvent(new CastleEvent(color));
                 castleKingSide.ApplyEvent(new NextTurnEvent());
                 
@@ -37,8 +37,8 @@ public class CastlingMovement : IMovement
             {
                 Move castleQueenSide = new(id, from, new Vector2Int(2, rank), board);
                 
-                castleQueenSide.ApplyEvent(new MovePieceEvent(id, new Vector2Int(2, rank)));
-                castleQueenSide.ApplyEvent(new MovePieceEvent(toCastleQueenSide.Id, new Vector2Int(3, rank)));
+                castleQueenSide.ApplyEvent(new MovePieceEvent(id, from, new Vector2Int(2, rank)));
+                castleQueenSide.ApplyEvent(new MovePieceEvent(toCastleQueenSide.Id, toCastleQueenSide.Position, new Vector2Int(3, rank)));
                 castleQueenSide.ApplyEvent(new CastleEvent(color));
                 castleQueenSide.ApplyEvent(new NextTurnEvent());
                 

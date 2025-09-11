@@ -50,7 +50,7 @@ public class SlidingMovement : IMovement
                 Piece onSquare = squares.Get(currentPos);
                 Move move = new(id, from, currentPos, board);
                 
-                move.ApplyEvent(new MovePieceEvent(id, currentPos));
+                move.ApplyEvent(new MovePieceEvent(id, from, currentPos));
                 if (onSquare != null)
                 {
                     if (onSquare.Color != color)
