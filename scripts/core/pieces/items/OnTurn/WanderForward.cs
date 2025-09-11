@@ -12,7 +12,7 @@ public class WanderForward(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
 {
     public override bool ConditionsMet(Board board, Move move, IBoardEvent trigger)
     {
-        if (move.Events[0] is MovePieceEvent movePieceEvent && movePieceEvent.PieceId == PieceId)
+        if (move.Moving == PieceId)
             return false;
         
         // foreach (IBoardEvent ev in move.Events)
