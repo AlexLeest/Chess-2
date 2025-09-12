@@ -83,11 +83,11 @@ public partial class GodotBoard : GridContainer
     private async void SquareClicked(Vector2I coords)
     {
         GD.Print($"Square clicked at {coords}");
-        // if (Board.Turn % 2 != 0)
-        // {
-        //     GD.Print("It's black's turn");
-        //     return;
-        // }
+        if (Board.Turn % 2 != 0)
+        {
+            GD.Print("It's black's turn");
+            return;
+        }
         bool colorToMove = Board.Turn % 2 == 0;
         
         Vector2Int corePos = coords.ToCore();
@@ -119,11 +119,11 @@ public partial class GodotBoard : GridContainer
         selectedPiece = square.GdPiece;
         GD.Print($"Selected piece {selectedPiece.Id}");
         // TODO: Show possible moves for piece
-        // foreach (Move move in Board.GetMoves(selectedPiece.Piece))
-        // {
-        //     // TODO: Highlight these squares
-        //     GD.Print($"Move {move} allowed");
-        // }
+        foreach (Move move in Board.GetMoves(selectedPiece.Piece))
+        {
+            // TODO: Highlight these squares
+            GD.Print($"Move {move} allowed");
+        }
     }
 
     private async Task SetNewBoard(Board newBoard)
@@ -150,17 +150,17 @@ public partial class GodotBoard : GridContainer
         // GD.Print("Yeah we are now RENDER?");
         RenderPieces();
         
-        // if (newBoard.ColorToMove == false)
-        // {
-        //     // White just played, black should respond by engine
-        //     // TODO: Set up a "computer is thinking" visual while the engine is doing its thing
-        //     Stopwatch stopwatch = Stopwatch.StartNew();
-        //     Move engineResponse = await Task.Run(() => engine.GenerateNextMove(newBoard));
-        //     // Board nextBoard = newBoard.ApplyMove(engineResponse, out List<IBoardEvent> events);
-        //     Board nextBoard = engineResponse.Result;
-        //     GD.Print($"Response: {nextBoard}, time: {stopwatch.Elapsed}");
-        //     await SetNewBoard(nextBoard);
-        // }
+        if (newBoard.ColorToMove == false)
+        {
+            // White just played, black should respond by engine
+            // TODO: Set up a "computer is thinking" visual while the engine is doing its thing
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            Move engineResponse = await Task.Run(() => engine.GenerateNextMove(newBoard));
+            // Board nextBoard = newBoard.ApplyMove(engineResponse, out List<IBoardEvent> events);
+            Board nextBoard = engineResponse.Result;
+            GD.Print($"Response: {nextBoard}, time: {stopwatch.Elapsed}");
+            await SetNewBoard(nextBoard);
+        }
     }
 
     private void RenderPieces()

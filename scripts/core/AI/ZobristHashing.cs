@@ -133,6 +133,7 @@ public class ZobristHashing(int maxDepth) : IEngine
             BasePiece.QUEEN => 9f * sign,
             BasePiece.KING => 0f * sign,
             BasePiece.CHECKERS => 1f * sign,
+            BasePiece.BOMB => 1f * sign,
             _ => throw new ArgumentOutOfRangeException(),
         };
     }

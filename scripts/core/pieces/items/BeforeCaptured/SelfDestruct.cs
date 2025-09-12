@@ -20,6 +20,7 @@ public class SelfDestruct(byte pieceId) : AbstractItem(pieceId, ItemTriggers.BEF
         if (trigger is not CapturePieceEvent captureEvent)
             return board;
 
+        // BUG: These can turn out to be null, breaking the following code
         Piece captured = move.Result.GetPiece(PieceId);
         Piece capturer = move.Result.GetPiece(captureEvent.CapturingPieceId);
         
