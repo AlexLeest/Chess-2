@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GDLeaveBombOnMove" load_steps=2 format=3 uid="uid://dhpr2668vduga"]
+
+[ext_resource type="Script" uid="uid://dctc7f8l8f0sl" path="res://scripts/godot/pieces/items/OnMove/GDLeaveBombOnMove.cs" id="1_e5745"]
+
+[resource]
+script = ExtResource("1_e5745")
+Rarity = 0
+metadata/_custom_type_script = "uid://dctc7f8l8f0sl"
