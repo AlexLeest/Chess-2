@@ -144,7 +144,8 @@ public class Board
         if (pieceDict.ContainsKey(piece.Id))
             return false;
         
-        Piece[] newPieces = DeepcopyPieces();
+        Piece[] newPieces = new Piece[Pieces.Length + 1];
+        Pieces.CopyTo(newPieces, 0);
         newPieces[^1] = piece;
         Pieces = newPieces;
         Squares.Set(piece.Position, piece);

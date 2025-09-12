@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.BeforeCapture;
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using Godot;
 
@@ -9,7 +10,7 @@ public partial class GDGun : GodotItem
 {
     public override IItem GetItem(byte pieceId)
     {
-        return new core.pieces.items.OnCapture.Gun(pieceId);
+        return new Gun(pieceId);
     }
 
     public override string GetDescription()

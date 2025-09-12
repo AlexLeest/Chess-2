@@ -1,6 +1,6 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.AfterCapture;
 
 public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.AFTER_CAPTURE) 
 {

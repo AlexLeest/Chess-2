@@ -1,7 +1,6 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
-using System.Collections.Generic;
 
-namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
+namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.BeforeCapture;
 
 /// <summary>
 /// "Shoots" the enemy piece, not actually moving this piece over there

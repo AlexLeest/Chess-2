@@ -13,6 +13,7 @@ public class SpawnPawnFence(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
         int kingX = move.To.X;
         int pawnY = move.To.Y == 0 ? 1 : 6;
         
+        // BUG: If a high ID piece is killed prior to this, are the items still registered to that piece ID? Can new spawned pawns "claim" those items?
         byte highestId = board.Pieces.Max(piece => piece.Id);
 
         for (int xPos = kingX - 1; xPos <= kingX + 1; xPos++)
@@ -25,10 +26,6 @@ public class SpawnPawnFence(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
             Vector2Int pawnPos = new(xPos, pawnY);
             Piece newPawn = new(highestId, BasePiece.PAWN, color, pawnPos, [new PawnMovement()], SpecialPieceTypes.PAWN);
             move.ApplyEvent(new SpawnPieceEvent(newPawn));
-            // Piece[] newPieces = board.DeepcopyPieces();
-            // newPieces[^1] = newPawn;
-            // board.Pieces = newPieces;
-            // board.Squares.Set(pawnPos, newPawn);
         }
 
         return board;

@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.AfterCaptured;
 using CHESS2THESEQUELTOCHESS.scripts.godot.items;
 using Godot;
 
@@ -9,7 +10,7 @@ public partial class GDRespawn : GodotItem
 {
     public override IItem GetItem(byte pieceId)
     {
-        return new core.pieces.items.OnCaptured.Respawn(pieceId);
+        return new Respawn(pieceId);
     }
 
     public override string GetDescription()

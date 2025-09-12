@@ -12,14 +12,20 @@ public class CapturePieceEvent(byte capturedPieceId, byte capturingPieceId, bool
         if (board.GetPiece(CapturedPieceId) is null)
             return;
         
-        board.ActivateItems(CapturingPieceId, ItemTriggers.BEFORE_CAPTURE, board, move, this);
-        board.ActivateItems(CapturedPieceId, ItemTriggers.BEFORE_CAPTURED, board, move, this);
+        if (triggersEvents)
+        {
+            board.ActivateItems(CapturingPieceId, ItemTriggers.BEFORE_CAPTURE, board, move, this);
+            board.ActivateItems(CapturedPieceId, ItemTriggers.BEFORE_CAPTURED, board, move, this);
+        }
         
         // Removal of captured piece
         board.RemovePiece(CapturedPieceId);
         
-        // Activating items 
-        board.ActivateItems(CapturingPieceId, ItemTriggers.AFTER_CAPTURE, board, move, this);
-        board.ActivateItems(CapturedPieceId, ItemTriggers.AFTER_CAPTURED, board, move, this);
+        // Activating items
+        if (triggersEvents)
+        {
+            board.ActivateItems(CapturingPieceId, ItemTriggers.AFTER_CAPTURE, board, move, this);
+            board.ActivateItems(CapturedPieceId, ItemTriggers.AFTER_CAPTURED, board, move, this);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.AfterCapture;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.AfterCaptured;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.BeforeCapture;
-using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCapture;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnOpponentCastle;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnPromotion;
@@ -49,6 +50,7 @@ public abstract partial class GodotItem : Resource
             SpawnPawnFence => new GDSpawnPawnFence(),
             HandHolder => new GDHandHolder(),
             ColorConverter => new GDColorConverter(),
+            DespawnTimer => new GDDespawnTimer(),
             _ => throw new NotImplementedException(),
         };
 

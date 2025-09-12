@@ -71,6 +71,8 @@ public class Piece(byte id, BasePiece basePiece, bool color, Vector2Int position
     public override string ToString()
     {
         string color = Color ? "WHITE" : "BLACK";
+        if (Movement.Length == 0)
+            return $"{files[Position.X]}{Position.Y + 1}, {color}";
         return $"{files[Position.X]}{Position.Y + 1}, {color}, movement: {Movement[0]}";
     }
 

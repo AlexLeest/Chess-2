@@ -12,4 +12,5 @@ public enum BasePiece
     
     // Nonstandard but defined
     CHECKERS,
+    BOMB,
 }

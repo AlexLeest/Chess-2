@@ -14,6 +14,6 @@ public partial class GDSelfDestruct : GodotItem
 
     public override string GetDescription()
     {
-        return "Self Destruct\nThis piece kills any piece that captures it.";
+        return "Self Destruct:\nThis piece kills any piece that captures it.";
     }
 }
