@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="UpgradesModel" load_steps=26 format=3 uid="uid://dnfklsd6c1fcm"]
+[gd_resource type="Resource" script_class="UpgradesModel" load_steps=27 format=3 uid="uid://dnfklsd6c1fcm"]
 
 [ext_resource type="Resource" uid="uid://bif220mgfmh7r" path="res://data/items/BeforeCapture/cannibal_teeth.tres" id="1_day28"]
 [ext_resource type="Resource" uid="uid://dvuxkeoey5glf" path="res://data/items/OnMove/evolution_loop.tres" id="1_l6gso"]
@@ -25,8 +25,9 @@
 [ext_resource type="Resource" uid="uid://b2x8cgcu6vpdt" path="res://data/movements/standard/rook_movement.tres" id="19_pwvtq"]
 [ext_resource type="Resource" uid="uid://drldwbx1tc0lh" path="res://data/movements/nonstandard/triple_pawn_push.tres" id="20_hsboa"]
 [ext_resource type="Resource" uid="uid://c1mkja0qcs72x" path="res://data/movements/nonstandard/cannibal_king.tres" id="21_fjmva"]
+[ext_resource type="Resource" uid="uid://bf8w3y5elosv7" path="res://data/movements/nonstandard/swapper.tres" id="25_auni3"]
 
 [resource]
 script = ExtResource("16_8o2jt")
 items = Array[Resource]([ExtResource("1_day28"), ExtResource("2_a152i"), ExtResource("3_auni3"), ExtResource("4_apx1c"), ExtResource("5_pwvtq"), ExtResource("4_4100q"), ExtResource("11_hsboa"), ExtResource("10_pwvtq"), ExtResource("1_l6gso"), ExtResource("10_a152i"), ExtResource("9_apx1c"), ExtResource("5_8o2jt"), ExtResource("3_7vb0p"), ExtResource("8_auni3"), ExtResource("15_a152i")])
-movements = Array[Object]([ExtResource("13_4100q"), ExtResource("14_8o2jt"), ExtResource("15_day28"), ExtResource("16_a152i"), ExtResource("17_auni3"), ExtResource("18_apx1c"), ExtResource("19_pwvtq"), ExtResource("20_hsboa"), ExtResource("21_fjmva")])
+movements = Array[Object]([ExtResource("13_4100q"), ExtResource("14_8o2jt"), ExtResource("15_day28"), ExtResource("16_a152i"), ExtResource("17_auni3"), ExtResource("18_apx1c"), ExtResource("19_pwvtq"), ExtResource("20_hsboa"), ExtResource("21_fjmva"), ExtResource("25_auni3")])

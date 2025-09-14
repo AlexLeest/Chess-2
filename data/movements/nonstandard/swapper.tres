@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GDSwapper" load_steps=2 format=3 uid="uid://bf8w3y5elosv7"]
+
+[ext_resource type="Script" uid="uid://d0hfk4e8115dk" path="res://scripts/godot/pieces/movement/nonstandard/GDSwapper.cs" id="1_u0h1r"]
+
+[resource]
+script = ExtResource("1_u0h1r")
+Rarity = 0
+metadata/_custom_type_script = "uid://d0hfk4e8115dk"
