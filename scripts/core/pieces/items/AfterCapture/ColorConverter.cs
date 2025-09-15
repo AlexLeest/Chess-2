@@ -36,4 +36,9 @@ public class ColorConverter(byte pieceId) : AbstractItem(pieceId, ItemTriggers.A
 
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new ColorConverter(pieceId);
+    }
 }

@@ -34,4 +34,9 @@ public class PromotionExplosion(byte pieceId) : AbstractItem(pieceId, ItemTrigge
 
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new PromotionExplosion(pieceId);
+    }
 }

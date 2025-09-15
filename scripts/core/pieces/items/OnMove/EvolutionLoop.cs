@@ -24,4 +24,9 @@ public class EvolutionLoop(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
         
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new EvolutionLoop(pieceId);
+    }
 }

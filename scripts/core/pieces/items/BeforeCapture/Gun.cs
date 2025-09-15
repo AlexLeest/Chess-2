@@ -15,4 +15,9 @@ public class Gun(byte pieceId) : AbstractItem(pieceId, ItemTriggers.BEFORE_CAPTU
 
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new Gun(pieceId);
+    }
 }

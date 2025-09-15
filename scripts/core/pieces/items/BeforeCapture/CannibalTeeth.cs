@@ -31,4 +31,9 @@ public class CannibalTeeth(byte pieceId) : AbstractItem(pieceId, ItemTriggers.BE
         
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new CannibalTeeth(pieceId);
+    }
 }

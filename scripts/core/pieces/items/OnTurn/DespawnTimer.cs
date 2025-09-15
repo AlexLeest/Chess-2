@@ -20,4 +20,9 @@ public class DespawnTimer(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_
         
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new DespawnTimer(pieceId);
+    }
 }

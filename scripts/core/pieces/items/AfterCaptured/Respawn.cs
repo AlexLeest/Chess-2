@@ -52,4 +52,9 @@ public class Respawn(byte pieceId) : AbstractItem(pieceId, ItemTriggers.AFTER_CA
         
         throw new KeyNotFoundException($"Piece with id {PieceId} not found at root board");
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new Respawn(pieceId);
+    }
 }

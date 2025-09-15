@@ -12,6 +12,8 @@ public interface IItem
     public bool ConditionsMet(Board board, Move move, IBoardEvent trigger);
 
     public Board Execute(Board board, Move move, IBoardEvent trigger);
+    
+    public IItem GetNewInstance(byte pieceId);
 
     public uint GetZobristHash(bool color, Vector2Int position);
 }

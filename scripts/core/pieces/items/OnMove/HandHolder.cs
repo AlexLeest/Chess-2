@@ -30,7 +30,7 @@ public class HandHolder(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MO
     
         return move.Result;
     }
-    
+
     private void AttemptPieceMove(Move move, Vector2Int from, Vector2Int delta, IBoardEvent trigger)
     {
         // Check if starting and goal location are on board
@@ -52,5 +52,10 @@ public class HandHolder(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_MO
             return;
         
         move.ApplyEvent(new MovePieceEvent(toBeMoved.Id, from, goalPos));
+    }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new HandHolder(pieceId);
     }
 }

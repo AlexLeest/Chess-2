@@ -2,12 +2,12 @@
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.AfterCapture;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.AfterCaptured;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.BeforeCapture;
-using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnOpponentCastle;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnPromotion;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnTurn;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCastle;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
+using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.BeforeCapture;
 using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnCapture;
 using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnCaptured;
 using CHESS2THESEQUELTOCHESS.scripts.godot.pieces.items.OnCastle;
@@ -51,6 +51,7 @@ public abstract partial class GodotItem : Resource
             HandHolder => new GDHandHolder(),
             ColorConverter => new GDColorConverter(),
             DespawnTimer => new GDDespawnTimer(),
+            Changeling => new GDChangeling(),
             _ => throw new NotImplementedException(),
         };
 

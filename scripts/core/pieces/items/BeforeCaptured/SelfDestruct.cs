@@ -31,4 +31,9 @@ public class SelfDestruct(byte pieceId) : AbstractItem(pieceId, ItemTriggers.BEF
         
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new SelfDestruct(pieceId);
+    }
 }

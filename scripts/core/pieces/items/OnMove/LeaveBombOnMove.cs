@@ -32,4 +32,9 @@ public class LeaveBombOnMove(byte pieceId) : AbstractItem(pieceId, ItemTriggers.
         
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new LeaveBombOnMove(pieceId);
+    }
 }

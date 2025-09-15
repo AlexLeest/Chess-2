@@ -30,6 +30,7 @@ public class CannibalKing : IMovement
                 Move move = new(id, from, targetCoords, board);
                 move.ApplyEvent(new MovePieceEvent(id, from, targetCoords));
                 move.ApplyEvent(new CapturePieceEvent(target.Id, id));
+                move.ApplyEvent(new NextTurnEvent());
 
                 moves.Add(move);
             }

@@ -21,4 +21,9 @@ public class CaptureNonKingPiece(byte pieceId) : AbstractItem(pieceId, ItemTrigg
         move.ApplyEvent(new CapturePieceEvent(nonKingPiece.Id, PieceId));
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new CaptureNonKingPiece(pieceId);
+    }
 }

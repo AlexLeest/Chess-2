@@ -20,7 +20,7 @@ public class Swapper : IMovement
                 continue;
             
             // Swap the two pieces
-            Move move = new Move(id, from, piece.Position, board);
+            Move move = new(id, from, piece.Position, board);
             move.ApplyEvent(new MovePieceEvent(id, from, piece.Position));
             move.ApplyEvent(new MovePieceEvent(piece.Id, piece.Position, from));
             move.ApplyEvent(new NextTurnEvent());

@@ -32,4 +32,9 @@ public class KingOfTheHill(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON
         move.ApplyEvent(new UpdatePieceEvent(before, after));
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new KingOfTheHill(pieceId);
+    }
 }

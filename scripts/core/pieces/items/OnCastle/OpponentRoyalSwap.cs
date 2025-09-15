@@ -47,4 +47,9 @@ public class OpponentRoyalSwap(byte pieceId) : AbstractItem(pieceId, ItemTrigger
 
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new OpponentRoyalSwap(pieceId);
+    }
 }

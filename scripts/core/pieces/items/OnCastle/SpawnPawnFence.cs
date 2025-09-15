@@ -30,4 +30,9 @@ public class SpawnPawnFence(byte pieceId) : AbstractItem(pieceId, ItemTriggers.O
 
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new SpawnPawnFence(pieceId);
+    }
 }

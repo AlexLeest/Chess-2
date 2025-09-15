@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GDChangeling" load_steps=2 format=3 uid="uid://is6p67luenan"]
+
+[ext_resource type="Script" uid="uid://74hxn5wn05os" path="res://scripts/godot/pieces/items/BeforeCapture/GDChangeling.cs" id="1_gbe3m"]
+
+[resource]
+script = ExtResource("1_gbe3m")
+Rarity = 2
+metadata/_custom_type_script = "uid://74hxn5wn05os"

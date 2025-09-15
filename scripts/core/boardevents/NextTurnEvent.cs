@@ -7,7 +7,6 @@ public class NextTurnEvent : IBoardEvent
 {
     public void AdjustBoard(Board board, Move move)
     {
-        // TODO: Handle pawn promotion
         board.ActivateItems(board.ColorToMove, ItemTriggers.ON_TURN, board, move, this);
 
         foreach (Piece piece in board.Pieces)

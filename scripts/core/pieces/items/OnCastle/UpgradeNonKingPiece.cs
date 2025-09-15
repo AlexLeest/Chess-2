@@ -26,4 +26,9 @@ public class UpgradeNonKingPiece(byte pieceId) : AbstractItem(pieceId, ItemTrigg
         
         return board;
     }
+
+    public override IItem GetNewInstance(byte pieceId)
+    {
+        return new UpgradeNonKingPiece(pieceId);
+    }
 }
