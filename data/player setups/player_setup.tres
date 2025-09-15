@@ -1,14 +1,16 @@
-[gd_resource type="Resource" script_class="PlayerSetup" load_steps=14 format=3 uid="uid://dab655gk8f2w"]
+[gd_resource type="Resource" script_class="PlayerSetup" load_steps=16 format=3 uid="uid://dab655gk8f2w"]
 
+[ext_resource type="Resource" uid="uid://dhpr2668vduga" path="res://data/items/OnMove/leave_bomb_on_move.tres" id="1_8qh0p"]
+[ext_resource type="Resource" uid="uid://bf8w3y5elosv7" path="res://data/movements/nonstandard/swapper.tres" id="2_l5ds2"]
 [ext_resource type="Script" uid="uid://cul58y3sumplo" path="res://scripts/godot/pieces/PieceResource.cs" id="3_wf1x1"]
 [ext_resource type="Script" uid="uid://dxjj038hvehvy" path="res://scripts/godot/data/PlayerSetup.cs" id="9_g37bp"]
 
 [sub_resource type="Resource" id="Resource_2dgya"]
 script = ExtResource("3_wf1x1")
 StartPosition = Vector2i(1, 1)
-Items = []
+Items = [ExtResource("1_8qh0p")]
 PieceType = 0
-Movement = []
+Movement = [ExtResource("2_l5ds2")]
 metadata/_custom_type_script = "uid://cul58y3sumplo"
 
 [sub_resource type="Resource" id="Resource_l5ds2"]
