@@ -1,7 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
-using Godot;
-using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
 

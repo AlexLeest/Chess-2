@@ -20,9 +20,12 @@ public class SelfDestruct(byte pieceId) : AbstractItem(pieceId, ItemTriggers.BEF
         if (trigger is not CapturePieceEvent captureEvent)
             return board;
 
-        // BUG: These can turn out to be null, breaking the following code
         Piece captured = move.Result.GetPiece(PieceId);
         Piece capturer = move.Result.GetPiece(captureEvent.CapturingPieceId);
+
+        // NullRef guard
+        if (captured is null || capturer is null)
+            return board;
         
         // BUG: Check that this doesn't infinite loop if 2 self-destruct pieces capture eachother?
         //  Keep track of whether an item has already been triggered? Maybe delete the selfdestruct after it gets used to avoid this?

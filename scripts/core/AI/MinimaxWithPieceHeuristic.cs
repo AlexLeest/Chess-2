@@ -1,5 +1,4 @@
-﻿using Godot;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;

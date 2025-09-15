@@ -35,29 +35,4 @@ public abstract class AbstractItem(byte pieceId, ItemTriggers trigger) : IItem
     {
         return ZobristCalculator.GetZobristHash(color, position, this);
     }
-
-    // public static IItem GetNewInstance(IItem instance, byte pieceId)
-    // {
-    //     return instance switch
-    //     {
-    //         AfterCapture.ColorConverter => new AfterCapture.ColorConverter(pieceId),
-    //         Respawn => new Respawn(pieceId),
-    //         CannibalTeeth => new CannibalTeeth(pieceId),
-    //         Changeling => new Changeling(pieceId),
-    //         Gun => new Gun(pieceId),
-    //         SelfDestruct => new SelfDestruct(pieceId),
-    //         OpponentRoyalSwap => new OpponentRoyalSwap(pieceId),
-    //         SpawnPawnFence => new SpawnPawnFence(pieceId),
-    //         UpgradeNonKingPiece => new UpgradeNonKingPiece(pieceId),
-    //         EvolutionLoop => new EvolutionLoop(pieceId),
-    //         HandHolder => new HandHolder(pieceId),
-    //         LeaveBombOnMove => new LeaveBombOnMove(pieceId),
-    //         CaptureNonKingPiece => new CaptureNonKingPiece(pieceId),
-    //         PromotionExplosion => new PromotionExplosion(pieceId),
-    //         DespawnTimer => new DespawnTimer(pieceId),
-    //         KingOfTheHill => new KingOfTheHill(pieceId),
-    //         WanderForward => new WanderForward(pieceId),
-    //         _ => throw new NotImplementedException(),
-    //     };
-    // }
 }

@@ -1,5 +1,4 @@
-﻿using Godot;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
@@ -28,7 +27,7 @@ public class ZobristHashing(int maxDepth) : IEngine
         }
         transpositionTable.Clear();
 
-        GD.Print($"TTable used {tTableUses} times");
+        // GD.Print($"TTable used {tTableUses} times");
         return lastKnownBestMove;
     }
 

@@ -15,6 +15,7 @@ public class NextTurnEvent : IBoardEvent
             {
                 Piece promoted = piece.DeepCopy(false).ChangeTo(BasePiece.QUEEN);
                 move.ApplyEvent(new UpdatePieceEvent(piece, promoted));
+                board.ActivateItems(promoted.Id, ItemTriggers.ON_PROMOTION, board, move, this);
             }
         }
         

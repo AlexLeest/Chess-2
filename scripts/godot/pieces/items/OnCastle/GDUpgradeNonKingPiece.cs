@@ -14,6 +14,6 @@ public partial class GDUpgradeNonKingPiece : GodotItem
 
     public override string GetDescription()
     {
-        return "Upgrade Non-King Piece\nOn castling, the non-king piece is upgraded";
+        return "Upgrade Non-King Piece:\nOn castling, the non-king piece is upgraded";
     }
 }

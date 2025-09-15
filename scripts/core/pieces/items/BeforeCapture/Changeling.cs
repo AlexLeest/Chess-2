@@ -28,7 +28,6 @@ public class Changeling(byte pieceId) : AbstractItem(pieceId, ItemTriggers.BEFOR
         {
             foreach (IItem item in board.ItemsPerPiece[captureEvent.CapturedPieceId])
             {
-                // BUG: This doesn't work because the item saves the PieceId, and just transferring it like this doesn't change that, messing with the ConditionsMet and Execute logic
                 move.ApplyEvent(new AddItemEvent(PieceId, item.GetNewInstance(PieceId)));
             }
         }
