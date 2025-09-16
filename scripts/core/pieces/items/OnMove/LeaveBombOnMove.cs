@@ -1,6 +1,7 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnCaptured;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnTurn;
+using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using System.Linq;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.items.OnMove;
@@ -16,15 +17,14 @@ public class LeaveBombOnMove(byte pieceId) : AbstractItem(pieceId, ItemTriggers.
         if (trigger is not MovePieceEvent movePieceEvent || movePieceEvent.PieceId != PieceId)
             return board;
         
+        if (board.Squares.Get(movePieceEvent.From) is not null)
+            return board;
+        
         Piece piece = board.GetPiece(PieceId);
-        // TODO: Think of a way to spawn a piece with a set lifespan AND different behavior on capture?
-        //  - New SpecialPieceType that behaves similar to EN_PASSANTABLE_PAWN and deteriorates on DeepCopy?
-        //  - Add SelfDestruct item to that piece.
 
         // BUG: Same possible problem as SpawnPawnFence, dead pieces remaining in Board.ItemsPerPiece and this bomb claiming them
         byte highestId = board.Pieces.Max(x => x.Id);
 
-        // BUG: Somehow, breaks WanderForward
         Piece bomb = new((byte)(highestId + 1), BasePiece.BOMB, piece.Color, movePieceEvent.From, []);
         move.ApplyEvent(new SpawnPieceEvent(bomb));
         move.ApplyEvent(new AddItemEvent(bomb.Id, new SelfDestruct(bomb.Id)));

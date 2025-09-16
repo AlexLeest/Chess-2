@@ -16,7 +16,8 @@ public class MovePieceEvent(byte pieceId, Vector2Int from, Vector2Int to, bool t
         ZobristCalculator.AdjustZobristHash(piece, board);
 
         // Change position, adjust board properly
-        board.Squares.Set(piece.Position, null);//[piece.Position.X, piece.Position.Y] = null;
+        if (board.Squares.Get(From).Id == piece.Id)
+            board.Squares.Set(From, null);
         board.Squares.Set(To, piece);
         piece.Position = To;
 

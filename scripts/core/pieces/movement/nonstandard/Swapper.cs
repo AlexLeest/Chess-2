@@ -20,9 +20,12 @@ public class Swapper : IMovement
                 continue;
             
             // Swap the two pieces
-            Move move = new(id, from, piece.Position, board);
-            move.ApplyEvent(new MovePieceEvent(id, from, piece.Position));
-            move.ApplyEvent(new MovePieceEvent(piece.Id, piece.Position, from));
+            Vector2Int to = piece.Position;
+            Move move = new(id, from, to, board);
+            
+            // To avoid setting one of the pieces to null again, moves to-to and from-from
+            move.ApplyEvent(new MovePieceEvent(piece.Id, to, from));
+            move.ApplyEvent(new MovePieceEvent(id, from, to));
             move.ApplyEvent(new NextTurnEvent());
 
             options.Add(move);
