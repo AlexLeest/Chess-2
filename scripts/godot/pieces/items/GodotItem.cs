@@ -52,6 +52,7 @@ public abstract partial class GodotItem : Resource
             ColorConverter => new GDColorConverter(),
             DespawnTimer => new GDDespawnTimer(),
             Changeling => new GDChangeling(),
+            Pusher => new GDPusher(),
             _ => throw new NotImplementedException(),
         };
 
