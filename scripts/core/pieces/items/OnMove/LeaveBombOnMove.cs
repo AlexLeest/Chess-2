@@ -14,12 +14,9 @@ public class LeaveBombOnMove(byte pieceId) : AbstractItem(pieceId, ItemTriggers.
 {
     public override Board Execute(Board board, Move move, IBoardEvent trigger)
     {
-        if (trigger is not MovePieceEvent movePieceEvent || movePieceEvent.PieceId != PieceId)
+        if (trigger is not MovePieceEvent movePieceEvent || movePieceEvent.PieceId != PieceId || board.Squares.Get(movePieceEvent.From) is not null)
             return board;
-        
-        if (board.Squares.Get(movePieceEvent.From) is not null)
-            return board;
-        
+
         Piece piece = board.GetPiece(PieceId);
 
         // BUG: Same possible problem as SpawnPawnFence, dead pieces remaining in Board.ItemsPerPiece and this bomb claiming them
