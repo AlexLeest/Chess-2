@@ -120,16 +120,13 @@ public partial class GodotBoard : GridContainer
             selectedPiece = null;
             return;
         }
-        // TODO: Highlight selected piece
         selectedPiece = square.GdPiece;
         selectedPiece.SetHighlight(true);
-        GD.Print($"Selected piece {selectedPiece.Id}");
+        // GD.Print($"Selected piece {selectedPiece.Id}");
         
-        // TODO: Show possible moves for piece
         foreach (Move move in Board.GetMoves(selectedPiece.Piece))
         {
-            // TODO: Highlight these squares
-            GD.Print($"Move {move} allowed");
+            // GD.Print($"Move {move} allowed");
             squares.Get(move.To).SetSelectedMoveHighlight(true);
         }
     }

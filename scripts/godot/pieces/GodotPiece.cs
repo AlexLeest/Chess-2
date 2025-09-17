@@ -18,7 +18,6 @@ public partial class GodotPiece : TextureRect
 
     public void SetHighlight(bool state)
     {
-        // TODO: Highlight this piece as currently selected by the player
         Modulate = state ? Colors.LightBlue : Colors.White;
     }
 }

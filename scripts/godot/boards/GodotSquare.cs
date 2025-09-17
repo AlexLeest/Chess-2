@@ -30,7 +30,6 @@ public partial class GodotSquare : ColorRect
         {
             if (mb.ButtonIndex == MouseButton.Left && mb.Pressed)
             {
-                // GD.Print($"Click pos {Pos}");
                 EmitSignalSquareClicked(Pos);
             }
         }
