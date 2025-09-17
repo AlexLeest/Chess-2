@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace CHESS2THESEQUELTOCHESS.scripts.core.pieces.movement.nonstandard;
 
 /// <summary>
-/// Movement that allows en-passant like capture of anything left or right of this piece. TODO: Untested
+/// Movement that allows en-passant like capture of anything left or right of this piece. TODO: Untested. Maybe only capture pieces that moved last turn?
 /// </summary>
 public class SuperEnPassant : IMovement
 {

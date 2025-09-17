@@ -23,7 +23,9 @@ public partial class MoveCounter : Node
     {
         if (input is InputEventKey eventKey && eventKey.Pressed)
         {
-            gdBoard = GetNode<GodotBoard>("../GodotBoard");
+            gdBoard = GetNodeOrNull<GodotBoard>("../GodotBoard");
+            if (gdBoard is null)
+                return;
             
             internalNodes = countInternalNodes ? 1 : 0;
             if (eventKey.Keycode == Key.Q)

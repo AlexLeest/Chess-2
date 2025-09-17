@@ -1,6 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
 using CHESS2THESEQUELTOCHESS.scripts.core.AI;
-using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
 using CHESS2THESEQUELTOCHESS.scripts.godot.utils;
 using Godot;
@@ -88,11 +87,16 @@ public partial class GodotBoard : GridContainer
             GD.Print("It's black's turn");
             return;
         }
-        bool colorToMove = Board.Turn % 2 == 0;
+        bool colorToMove = Board.ColorToMove;
         
         Vector2Int corePos = coords.ToCore();
         if (selectedPiece != null)
         {
+            // Reset highlights
+            selectedPiece.SetHighlight(false);
+            foreach (GodotSquare sq in squares)
+                sq.SetHighlight(false);
+            
             Piece pieceToMove = selectedPiece.Piece;
 
             foreach (Move possibleMove in Board.GetMoves(pieceToMove))
@@ -116,13 +120,17 @@ public partial class GodotBoard : GridContainer
             selectedPiece = null;
             return;
         }
+        // TODO: Highlight selected piece
         selectedPiece = square.GdPiece;
+        selectedPiece.SetHighlight(true);
         GD.Print($"Selected piece {selectedPiece.Id}");
+        
         // TODO: Show possible moves for piece
         foreach (Move move in Board.GetMoves(selectedPiece.Piece))
         {
             // TODO: Highlight these squares
             GD.Print($"Move {move} allowed");
+            squares.Get(move.To).SetHighlight(true);
         }
     }
 

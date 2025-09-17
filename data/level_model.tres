@@ -13,6 +13,6 @@
 [resource]
 script = ExtResource("1_k7ub5")
 EnemySetup = ExtResource("1_5p1i5")
-Engines = Array[Resource]([ExtResource("2_iqlbt"), ExtResource("3_iqlbt"), ExtResource("4_y3fyr"), ExtResource("5_fn8si"), ExtResource("6_ichwf"), ExtResource("7_dxdhp")])
+Engines = Array[Resource]([ExtResource("3_iqlbt"), ExtResource("4_y3fyr"), ExtResource("5_fn8si"), ExtResource("6_ichwf"), ExtResource("7_dxdhp"), ExtResource("2_iqlbt")])
 upgrades = ExtResource("5_p7r78")
 metadata/_custom_type_script = "uid://d4jbqkmx4hwho"

@@ -15,4 +15,10 @@ public partial class GodotPiece : TextureRect
         Piece = piece;
         Id = piece.Id;
     }
+
+    public void SetHighlight(bool state)
+    {
+        // TODO: Highlight this piece as currently selected by the player
+        Modulate = state ? Colors.Gold : Colors.White;
+    }
 }

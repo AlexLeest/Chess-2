@@ -45,8 +45,15 @@ public partial class GodotSquare : ColorRect
         EmitSignalOnMouseExited(Pos);
     }
 
+    public void SetHighlight(bool state)
+    {
+        // TODO: Highlight this square for possible movement of selected piece
+        Modulate = state ? Colors.Gold : Colors.White;
+    }
+
     public void Clear()
     {
+        SetHighlight(false);
         if (GdPiece is not null)
             GdPiece.QueueFree();
         GdPiece = null;

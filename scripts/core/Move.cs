@@ -4,17 +4,26 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core;
 
-public struct Move(byte pieceId, Vector2Int from, Vector2Int to, Board startingBoard)
+public struct Move
 {
     // id of the piece that got the move command
-    public byte Moving = pieceId;
+    public byte Moving;
     // positions the piece was moved from/to.
     // To does not necessarily match up with the resulting position!
-    public Vector2Int From = from, To = to;
+    public Vector2Int From, To;
     // List of events that happened because of this move, in order.
-    public List<IBoardEvent> Events = [];
+    public List<IBoardEvent> Events;
     // Resulting board state (can be an illegal board)
-    public Board Result = startingBoard.Copy();
+    public Board Result;
+
+    public Move(byte pieceId, Vector2Int from, Vector2Int to, Board startingBoard)
+    {
+        Moving = pieceId;
+        From = from;
+        To = to;
+        Events = [];
+        Result = startingBoard.Copy(this);
+    }
 
     public void ApplyEvent(IBoardEvent boardEvent)
     {
