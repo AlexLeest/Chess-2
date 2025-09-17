@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
 
-// TODO: Untested
 public class AddItemEvent(byte pieceId, IItem item) : IBoardEvent
 {
     public void AdjustBoard(Board board, Move move)

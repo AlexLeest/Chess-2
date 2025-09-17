@@ -57,6 +57,7 @@ public class MinimaxWithPieceHeuristic(int maxDepth) : IEngine
         if (nextMoves.Count == 0)
         {
             principalVariation = [];
+            // TODO: Replace with Move.IsLegal
             if (board.IsInCheck(board.ColorToMove))
                 return float.MinValue;
             return 0;

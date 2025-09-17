@@ -55,7 +55,6 @@ public abstract partial class GodotItem : Resource
             Pusher => new GDPusher(),
             _ => throw new NotImplementedException(),
         };
-
     }
 }
 

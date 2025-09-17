@@ -263,6 +263,7 @@ public class Board
                 continue;
             foreach (Move move in piece.GetMovementOptions(this))
             {
+                // TODO: Replace with Move.IsLegal
                 if (!move.Result.IsInCheck(ColorToMove))
                 {
                     result.Add(move);
@@ -278,6 +279,7 @@ public class Board
         
         foreach (Move move in piece.GetMovementOptions(this))
         {
+            // TODO: Replace with Move.IsLegal
             if (!move.Result.IsInCheck(piece.Color))
             {
                 result.Add(move);

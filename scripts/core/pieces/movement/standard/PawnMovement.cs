@@ -11,9 +11,6 @@ public class PawnMovement : IMovement
 {
     public List<Move> GetMovementOptions(byte id, Vector2Int from, Board board, bool color)
     {
-        // TODO: Handle promotion (here or in MovePieceEvent?)
-        // TODO: Add making a pawn en-passantable
-        
         List<Move> options = [];
         Vector2Int direction = new(0, (color ? 1 : -1));
 

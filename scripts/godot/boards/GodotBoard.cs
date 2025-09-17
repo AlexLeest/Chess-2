@@ -139,12 +139,12 @@ public partial class GodotBoard : GridContainer
             {
                 // CHECKMATE
                 GD.Print($"{otherColor} WINS");
-                FinishLevelAndSpawnSetup();
+                FinishLevelAndSpawnSetup(true, !newBoard.ColorToMove);
                 return;
             }
             // STALEMATE
             GD.Print($"STALEMATE");
-            FinishLevelAndSpawnSetup();
+            FinishLevelAndSpawnSetup(false, false);
             return;
         }
         // GD.Print("Yeah we are now RENDER?");
@@ -185,12 +185,22 @@ public partial class GodotBoard : GridContainer
         }
     }
     
-    private void FinishLevelAndSpawnSetup()
+    private void FinishLevelAndSpawnSetup(bool checkmate, bool color)
     {
         Node canvas = GetTree().CurrentScene;
-        // Spawn the "main" scene
-        // BoardSetup resource should handle board spawning correctly?
+        // TODO: Show a visual for whether this was a win, loss, or stalemate
 
+        if (!checkmate)
+        {
+            // Stalemate, think of what should happen here
+        }
+
+        if (!color)
+        {
+            // Player lost. Reset to start of game. Actually uh how.
+        }
+
+        // Loads and spawns the preparation board
         PackedScene prepBoard = ResourceLoader.Load<PackedScene>("res://prefabs/preparation_board.tscn");
         Node board = prepBoard.Instantiate();
         canvas.AddChild(board);

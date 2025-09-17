@@ -15,7 +15,7 @@ public class DespawnTimer(byte pieceId) : AbstractItem(pieceId, ItemTriggers.ON_
         if (piece is null || board.LastBoard.GetPiece(PieceId) is null)
             return board;
         
-        // Piece captures itself? BUG: Will probably bug the fuck out with selfdestruct looping infinitely but let's find out YES IT DOES
+        // Piece captures itself?
         move.ApplyEvent(new CapturePieceEvent(pieceId, pieceId, false));
         
         return board;

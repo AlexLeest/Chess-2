@@ -63,6 +63,7 @@ public class ZobristHashing(int maxDepth) : IEngine
         if (nextMoves.Count == 0)
         {
             bestMove = new Move();
+            // TODO: Replace with Move.IsLegal
             if (board.IsInCheck(board.ColorToMove))
                 return float.MinValue;
             return 0;

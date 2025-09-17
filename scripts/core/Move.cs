@@ -25,8 +25,8 @@ public struct Move(byte pieceId, Vector2Int from, Vector2Int to, Board startingB
 
     public bool IsLegal()
     {
-        // TODO: Implement legality check for Result board
-        return true;
+        return !Result.IsInCheck(!Result.ColorToMove);
+
     }
 
     public static bool operator ==(Move? a, Move? b)
