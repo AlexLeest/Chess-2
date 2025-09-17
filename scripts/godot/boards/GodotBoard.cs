@@ -95,7 +95,7 @@ public partial class GodotBoard : GridContainer
             // Reset highlights
             selectedPiece.SetHighlight(false);
             foreach (GodotSquare sq in squares)
-                sq.SetHighlight(false);
+                sq.SetSelectedMoveHighlight(false);
             
             Piece pieceToMove = selectedPiece.Piece;
 
@@ -130,7 +130,7 @@ public partial class GodotBoard : GridContainer
         {
             // TODO: Highlight these squares
             GD.Print($"Move {move} allowed");
-            squares.Get(move.To).SetHighlight(true);
+            squares.Get(move.To).SetSelectedMoveHighlight(true);
         }
     }
 
@@ -191,6 +191,10 @@ public partial class GodotBoard : GridContainer
             
             gdPiece.Texture = pieceTextures.GetPieceTexture(piece);
         }
+        if (Board.LastMove is null)
+            return;
+        squares.Get(Board.LastMove.Value.From).SetLastMoveHighlight(true);
+        squares.Get(Board.LastMove.Value.To).SetLastMoveHighlight(true);
     }
     
     private void FinishLevelAndSpawnSetup(bool checkmate, bool color)

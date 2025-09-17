@@ -35,7 +35,6 @@ public struct Move
     public bool IsLegal()
     {
         return !Result.IsInCheck(!Result.ColorToMove);
-
     }
 
     public static bool operator ==(Move? a, Move? b)

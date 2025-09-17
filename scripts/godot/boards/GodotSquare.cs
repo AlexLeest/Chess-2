@@ -8,9 +8,8 @@ public partial class GodotSquare : ColorRect
 {
     [Export] public GodotPiece GdPiece;
     [Export] public Vector2I Pos;
-    
-    [Export] private int squareNumber;
-    private Color color;
+
+    private bool lastMoveHighlight, selectedMoveHighlight;
     
     [Signal] public delegate void SquareClickedEventHandler(Vector2I coords);
     [Signal] public delegate void OnMouseEnteredEventHandler(Vector2I coords);
@@ -21,6 +20,8 @@ public partial class GodotSquare : ColorRect
         // Necessary to have the event carry position data to GodotBoard
         MouseEntered += SquareMouseEntered;
         MouseExited += SquareMouseExited;
+        
+        
     }
 
     public override void _GuiInput(InputEvent input)
@@ -45,15 +46,27 @@ public partial class GodotSquare : ColorRect
         EmitSignalOnMouseExited(Pos);
     }
 
-    public void SetHighlight(bool state)
+    public void SetSelectedMoveHighlight(bool state)
     {
-        // TODO: Highlight this square for possible movement of selected piece
-        Modulate = state ? Colors.Gold : Colors.White;
+        selectedMoveHighlight = state;
+        
+        Modulate = state ? Colors.LightBlue : Colors.White;
+        if (!state && lastMoveHighlight)
+            SetLastMoveHighlight(lastMoveHighlight);
+    }
+
+    public void SetLastMoveHighlight(bool state)
+    {
+        lastMoveHighlight = state;
+
+        Modulate = state ? Colors.Yellow : Colors.White;
     }
 
     public void Clear()
     {
-        SetHighlight(false);
+        SetSelectedMoveHighlight(false);
+        SetLastMoveHighlight(false);
+        
         if (GdPiece is not null)
             GdPiece.QueueFree();
         GdPiece = null;
