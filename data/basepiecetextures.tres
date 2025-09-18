@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="PieceTextures" load_steps=35 format=3 uid="uid://bcrexudceb4sh"]
+[gd_resource type="Resource" script_class="PieceTextures" load_steps=36 format=3 uid="uid://bcrexudceb4sh"]
 
 [ext_resource type="Script" uid="uid://03f3vre5h3sj" path="res://scripts/godot/utils/BasePieceTexture.cs" id="1_fhrla"]
+[ext_resource type="Texture2D" uid="uid://dc1kw03l78njb" path="res://art/pieces/special_marker.png" id="1_hpkq3"]
 [ext_resource type="Script" uid="uid://cr2qemoyqbcdy" path="res://scripts/godot/pieces/PieceTextures.cs" id="1_pa321"]
 [ext_resource type="Texture2D" uid="uid://b17veqy3lpb83" path="res://art/pieces/wP.svg" id="1_s6bhj"]
 [ext_resource type="Texture2D" uid="uid://cad87thwm8ejr" path="res://art/pieces/bP.svg" id="3_7lck4"]
@@ -133,5 +134,6 @@ metadata/_custom_type_script = "uid://03f3vre5h3sj"
 
 [resource]
 script = ExtResource("1_pa321")
+SpecialMarker = ExtResource("1_hpkq3")
 pieceTextures = Array[Object]([SubResource("Resource_b5m35"), SubResource("Resource_vjo87"), SubResource("Resource_xo6sd"), SubResource("Resource_oqyug"), SubResource("Resource_gyn4y"), SubResource("Resource_ol6j1"), SubResource("Resource_es8jc"), SubResource("Resource_0ax14"), SubResource("Resource_1irfh"), SubResource("Resource_f8lef"), SubResource("Resource_op34j"), SubResource("Resource_t6kho"), SubResource("Resource_losim"), SubResource("Resource_hpkq3"), SubResource("Resource_l8dpr"), SubResource("Resource_jlof7")])
 metadata/_custom_type_script = "uid://cr2qemoyqbcdy"

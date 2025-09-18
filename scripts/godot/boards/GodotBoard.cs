@@ -61,6 +61,18 @@ public partial class GodotBoard : GridContainer
 
         engine = levelModel.GetEngine(Level);
     }
+    
+    public override void _Input(InputEvent input)
+    {    
+        if (input is InputEventMouseButton mb)
+        {
+            if (mb.ButtonIndex == MouseButton.Right && mb.Pressed)
+            {
+                GD.Print("rmb");
+                DeselectPiece();
+            }
+        }
+    }
 
     private void SquareMouseEnter(Vector2I coords)
     {
@@ -99,18 +111,21 @@ public partial class GodotBoard : GridContainer
             
             Piece pieceToMove = selectedPiece.Piece;
 
+            // Loop through possible moves for this piece
             foreach (Move possibleMove in Board.GetMoves(pieceToMove))
             {
+                // Guard clause for clicked option
                 if (possibleMove.From != selectedPiece?.Piece.Position || possibleMove.To != corePos)
                 {
                     continue;
                 }
 
+                // Corresponding move found, set the board!
                 await SetNewBoard(possibleMove.Result);
                 selectedPiece = null;
                 return;
             }
-            // Clicked position couldn't be moved to by this piece.
+            // No corresponding move found. Reset selected piece.
             selectedPiece = null;
         }
 
@@ -122,13 +137,20 @@ public partial class GodotBoard : GridContainer
         }
         selectedPiece = square.GdPiece;
         selectedPiece.SetHighlight(true);
-        // GD.Print($"Selected piece {selectedPiece.Id}");
         
         foreach (Move move in Board.GetMoves(selectedPiece.Piece))
         {
-            // GD.Print($"Move {move} allowed");
             squares.Get(move.To).SetSelectedMoveHighlight(true);
         }
+    }
+
+    private void DeselectPiece()
+    {
+        // Reset highlights
+        selectedPiece?.SetHighlight(false);
+        foreach (GodotSquare sq in squares)
+            sq.SetSelectedMoveHighlight(false);
+        selectedPiece = null;
     }
 
     private async Task SetNewBoard(Board newBoard)
@@ -187,6 +209,14 @@ public partial class GodotBoard : GridContainer
             gdPiece.Position = Vector2.Down;
             
             gdPiece.Texture = pieceTextures.GetPieceTexture(piece);
+
+            if (Board.ItemsPerPiece.ContainsKey(piece.Id) || piece.Movement.Length != DefaultMovements.Get(piece.BasePiece).Length)
+            {
+                GD.Print($"{piece.Id} has movement/items.");
+                TextureRect specialMarker = new();
+                specialMarker.Texture = pieceTextures.SpecialMarker;
+                gdPiece.AddChild(specialMarker);
+            }
         }
         if (Board.LastMove is null)
             return;

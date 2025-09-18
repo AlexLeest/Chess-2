@@ -8,6 +8,8 @@ namespace CHESS2THESEQUELTOCHESS.scripts.godot;
 [GlobalClass]
 public partial class PieceTextures : Resource
 {
+    [Export] public Texture2D SpecialMarker;
+    
     [Export] private BasePieceTexture[] pieceTextures;
 
     private bool initialized;

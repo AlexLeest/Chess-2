@@ -13,12 +13,18 @@ public class SuperEnPassant : IMovement
     {
         List<Move> options = [];
         Vector2Int forward = color ? Vector2Int.Up : Vector2Int.Down;
+        int boardWidth = board.Squares.GetLength(0);
+        int boardHeight = board.Squares.GetLength(1);
+        if (!forward.Inside(boardWidth, boardHeight))
+            return options;
         
         Vector2Int left = from + Vector2Int.Left;
-        AttemptMove(id, from, board, color, left, forward, options);
+        if (left.Inside(boardWidth, boardHeight))
+            AttemptMove(id, from, board, color, left, forward, options);
         
         Vector2Int right = from + Vector2Int.Left;
-        AttemptMove(id, from, board, color, right, forward, options);
+        if (right.Inside(boardWidth, boardHeight))
+            AttemptMove(id, from, board, color, right, forward, options);
         
         return options;
     }
