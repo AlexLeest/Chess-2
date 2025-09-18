@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GDSuperEnPassant" load_steps=2 format=3 uid="uid://3mpq3p3tkbjx"]
+
+[ext_resource type="Script" uid="uid://sqt76nryansm" path="res://scripts/godot/pieces/movement/nonstandard/GDSuperEnPassant.cs" id="1_spk6h"]
+
+[resource]
+script = ExtResource("1_spk6h")
+Rarity = 0
+metadata/_custom_type_script = "uid://sqt76nryansm"

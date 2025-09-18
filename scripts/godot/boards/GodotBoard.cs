@@ -68,7 +68,7 @@ public partial class GodotBoard : GridContainer
         {
             if (mb.ButtonIndex == MouseButton.Right && mb.Pressed)
             {
-                GD.Print("rmb");
+                // GD.Print("rmb");
                 DeselectPiece();
             }
         }
@@ -93,10 +93,10 @@ public partial class GodotBoard : GridContainer
 
     private async void SquareClicked(Vector2I coords)
     {
-        GD.Print($"Square clicked at {coords}");
+        // GD.Print($"Square clicked at {coords}");
         if (Board.Turn % 2 != 0)
         {
-            GD.Print("It's black's turn");
+            // GD.Print("It's black's turn");
             return;
         }
         bool colorToMove = Board.ColorToMove;
@@ -155,7 +155,7 @@ public partial class GodotBoard : GridContainer
 
     private async Task SetNewBoard(Board newBoard)
     {
-        GD.Print($"turn: {newBoard.Turn}");
+        // GD.Print($"turn: {newBoard.Turn}");
         Board = newBoard;
         
         // Check for checkmate or stalemate
@@ -174,7 +174,6 @@ public partial class GodotBoard : GridContainer
             FinishLevelAndSpawnSetup(false, false);
             return;
         }
-        // GD.Print("Yeah we are now RENDER?");
         RenderPieces();
         
         if (newBoard.ColorToMove == false)
@@ -212,7 +211,7 @@ public partial class GodotBoard : GridContainer
 
             if (Board.ItemsPerPiece.ContainsKey(piece.Id) || piece.Movement.Length != DefaultMovements.Get(piece.BasePiece).Length)
             {
-                GD.Print($"{piece.Id} has movement/items.");
+                // GD.Print($"{piece.Id} has movement/items.");
                 TextureRect specialMarker = new();
                 specialMarker.Texture = pieceTextures.SpecialMarker;
                 gdPiece.AddChild(specialMarker);

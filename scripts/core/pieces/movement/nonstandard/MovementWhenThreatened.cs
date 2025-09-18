@@ -10,7 +10,7 @@ namespace CHESS2THESEQUELTOCHESS.scripts.core;
 /// <param name="baseMovement">The movement in question</param>
 public class MovementWhenThreatened(IMovement baseMovement) : IMovement
 {
-    private IMovement baseMovement = baseMovement;
+    public IMovement BaseMovement = baseMovement;
     private static Dictionary<(bool, Vector2Int, uint), uint> zobristHashes = [];
     private static Random rng = new();
 
@@ -19,15 +19,15 @@ public class MovementWhenThreatened(IMovement baseMovement) : IMovement
         if (!board.IsInCheck(color, from))
             return [];
         
-        return baseMovement.GetMovementOptions(id, from, board, color);
+        return BaseMovement.GetMovementOptions(id, from, board, color);
     }
 
     public bool Attacks(Vector2Int from, Vector2Int target, Board board, bool color)
     {
-        if (!board.IsInCheck(color, from))
+        if (!board.IsInCheck(!color, from))
             return false;
         
-        return baseMovement.Attacks(from, target, board, color);
+        return BaseMovement.Attacks(from, target, board, color);
     }
 
     public bool AttacksAny(Vector2Int from, Vector2Int[] targets, Board board, bool color)
@@ -35,12 +35,12 @@ public class MovementWhenThreatened(IMovement baseMovement) : IMovement
         if (!board.IsInCheck(color, from))
             return false;
 
-        return baseMovement.AttacksAny(from, targets, board, color);
+        return BaseMovement.AttacksAny(from, targets, board, color);
     }
 
     public uint GetZobristHash(bool color, Vector2Int position)
     {
-        uint baseHash = baseMovement.GetZobristHash(color, position);
+        uint baseHash = BaseMovement.GetZobristHash(color, position);
         (bool, Vector2Int, uint) index = (color, position, baseHash);
         
         if (!zobristHashes.TryGetValue(index, out uint result))
@@ -53,6 +53,6 @@ public class MovementWhenThreatened(IMovement baseMovement) : IMovement
 
     public override string ToString()
     {
-        return $"WHEN THREATENED: {baseMovement}";
+        return $"WHEN THREATENED: {BaseMovement}";
     }
 }

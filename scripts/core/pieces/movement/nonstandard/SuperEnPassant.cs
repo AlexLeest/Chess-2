@@ -22,7 +22,7 @@ public class SuperEnPassant : IMovement
         if (left.Inside(boardWidth, boardHeight))
             AttemptMove(id, from, board, color, left, forward, options);
         
-        Vector2Int right = from + Vector2Int.Left;
+        Vector2Int right = from + Vector2Int.Right;
         if (right.Inside(boardWidth, boardHeight))
             AttemptMove(id, from, board, color, right, forward, options);
         

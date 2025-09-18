@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core;
+using CHESS2THESEQUELTOCHESS.scripts.core.pieces.items;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.movement;
 using CHESS2THESEQUELTOCHESS.scripts.core.pieces.movement.nonstandard;
 using CHESS2THESEQUELTOCHESS.scripts.core.utils;
@@ -37,6 +38,10 @@ public abstract partial class GodotMovement : Resource
                 return new GodotCastlingMovement();
             case Swapper:
                 return new GDSwapper();
+            case MovementWhenThreatened whenThreatened:
+                return new GDWhenThreatened(GodotMovement.CreateFromIMovement(whenThreatened.BaseMovement));
+            case SuperEnPassant:
+                return new GDSuperEnPassant();
         }
         throw new System.NotImplementedException();
     }

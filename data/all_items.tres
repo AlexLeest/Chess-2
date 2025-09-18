@@ -15,20 +15,20 @@
 [ext_resource type="Resource" uid="uid://df3ylqibf8b47" path="res://data/items/OnCastle/upgrade_non_king_piece.tres" id="10_pwvtq"]
 [ext_resource type="Resource" uid="uid://b8jts62phq6h6" path="res://data/items/OnCastle/spawn_pawn_fence.tres" id="11_hsboa"]
 [ext_resource type="Resource" uid="uid://do1heo3x146tb" path="res://data/movements/standard/checkers_jump.tres" id="13_4100q"]
-[ext_resource type="Resource" uid="uid://cfx0jw73qy21n" path="res://data/movements/standard/bishop_movement.tres" id="14_8o2jt"]
 [ext_resource type="Resource" uid="uid://dhpr2668vduga" path="res://data/items/OnMove/leave_bomb_on_move.tres" id="15_a152i"]
 [ext_resource type="Resource" uid="uid://nrdvag5iu0f1" path="res://data/movements/standard/king_movement.tres" id="15_day28"]
 [ext_resource type="Script" uid="uid://cc7v4nx16p53b" path="res://scripts/godot/data/UpgradesModel.cs" id="16_8o2jt"]
 [ext_resource type="Resource" uid="uid://2thbkgl7alft" path="res://data/movements/standard/knight_movement.tres" id="16_a152i"]
 [ext_resource type="Resource" uid="uid://is6p67luenan" path="res://data/items/BeforeCapture/changeling.tres" id="16_apx1c"]
 [ext_resource type="Resource" uid="uid://bs3d5s2jnrs0m" path="res://data/movements/standard/pawn_movement.tres" id="17_auni3"]
-[ext_resource type="Resource" uid="uid://nhw5xi4wt0ea" path="res://data/movements/standard/queen_movement.tres" id="18_apx1c"]
-[ext_resource type="Resource" uid="uid://b2x8cgcu6vpdt" path="res://data/movements/standard/rook_movement.tres" id="19_pwvtq"]
 [ext_resource type="Resource" uid="uid://drldwbx1tc0lh" path="res://data/movements/nonstandard/triple_pawn_push.tres" id="20_hsboa"]
 [ext_resource type="Resource" uid="uid://c1mkja0qcs72x" path="res://data/movements/nonstandard/cannibal_king.tres" id="21_fjmva"]
+[ext_resource type="Resource" uid="uid://b4v4bhhpvfmrp" path="res://data/movements/nonstandard/king_when_threatened.tres" id="25_apx1c"]
 [ext_resource type="Resource" uid="uid://bf8w3y5elosv7" path="res://data/movements/nonstandard/swapper.tres" id="25_auni3"]
+[ext_resource type="Resource" uid="uid://3mpq3p3tkbjx" path="res://data/movements/nonstandard/super_en_passant.tres" id="26_apx1c"]
+[ext_resource type="Resource" uid="uid://n8nou3f0u6m4" path="res://data/movements/nonstandard/queen_when_threatened.tres" id="26_pwvtq"]
 
 [resource]
 script = ExtResource("16_8o2jt")
 items = Array[Resource]([ExtResource("1_day28"), ExtResource("2_a152i"), ExtResource("3_auni3"), ExtResource("4_apx1c"), ExtResource("5_pwvtq"), ExtResource("4_4100q"), ExtResource("11_hsboa"), ExtResource("10_pwvtq"), ExtResource("1_l6gso"), ExtResource("10_a152i"), ExtResource("9_apx1c"), ExtResource("5_8o2jt"), ExtResource("3_7vb0p"), ExtResource("8_auni3"), ExtResource("15_a152i"), ExtResource("16_apx1c")])
-movements = Array[Object]([ExtResource("13_4100q"), ExtResource("14_8o2jt"), ExtResource("15_day28"), ExtResource("16_a152i"), ExtResource("17_auni3"), ExtResource("18_apx1c"), ExtResource("19_pwvtq"), ExtResource("20_hsboa"), ExtResource("21_fjmva"), ExtResource("25_auni3")])
+movements = Array[Object]([ExtResource("13_4100q"), ExtResource("15_day28"), ExtResource("16_a152i"), ExtResource("17_auni3"), ExtResource("20_hsboa"), ExtResource("21_fjmva"), ExtResource("25_auni3"), ExtResource("26_apx1c"), ExtResource("25_apx1c"), ExtResource("26_pwvtq")])
