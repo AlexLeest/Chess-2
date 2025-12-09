@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using System;
 using System.Collections.Generic;
 
 namespace CHESS2THESEQUELTOCHESS.scripts.core.AI;
@@ -51,6 +52,7 @@ public class ZobristWithQSearch(int maxDepth) : IEngine
         
         if (depth <= 0)
         {
+            // TODO: Add QSearch for non-quiet positions
             bestMove = new Move();
             return DetermineScore(board);
         }
@@ -107,6 +109,16 @@ public class ZobristWithQSearch(int maxDepth) : IEngine
             return;
 
         (moves[index], moves[0]) = (moves[0], moves[index]);
+    }
+
+    private bool PositionIsQuiet(List<Move> moves)
+    {
+        foreach (Move move in moves)
+            foreach (IBoardEvent ev in move.Events)
+                if (ev is CapturePieceEvent)
+                    return false;
+
+        return true;
     }
     
     public float DetermineScore(Board board)
