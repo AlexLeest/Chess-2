@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GDZobristWithQSearch" load_steps=2 format=3 uid="uid://gaoqu43i20jc"]
+
+[ext_resource type="Script" uid="uid://dksjxnuvvw33v" path="res://scripts/godot/AI/GDZobristWithQSearch.cs" id="1_4g56b"]
+
+[resource]
+script = ExtResource("1_4g56b")
+depth = 4
+metadata/_custom_type_script = "uid://dksjxnuvvw33v"

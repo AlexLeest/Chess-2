@@ -49,16 +49,16 @@ public class ZobristWithQSearch(int maxDepth) : IEngine
                 return entry.Score;
             }
         }
+
+        float max = float.NegativeInfinity;
+        List<Move> nextMoves = board.GetMoves();
         
-        if (depth <= 0)
+        if (depth <= 0 && PositionIsQuiet(nextMoves))
         {
             // TODO: Add QSearch for non-quiet positions
             bestMove = new Move();
             return DetermineScore(board);
         }
-
-        float max = float.NegativeInfinity;
-        List<Move> nextMoves = board.GetMoves();
         
         SortByPrincipalVariation(board, nextMoves);
         
@@ -73,6 +73,24 @@ public class ZobristWithQSearch(int maxDepth) : IEngine
         
         foreach (Move move in nextMoves)
         {
+            if (depth <= 0)
+            {
+                bool quiet = true;
+                foreach (var ev in move.Events)
+                {
+                    if (ev is CapturePieceEvent)
+                    {
+                        quiet = false;
+                        break;
+                    }
+                }
+                if (quiet)
+                {
+                    bestMove = new Move();
+                    return DetermineScore(board);
+                }
+            }
+            
             Board nextBoard = move.Result;
             if (nextBoard is null)
                 continue;
