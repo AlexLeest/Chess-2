@@ -1,4 +1,5 @@
 ﻿using CHESS2THESEQUELTOCHESS.scripts.core.boardevents;
+using Godot;
 using System;
 using System.Collections.Generic;
 
@@ -13,11 +14,12 @@ public class ZobristWithQSearch(int maxDepth) : IEngine
     private TranspositionTable transpositionTable = new();
     
     // Debug counts
-    private int tTableFinds, tTableUses, tTableMismatch;
+    private int tTableFinds, tTableUses, tTableMismatch, qsearchAmount, maxQsearchDepth;
     
     public Move GenerateNextMove(Board board)
     {
         tTableUses = 0;
+        qsearchAmount = maxQsearchDepth = 0;
         
         Move lastKnownBestMove = new();
         
@@ -27,6 +29,8 @@ public class ZobristWithQSearch(int maxDepth) : IEngine
             lastKnownBestMove = bestMove;
         }
         transpositionTable.Clear();
+        
+        GD.Print($"QSearchAmount: {qsearchAmount}, max depth: {maxQsearchDepth}");
 
         // GD.Print($"TTable used {tTableUses} times");
         return lastKnownBestMove;
@@ -52,12 +56,20 @@ public class ZobristWithQSearch(int maxDepth) : IEngine
 
         float max = float.NegativeInfinity;
         List<Move> nextMoves = board.GetMoves();
-        
+
         if (depth <= 0 && PositionIsQuiet(nextMoves))
         {
             // TODO: Add QSearch for non-quiet positions
             bestMove = new Move();
             return DetermineScore(board);
+        }
+        if (depth <= 0)
+        {
+            qsearchAmount++;
+            if (depth < maxQsearchDepth)
+            {
+                maxQsearchDepth = depth;
+            }
         }
         
         SortByPrincipalVariation(board, nextMoves);
